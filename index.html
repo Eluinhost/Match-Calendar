@@ -100,8 +100,8 @@
 			<tr>
 				<td>
 					<select id="cycle">
-						<option>24 Hours</option>
-						<option>12 Hours</option>
+						<option value="24h">24 Hours</option>
+						<option value="12h">12 Hours</option>
 					</select>
 				</td>
 				<td><span id="time">Syncing with time.is...</span></td>
@@ -169,22 +169,20 @@
 					innerHTML += "<td class='countdown'>Syncing with time.is...</td>";
 					innerHTML += "</tr>";
 				}
+				document.getElementById("cycle").onchange = updateClockCycle;
+				document.getElementById("zone").onchange = updateTimeZone;
 				document.getElementById("matches").innerHTML = innerHTML;
-				document.getElementById("cycle").onchange = updateClocks;
-				document.getElementById("zone").onchange = updateClocks;
-				setTimeout(updateCountdowns, 2000);
+				setTimeout(update, 2000);
 			}
 			
-			function updateMatches() {
-				if (matches[0].date.diff(moment()) < 0) {
+			function update() {
+				var clockCycle = document.getElementById("cycle");
+				var patterns = ["HH:mm:ss", "hh:mm:ss A"];
+				var pattern = patterns[clockCycle.selectedIndex];
+				if (matches[0].date.diff(now()) < 0) {
 					document.getElementById("matches").deleteRow(1);
 					matches.shift();
 				}
-			}
-			
-			function updateCountdowns() {
-				updateMatches();
-				var pattern = patterns[document.getElementById("cycle").selectedIndex+2];
 				document.getElementById("time").innerHTML = now().format(pattern);
 				var table = document.getElementById("matches");
 				for (var i in matches) {
@@ -192,7 +190,38 @@
 					var d = m.date.diff(now(), "seconds");
 					table.rows[parseInt(i)+1].cells[2].innerHTML = format(d);
 				}
-				setTimeout(updateCountdowns, 1000);
+				setTimeout(update, 1000);
+			}
+			
+			function updateClockCycle() {
+				var clockCycle = document.getElementById("cycle");
+				var table = document.getElementById("matches");
+				var patterns = ["MMMM Do - HH:mm", "MMMM Do - hh:mm A"];
+				for (var i in matches) {
+					var m = matches[i];
+					var date = m.date.format(patterns[clockCycle.selectedIndex]);
+					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
+				}
+			}
+			
+			function updateTimeZone() {
+				var timeZone = document.getElementById("zone");
+				var clockCycle = document.getElementById("cycle");
+				var patterns = ["MMMM Do - HH:mm", "MMMM Do - hh:mm A"];
+				var table = document.getElementById("matches");
+				for (var i in matches) {
+					var m = matches[i];
+					m.date.zone(timeZone.value);
+					var date = m.date.format(patterns[clockCycle.selectedIndex]);
+					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
+				}
+			}
+			
+			function now() {
+				var html = document.getElementById("UTC_za00").innerHTML;
+				var date = moment.utc(/\d+:\d+:\d+/.exec(html), "HH:mm:ss");
+				date.zone(document.getElementById("zone").value);
+				return date;
 			}
 			
 			function format(seconds) {
@@ -207,26 +236,7 @@
 				formatted += (seconds < 10 ? ":0" : ":") + seconds;
 				return formatted;
 			}
-			
-			function updateClocks() {
-				var pattern = patterns[document.getElementById("cycle").selectedIndex+2];
-				document.getElementById("time").innerHTML = now().format(pattern);
-				var table = document.getElementById("matches");
-				for (var i in matches) {
-					var m = matches[i];
-					var pattern = patterns[document.getElementById("cycle").selectedIndex];
-					m.date.zone(document.getElementById("zone").value);
-					table.rows[parseInt(i)+1].cells[0].innerHTML = m.date.format(pattern);	
-				}
-			}
-			
-			function now() {
-				var html = document.getElementById("UTC_za00").innerHTML;
-				var date = moment.utc(/\d+:\d+:\d+/.exec(html), "HH:mm:ss");
-				date.zone(document.getElementById("zone").value);
-				return date;
-			}
 		</script>
-		<script type="text/javascript" src="http://www.se.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&sort=new&jsonp=parseMatches"></script>	
+		<script type="text/javascript" src="http://www.se.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&limit=100&jsonp=parseMatches"></script>	
 	</body>
 </html>

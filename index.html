@@ -154,6 +154,7 @@
 			document.getElementById("banner").src = images[Math.floor(Math.random()*images.length)];
 			document.getElementById("cycle").value = GET("cycle", "24h");
 			document.getElementById("zone").value = GET("zone", "+00:00");
+			
 			function parseMatches(data) {	
 				for (var i in data.data.children) {
 					var match = data.data.children[i].data;
@@ -177,9 +178,11 @@
 					innerHTML += "<td class='countdown'>Syncing with time.is...</td>";
 					innerHTML += "</tr>";
 				}
-				document.getElementById("cycle").onchange = updateClockCycle;
-				document.getElementById("zone").onchange = updateTimeZone;
+				document.getElementById("cycle").onchange = function() {SET("cycle", document.getElementById("cycle").value);}
+				document.getElementById("zone").onchange = function() {SET("zone", document.getElementById("zone").value);}
 				document.getElementById("matches").innerHTML = innerHTML;
+				updateClockCycle();
+				updateTimeZone();
 				setTimeout(update, 1000);
 			}
 			
@@ -210,7 +213,6 @@
 					var date = m.date.format(patterns[clockCycle.selectedIndex]);
 					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
 				}
-				SET("cycle", clockCycle.value);
 			}
 			
 			function updateTimeZone() {
@@ -224,7 +226,6 @@
 					var date = m.date.format(patterns[clockCycle.selectedIndex]);
 					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
 				}
-				SET("zone", timeZone.value);
 			}
 			
 			function now() {

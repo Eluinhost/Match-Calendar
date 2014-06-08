@@ -91,6 +91,11 @@
 				text-align: center;
 				width: 175px;
 			}
+			
+			.address {
+				text-align: center;
+				width: 175px;
+			}
 		</style>
 	</head>
 	<body>
@@ -144,35 +149,38 @@
 		</script>
 		<script type="text/javascript">
 			var matches = [];
-			var patterns = ["MMMM Do - HH:mm", "MMMM Do - hh:mm A", "HH:mm:ss", "hh:mm:ss A"];
 			var images = ["http://i.imgur.com/tyLyQjh.png", "http://i.imgur.com/IfLFcwO.png", "http://i.imgur.com/gX6cacb.png", "http://i.imgur.com/pMAckxW.png", "http://i.imgur.com/hg4YQyu.png", "http://i.imgur.com/iFCP8Za.png", "http://i.imgur.com/4cladhq.png", "http://i.imgur.com/UZxvbmq.png", "http://i.imgur.com/scgqwAA.png"];
-			
+			var options = {cycle: "24h", zone: "+00:00", timeFormat: "HH:mm:ss", dateFormat: "MMMM Do - HH:mm"};
 			document.getElementById("banner").src = images[Math.floor(Math.random()*images.length)];
+			document.getElementById("cycle").value = GET("cycle", "24h");
+			document.getElementById("zone").value = GET("zone", "+00:00");
 			function parseMatches(data) {	
 				for (var i in data.data.children) {
 					var match = data.data.children[i].data;
 					var index = match.title.indexOf("-");
 					var title = match.title.substring(index+2);
 					var date = moment.utc(match.title.substring(0, index-1), "MMM DD HH:mm");
+					var address = parseAddress(match.selftext);
 					var url = match.url.replace("se.", "");
 					if (date.diff(moment.utc()) > 0) {
-						matches.push({title: title, date: date, url: url});
+						matches.push({title: title, date: date, address: address, url: url, text: match.selftext_html});
 					}
 				}
 				matches.sort(function(a, b) { return a.date.diff(b.date) });
-				var innerHTML = "<tr><th>Date</th><th>Match</th><th>Countdown</th></tr>";
+				var innerHTML = "<tr><th>Date</th><th>Match</th><th>Address</th><th>Countdown</th></tr>";
 				for (var i in matches) {
 					var m = matches[i];
 					innerHTML += "<tr>";
-					innerHTML += "<td class='date'>"+m.date.format(patterns[0])+"</td>"
-					innerHTML += "<td class='title'><a href='"+m.url+"'>"+m.title+"</td>";
+					innerHTML += "<td class='date'>"+m.date.format(options.dateFormat)+"</td>"
+					innerHTML += "<td class='title'><a href='"+m.url+"' title='"+m.text+"'>"+m.title+"></td>";
+					innerHTML += "<td class='address'>"+m.address+"</td>";
 					innerHTML += "<td class='countdown'>Syncing with time.is...</td>";
 					innerHTML += "</tr>";
 				}
 				document.getElementById("cycle").onchange = updateClockCycle;
 				document.getElementById("zone").onchange = updateTimeZone;
 				document.getElementById("matches").innerHTML = innerHTML;
-				setTimeout(update, 2000);
+				setTimeout(update, 1000);
 			}
 			
 			function update() {
@@ -188,9 +196,9 @@
 				for (var i in matches) {
 					var m = matches[i];
 					var d = m.date.diff(now(), "seconds");
-					table.rows[parseInt(i)+1].cells[2].innerHTML = format(d);
+					table.rows[parseInt(i)+1].cells[3].innerHTML = format(d);
 				}
-				setTimeout(update, 1000);
+				setTimeout(update, 500);
 			}
 			
 			function updateClockCycle() {
@@ -202,6 +210,7 @@
 					var date = m.date.format(patterns[clockCycle.selectedIndex]);
 					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
 				}
+				SET("cycle", clockCycle.value);
 			}
 			
 			function updateTimeZone() {
@@ -215,6 +224,7 @@
 					var date = m.date.format(patterns[clockCycle.selectedIndex]);
 					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
 				}
+				SET("zone", timeZone.value);
 			}
 			
 			function now() {
@@ -222,6 +232,13 @@
 				var date = moment.utc(/\d+:\d+:\d+/.exec(html), "HH:mm:ss");
 				date.zone(document.getElementById("zone").value);
 				return date;
+			}
+			
+			function parseAddress(text) {
+				if (/\d+\.\d+\.\d+\.\d+:\d+/.test(text)) {
+					return /\d+\.\d+\.\d+\.\d+:\d+/.exec(text);
+				}
+				return "-";
 			}
 			
 			function format(seconds) {
@@ -235,6 +252,26 @@
 				formatted += (minutes < 10 ? ":0" : ":") + minutes;
 				formatted += (seconds < 10 ? ":0" : ":") + seconds;
 				return formatted;
+			}
+			
+			function GET(key, def) {
+				var result = def;
+				var query = document.URL.substring(document.URL.indexOf("?")+1);
+				if (query) {
+					var data = query.split("&");
+					data.forEach(function(d) {
+						if (d.indexOf(key) == 0) {
+							result =  d.substring(d.indexOf("=")+1);	
+						}
+					});
+				}
+				return result;
+			}
+			
+			function SET(key, val, search) {
+				var regex = new RegExp("([?;&])" + key + "[^&;]*[;&]?")
+				var query = window.location.search.replace(regex, "$1").replace(/&$/, '')
+				window.location = (query.length > 2 ? query + "&" : "?") + key + "=" + val
 			}
 		</script>
 		<script type="text/javascript" src="http://www.se.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&limit=100&jsonp=parseMatches"></script>	

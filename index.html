@@ -247,6 +247,8 @@
 			function parseAddress(text) {
 				if (/\d+\.\d+\.\d+\.\d+:\d+/.test(text)) {
 					return /\d+\.\d+\.\d+\.\d+:\d+/.exec(text);
+				} if (/\d+\.\d+\.\d+\.\d+/.test(text)) {
+					return /\d+\.\d+\.\d+\.\d+/.exec(text)+":25565";
 				}
 				return "-";
 			}

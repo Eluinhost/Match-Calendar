@@ -160,7 +160,6 @@
 			cycle.onchange = reload;
 			zone.onchange = reload;
 			
-			
 			var timeFormat = cycle.value == "24h" ? "HH:mm:ss" : "hh:mm:ss A";
 			var dateFormat = cycle.value == "24h" ? "MMMM Do - HH:mm" : "MMMM Do hh:mm A";
 			
@@ -218,7 +217,7 @@
 					var time = text.substring(text.indexOf("Whitelist off"));
 					if (/\d+:\d+/.test(time)) {
 						var r = /(\d+):(\d+)/.exec(time);
-						opens.set("hour", r[1]);
+						opens.set("hour", opens.get("hour") < parseInt(r[1]) ? 0 : r[1]);
 						opens.set("minute", r[2]);
 					}
 					else if (/\d+/.test(time)) {
@@ -231,19 +230,17 @@
 			
 			function getRemaining(date, under) {
 				var remaining = date.diff(time, "seconds");
-				if (remaining > 0) {
-					var formatted = "";
-					var days = Math.floor(remaining/86400);
-					var hours = Math.floor((remaining - days*86400)/3600);
-					var minutes = Math.floor((remaining - days*86400 - hours*3600)/60);
-					var seconds = Math.floor(remaining - days*86400 - hours*3600 - minutes*60);
-					formatted += (days < 10 ? "0" : "") + days;
-					formatted += (hours < 10 ? ":0" : ":") + hours;
-					formatted += (minutes < 10 ? ":0" : ":") + minutes;
-					formatted += (seconds < 10 ? ":0" : ":") + seconds;
-					return formatted;
-				} 
-				return under;
+				if (remaining < 0) return under;
+				var formatted = "";
+				var days = Math.floor(remaining/86400);
+				var hours = Math.floor((remaining - days*86400)/3600);
+				var minutes = Math.floor((remaining - days*86400 - hours*3600)/60);
+				var seconds = Math.floor(remaining - days*86400 - hours*3600 - minutes*60);
+				formatted += (days < 10 ? "0" : "") + days;
+				formatted += (hours < 10 ? ":0" : ":") + hours;
+				formatted += (minutes < 10 ? ":0" : ":") + minutes;
+				formatted += (seconds < 10 ? ":0" : ":") + seconds;
+				return formatted;
 			}
 			
 			function createRow(match) {

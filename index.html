@@ -3,6 +3,7 @@
 	<head>
 		<title>Match Calendar</title>
 		<link rel="icon" href="http://i.imgur.com/GjMv9aL.png?1">
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://momentjs.com/downloads/moment.min.js"></script>
 		<script src="http://widget.time.is/t.js"></script>
 		<style>
@@ -87,14 +88,14 @@
 				text-align: left;
 			}
 
-			.countdown {
+			.opens {
 				text-align: center;
-				width: 175px;
+				width: 100px;
 			}
 
-			.address {
+			.starts {
 				text-align: center;
-				width: 175px;
+				width: 100px;
 			}
 		</style>
 	</head>
@@ -149,133 +150,125 @@
 		</script>
 		<script type="text/javascript">
 			var matches = [];
-			var images = ["http://i.imgur.com/tyLyQjh.png", "http://i.imgur.com/IfLFcwO.png", "http://i.imgur.com/gX6cacb.png", "http://i.imgur.com/pMAckxW.png", "http://i.imgur.com/hg4YQyu.png", "http://i.imgur.com/iFCP8Za.png", "http://i.imgur.com/4cladhq.png", "http://i.imgur.com/UZxvbmq.png", "http://i.imgur.com/scgqwAA.png"];
-			var options = {cycle: "24h", zone: "+00:00", timeFormat: "HH:mm:ss", dateFormat: "MMMM Do - HH:mm"};
-			document.getElementById("banner").src = images[Math.floor(Math.random()*images.length)];
-			document.getElementById("cycle").value = GET("cycle", "24h");
-			document.getElementById("zone").value = GET("zone", "+00:00");
-
-			function parseMatches(data) {	
-				for (var i in data.data.children) {
-					var match = data.data.children[i].data; 
-					var title = match.title.substring(match.title.indexOf("-")+2);
-					var date = moment.utc(/\w+ \d+ \d+:\d+ UTC/.exec(match.title), "MMM DD HH:mm");
-					var address = parseAddress(match.selftext);
-					var url = match.url;
-					if (date.diff(moment.utc()) > 0) {
-						matches.push({title: title, date: date, address: address, url: url, text: match.selftext_html});
+			var time = moment();
+			var table = document.getElementById("matches");
+			var cycle = document.getElementById("cycle");
+			var zone = document.getElementById("zone");
+			
+			cycle.value = getOption("cycle", "24h");
+			zone.value = getOption("zone", "+00:00");
+			cycle.onchange = reload;
+			zone.onchange = reload;
+			
+			
+			var timeFormat = cycle.value == "24h" ? "HH:mm:ss" : "hh:mm:ss A";
+			var dateFormat = cycle.value == "24h" ? "MMMM Do - HH:mm" : "MMMM Do hh:mm A";
+			
+			updateTime();
+			updateMatches();
+			updateCountdowns();
+			
+			function updateMatches() {
+				$.ajax({                                                                                                                                                                                                        
+					type: "GET",
+					url: "http://www.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&sort=new&limit=100",
+					success: function(response) {
+						matches = [];
+						response.data.children.forEach(function(r) {
+							var match = {};
+							match.date = moment.utc(/\w+ \d+ \d+:\d+/.exec(r.data.title), "MMM DD HH:mm");
+							match.date.zone(zone.value);
+							match.title = r.data.title.substring(r.data.title.indexOf("-")+2);
+							match.url = r.data.url;
+							match.opens = getOpens(match.date, r.data.selftext);
+							if (match.date.diff(time) > 0) {
+								matches.push(match);
+							}
+						});
+						matches.sort(function(a, b) {return a.date.diff(b.date);});
+						table.innerHTML = "<tr><th>Date</th><th>Match</th><th>Opens</th><th>Starts</th></tr>";
+						matches.forEach(function(m) { table.innerHTML += createRow(m);});
 					}
-				}
-				matches.sort(function(a, b) { return a.date.diff(b.date) });
-				var innerHTML = "<tr><th>Date</th><th>Match</th><th>Address</th><th>Countdown</th></tr>";
-				for (var i in matches) {
-					var m = matches[i];
-					innerHTML += "<tr>";
-					innerHTML += "<td class='date'>"+m.date.format(options.dateFormat)+"</td>"
-					innerHTML += "<td class='title'><a href='"+m.url+"'>"+m.title+"</a></td>";
-					innerHTML += "<td class='address'>"+m.address+"</td>";
-					innerHTML += "<td class='countdown'>Syncing with time.is...</td>";
-					innerHTML += "</tr>";
-				}
-				document.getElementById("cycle").onchange = function() {SET("cycle", document.getElementById("cycle").value);}
-				document.getElementById("zone").onchange = function() {SET("zone", document.getElementById("zone").value);}
-				document.getElementById("matches").innerHTML = innerHTML;
-				updateClockCycle();
-				updateTimeZone();
-				setTimeout(update, 1000);
+				});
+				setTimeout(updateMatches, 60000);
 			}
-
-			function update() {
-				var clockCycle = document.getElementById("cycle");
-				var patterns = ["HH:mm:ss", "hh:mm:ss A"];
-				var pattern = patterns[clockCycle.selectedIndex];
-				if (matches[0].date.diff(now()) < 0) {
-					document.getElementById("matches").deleteRow(1);
-					matches.shift();
+			
+			function updateCountdowns() {
+				for (var i = 0; i < matches.length; i++) {
+					var match = matches[i];
+					var row = table.rows[i+1];
+					if (match.opens) row.cells[2].innerHTML = getRemaining(match.opens, "Opened");
+					row.cells[3].innerHTML = getRemaining(match.date, "Started");
 				}
-				document.getElementById("time").innerHTML = now().format(pattern);
-				var table = document.getElementById("matches");
-				for (var i in matches) {
-					var m = matches[i];
-					var d = m.date.diff(now(), "seconds");
-					table.rows[parseInt(i)+1].cells[3].innerHTML = format(d);
-				}
-				setTimeout(update, 500);
+				setTimeout(updateCountdowns, 10);
 			}
-
-			function updateClockCycle() {
-				var clockCycle = document.getElementById("cycle");
-				var table = document.getElementById("matches");
-				var patterns = ["MMMM Do - HH:mm", "MMMM Do - hh:mm A"];
-				for (var i in matches) {
-					var m = matches[i];
-					var date = m.date.format(patterns[clockCycle.selectedIndex]);
-					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
+			
+			function updateTime() {
+				var widget = document.getElementById("UTC_za00");
+				var match = /\d+:\d+:\d+/.exec(widget.innerHTML);
+				time = moment.utc(match, "HH:mm:ss");
+				time.zone(zone.value);
+				document.getElementById("time").innerHTML = time.format(timeFormat);
+				setTimeout(updateTime, 10);
+			}
+			
+			function getOpens(date, text) {
+				if (text.indexOf("Whitelist off:") > -1) {
+					var opens = moment.utc(date);
+					var time = text.substring(text.indexOf("Whitelist off:")+13);
+					if (/\d+:\d+/.test(time)) {
+						var r = /(\d+):(\d+)/.exec(time);
+						opens.set("hour", r[1]);
+						opens.set("minute", r[2]);
+					}
+					else if (/\d+/.test(time)) {
+						opens.subtract("minutes", /\d+/.exec(time));
+					}
+					opens.zone(zone.value);
+					return opens;
 				}
 			}
-
-			function updateTimeZone() {
-				var timeZone = document.getElementById("zone");
-				var clockCycle = document.getElementById("cycle");
-				var patterns = ["MMMM Do - HH:mm", "MMMM Do - hh:mm A"];
-				var table = document.getElementById("matches");
-				for (var i in matches) {
-					var m = matches[i];
-					m.date.zone(timeZone.value);
-					var date = m.date.format(patterns[clockCycle.selectedIndex]);
-					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
-				}
+			
+			function getRemaining(date, under) {
+				var remaining = date.diff(time, "seconds");
+				if (remaining > 0) {
+					var formatted = "";
+					var days = Math.floor(remaining/86400);
+					var hours = Math.floor((remaining - days*86400)/3600);
+					var minutes = Math.floor((remaining - days*86400 - hours*3600)/60);
+					var seconds = Math.floor(remaining - days*86400 - hours*3600 - minutes*60);
+					formatted += (days < 10 ? "0" : "") + days;
+					formatted += (hours < 10 ? ":0" : ":") + hours;
+					formatted += (minutes < 10 ? ":0" : ":") + minutes;
+					formatted += (seconds < 10 ? ":0" : ":") + seconds;
+					return formatted;
+				} 
+				return under;
 			}
-
-			function now() {
-				var html = document.getElementById("UTC_za00").innerHTML;
-				var date = moment.utc(/\d+:\d+:\d+/.exec(html), "HH:mm:ss");
-				date.zone(document.getElementById("zone").value);
-				return date;
+			
+			function createRow(match) {
+				var row = "<tr>";
+				row += "<td class='date'>"+match.date.format(dateFormat)+"</td>";
+				row += "<td class='match'><a href='"+match.url+"'>"+match.title+"</a></td>";
+				row += "<td class='opens'>-</td>";
+				row += "<td class='starts'>-</td>";
+				return row + "</tr>"
 			}
-
-			function parseAddress(text) {
-				if (/\d+\.\d+\.\d+\.\d+:\d+/.test(text)) {
-					return /\d+\.\d+\.\d+\.\d+:\d+/.exec(text);
-				} if (/\d+\.\d+\.\d+\.\d+/.test(text)) {
-					return /\d+\.\d+\.\d+\.\d+/.exec(text)+":25565";
-				}
-				return "-";
+			
+			function reload() {
+				location.search = "?cycle="+cycle.value+"&zone="+zone.value;
 			}
-
-			function format(seconds) {
-				var formatted = "";
-				var days = Math.floor(seconds/86400);
-				var hours = Math.floor((seconds - days*86400)/3600);
-				var minutes = Math.floor((seconds - days*86400 - hours*3600)/60);
-				var seconds = Math.floor(seconds - days*86400 - hours*3600 - minutes*60);
-				formatted += (days < 10 ? "0" : "") + days;
-				formatted += (hours < 10 ? ":0" : ":") + hours;
-				formatted += (minutes < 10 ? ":0" : ":") + minutes;
-				formatted += (seconds < 10 ? ":0" : ":") + seconds;
-				return formatted;
+			
+			function getOption(name, def) {
+				var options = location.search.substring(1).split("&");
+				var option = def;
+				options.forEach(function(o) {
+					if (o.indexOf(name) > -1) {
+						option = o.substring(o.indexOf("=")+1);
+					}
+				});
+				return option;
 			}
-
-			function GET(key, def) {
-				var result = def;
-				var query = document.URL.substring(document.URL.indexOf("?")+1);
-				if (query) {
-					var data = query.split("&");
-					data.forEach(function(d) {
-						if (d.indexOf(key) == 0) {
-							result =  d.substring(d.indexOf("=")+1);	
-						}
-					});
-				}
-				return result;
-			}
-
-			function SET(key, val, search) {
-				var regex = new RegExp("([?;&])" + key + "[^&;]*[;&]?")
-				var query = window.location.search.replace(regex, "$1").replace(/&$/, '')
-				window.location = (query.length > 2 ? query + "&" : "?") + key + "=" + val
-			}
-		</script>
-		<script type="text/javascript" src="http://www.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&limit=100&jsonp=parseMatches"></script>	
+		</script>	
 	</body>
 </html>

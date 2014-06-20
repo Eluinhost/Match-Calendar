@@ -186,7 +186,7 @@
 							}
 						});
 						matches.sort(function(a, b) {return a.date.diff(b.date);});
-						table.innerHTML = "<tr><th>Date</th><th>Match</th><th>Opens</th><th>Starts</th></tr>";
+						table.innerHTML = "<tr><th>Date</th><th>Match</th><th title='EXPERIMENTAL: Post must contain \"Whitelist off:\"'>Opens*</th><th>Starts</th></tr>";
 						matches.forEach(function(m) { table.innerHTML += createRow(m);});
 					}
 				});
@@ -213,9 +213,9 @@
 			}
 			
 			function getOpens(date, text) {
-				if (text.indexOf("Whitelist off:") > -1) {
+				if (text.indexOf("Whitelist off") > -1) {
 					var opens = moment.utc(date);
-					var time = text.substring(text.indexOf("Whitelist off:")+13);
+					var time = text.substring(text.indexOf("Whitelist off"));
 					if (/\d+:\d+/.test(time)) {
 						var r = /(\d+):(\d+)/.exec(time);
 						opens.set("hour", r[1]);

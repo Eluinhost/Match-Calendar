@@ -10,20 +10,12 @@
 				margin: 0px;
 				font-family: Helvetica;
 			}
-			
-			#announcement {
-				width: 100%;
-				background: #CCCCCC;
-				text-align: center;
-				font-size: 25px;
-				text-decoration: underline;
-			}
-			
+
 			#banner {
 				width: 100%;
 				display: block;
 			}
-			
+
 			#options {
 				width: 100%;
 				display: table;
@@ -32,29 +24,29 @@
 				color: #000000;
 				background: #CCCCCC;
 			}
-			
+
 			#options span, a {
 				color: #000000;
 				text-decoration: none;
 			}
-			
+
 			#options select {
 				background: transparent;
 				border: none;
 			}
-			
+
 			#options select option {
 				background: #CCCCCC;
 				border: none;
 			}
-			
+
 			#matches {
 				width: 100%;
 				margin: auto;
 				border-collapse: collapse;
 				font-size: 15px;
 			}
-			
+
 			#matches th {
 				font-size: 20px;
 				font-weight: bold;
@@ -62,11 +54,11 @@
 				height: 50px;
 				color: #FFFFFF;
 			}
-			
+
 			#matches tr:nth-child(odd) {
 				background: #EBEBEB;
 			}
-			
+
 			#matches tr:nth-child(even) {
 				background: #F2F2F2;
 			}
@@ -74,32 +66,32 @@
 			#matches td {
 				padding: 10px;
 			}
-			
+
 			#matches td a {
 				text-decoration: none;
 				color: #000000;
 				font-size: 15px;
 				font-weight: bold;
 			}
-			
+
 			#matches td a:hover {
 				text-decoration: underline;
 			}
-			
+
 			.date {
 				text-align: center;
 				width: 175px;
 			}
-			
+
 			.match {
 				text-align: left;
 			}
-			
+
 			.countdown {
 				text-align: center;
 				width: 175px;
 			}
-			
+
 			.address {
 				text-align: center;
 				width: 175px;
@@ -107,7 +99,6 @@
 		</style>
 	</head>
 	<body>
-		<div id="announcement"><a href="http://www.reddit.com/r/ultrahardcore/comments/27nolm/match_calendar_update_and_requests/">Updated! Click here for info.</a></div>
 		<a href="http://www.reddit.com/r/ultrahardcore"><img id="banner" src="http://i.imgur.com/tyLyQjh.png"></a>
 		<table id="options">
 			<tr><th>Clock Cycle</th><th><a id="time_is_link" href="http://time.is/">Current Time</a></th><th>Time Zone</th></tr>
@@ -163,15 +154,14 @@
 			document.getElementById("banner").src = images[Math.floor(Math.random()*images.length)];
 			document.getElementById("cycle").value = GET("cycle", "24h");
 			document.getElementById("zone").value = GET("zone", "+00:00");
-			
+
 			function parseMatches(data) {	
 				for (var i in data.data.children) {
-					var match = data.data.children[i].data;
-					var index = match.title.indexOf("-");
-					var title = match.title.substring(index+2);
-					var date = moment.utc(match.title.substring(0, index-1), "MMM DD HH:mm");
+					var match = data.data.children[i].data; 
+					var title = match.title.substring(match.title.indexOf("-")+2);
+					var date = moment.utc(/\w+ \d+ \d+:\d+ UTC/.exec(match.title), "MMM DD HH:mm");
 					var address = parseAddress(match.selftext);
-					var url = match.url.replace("se.", "");
+					var url = match.url;
 					if (date.diff(moment.utc()) > 0) {
 						matches.push({title: title, date: date, address: address, url: url, text: match.selftext_html});
 					}
@@ -194,7 +184,7 @@
 				updateTimeZone();
 				setTimeout(update, 1000);
 			}
-			
+
 			function update() {
 				var clockCycle = document.getElementById("cycle");
 				var patterns = ["HH:mm:ss", "hh:mm:ss A"];
@@ -212,7 +202,7 @@
 				}
 				setTimeout(update, 500);
 			}
-			
+
 			function updateClockCycle() {
 				var clockCycle = document.getElementById("cycle");
 				var table = document.getElementById("matches");
@@ -223,7 +213,7 @@
 					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
 				}
 			}
-			
+
 			function updateTimeZone() {
 				var timeZone = document.getElementById("zone");
 				var clockCycle = document.getElementById("cycle");
@@ -236,14 +226,14 @@
 					table.rows[parseInt(i)+1].cells[0].innerHTML = date;
 				}
 			}
-			
+
 			function now() {
 				var html = document.getElementById("UTC_za00").innerHTML;
 				var date = moment.utc(/\d+:\d+:\d+/.exec(html), "HH:mm:ss");
 				date.zone(document.getElementById("zone").value);
 				return date;
 			}
-			
+
 			function parseAddress(text) {
 				if (/\d+\.\d+\.\d+\.\d+:\d+/.test(text)) {
 					return /\d+\.\d+\.\d+\.\d+:\d+/.exec(text);
@@ -252,7 +242,7 @@
 				}
 				return "-";
 			}
-			
+
 			function format(seconds) {
 				var formatted = "";
 				var days = Math.floor(seconds/86400);
@@ -265,7 +255,7 @@
 				formatted += (seconds < 10 ? ":0" : ":") + seconds;
 				return formatted;
 			}
-			
+
 			function GET(key, def) {
 				var result = def;
 				var query = document.URL.substring(document.URL.indexOf("?")+1);
@@ -279,13 +269,13 @@
 				}
 				return result;
 			}
-			
+
 			function SET(key, val, search) {
 				var regex = new RegExp("([?;&])" + key + "[^&;]*[;&]?")
 				var query = window.location.search.replace(regex, "$1").replace(/&$/, '')
 				window.location = (query.length > 2 ? query + "&" : "?") + key + "=" + val
 			}
 		</script>
-		<script type="text/javascript" src="http://www.se.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&limit=100&jsonp=parseMatches"></script>	
+		<script type="text/javascript" src="http://www.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&limit=100&jsonp=parseMatches"></script>	
 	</body>
 </html>

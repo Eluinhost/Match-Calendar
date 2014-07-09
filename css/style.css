@@ -1,0 +1,90 @@
+body {
+    margin: 0px;
+    font-family: Helvetica;
+}
+
+#banner {
+    width: 100%;
+    display: block;
+}
+
+#options {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    text-align: center;
+    color: #000000;
+    background: #CCCCCC;
+}
+
+#options span, a {
+    color: #000000;
+    text-decoration: none;
+}
+
+#options select {
+    background: transparent;
+    border: none;
+}
+
+#options select option {
+    background: #CCCCCC;
+    border: none;
+}
+
+#matches {
+    width: 100%;
+    margin: auto;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+#matches th {
+    font-size: 20px;
+    font-weight: bold;
+    background: #21262B;
+    height: 50px;
+    color: #FFFFFF;
+}
+
+#matches tr:nth-child(odd) {
+    background: #EBEBEB;
+}
+
+#matches tr:nth-child(even) {
+    background: #F2F2F2;
+}
+
+#matches td {
+    padding: 10px;
+}
+
+#matches td a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#matches td a:hover {
+    text-decoration: underline;
+}
+
+.date {
+    text-align: center;
+    width: 175px;
+}
+
+.match {
+    text-align: left;
+}
+
+.opens {
+    text-align: center;
+    width: 100px;
+}
+
+.starts {
+    text-align: center;
+    width: 100px;
+}

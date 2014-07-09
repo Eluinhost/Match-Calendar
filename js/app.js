@@ -5,6 +5,13 @@ angular.module('MatchCalendar', ['mm.foundation'])
 
     //controller for the application
     .controller('AppCtrl', ['$scope', 'RedditPostsService', function($scope, RedditPostsService) {
+        $scope.time_formats = [
+            {ID:'12h', value: '12h'},
+            {ID:'24h', value: '24h'}
+        ];
+
+        $scope.time_format = '24h';
+
         $scope.posts = [];
 
         $scope.updatePosts = function() {

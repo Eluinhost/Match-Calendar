@@ -17,10 +17,7 @@
     <div class="medium-4 columns">
         <label>
             <b>Format</b>
-            <select>
-                <option value="12h">12h</option>
-                <option value="24h">24h</option>
-            </select>
+            <select ng-model="time_format" ng-options="item.ID as item.value for item in time_formats"></select>
         </label>
     </div>
     <div class="medium-4 columns">

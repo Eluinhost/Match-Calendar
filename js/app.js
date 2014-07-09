@@ -4,12 +4,20 @@
 angular.module('MatchCalendar', ['mm.foundation'])
 
     //controller for the application
-    .controller('AppCtrl', ['$scope', function($scope) {
+    .controller('AppCtrl', ['$scope', 'RedditPostsService', function($scope, RedditPostsService) {
+        $scope.posts = [];
 
+        $scope.updatePosts = function() {
+            RedditPostsService.query().then(function(data) {
+                $scope.posts = data;
+            });
+        };
+
+        $scope.updatePosts();
     }])
 
     //a match post model
-    .factory('MatchPost', function (Organisation) {
+    .factory('MatchPost', function () {
 
         function MatchPost(title, time, raw) {
             this.title = title;

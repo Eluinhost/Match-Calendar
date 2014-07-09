@@ -86,7 +86,7 @@ angular.module('MatchCalendar', ['mm.foundation'])
 
                         //filter the parsed ones in time order
                         var filteredParsed = $filter('orderBy')(parsed, function(element) {
-                            return element.uhccalendar.time.format('X');
+                            return element.time.format('X');
                         });
 
                         //add the unparsed matches to the end

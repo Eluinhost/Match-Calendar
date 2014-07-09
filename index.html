@@ -9,51 +9,29 @@
 </head>
 <body>
 <a href="http://www.reddit.com/r/ultrahardcore"><img id="banner" src="images/banner.png"></a>
-<table id="options">
-    <tr>
-        <th>Clock Cycle</th>
-        <th><a id="time_is_link" href="http://time.is/">Current Time</a></th>
-        <th>Time Zone</th>
-    </tr>
-    <tr>
-        <td>
-            <select id="cycle">
-                <option value="24h">24 Hours</option>
-                <option value="12h">12 Hours</option>
+<div class="row full-width options text-center">
+    <div class="medium-4 columns">
+        <h3>Current Time:</h3>
+        <em>00:00</em>
+    </div>
+    <div class="medium-4 columns">
+        <label>
+            <b>Format</b>
+            <select>
+                <option value="12h">12h</option>
+                <option value="24h">24h</option>
             </select>
-        </td>
-        <td><span id="time">Syncing with time.is...</span></td>
-        <td>
-            <select id="zone">
-                <option value="+00:00">UTC +00:00</option>
-                <option value="-12:00">UTC -12:00</option>
-                <option value="-11:00">UTC -11:00</option>
-                <option value="-10:00">UTC -10:00</option>
-                <option value="-09:00">UTC -09:00</option>
-                <option value="-08:00">UTC -08:00</option>
-                <option value="-07:00">UTC -07:00</option>
-                <option value="-06:00">UTC -06:00</option>
-                <option value="-05:00">UTC -05:00</option>
-                <option value="-04:00">UTC -04:00</option>
-                <option value="-03:00">UTC -03:00</option>
-                <option value="-02:00">UTC -02:00</option>
-                <option value="-01:00">UTC -01:00</option>
-                <option value="+01:00">UTC +01:00</option>
-                <option value="+02:00">UTC +02:00</option>
-                <option value="+03:00">UTC +03:00</option>
-                <option value="+04:00">UTC +04:00</option>
-                <option value="+05:00">UTC +05:00</option>
-                <option value="+06:00">UTC +06:00</option>
-                <option value="+07:00">UTC +07:00</option>
-                <option value="+08:00">UTC +08:00</option>
-                <option value="+09:00">UTC +09:00</option>
-                <option value="+10:00">UTC +10:00</option>
-                <option value="+11:00">UTC +11:00</option>
-                <option value="+12:00">UTC +12:00</option>
+        </label>
+    </div>
+    <div class="medium-4 columns">
+        <label>
+            <b>Timezone</b>
+            <select>
+                <option value="+00:00">UTC</option>
             </select>
-        </td>
-    </tr>
-</table>
+        </label>
+    </div>
+</div>
 <table id="matches"></table>
 <span id="UTC_za00" style="display: none"></span>
 <script type="text/javascript">

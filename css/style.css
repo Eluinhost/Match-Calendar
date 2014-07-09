@@ -8,28 +8,18 @@ body {
     display: block;
 }
 
-#options {
-    width: 100%;
-    display: table;
-    table-layout: fixed;
-    text-align: center;
-    color: #000000;
+.options {
     background: #CCCCCC;
 }
 
-#options span, a {
-    color: #000000;
-    text-decoration: none;
-}
-
-#options select {
+.options input {
     background: transparent;
     border: none;
 }
 
-#options select option {
-    background: #CCCCCC;
-    border: none;
+.row.full-width {
+    width: 100%;
+    max-width: 100%;
 }
 
 #matches {

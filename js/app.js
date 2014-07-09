@@ -41,7 +41,7 @@ angular.module('MatchCalendar', ['mm.foundation'])
                 time = null;
             } else {
                 //get everything after the first '- ' in the title as the actual title
-                element.data.title = element.title.substring(element.title.indexOf('-') + 2);
+                element.title = element.title.substring(element.title.indexOf('-') + 2);
             }
 
             return new MatchPost(element.title, time, element);
@@ -70,18 +70,18 @@ angular.module('MatchCalendar', ['mm.foundation'])
 
                         //filter all the posts
                         var unparsed = [];
-                        var parsed = $filter('filter')(data.data.data.children, function(element) {
+                        var parsed = [];
+
+                        angular.forEach(data.data.data.children, function(element) {
                             //parse the post
                             var matchPost = MatchPost.parseData(element.data);
 
                             //if time was invalid push to the invalid stack
                             if(matchPost.time == null) {
                                 unparsed.push(matchPost);
-                                return false;
+                            } else {
+                                parsed.push(matchPost);
                             }
-
-                            //valid add to parsed
-                            return true;
                         });
 
                         //filter the parsed ones in time order

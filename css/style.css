@@ -10,6 +10,7 @@ body {
 
 .notify-permission {
     cursor: pointer;
+    margin-bottom: 0;
 }
 
 .options {

@@ -4,7 +4,14 @@
 angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
 
     //controller for the application
-    .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', '$timeout', function($scope, RedditPostsService, $cookieStore, $timeout) {
+    .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', '$timeout', 'HtmlNotifications', function($scope, RedditPostsService, $cookieStore, $timeout, HtmlNotifications) {
+        $scope.requestPermissions = function() {
+            HtmlNotifications.requestPermission();
+        };
+        $scope.permissionGranted = function() {
+            return HtmlNotifications.currentPermission() === 'granted';
+        };
+
         $scope.time_formats = ['12h', '24h'];
         $scope.time_zones = moment.tz.names();
 
@@ -129,6 +136,52 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
                 );
 
                 return deferred.promise;
+            }
+        };
+    }])
+
+    .factory('HtmlNotifications', ['$q', function($q) {
+        return {
+            /**
+             * @returns boolean true if notification available, false otherwise
+             */
+            supports: function() {
+                return "Notification" in window;
+            },
+            currentPermission: function() {
+                if(!Notification.permission) {
+                    Notification.permission = 'default';
+                }
+                return Notification.permission;
+            },
+            /**
+             * @returns {promise} resolves on granted, rejects on not
+             */
+            requestPermission: function() {
+                console.log('requesting', Notification.permission);
+                var def = $q.defer();
+                if(Notification.permission !== 'granted') {
+                    //request the permission and update the permission value
+                    Notification.requestPermission(function (status) {
+                        console.log(status);
+                        if (Notification.permission !== status) {
+                            Notification.permission = status;
+                        }
+                        status === 'granted' ? def.resolve() : def.reject();
+                    });
+                } else {
+                    def.resolve();
+                }
+                return def.promise;
+            },
+            /**
+             * @param title the title for the notification
+             * @param options
+             */
+            notify: function(title, options) {
+                this.requestPermission().then(function() {
+                    new Notification(title, options);
+                });
             }
         };
     }]);

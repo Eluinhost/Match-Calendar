@@ -53,12 +53,17 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
             //attempt to parse the date from the post title
             var time = moment.utc(/[\w]+ [\d]+ [\d]+:[\d]+/.exec(element.title), 'MMM DD HH:mm', 'en');
 
-            //if it's in the past or invalid (no parsable date) read as unparsed
-            if(!time.isValid() || time.diff(currentTime) < 0) {
+            //if it's invalid (no parsable date) read as unparsed
+            if(!time.isValid()) {
                 time = null;
             } else {
                 //get everything after the first '- ' in the title as the actual title
                 element.title = element.title.substring(element.title.indexOf('-') + 2);
+            }
+
+            if(time.diff(currentTime) < 0) {
+                //if it's in the past don't show it at all
+                return null;
             }
 
             return new MatchPost(element.title, time, element);
@@ -93,12 +98,12 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
                             //parse the post
                             var matchPost = MatchPost.parseData(element.data);
 
-                            //if time was invalid push to the invalid stack
-                            if(matchPost.time == null) {
-                                unparsed.push(matchPost);
-                            } else {
-                                parsed.push(matchPost);
+                            if(null == matchPost) {
+                                return;
                             }
+
+                            //if time was invalid push to the invalid stack
+                            matchPost.time == null ? unparsed.push(matchPost) : parsed.push(matchPost);
                         });
 
                         //filter the parsed ones in time order

@@ -48,6 +48,16 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
 
         (function tick() {
             $scope.updatePosts();
+            if(HtmlNotifications.currentPermission() === 'granted') {
+                angular.forEach($scope.posts, function (post) {
+                    if(post.time == null) return;
+
+                    var timeLeft = post.time.diff($scope.current_time);
+                    if(timeLeft < 1000 * 60 * 15) {
+                        HtmlNotifications.notify('Game starting ' + post.time.fromNow(), post.title);
+                    }
+                });
+            }
             $timeout(tick, 1000 * 60);
         })();
     }])

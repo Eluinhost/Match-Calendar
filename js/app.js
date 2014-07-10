@@ -39,7 +39,6 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
                 $scope.posts = data;
             });
         };
-        $scope.updatePosts();
 
         (function tick() {
             $scope.current_time = moment();

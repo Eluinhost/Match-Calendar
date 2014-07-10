@@ -4,7 +4,7 @@
 angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
 
     //controller for the application
-    .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', function($scope, RedditPostsService, $cookieStore) {
+    .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', '$timeout', function($scope, RedditPostsService, $cookieStore, $timeout) {
         $scope.time_formats = ['12h', '24h'];
         $scope.time_zones = moment.tz.names();
 
@@ -31,6 +31,11 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
             });
         };
         $scope.updatePosts();
+
+        (function tick() {
+            $scope.current_time = moment();
+            $timeout(tick, 1000);
+         })();
     }])
 
     //a match post model

@@ -12,7 +12,7 @@
 <div class="row full-width options text-center">
     <div class="medium-4 columns">
         <h3>Current Time:</h3>
-        <em>00:00</em>
+        <em ng-bind="current_time.tz(time_zone).format(time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em>
     </div>
     <div class="medium-4 columns">
         <label>

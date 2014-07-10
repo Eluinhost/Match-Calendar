@@ -50,7 +50,7 @@
                     <a ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
                 </div>
                 <div class="small-3 columns text-center">
-                    <em ng-bind="post.time != null ? post.time.fromNow() : '???'"></em>
+                    <em ng-bind="post.time != null ? 'starts ' + post.time.fromNow() : '???'"></em>
                 </div>
             </div>
         </accordion-heading>

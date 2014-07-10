@@ -65,8 +65,9 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
     //a match post model
     .factory('MatchPost', function () {
 
-        function MatchPost(title, author, time, permalink, raw) {
+        function MatchPost(title, selftext, author, time, permalink, raw) {
             this.title = title;
+            this.selftext = selftext;
             this.author = author;
             this.time = time;
             this.permalink = permalink;
@@ -99,7 +100,7 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
 
             var link = 'http://reddit.com/' + element.permalink;
 
-            return new MatchPost(element.title, element.author, time, link, element);
+            return new MatchPost(element.title, element.selftext, element.author, time, link, element);
         };
 
         //Return the constructor function

@@ -32,7 +32,7 @@
     <alert ng-show="currentPermission() === 'default'" class="notify-permission warning" ng-click="requestPermissions()">
         Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
     </alert>
-    <alert ng-show="currentPermission() === 'denied'" class="alert">
+    <alert ng-show="currentPermission() === 'denied'" class="notify-permission alert">
         Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
     </alert>
 </div>

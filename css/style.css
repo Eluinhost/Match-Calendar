@@ -7,8 +7,11 @@ body {
     display: block;
 }
 
-.notify-permission {
+.notify-permission.warning {
     cursor: pointer;
+}
+
+.notify-permission {
     margin-bottom: 0;
 }
 

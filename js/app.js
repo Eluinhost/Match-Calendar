@@ -6,7 +6,9 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
     //controller for the application
     .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', '$timeout', 'HtmlNotifications', function($scope, RedditPostsService, $cookieStore, $timeout, HtmlNotifications) {
         $scope.requestPermissions = function() {
-            HtmlNotifications.requestPermission();
+            HtmlNotifications.requestPermission().then(function() {
+                HtmlNotifications.notify('Notifications Enabled!');
+            });
         };
         $scope.permissionGranted = function() {
             return HtmlNotifications.currentPermission() === 'granted';
@@ -176,9 +178,14 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
             /**
              * @param title the title for the notification
              * @param options
+             * @param body the body of the notification
              */
-            notify: function(title, options) {
+            notify: function(title, body, options) {
                 this.requestPermission().then(function() {
+                    options = options || [];
+                    options.icon = options.icon || 'images/favicon.png';
+                    options.body = body || '';
+
                     new Notification(title, options);
                 });
             }

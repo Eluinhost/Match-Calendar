@@ -5,10 +5,7 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
 
     //controller for the application
     .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', function($scope, RedditPostsService, $cookieStore) {
-        $scope.time_formats = [
-            {ID:'12h', value: '12h'},
-            {ID:'24h', value: '24h'}
-        ];
+        $scope.time_formats = ['12h', '24h'];
         $scope.time_zones = moment.tz.names();
 
         $scope.time_zone = $cookieStore.get('time_zone');

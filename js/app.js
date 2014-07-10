@@ -10,8 +10,8 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
                 HtmlNotifications.notify('Notifications Enabled!');
             });
         };
-        $scope.permissionGranted = function() {
-            return HtmlNotifications.currentPermission() === 'granted';
+        $scope.currentPermission = function() {
+            return HtmlNotifications.currentPermission();
         };
 
         $scope.time_formats = ['12h', '24h'];

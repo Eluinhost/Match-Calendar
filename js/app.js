@@ -9,9 +9,10 @@ angular.module('MatchCalendar', ['mm.foundation'])
             {ID:'12h', value: '12h'},
             {ID:'24h', value: '24h'}
         ];
+        $scope.time_zones = moment.tz.names();
+        $scope.time_zone = 'Etc/UTC';
 
         $scope.time_format = '24h';
-
         $scope.posts = [];
 
         $scope.updatePosts = function() {
@@ -19,7 +20,6 @@ angular.module('MatchCalendar', ['mm.foundation'])
                 $scope.posts = data;
             });
         };
-
         $scope.updatePosts();
     }])
 

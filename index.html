@@ -23,9 +23,7 @@
     <div class="medium-4 columns">
         <label>
             <b>Timezone</b>
-            <select>
-                <option value="+00:00">UTC</option>
-            </select>
+            <select ng-model="time_zone" ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in time_zones"></select>
         </label>
     </div>
 </div>

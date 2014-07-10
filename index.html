@@ -28,6 +28,9 @@
         </label>
     </div>
 </div>
+<div>
+    <alert ng-hide="permissionGranted()" class="notify-permission" type="alert" ng-click="requestPermissions()">Click me to enable Desktop notifications</alert>
+</div>
 <accordion close-others="false">
     <accordion-group ng-repeat="post in posts">
         <accordion-heading>

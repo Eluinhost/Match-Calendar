@@ -8,6 +8,10 @@ body {
     display: block;
 }
 
+.notify-permission {
+    cursor: pointer;
+}
+
 .options {
     background: #CCCCCC;
 }

@@ -1,20 +1,33 @@
 'use strict';
 
 // Main application
-angular.module('MatchCalendar', ['mm.foundation'])
+angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
 
     //controller for the application
-    .controller('AppCtrl', ['$scope', 'RedditPostsService', function($scope, RedditPostsService) {
+    .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', function($scope, RedditPostsService, $cookieStore) {
         $scope.time_formats = [
             {ID:'12h', value: '12h'},
             {ID:'24h', value: '24h'}
         ];
         $scope.time_zones = moment.tz.names();
-        $scope.time_zone = 'Etc/UTC';
 
-        $scope.time_format = '24h';
+        $scope.time_zone = $cookieStore.get('time_zone');
+        $scope.$watch('time_zone', function(newValue) {
+            $cookieStore.put('time_zone', newValue);
+        });
+        if(null == $scope.time_zone) {
+            $scope.time_zone = 'Etc/UTC'
+        }
+
+        $scope.time_format = $cookieStore.get('time_format');
+        $scope.$watch('time_format', function(newValue) {
+            $cookieStore.put('time_format', newValue);
+        });
+        if(null == $scope.time_format) {
+            $scope.time_format = '24h';
+        }
+
         $scope.posts = [];
-
         $scope.updatePosts = function() {
             RedditPostsService.query().then(function(data) {
                 $scope.posts = data;

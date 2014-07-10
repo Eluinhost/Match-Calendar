@@ -29,7 +29,9 @@
     </div>
 </div>
 <div>
-    <alert ng-hide="permissionGranted()" class="notify-permission" type="alert" ng-click="requestPermissions()">Click me to enable Desktop notifications</alert>
+    <alert ng-hide="permissionGranted()" class="notify-permission warning" ng-click="requestPermissions()">
+        Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
+    </alert>
 </div>
 <accordion close-others="false">
     <accordion-group ng-repeat="post in posts">

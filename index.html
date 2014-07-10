@@ -27,6 +27,14 @@
         </label>
     </div>
 </div>
+<accordion>
+    <accordion-group ng-repeat="post in posts">
+        <accordion-heading>
+            <b ng-bind="post.time == null ? 'Unparsed' : post.time.tz(time_zone).format(time_format == '24h' ? 'MMM DD HH:mm' : 'MMM DD hh:mm a')"></b> - <span ng-bind="post.title"></span>
+        </accordion-heading>
+        {{ post.raw }}
+    </accordion-group>
+</accordion>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 <script src="bower_components/angular-foundation/mm-foundation-tpls.min.js"></script>

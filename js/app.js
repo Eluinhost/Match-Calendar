@@ -45,6 +45,11 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
             $scope.current_time = moment();
             $timeout(tick, 1000);
          })();
+
+        (function tick() {
+            $scope.updatePosts();
+            $timeout(tick, 1000 * 60);
+        })();
     }])
 
     //a match post model

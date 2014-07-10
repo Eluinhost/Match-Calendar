@@ -158,7 +158,6 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies'])
              * @returns {promise} resolves on granted, rejects on not
              */
             requestPermission: function() {
-                console.log('requesting', Notification.permission);
                 var def = $q.defer();
                 if(Notification.permission !== 'granted') {
                     //request the permission and update the permission value

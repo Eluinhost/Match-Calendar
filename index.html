@@ -54,11 +54,14 @@
                 </div>
             </div>
         </accordion-heading>
-        <span ng-bind="post.selftext"></span>
+        <div btf-markdown="post.selftext"></div>
     </accordion-group>
 </accordion>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="bower_components/showdown/compressed/showdown.js"></script>
+<script src="bower_components/angular-markdown-directive/markdown.js"></script>
 <script src="bower_components/angular-foundation/mm-foundation-tpls.min.js"></script>
 <script src="bower_components/moment/min/moment.min.js"></script>
 <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js"></script>

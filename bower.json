@@ -8,6 +8,7 @@
         "foundation": "~5.3.0",
         "moment-timezone": "https://github.com/Eluinhost/moment-timezone/archive/0.1.1-pre.zip",
         "angular-cookies": "~1.2.19",
-        "font-awesome": "~4.1.0"
+        "font-awesome": "~4.1.0",
+        "angular-markdown-directive": "~0.3.0"
     }
 }

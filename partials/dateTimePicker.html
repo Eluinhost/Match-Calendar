@@ -1,0 +1,7 @@
+<timepicker ng-model="pickedDate" hour-step="1" minute-step="15" show-meridian="time_format = '12h'"></timepicker>
+<p class="input-group col-sm-3">
+    <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" min-date="minDate" ng-model="pickedDate" is-open="opened" ng-required="true" close-text="Close" />
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+</p>

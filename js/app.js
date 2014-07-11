@@ -224,4 +224,29 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 });
             }
         };
+    }])
+
+    .directive('dateTimePicker', [function() {
+        return {
+            restrict: 'AE',
+            scope: {
+                minDate: '=?',
+                pickedDate: '=',
+                initialDate: '=?'
+            },
+            templateUrl: 'partials/dateTimePicker.html',
+            link: function($scope, $element, $attr) {
+                if($scope.initialDate == null) {
+                    $scope.initialDate = new Date();
+                }
+
+                $scope.opened = false;
+
+                $scope.toggle = function($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    $scope.opened = !$scope.opened;
+                }
+            }
+        }
     }]);

@@ -1,21 +1,21 @@
 <accordion close-others="false">
     <accordion-group ng-repeat="post in posts">
         <accordion-heading>
-            <div class="row full-width">
-                <div class="small-2 columns text-center">
+            <div class="row">
+                <div class="col-xs-2 text-center">
                     <b ng-bind="post.time == null ? 'Unparsed' : post.time.tz(time_zone).format(time_format == '24h' ? 'MMM DD HH:mm' : 'MMM DD hh:mm a')"></b>
                 </div>
-                <div class="small-2 columns text-center">
+                <div class="col-xs-2 text-center">
                     <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a>
                 </div>
-                <div class="small-5 columns">
+                <div class="col-xs-5">
                     <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
                 </div>
-                <div class="small-3 columns text-center">
+                <div class="col-xs-3 text-center">
                     <em ng-bind="post.time != null ? 'starts ' + post.time.fromNow() : '???'"></em>
                 </div>
             </div>
         </accordion-heading>
-        <div class="row" btf-markdown="post.selftext"></div>
+        <div class="container" btf-markdown="post.selftext"></div>
     </accordion-group>
 </accordion>

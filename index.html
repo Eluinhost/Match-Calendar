@@ -4,46 +4,47 @@
     <title>Match Calendar</title>
     <link rel="icon" href="images/favicon.png">
 
-    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body ng-app="MatchCalendar" ng-controller="AppCtrl">
 <a target="_blank" href="http://www.reddit.com/r/ultrahardcore"><img id="banner" src="images/banner.png"></a>
-<div class="row full-width options text-center">
-    <div class="medium-4 columns">
-        <h3>Current Time:</h3>
-        <em ng-bind="current_time.tz(time_zone).format(time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em>
+<div class="container-fluid">
+    <div class="row options text-center">
+        <div class="col-sm-4">
+            <h3>Current Time: <em ng-bind="current_time.tz(time_zone).format(time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em></h3>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label><b>Format</b></label>
+                <select class="form-control" ng-model="time_format" ng-options="o as o for o in time_formats"></select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+            <label><b>Timezone</b></label>
+            <select class="form-control" ng-model="time_zone" ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in time_zones"></select>
+            </div>
+        </div>
     </div>
-    <div class="medium-4 columns">
-        <label>
-            <b>Format</b>
-            <select ng-model="time_format" ng-options="o as o for o in time_formats"></select>
-        </label>
+    <div class="row">
+        <alert ng-show="currentPermission() === 'default'" class="notify-permission" type="warning" ng-click="requestPermissions()">
+            Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
+        </alert>
+        <alert ng-show="currentPermission() === 'denied'" class="notify-permission" type="danger">
+            Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+        </alert>
     </div>
-    <div class="medium-4 columns">
-        <label>
-            <b>Timezone</b>
-            <select ng-model="time_zone" ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in time_zones"></select>
-        </label>
-    </div>
+    <div class="row" ui-view></div>
 </div>
-<div>
-    <alert ng-show="currentPermission() === 'default'" class="notify-permission warning" ng-click="requestPermissions()">
-        Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
-    </alert>
-    <alert ng-show="currentPermission() === 'denied'" class="notify-permission alert">
-        Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
-    </alert>
-</div>
-<ui-view></ui-view>
 <script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="bower_components/showdown/compressed/showdown.js"></script>
 <script src="bower_components/angular-markdown-directive/markdown.js"></script>
-<script src="bower_components/angular-foundation/mm-foundation-tpls.min.js"></script>
 <script src="bower_components/moment/min/moment.min.js"></script>
 <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js"></script>
 <script src="js/app.js"></script>

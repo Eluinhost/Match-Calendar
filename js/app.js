@@ -95,10 +95,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.simpleUtcStarts = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
         });
         $scope.$watch('address', function(newValue) {
-            $scope.generated.address = newValue;
+            $scope.generated.address = newValue.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
         });
         $scope.$watch('post_title', function(newValue) {
-            $scope.generated.title = newValue;
+            $scope.generated.title = newValue.replace(/\[/g, '\\[').replace(/\]/g, '\\]');
         });
 
         $scope.$watch('generated', function(newValue) {

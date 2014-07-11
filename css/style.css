@@ -1,0 +1,33 @@
+body {
+    font-family: Helvetica, serif;
+}
+
+#banner {
+    width: 100%;
+    display: block;
+}
+
+.notify-permission.warning {
+    cursor: pointer;
+}
+
+.generator-page {
+    padding-top: 15px;
+}
+
+.notify-permission {
+    margin-bottom: 0;
+}
+
+.options {
+    background: #CCCCCC;
+}
+
+a[href$="/matchpost"] {
+    display:none
+}
+
+.timepicker-center {
+    margin-right: auto;
+    margin-left: auto;
+}

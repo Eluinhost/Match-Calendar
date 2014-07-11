@@ -1,271 +1,54 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Match Calendar</title>
-		<link rel="icon" href="http://i.imgur.com/GjMv9aL.png?1">
-		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="http://momentjs.com/downloads/moment.min.js"></script>
-		<script src="http://widget.time.is/t.js"></script>
-		<style>
-			body {
-				margin: 0px;
-				font-family: Helvetica;
-			}
+<head>
+    <title>Match Calendar</title>
+    <link rel="icon" href="images/favicon.png">
 
-			#banner {
-				width: 100%;
-				display: block;
-			}
-
-			#options {
-				width: 100%;
-				display: table;
-				table-layout: fixed;
-				text-align: center;
-				color: #000000;
-				background: #CCCCCC;
-			}
-
-			#options span, a {
-				color: #000000;
-				text-decoration: none;
-			}
-
-			#options select {
-				background: transparent;
-				border: none;
-			}
-
-			#options select option {
-				background: #CCCCCC;
-				border: none;
-			}
-
-			#matches {
-				width: 100%;
-				margin: auto;
-				border-collapse: collapse;
-				font-size: 15px;
-			}
-
-			#matches th {
-				font-size: 20px;
-				font-weight: bold;
-				background: #21262B;
-				height: 50px;
-				color: #FFFFFF;
-			}
-
-			#matches tr:nth-child(odd) {
-				background: #EBEBEB;
-			}
-
-			#matches tr:nth-child(even) {
-				background: #F2F2F2;
-			}
-
-			#matches td {
-				padding: 10px;
-			}
-
-			#matches td a {
-				text-decoration: none;
-				color: #000000;
-				font-size: 15px;
-				font-weight: bold;
-			}
-
-			#matches td a:hover {
-				text-decoration: underline;
-			}
-
-			.date {
-				text-align: center;
-				width: 175px;
-			}
-
-			.match {
-				text-align: left;
-			}
-
-			.opens {
-				text-align: center;
-				width: 100px;
-			}
-
-			.starts {
-				text-align: center;
-				width: 100px;
-			}
-		</style>
-	</head>
-	<body>
-		<a href="http://www.reddit.com/r/ultrahardcore"><img id="banner" src="http://i.imgur.com/tyLyQjh.png"></a>
-		<table id="options">
-			<tr><th>Clock Cycle</th><th><a id="time_is_link" href="http://time.is/">Current Time</a></th><th>Time Zone</th></tr>
-			<tr>
-				<td>
-					<select id="cycle">
-						<option value="24h">24 Hours</option>
-						<option value="12h">12 Hours</option>
-					</select>
-				</td>
-				<td><span id="time">Syncing with time.is...</span></td>
-				<td>
-					<select id="zone">
-						<option value="+00:00">UTC +00:00</option>
-						<option value="-12:00">UTC -12:00</option>
-						<option value="-11:00">UTC -11:00</option>
-						<option value="-10:00">UTC -10:00</option>
-						<option value="-09:00">UTC -09:00</option>
-						<option value="-08:00">UTC -08:00</option>
-						<option value="-07:00">UTC -07:00</option>
-						<option value="-06:00">UTC -06:00</option>
-						<option value="-05:00">UTC -05:00</option>
-						<option value="-04:00">UTC -04:00</option>
-						<option value="-03:00">UTC -03:00</option>
-						<option value="-02:00">UTC -02:00</option>
-						<option value="-01:00">UTC -01:00</option>
-						<option value="+01:00">UTC +01:00</option>
-						<option value="+02:00">UTC +02:00</option>
-						<option value="+03:00">UTC +03:00</option>
-						<option value="+04:00">UTC +04:00</option>
-						<option value="+05:00">UTC +05:00</option>
-						<option value="+06:00">UTC +06:00</option>
-						<option value="+07:00">UTC +07:00</option>
-						<option value="+08:00">UTC +08:00</option>
-						<option value="+09:00">UTC +09:00</option>
-						<option value="+10:00">UTC +10:00</option>
-						<option value="+11:00">UTC +11:00</option>
-						<option value="+12:00">UTC +12:00</option>
-					</select>
-				</td>
-			</tr>
-		</table>
-		</div>
-		<table id="matches"></table>
-		<span id="UTC_za00" style="display: none"></span>
-		<script type="text/javascript">
-			time_is_widget.init({UTC_za00: {}});
-		</script>
-		<script type="text/javascript">
-			var matches = [];
-			var time = moment();
-			var table = document.getElementById("matches");
-			var cycle = document.getElementById("cycle");
-			var zone = document.getElementById("zone");
-			
-			cycle.value = getOption("cycle", "24h");
-			zone.value = getOption("zone", "+00:00");
-			cycle.onchange = reload;
-			zone.onchange = reload;
-			
-			var timeFormat = cycle.value == "24h" ? "HH:mm:ss" : "hh:mm:ss A";
-			var dateFormat = cycle.value == "24h" ? "MMMM Do - HH:mm" : "MMMM Do - hh:mm A";
-			
-			updateTime();
-			updateMatches();
-			updateCountdowns();
-			
-			function updateMatches() {
-				$.ajax({                                                                                                                                                                                                        
-					type: "GET",
-					url: "http://www.reddit.com/r/ultrahardcore/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&sort=new&limit=100",
-					success: function(response) {
-						matches = [];
-						response.data.children.forEach(function(r) {
-							var match = {};
-							match.date = moment.utc(/\w+ \d+ \d+:\d+/.exec(r.data.title), "MMM DD HH:mm");
-							match.date.zone(zone.value);
-							match.title = r.data.title.substring(r.data.title.indexOf("-")+2);
-							match.url = r.data.url;
-							match.opens = getOpens(match.date, r.data.selftext);
-							if (match.date.diff(time) > 0) {
-								matches.push(match);
-							}
-						});
-						matches.sort(function(a, b) {return a.date.diff(b.date);});
-						table.innerHTML = "<tr><th>Date</th><th>Match</th><th title='EXPERIMENTAL: Post must contain \"Whitelist off:\"'>Opens*</th><th>Starts</th></tr>";
-						matches.forEach(function(m) { table.innerHTML += createRow(m);});
-					}
-				});
-				setTimeout(updateMatches, 60000);
-			}
-			
-			function updateCountdowns() {
-				for (var i = 0; i < matches.length; i++) {
-					var match = matches[i];
-					var row = table.rows[i+1];
-					if (match.opens) row.cells[2].innerHTML = getRemaining(match.opens, "Opened");
-					row.cells[3].innerHTML = getRemaining(match.date, "Started");
-				}
-				setTimeout(updateCountdowns, 10);
-			}
-			
-			function updateTime() {
-				var widget = document.getElementById("UTC_za00");
-				var match = /\d+:\d+:\d+/.exec(widget.innerHTML);
-				time = moment.utc(match, "HH:mm:ss");
-				time.zone(zone.value);
-				document.getElementById("time").innerHTML = time.format(timeFormat);
-				setTimeout(updateTime, 10);
-			}
-			
-			function getOpens(date, text) {
-				if (text.indexOf("Whitelist off") > -1) {
-					var opens = moment.utc(date);
-					var time = text.substring(text.indexOf("Whitelist off"));
-					if (/\d+:\d+/.test(time)) {
-						var r = /(\d+):(\d+)/.exec(time);
-						opens.set("hour", opens.get("hour") < parseInt(r[1]) ? 0 : r[1]);
-						opens.set("minute", r[2]);
-					}
-					else if (/\d+/.test(time)) {
-						opens.subtract("minutes", /\d+/.exec(time));
-					}
-					opens.zone(zone.value);
-					return opens;
-				}
-			}
-			
-			function getRemaining(date, under) {
-				var remaining = date.diff(time, "seconds");
-				if (remaining < 0) return under;
-				var formatted = "";
-				var days = Math.floor(remaining/86400);
-				var hours = Math.floor((remaining - days*86400)/3600);
-				var minutes = Math.floor((remaining - days*86400 - hours*3600)/60);
-				var seconds = Math.floor(remaining - days*86400 - hours*3600 - minutes*60);
-				formatted += (days < 10 ? "0" : "") + days;
-				formatted += (hours < 10 ? ":0" : ":") + hours;
-				formatted += (minutes < 10 ? ":0" : ":") + minutes;
-				formatted += (seconds < 10 ? ":0" : ":") + seconds;
-				return formatted;
-			}
-			
-			function createRow(match) {
-				var row = "<tr>";
-				row += "<td class='date'>"+match.date.format(dateFormat)+"</td>";
-				row += "<td class='match'><a href='"+match.url+"'>"+match.title+"</a></td>";
-				row += "<td class='opens'>-</td>";
-				row += "<td class='starts'>-</td>";
-				return row + "</tr>"
-			}
-			
-			function reload() {
-				location.search = "?cycle="+cycle.value+"&zone="+zone.value;
-			}
-			
-			function getOption(name, def) {
-				var options = location.search.substring(1).split("&");
-				var option = def;
-				options.forEach(function(o) {
-					if (o.indexOf(name) > -1) {
-						option = o.substring(o.indexOf("=")+1);
-					}
-				});
-				return option;
-			}
-		</script>	
-	</body>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body ng-app="MatchCalendar" ng-controller="AppCtrl">
+<a target="_blank" href="http://www.reddit.com/r/ultrahardcore"><img id="banner" src="images/banner.png"></a>
+<div class="container-fluid">
+    <div class="row options text-center">
+        <div class="col-sm-4">
+            <h3>Current Time: <em ng-bind="current_time.tz(time_zone).format(time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em></h3>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label><b>Format</b></label>
+                <select class="form-control" ng-model="time_format" ng-options="o as o for o in time_formats"></select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+            <label><b>Timezone</b></label>
+            <select class="form-control" ng-model="time_zone" ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in time_zones"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <alert ng-show="currentPermission() === 'default'" class="notify-permission" type="warning" ng-click="requestPermissions()">
+            Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
+        </alert>
+        <alert ng-show="currentPermission() === 'denied'" class="notify-permission" type="danger">
+            Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+        </alert>
+    </div>
+    <div class="row" ui-view></div>
+</div>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="bower_components/showdown/compressed/showdown.js"></script>
+<script src="bower_components/angular-markdown-directive/markdown.js"></script>
+<script src="bower_components/moment/min/moment.min.js"></script>
+<script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js"></script>
+<script src="bower_components/ng-clip/dest/ng-clip.min.js"></script>
+<script src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
+<script src="js/app.js"></script>
+</body>
 </html>

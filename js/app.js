@@ -11,6 +11,12 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies', 'ngSanitize', 'bt
                 templateUrl: 'partials/list.html'
             })
 
+            .state('generate', {
+                url: '/generate',
+                templateUrl: 'partials/generator.html',
+                controller: 'HeaderGeneratorCtrl'
+            });
+
         $urlRouterProvider.otherwise('/list');
     }])
 
@@ -70,6 +76,10 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies', 'ngSanitize', 'bt
             }
             $timeout(tick, 1000 * 60);
         })();
+    }])
+
+    .controller('HeaderGeneratorCtrl', [function() {
+
     }])
 
     //a match post model

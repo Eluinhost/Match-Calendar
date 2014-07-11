@@ -11,6 +11,10 @@ body {
     cursor: pointer;
 }
 
+.generator-page {
+    padding-top: 15px;
+}
+
 .notify-permission {
     margin-bottom: 0;
 }

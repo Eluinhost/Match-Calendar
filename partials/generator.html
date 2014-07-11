@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+        <div class="form-group">
+            <label>Opens: <em ng-bind="opens.utc()"></em></label>
+            <p class="help-block">Time game will open (in your selected timezone)</p>
+            <date-time-picker picked-date="opens" time-zone="time_zone" min-date="current_time" meridian="time_format != '12h'"></date-time-picker>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label>Starts: <em ng-bind="starts.utc()"></em></label>
+            <p class="help-block">Time game will start (in your selected timezone)</p>
+            <date-time-picker picked-date="starts" time-zone="time_zone" min-date="current_time" meridian="time_format != '12h'"></date-time-picker>
+        </div>
+    </div>
+</div>

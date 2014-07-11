@@ -1,6 +1,6 @@
-<timepicker ng-model="wrappedPickedDate" hour-step="1" minute-step="15" show-meridian="meridian"></timepicker>
+<timepicker ng-model="internalJSDate" hour-step="1" minute-step="15" show-meridian="meridian"></timepicker>
 <p class="input-group col-sm-3">
-    <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" min-date="wrappedMinDate" ng-model="wrappedPickedDate" is-open="opened" ng-required="true" close-text="Close" />
+    <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy" min-date="internalMinDate" ng-model="internalJSDate" is-open="opened" ng-required="true" close-text="Close" />
     <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
     </span>

@@ -78,7 +78,7 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies', 'ngSanitize', 'bt
         })();
     }])
 
-    .controller('HeaderGeneratorCtrl', [function() {
+    .controller('HeaderGeneratorCtrl', ['$scope', function($scope) {
 
     }])
 

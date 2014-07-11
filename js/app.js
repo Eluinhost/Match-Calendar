@@ -1,7 +1,7 @@
 'use strict';
 
 // Main application
-angular.module('MatchCalendar', ['mm.foundation', 'ngCookies', 'ngSanitize', 'btford.markdown'])
+angular.module('MatchCalendar', ['mm.foundation', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router'])
 
     //controller for the application
     .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', '$timeout', 'HtmlNotifications', function($scope, RedditPostsService, $cookieStore, $timeout, HtmlNotifications) {

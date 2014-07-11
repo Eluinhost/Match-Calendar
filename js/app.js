@@ -231,15 +231,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             restrict: 'AE',
             scope: {
                 minDate: '=?',
-                pickedDate: '=',
-                initialDate: '=?'
+                pickedDate: '='
             },
             templateUrl: 'partials/dateTimePicker.html',
             link: function($scope, $element, $attr) {
-                if($scope.initialDate == null) {
-                    $scope.initialDate = new Date();
-                }
-
                 $scope.opened = false;
 
                 $scope.toggle = function($event) {

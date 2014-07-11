@@ -87,14 +87,12 @@ angular.module('MatchCalendar', ['mm.foundation', 'ngCookies', 'ngSanitize', 'bt
             //if it's invalid (no parsable date) read as unparsed
             if(!time.isValid()) {
                 time = null;
+            } else if(time.diff(currentTime) < 0) {
+                //if it's in the past don't show it at all
+                return null;
             } else {
                 //get everything after the first '- ' in the title as the actual title
                 element.title = element.title.substring(element.title.indexOf('-') + 2);
-            }
-
-            if(time.diff(currentTime) < 0) {
-                //if it's in the past don't show it at all
-                return null;
             }
 
             var link = 'http://reddit.com/' + element.permalink;

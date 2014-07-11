@@ -102,7 +102,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         });
 
         $scope.$watch('generated', function(newValue) {
-            $scope.generatedJson = JSON.stringify(newValue);
+            $scope.generatedLink = '[' + JSON.stringify(newValue) + '](/matchpost)';
         }, true);
 
         $scope.opens = moment();

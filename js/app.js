@@ -79,8 +79,36 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     }])
 
     .controller('HeaderGeneratorCtrl', ['$scope', function($scope) {
+        $scope.generated = {
+            opens: '',
+            starts: '',
+            address: '',
+            title: ''
+        };
+
+        $scope.$watch('opens', function(newValue) {
+            $scope.generated.opens = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
+            $scope.simpleUtcOpens = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
+        });
+        $scope.$watch('starts', function(newValue) {
+            $scope.generated.starts = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
+            $scope.simpleUtcStarts = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
+        });
+        $scope.$watch('address', function(newValue) {
+            $scope.generated.address = newValue;
+        });
+        $scope.$watch('post_title', function(newValue) {
+            $scope.generated.title = newValue;
+        });
+
+        $scope.$watch('generated', function(newValue) {
+            $scope.generatedJson = JSON.stringify(newValue);
+        }, true);
+
         $scope.opens = moment();
         $scope.starts = moment();
+        $scope.address = '192.168.0.1';
+        $scope.post_title = 'Game Title';
     }])
 
     //a match post model

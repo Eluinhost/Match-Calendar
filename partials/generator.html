@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Opens: </h3><span ng-bind="opens.utc().format('YY-MM-DD HH:mm UTC')"></span>
+                    <h3 class="panel-title">Opens: </h3><span ng-bind="simpleUtcOpens"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will open (in your selected timezone)</p>
@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Starts: </h3><span ng-bind="starts.utc().format('YY-MM-DD HH:mm UTC')"></span>
+                    <h3 class="panel-title">Starts: </h3><span ng-bind="simpleUtcStarts"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will start (in your selected timezone)</p>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="panel-body">
                     <span class="help-block">The title to show on the list</span>
-                    <input class="form-control" type="text" ng-model="title"/>
+                    <input class="form-control" type="text" ng-model="post_title"/>
                 </div>
             </div>
         </div>
@@ -42,9 +42,12 @@
                 </div>
                 <div class="panel-body">
                     <span class="help-block">The server address/IP to connect to</span>
-                    <input class="form-control" type="text" ng-model="title"/>
+                    <input class="form-control" type="text" ng-model="address"/>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row" ng-bind="generatedJson">
+
     </div>
 </div>

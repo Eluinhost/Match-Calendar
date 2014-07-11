@@ -3,6 +3,17 @@
 // Main application
 angular.module('MatchCalendar', ['mm.foundation', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router'])
 
+    //configuration
+    .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+        $stateProvider
+            .state('list', {
+                url: '/list',
+                templateUrl: 'partials/list.html'
+            })
+
+        $urlRouterProvider.otherwise('/list');
+    }])
+
     //controller for the application
     .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', '$timeout', 'HtmlNotifications', function($scope, RedditPostsService, $cookieStore, $timeout, HtmlNotifications) {
         $scope.requestPermissions = function() {

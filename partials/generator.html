@@ -1,16 +1,26 @@
-<div class="container">
+<div class="container text-center">
     <div class="row">
-        <div class="form-group">
-            <label>Opens: <em ng-bind="opens.utc()"></em></label>
-            <p class="help-block">Time game will open (in your selected timezone)</p>
-            <date-time-picker picked-date="opens" time-zone="time_zone" min-date="current_time" meridian="time_format != '12h'"></date-time-picker>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Opens: </h3><span ng-bind="opens.utc().format('YY-MM-DD HH:mm UTC')"></span>
+                </div>
+                <div class="panel-body">
+                    <p class="help-block">Time game will open (in your selected timezone)</p>
+                    <date-time-picker picked-date="opens" time-zone="time_zone" min-date="current_time" meridian="time_format != '12h'"></date-time-picker>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            <label>Starts: <em ng-bind="starts.utc()"></em></label>
-            <p class="help-block">Time game will start (in your selected timezone)</p>
-            <date-time-picker picked-date="starts" time-zone="time_zone" min-date="current_time" meridian="time_format != '12h'"></date-time-picker>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Starts: </h3><span ng-bind="starts.utc().format('YY-MM-DD HH:mm UTC')"></span>
+                </div>
+                <div class="panel-body">
+                    <p class="help-block">Time game will start (in your selected timezone)</p>
+                    <date-time-picker picked-date="starts" time-zone="time_zone" min-date="current_time" meridian="time_format != '12h'"></date-time-picker>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -22,3 +22,8 @@ body {
 a[href$="/matchpost"] {
     display:none
 }
+
+.timepicker-center {
+    margin-right: auto;
+    margin-left: auto;
+}

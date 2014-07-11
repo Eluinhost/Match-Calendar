@@ -10,6 +10,7 @@
     "angular-markdown-directive": "~0.3.0",
     "angular-ui-router": "~0.2.10",
     "angular-bootstrap": "~0.11.0",
-    "bootstrap": "~3.2.0"
+    "bootstrap": "~3.2.0",
+    "ng-clip": "~0.2.1"
   }
 }

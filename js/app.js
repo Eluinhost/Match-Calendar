@@ -1,7 +1,7 @@
 'use strict';
 
 // Main application
-angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router'])
+angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard'])
 
     //configuration
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {

@@ -79,7 +79,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     }])
 
     .controller('HeaderGeneratorCtrl', ['$scope', function($scope) {
-
+        $scope.opens = new Date();
+        $scope.starts = new Date();
     }])
 
     //a match post model
@@ -231,7 +232,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             restrict: 'AE',
             scope: {
                 minDate: '=?',
-                pickedDate: '='
+                pickedDate: '=',
+                meridian: '='
             },
             templateUrl: 'partials/dateTimePicker.html',
             link: function($scope, $element, $attr) {

@@ -15,12 +15,15 @@ body {
     padding-top: 15px;
 }
 
-.notify-permission {
+.notify-permission,
+.navbar {
     margin-bottom: 0;
 }
 
-.options {
+.options,
+.navbar-default {
     background: #CCCCCC;
+    border-color: #CCCCCC;
 }
 
 a[href$="/matchpost"] {

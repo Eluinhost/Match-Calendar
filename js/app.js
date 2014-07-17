@@ -134,15 +134,19 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
             var opens, title;
 
+            var parsedLink = false;
             if(linkData != null) {
-                //todo read json
-                var json = JSON.parse(linkData);
+                try {
+                    var json = JSON.parse(linkData);
 
-                opens = moment(json.opens);
+                    opens = moment(json.opens);
+                    title = element.title;
 
-                title = element.title;
-            } else {
-                //fall back to old style title parsing
+                    parsedLink = true;
+                } catch (SyntaxError) {}
+            }
+
+            if(!parsedLink) {
                 //fall back to old style title parsing
 
                 //attempt to parse the date from the post title
@@ -186,7 +190,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 //simple regex for [data](/link) type links
                 var regex = new RegExp('\\[([^\\[\\]]+)\\]\\('+path+'\\)', 'g');
                 var matches = regex.exec(markdown);
-                console.log(matches);
                 if(matches == null) {
                     return null;
                 } else {

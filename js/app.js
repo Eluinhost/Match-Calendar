@@ -139,11 +139,11 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 try {
                     var json = JSON.parse(linkData);
 
-                    opens = moment(json.opens);
+                    opens = moment(json.opens, 'YYYY-MM-DDTHH:mm:ssZ');
                     title = element.title;
 
                     parsedLink = true;
-                } catch (SyntaxError) {}
+                } catch (err) {}
             }
 
             if(!parsedLink) {

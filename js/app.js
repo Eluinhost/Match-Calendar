@@ -68,11 +68,11 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.updatePosts();
             if(HtmlNotifications.currentPermission() === 'granted') {
                 angular.forEach($scope.posts, function (post) {
-                    if(post.time == null) return;
+                    if(post.opens == null) return;
 
-                    var timeLeft = post.time.diff($scope.current_time);
+                    var timeLeft = post.opens.diff($scope.current_time);
                     if(timeLeft < 1000 * 60 * 15) {
-                        HtmlNotifications.notify('Game starting ' + post.time.fromNow(), post.title);
+                        HtmlNotifications.notify('Game opening ' + post.opens.fromNow(), post.title);
                     }
                 });
             }
@@ -116,11 +116,12 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     //a match post model
     .factory('MatchPost', ['MarkdownLinkDataService', function (MarkdownLinkDataService) {
 
-        function MatchPost(title, selftext, author, time, permalink, raw) {
+        function MatchPost(title, selftext, author, opens, starts, permalink, raw) {
             this.title = title;
             this.selftext = selftext;
             this.author = author;
-            this.time = time;
+            this.opens = opens;
+            this.starts = starts;
             this.permalink = permalink;
             this.raw = raw;
         }
@@ -132,7 +133,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         MatchPost.parseData = function (element) {
             var linkData = MarkdownLinkDataService.fetch('/matchpost', element.selftext);
 
-            var opens, title;
+            var opens, starts, title;
 
             var parsedLink = false;
             if(linkData != null) {
@@ -140,6 +141,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                     var json = JSON.parse(linkData);
 
                     opens = moment(json.opens, 'YYYY-MM-DDTHH:mm:ssZ');
+                    starts = moment(json.starts, 'YYYY-MM-DDTHH:mm:ssZ');
                     title = element.title;
 
                     parsedLink = true;
@@ -150,7 +152,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 //fall back to old style title parsing
 
                 //attempt to parse the date from the post title
-                opens = moment.utc(/[\w]+ [\d]+ [\d]+:[\d]+/.exec(element.title), 'MMM DD HH:mm', 'en');
+                starts = moment.utc(/[\w]+ [\d]+ [\d]+:[\d]+/.exec(element.title), 'MMM DD HH:mm', 'en');
+                opens = starts;
 
                 //get everything after the first '- ' in the title as the actual title
                 title = element.title.substring(element.title.indexOf('-') + 2);
@@ -161,16 +164,21 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             var currentTime = moment();
 
             //if it's invalid (no parsable date) read as unparsed
-            if(!opens.isValid()) {
-                opens = null;
-            } else if(opens.diff(currentTime) < 0) {
+            if(!starts.isValid()) {
+                starts = null;
+            } else if(starts.diff(currentTime) < 0) {
                 //if it's in the past don't show it at all
                 return null;
             }
 
+            //if it's invalid (no parsable date) read as unparsed
+            if(!opens.isValid()) {
+                opens = null;
+            }
+
             var link = 'http://reddit.com/' + element.permalink;
 
-            return new MatchPost(title, element.selftext, element.author, opens, link, element);
+            return new MatchPost(title, element.selftext, element.author, opens, starts, link, element);
         };
 
         //Return the constructor function
@@ -228,7 +236,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                                 }
 
                                 //if time was invalid push to the invalid stack
-                                matchPost.time == null ? unparsed.push(matchPost) : parsed.push(matchPost);
+                                matchPost.starts == null ? unparsed.push(matchPost) : parsed.push(matchPost);
                             });
                             deferred.resolve({
                                 parsed: parsed,
@@ -256,7 +264,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
                     //filter the parsed ones in time order
                     var filtered = $filter('orderBy')(parsed, function(element) {
-                        return element.time.format('X');
+                        return element.starts.format('X');
                     });
 
                     //add the unparsed matches to the end

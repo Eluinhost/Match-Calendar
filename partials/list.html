@@ -3,16 +3,19 @@
         <accordion-heading>
             <div class="row">
                 <div class="col-xs-2 text-center">
-                    <b ng-bind="post.time == null ? 'Unparsed' : post.time.tz(time_zone).format(time_format == '24h' ? 'MMM DD HH:mm' : 'MMM DD hh:mm a')"></b>
+                    <b ng-bind="post.opens == null ? 'Unparsed' : post.starts.tz(time_zone).format(time_format == '24h' ? 'MMM DD HH:mm' : 'MMM DD hh:mm a')"></b>
                 </div>
                 <div class="col-xs-2 text-center">
                     <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a>
                 </div>
-                <div class="col-xs-5">
+                <div class="col-xs-4">
                     <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
                 </div>
-                <div class="col-xs-3 text-center">
-                    <em ng-bind="post.time != null ? 'starts ' + post.time.fromNow() : '???'"></em>
+                <div class="col-xs-2 text-center">
+                    <em ng-bind="post.opens != null ? 'opens ' + post.opens.fromNow() : '???'"></em>
+                </div>
+                <div class="col-xs-2 text-center">
+                    <em ng-bind="post.starts != null ? 'starts ' + post.starts.fromNow() : '???'"></em>
                 </div>
             </div>
         </accordion-heading>

@@ -50,7 +50,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.time_format = '24h';
         }
 
-        $scope.subreddits = ['ultrahardcore'];
+        $scope.subreddits = ['ghowden', 'ultrahardcore'];
 
         $scope.posts = [];
         $scope.updatePosts = function() {
@@ -114,7 +114,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     }])
 
     //a match post model
-    .factory('MatchPost', function () {
+    .factory('MatchPost', ['MarkdownLinkDataService', function (MarkdownLinkDataService) {
 
         function MatchPost(title, selftext, author, time, permalink, raw) {
             this.title = title;
@@ -130,31 +130,71 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
          * @returns {MatchPost}
          */
         MatchPost.parseData = function (element) {
+            var linkData = MarkdownLinkDataService.fetch('/matchpost', element.selftext);
+
+            var opens, title;
+
+            if(linkData != null) {
+                //todo read json
+                var json = JSON.parse(linkData);
+
+                opens = moment(json.opens);
+
+                title = element.title;
+            } else {
+                //fall back to old style title parsing
+                //fall back to old style title parsing
+
+                //attempt to parse the date from the post title
+                opens = moment.utc(/[\w]+ [\d]+ [\d]+:[\d]+/.exec(element.title), 'MMM DD HH:mm', 'en');
+
+                //get everything after the first '- ' in the title as the actual title
+                title = element.title.substring(element.title.indexOf('-') + 2);
+            }
+
+
             //get the time right now
             var currentTime = moment();
 
-            //attempt to parse the date from the post title
-            var time = moment.utc(/[\w]+ [\d]+ [\d]+:[\d]+/.exec(element.title), 'MMM DD HH:mm', 'en');
-
             //if it's invalid (no parsable date) read as unparsed
-            if(!time.isValid()) {
-                time = null;
-            } else if(time.diff(currentTime) < 0) {
+            if(!opens.isValid()) {
+                opens = null;
+            } else if(opens.diff(currentTime) < 0) {
                 //if it's in the past don't show it at all
                 return null;
-            } else {
-                //get everything after the first '- ' in the title as the actual title
-                element.title = element.title.substring(element.title.indexOf('-') + 2);
             }
 
             var link = 'http://reddit.com/' + element.permalink;
 
-            return new MatchPost(element.title, element.selftext, element.author, time, link, element);
+            return new MatchPost(title, element.selftext, element.author, opens, link, element);
         };
 
         //Return the constructor function
         return MatchPost;
-    })
+    }])
+
+    //service for matching markdown links to specific URL path
+    .factory( 'MarkdownLinkDataService', [function() {
+        return {
+            /**
+             * Returns the raw string for the markdown link in format [data](link)
+             * @param path {string} the URL that was linked to
+             * @param markdown {string} the markdown
+             * @returns {string} data for the link
+             */
+            fetch: function(path, markdown) {
+                //simple regex for [data](/link) type links
+                var regex = new RegExp('\\[([^\\[\\]]+)\\]\\('+path+'\\)', 'g');
+                var matches = regex.exec(markdown);
+                console.log(matches);
+                if(matches == null) {
+                    return null;
+                } else {
+                    return matches[1];
+                }
+            }
+        }
+    }])
 
     //service for fetching reddit posts from the JSON api
     .factory( 'RedditPostsService', ['$http', '$q', '$filter', 'MatchPost', function( $http, $q, $filter, MatchPost ) {

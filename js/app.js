@@ -50,9 +50,11 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.time_format = '24h';
         }
 
+        $scope.subreddits = ['ultrahardcore'];
+
         $scope.posts = [];
         $scope.updatePosts = function() {
-            RedditPostsService.query(['ultrahardcore']).then(function(data) {
+            RedditPostsService.query($scope.subreddits).then(function(data) {
                 $scope.posts = data;
             });
         };

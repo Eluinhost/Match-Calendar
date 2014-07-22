@@ -4,24 +4,24 @@
 angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard'])
 
     .run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore) {
-        $rootScope.time_formats = ['12h', '24h'];
-        $rootScope.time_zones = moment.tz.names();
+        $rootScope.settings = {
+            time_formats: ['12h', '24h'],
+            time_zones: moment.tz.names(),
+            time_zone: $cookieStore.get('time_zone'),
+            time_format: $cookieStore.get('time_format')
+        };
 
-        $rootScope.time_zone = $cookieStore.get('time_zone');
-        $rootScope.$watch('time_zone', function(newValue) {
+        $rootScope.$watch('settings.time_zone', function(newValue) {
             $cookieStore.put('time_zone', newValue);
         });
-        if(null == $rootScope.time_zone) {
-            $rootScope.time_zone = 'Etc/UTC'
-        }
+        if(null == $rootScope.settings.time_zone)
+            $rootScope.settings.time_zone = 'Etc/UTC';
 
-        $rootScope.time_format = $cookieStore.get('time_format');
-        $rootScope.$watch('time_format', function(newValue) {
+        $rootScope.$watch('settings.time_format', function(newValue) {
             $cookieStore.put('time_format', newValue);
         });
-        if(null == $rootScope.time_format) {
-            $rootScope.time_format = '24h';
-        }
+        if(null == $rootScope.settings.time_format)
+            $rootScope.settings.time_format = '24h';
     }])
 
     //configuration

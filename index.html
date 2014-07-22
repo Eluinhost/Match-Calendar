@@ -33,18 +33,18 @@
 <div class="container-fluid">
     <div class="row options text-center">
         <div class="col-sm-4">
-            <h3>Current Time: <em ng-bind="current_time.tz(time_zone).format(time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em></h3>
+            <h3>Current Time: <em ng-bind="current_time.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em></h3>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
                 <label><b>Format</b></label>
-                <select class="form-control" ng-model="time_format" ng-options="o as o for o in time_formats"></select>
+                <select class="form-control" ng-model="settings.time_format" ng-options="o as o for o in settings.time_formats"></select>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
             <label><b>Timezone</b></label>
-            <select class="form-control" ng-model="time_zone" ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in time_zones"></select>
+            <select class="form-control" ng-model="settings.time_zone" ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in settings.time_zones"></select>
             </div>
         </div>
     </div>

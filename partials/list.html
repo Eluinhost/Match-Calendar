@@ -3,7 +3,7 @@
         <accordion-heading>
             <div class="row">
                 <div class="col-xs-2 text-center">
-                    <b ng-bind="post.opens == null ? 'Unparsed' : post.starts.tz(time_zone).format(time_format == '24h' ? 'MMM DD HH:mm' : 'MMM DD hh:mm a')"></b>
+                    <b ng-bind="post.opens == null ? 'Unparsed' : post.starts.tz(settings.time_zone).format(settings.time_format == '24h' ? 'MMM DD HH:mm' : 'MMM DD hh:mm a')"></b>
                 </div>
                 <div class="col-xs-2 text-center">
                     <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a>

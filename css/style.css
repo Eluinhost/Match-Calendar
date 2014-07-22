@@ -11,11 +11,10 @@ body {
     cursor: pointer;
 }
 
-.generator-page {
-    padding-top: 15px;
+.unpadded-page {
+    margin-top: -15px;
 }
 
-.notify-permission,
 .navbar {
     margin-bottom: 0;
 }

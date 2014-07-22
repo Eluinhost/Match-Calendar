@@ -19,6 +19,10 @@ body {
     margin-bottom: 0;
 }
 
+.time-info {
+    margin-bottom: 10px;
+}
+
 .options,
 .navbar-default {
     background: #CCCCCC;

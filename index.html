@@ -34,7 +34,7 @@
     <div class="row options text-center">
         <div class="time-info col-sm-6 col-sm-offset-3">
             <h3>Current Time: <em ng-bind="current_time.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em></h3>
-            <span ng-bind="settings.time_zone + '-' + settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
+            <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
         </div>
     </div>
     <div class="row">

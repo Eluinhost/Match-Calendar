@@ -15,6 +15,11 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 url: '/generate',
                 templateUrl: 'partials/generator.html',
                 controller: 'HeaderGeneratorCtrl'
+            })
+
+            .state('settings', {
+                url: '/settings',
+                templateUrl: 'partials/settings.html'
             });
 
         $urlRouterProvider.otherwise('/list');

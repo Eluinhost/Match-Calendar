@@ -11,13 +11,16 @@ body {
     cursor: pointer;
 }
 
-.generator-page {
-    padding-top: 15px;
+.unpadded-page {
+    margin-top: -15px;
 }
 
-.notify-permission,
 .navbar {
     margin-bottom: 0;
+}
+
+.time-info {
+    margin-bottom: 10px;
 }
 
 .options,
@@ -28,6 +31,10 @@ body {
 
 a[href$="/matchpost"] {
     display:none
+}
+
+[ui-sref] {
+    cursor: pointer;
 }
 
 .timepicker-center {

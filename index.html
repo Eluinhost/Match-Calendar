@@ -24,6 +24,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active"><a ui-sref="list">Match List</a></li>
                 <li ui-sref-active="active"><a ui-sref="generate">Post Generator</a></li>
+                <li ui-sref-active="active"><a ui-sref="settings">Settings</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div>
@@ -31,20 +32,9 @@
 <a target="_blank" href="http://www.reddit.com/r/ultrahardcore"><img id="banner" src="images/banner.png"></a>
 <div class="container-fluid">
     <div class="row options text-center">
-        <div class="col-sm-4">
-            <h3>Current Time: <em ng-bind="current_time.tz(time_zone).format(time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em></h3>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label><b>Format</b></label>
-                <select class="form-control" ng-model="time_format" ng-options="o as o for o in time_formats"></select>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-            <label><b>Timezone</b></label>
-            <select class="form-control" ng-model="time_zone" ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in time_zones"></select>
-            </div>
+        <div class="time-info col-sm-6 col-sm-offset-3">
+            <h3>Current Time: <em ng-bind="current_time.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em></h3>
+            <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
         </div>
     </div>
     <div class="row">

@@ -3,6 +3,27 @@
 // Main application
 angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard'])
 
+    .run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore) {
+        $rootScope.time_formats = ['12h', '24h'];
+        $rootScope.time_zones = moment.tz.names();
+
+        $rootScope.time_zone = $cookieStore.get('time_zone');
+        $rootScope.$watch('time_zone', function(newValue) {
+            $cookieStore.put('time_zone', newValue);
+        });
+        if(null == $rootScope.time_zone) {
+            $rootScope.time_zone = 'Etc/UTC'
+        }
+
+        $rootScope.time_format = $cookieStore.get('time_format');
+        $rootScope.$watch('time_format', function(newValue) {
+            $cookieStore.put('time_format', newValue);
+        });
+        if(null == $rootScope.time_format) {
+            $rootScope.time_format = '24h';
+        }
+    }])
+
     //configuration
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -35,25 +56,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.currentPermission = function() {
             return HtmlNotifications.currentPermission();
         };
-
-        $scope.time_formats = ['12h', '24h'];
-        $scope.time_zones = moment.tz.names();
-
-        $scope.time_zone = $cookieStore.get('time_zone');
-        $scope.$watch('time_zone', function(newValue) {
-            $cookieStore.put('time_zone', newValue);
-        });
-        if(null == $scope.time_zone) {
-            $scope.time_zone = 'Etc/UTC'
-        }
-
-        $scope.time_format = $cookieStore.get('time_format');
-        $scope.$watch('time_format', function(newValue) {
-            $cookieStore.put('time_format', newValue);
-        });
-        if(null == $scope.time_format) {
-            $scope.time_format = '24h';
-        }
 
         $scope.subreddits = ['ghowden', 'ultrahardcore'];
 

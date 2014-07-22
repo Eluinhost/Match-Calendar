@@ -29,6 +29,10 @@ a[href$="/matchpost"] {
     display:none
 }
 
+[ui-sref] {
+    cursor: pointer;
+}
+
 .timepicker-center {
     margin-right: auto;
     margin-left: auto;

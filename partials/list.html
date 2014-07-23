@@ -1,6 +1,6 @@
 <div class="list-page unpadded-page">
     <accordion close-others="false">
-        <accordion-group ng-repeat="post in posts">
+        <accordion-group ng-repeat="post in posts track by post.id">
             <accordion-heading>
                 <div class="row">
                     <div class="col-xs-2 text-center">

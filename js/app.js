@@ -123,7 +123,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     //a match post model
     .factory('MatchPost', ['MarkdownLinkDataService', function (MarkdownLinkDataService) {
 
-        function MatchPost(title, selftext, author, opens, starts, permalink) {
+        function MatchPost(id, title, selftext, author, opens, starts, permalink) {
+            this.id = id;
             this.title = title;
             this.selftext = selftext;
             this.author = author;
@@ -184,7 +185,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
             var link = 'http://reddit.com/' + element.permalink;
 
-            return new MatchPost(title, element.selftext, element.author, opens, starts, link);
+            return new MatchPost(element.id, title, element.selftext, element.author, opens, starts, link);
         };
 
         //Return the constructor function

@@ -93,11 +93,22 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     }])
 
     .controller('HeaderGeneratorCtrl', ['$scope', function($scope) {
+        $scope.regions = {
+            'AF': 'Africa',
+            'AN': 'Antartica',
+            'AS': 'Asia',
+            'EU': 'Europe',
+            'NA': 'North America',
+            'OC': 'Oceania',
+            'SA': 'South America'
+        };
+
         $scope.generated = {
             opens: '',
             starts: '',
             address: '',
-            title: ''
+            title: '',
+            region: ''
         };
 
         $scope.$watch('opens', function(newValue) {
@@ -114,6 +125,9 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.$watch('post_title', function(newValue) {
             $scope.generated.title = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
+        $scope.$watch('region', function(newValue) {
+            $scope.generated.region = newValue;
+        });
 
         $scope.$watch('generated', function(newValue) {
             $scope.generatedLink = '[' + JSON.stringify(newValue) + '](/matchpost)';
@@ -123,13 +137,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.starts = moment();
         $scope.address = '192.168.0.1';
         $scope.post_title = 'Game Title';
+        $scope.region = 'NA';
     }])
 
     //a match post model
     .factory('MatchPost', ['MarkdownLinkDataService', function (MarkdownLinkDataService) {
 
-        function MatchPost(id, title, selftext, author, opens, starts, permalink) {
+        function MatchPost(id, region, title, selftext, author, opens, starts, permalink) {
             this.id = id;
+            this.region = region;
             this.title = title;
             this.selftext = selftext;
             this.author = author;
@@ -145,7 +161,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         MatchPost.parseData = function (element) {
             var linkData = MarkdownLinkDataService.fetch('/matchpost', element.selftext);
 
-            var opens, starts, title;
+            var opens, starts, title, region;
 
             var parsedLink = false;
             if(linkData != null) {
@@ -154,6 +170,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
                     opens = moment(json.opens, 'YYYY-MM-DDTHH:mm:ssZ');
                     starts = moment(json.starts, 'YYYY-MM-DDTHH:mm:ssZ');
+                    region = json.region;
                     title = element.title;
 
                     parsedLink = true;
@@ -169,6 +186,9 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
                 //get everything after the first '- ' in the title as the actual title
                 title = element.title.substring(element.title.indexOf('-') + 2);
+
+                //set a default region to show
+                region = 'Earth';
             }
 
 
@@ -190,7 +210,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
             var link = 'http://reddit.com/' + element.permalink;
 
-            return new MatchPost(element.id, title, element.selftext, element.author, opens, starts, link);
+            return new MatchPost(element.id, region, title, element.selftext, element.author, opens, starts, link);
         };
 
         //Return the constructor function

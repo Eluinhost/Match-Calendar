@@ -48,11 +48,24 @@
         </div>
     </div>
     <div class="row">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                Paste the text below and add it to your reddit post &nbsp; <a href="" clip-copy="generatedLink"><i class="fa fa-clipboard"></i>Copy to clipboard</a>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Region
+                </div>
+                <div class="panel-body">
+                    <span class="help-block">The server region</span>
+                    <select class="form-control" ng-model="region" ng-options="o as k for (o,k) in regions"></select>
+                </div>
             </div>
-            <div class="panel-body" ng-bind="generatedLink"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Paste the text below and add it to your reddit post &nbsp; <a href="" clip-copy="generatedLink"><i class="fa fa-clipboard"></i>Copy to clipboard</a>
+                </div>
+                <div class="panel-body" ng-bind="generatedLink"></div>
+            </div>
         </div>
     </div>
 </div>

@@ -36,8 +36,9 @@
             <h3>Current Time: <em ng-bind="current_time.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em></h3>
             <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
         </div>
-        <div class="refresh-icon col-sm-3">
-            <h3 ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': updatingPosts}"></i> Refresh</h3>
+        <div class="refresh-button col-sm-3">
+            <b class="refresh-icon" ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': updatingPosts}"></i> Refresh</b>
+            <b>Last Updated: </b><em ng-bind="lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em>
         </div>
     </div>
     <div class="row">

@@ -29,6 +29,14 @@ body {
     border-color: #CCCCCC;
 }
 
+.refresh-button {
+    padding-top: 15px;
+}
+
+.refresh-icon {
+    display: block;
+}
+
 a[href$="/matchpost"] {
     display:none
 }

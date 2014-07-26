@@ -68,6 +68,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             RedditPostsService.query($scope.subreddits).then(function(data) {
                 $scope.posts = data;
                 $scope.updatingPosts = false;
+                $scope.lastUpdated = moment();
             });
         };
 

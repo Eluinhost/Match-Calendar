@@ -48,6 +48,9 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
     //controller for the application
     .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', '$timeout', 'HtmlNotifications', function($scope, RedditPostsService, $cookieStore, $timeout, HtmlNotifications) {
+
+        $scope.updatingPosts = false;
+
         $scope.requestPermissions = function() {
             HtmlNotifications.requestPermission().then(function() {
                 HtmlNotifications.notify('Notifications Enabled!');
@@ -61,8 +64,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
         $scope.posts = [];
         $scope.updatePosts = function() {
+            $scope.updatingPosts = true;
             RedditPostsService.query($scope.subreddits).then(function(data) {
                 $scope.posts = data;
+                $scope.updatingPosts = false;
             });
         };
 

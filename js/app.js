@@ -8,7 +8,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             time_formats: ['12h', '24h'],
             time_zones: moment.tz.names(),
             time_zone: $cookieStore.get('time_zone'),
-            time_format: $cookieStore.get('time_format')
+            time_format: $cookieStore.get('time_format'),
+            subreddits: $cookieStore.get('subreddits')
         };
 
         $rootScope.$watch('settings.time_zone', function(newValue) {
@@ -22,6 +23,12 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         });
         if(null == $rootScope.settings.time_format)
             $rootScope.settings.time_format = '24h';
+
+        $rootScope.$watch('settings.subreddits', function(newValue) {
+            $cookieStore.put('subreddits', newValue);
+        });
+        if(null == $rootScope.settings.subreddits)
+            $rootScope.settings.subreddits = ['ultrahardcore', 'ghowden'];
     }])
 
     //configuration
@@ -60,12 +67,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             return HtmlNotifications.currentPermission();
         };
 
-        $scope.subreddits = ['ghowden', 'ultrahardcore'];
-
         $scope.posts = [];
         $scope.updatePosts = function() {
             $scope.updatingPosts = true;
-            RedditPostsService.query($scope.subreddits).then(function(data) {
+            RedditPostsService.query($scope.settings.subreddits).then(function(data) {
                 $scope.posts = data;
                 $scope.updatingPosts = false;
                 $scope.lastUpdated = moment();

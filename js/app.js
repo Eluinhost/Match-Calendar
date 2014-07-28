@@ -47,7 +47,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
             .state('settings', {
                 url: '/settings',
-                templateUrl: 'partials/settings.html'
+                templateUrl: 'partials/settings.html',
+                controller: 'SettingsCtrl'
             });
 
         $urlRouterProvider.otherwise('/list');
@@ -96,6 +97,20 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             }
             $timeout(tick, 1000 * 60);
         })();
+    }])
+
+    .controller('SettingsCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+        $scope.addSubreddit = function(name) {
+            if(name === '' || name === null || name === undefined) {
+                return;
+            }
+            if($rootScope.settings.subreddits.indexOf(name) === -1) {
+                $rootScope.settings.subreddits.push(name);
+            }
+        };
+        $scope.removeSubreddit = function(index) {
+            $rootScope.settings.subreddits.splice(index, 1);
+        };
     }])
 
     .controller('HeaderGeneratorCtrl', ['$scope', function($scope) {

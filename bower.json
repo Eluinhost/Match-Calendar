@@ -4,7 +4,7 @@
   "dependencies": {
     "angular": "~1.2.19",
     "moment": "~2.7.0",
-    "moment-timezone": "~0.1.0",
+    "moment-timezone": "~0.2.0",
     "angular-cookies": "~1.2.19",
     "font-awesome": "~4.1.0",
     "angular-markdown-directive": "~0.3.0",

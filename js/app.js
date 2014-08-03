@@ -278,7 +278,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                     var parsed = [];
                     var unparsed = [];
                     //get the posts
-                    $http.get('http://www.reddit.com/r/' + subreddit + '/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&limit=' + limit + '&sort=' + sort).then(
+                    $http.get('https://www.reddit.com/r/' + subreddit + '/search.json?q=flair%3AUpcoming_Match&restrict_sr=on&limit=' + limit + '&sort=' + sort).then(
                         function(data) {
                             angular.forEach(data.data.data.children, function(element) {
                                 //parse the post

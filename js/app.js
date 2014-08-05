@@ -24,7 +24,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         if(null == $rootScope.settings.time_format)
             $rootScope.settings.time_format = '24h';
 
-        $rootScope.$watch('settings.subreddits', function(newValue) {
+        $rootScope.$watchCollection('settings.subreddits', function(newValue) {
             $cookieStore.put('subreddits', newValue);
         });
         if(null == $rootScope.settings.subreddits)
@@ -77,6 +77,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 $scope.lastUpdated = moment();
             });
         };
+
+        $scope.$watchCollection('settings.subreddits', $scope.updatePosts);
 
         (function tick() {
             $scope.current_time = moment();

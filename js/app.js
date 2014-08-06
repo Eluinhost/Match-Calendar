@@ -3,7 +3,12 @@
 // Main application
 angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard'])
 
-    .run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore) {
+    .run(['$rootScope', '$cookieStore', 'DateTimeService', function($rootScope, $cookieStore, DateTimeService) {
+        DateTimeService.resync();
+        $rootScope.currentTime = function() {
+            return moment().add('ms', $rootScope.offset);
+        };
+
         $rootScope.settings = {
             time_formats: ['12h', '24h'],
             time_zones: moment.tz.names(),
@@ -81,7 +86,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.$watchCollection('settings.subreddits', $scope.updatePosts);
 
         (function tick() {
-            $scope.current_time = moment();
+            $scope.current_time = $scope.currentTime();
             $timeout(tick, 1000);
          })();
 
@@ -156,8 +161,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.generatedLink = '[' + JSON.stringify(newValue) + '](/matchpost)';
         }, true);
 
-        $scope.opens = moment();
-        $scope.starts = moment();
+        $scope.opens = $scope.currentTime();
+        $scope.starts = $scope.currentTime();
         $scope.address = '192.168.0.1';
         $scope.post_title = 'Game Title';
         $scope.region = 'NA';
@@ -380,6 +385,24 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 });
             }
         };
+    }])
+
+    .factory('DateTimeService', ['$http', '$rootScope', function($http, $rootScope) {
+        var resyncURL = 'sync.php';
+
+        return {
+            resync: function() {
+                $http.get(resyncURL).then(
+                    function(data) {
+                        console.log(data.data.time);
+                        console.log(moment().valueOf());
+                        //this isn't really that accurate but within ping time so close enough
+                        $rootScope.offset = data.data.time - moment().valueOf();
+                        console.log($rootScope.offset);
+                    }
+                );
+            }
+        }
     }])
 
     .directive('dateTimePicker', [function() {

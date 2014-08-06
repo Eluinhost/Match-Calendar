@@ -79,7 +79,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             RedditPostsService.query($scope.settings.subreddits).then(function(data) {
                 $scope.posts = data;
                 $scope.updatingPosts = false;
-                $scope.lastUpdated = moment();
+                $scope.lastUpdated = $scope.currentTime();
             });
         };
 
@@ -98,7 +98,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
                     var timeLeft = post.opens.diff($scope.current_time);
                     if(timeLeft < 1000 * 60 * 15) {
-                        HtmlNotifications.notify('Game opening ' + post.opens.fromNow(), post.title);
+                        HtmlNotifications.notify('Game opening ' + post.opens.from($scope.currentTime()), post.title);
                     }
                 });
             }
@@ -169,7 +169,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     }])
 
     //a match post model
-    .factory('MatchPost', ['MarkdownLinkDataService', function (MarkdownLinkDataService) {
+    .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', function (MarkdownLinkDataService, $rootScope) {
 
         function MatchPost(id, region, title, selftext, author, opens, starts, permalink) {
             this.id = id;
@@ -219,14 +219,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 region = 'Earth';
             }
 
-
-            //get the time right now
-            var currentTime = moment();
-
             //if it's invalid (no parsable date) read as unparsed
             if(!starts.isValid()) {
                 starts = null;
-            } else if(starts.diff(currentTime) < 0) {
+            } else if(starts.diff($rootScope.currentTime()) < 0) {
                 //if it's in the past don't show it at all
                 return null;
             }
@@ -269,8 +265,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
     //service for fetching reddit posts from the JSON api
     .factory( 'RedditPostsService', ['$http', '$q', '$filter', 'MatchPost', function( $http, $q, $filter, MatchPost ) {
-        var uri = 'ultrahardcore/';
-
         return {
             //fetch all
             query: function (subreddits, limit, sort) {
@@ -359,7 +353,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 if(Notification.permission !== 'granted') {
                     //request the permission and update the permission value
                     Notification.requestPermission(function (status) {
-                        console.log(status);
                         if (Notification.permission !== status) {
                             Notification.permission = status;
                         }
@@ -394,11 +387,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             resync: function() {
                 $http.get(resyncURL).then(
                     function(data) {
-                        console.log(data.data.time);
-                        console.log(moment().valueOf());
                         //this isn't really that accurate but within ping time so close enough
                         $rootScope.offset = data.data.time - moment().valueOf();
-                        console.log($rootScope.offset);
                     }
                 );
             }

@@ -7,6 +7,10 @@ body {
     display: block;
 }
 
+.favorite_host > .panel-heading{
+    background-color: #CCFFCC
+}
+
 .notify-permission.alert-warning {
     cursor: pointer;
 }

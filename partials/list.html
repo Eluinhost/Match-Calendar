@@ -13,10 +13,10 @@
                         <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
                     </div>
                     <div class="col-xs-2 text-center">
-                        <em ng-bind="post.opens != null ? 'opens ' + post.opens.fromNow() : '???'"></em>
+                        <em ng-bind="post.opens != null ? 'opens ' + post.opens.from(currentTime()) : '???'"></em>
                     </div>
                     <div class="col-xs-2 text-center">
-                        <em ng-bind="post.starts != null ? 'starts ' + post.starts.fromNow() : '???'"></em>
+                        <em ng-bind="post.starts != null ? 'starts ' + post.starts.from(currentTime()) : '???'"></em>
                     </div>
                 </div>
             </accordion-heading>

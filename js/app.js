@@ -3,7 +3,12 @@
 // Main application
 angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard'])
 
-    .run(['$rootScope', '$cookieStore', function($rootScope, $cookieStore) {
+    .run(['$rootScope', '$cookieStore', 'DateTimeService', function($rootScope, $cookieStore, DateTimeService) {
+        DateTimeService.resync();
+        $rootScope.currentTime = function() {
+            return moment().add('ms', $rootScope.offset);
+        };
+
         $rootScope.settings = {
             time_formats: ['12h', '24h'],
             time_zones: moment.tz.names(),
@@ -74,14 +79,14 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             RedditPostsService.query($scope.settings.subreddits).then(function(data) {
                 $scope.posts = data;
                 $scope.updatingPosts = false;
-                $scope.lastUpdated = moment();
+                $scope.lastUpdated = $scope.currentTime();
             });
         };
 
         $scope.$watchCollection('settings.subreddits', $scope.updatePosts);
 
         (function tick() {
-            $scope.current_time = moment();
+            $scope.current_time = $scope.currentTime();
             $timeout(tick, 1000);
          })();
 
@@ -93,7 +98,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
                     var timeLeft = post.opens.diff($scope.current_time);
                     if(timeLeft < 1000 * 60 * 15) {
-                        HtmlNotifications.notify('Game opening ' + post.opens.fromNow(), post.title);
+                        HtmlNotifications.notify('Game opening ' + post.opens.from($scope.currentTime()), post.title);
                     }
                 });
             }
@@ -156,15 +161,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.generatedLink = '[' + JSON.stringify(newValue) + '](/matchpost)';
         }, true);
 
-        $scope.opens = moment();
-        $scope.starts = moment();
+        $scope.opens = $scope.currentTime();
+        $scope.starts = $scope.currentTime();
         $scope.address = '192.168.0.1';
         $scope.post_title = 'Game Title';
         $scope.region = 'NA';
     }])
 
     //a match post model
-    .factory('MatchPost', ['MarkdownLinkDataService', function (MarkdownLinkDataService) {
+    .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', function (MarkdownLinkDataService, $rootScope) {
 
         function MatchPost(id, region, title, selftext, author, opens, starts, permalink) {
             this.id = id;
@@ -214,14 +219,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 region = 'Earth';
             }
 
-
-            //get the time right now
-            var currentTime = moment();
-
             //if it's invalid (no parsable date) read as unparsed
             if(!starts.isValid()) {
                 starts = null;
-            } else if(starts.diff(currentTime) < 0) {
+            } else if(starts.diff($rootScope.currentTime()) < 0) {
                 //if it's in the past don't show it at all
                 return null;
             }
@@ -264,8 +265,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
     //service for fetching reddit posts from the JSON api
     .factory( 'RedditPostsService', ['$http', '$q', '$filter', 'MatchPost', function( $http, $q, $filter, MatchPost ) {
-        var uri = 'ultrahardcore/';
-
         return {
             //fetch all
             query: function (subreddits, limit, sort) {
@@ -354,7 +353,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 if(Notification.permission !== 'granted') {
                     //request the permission and update the permission value
                     Notification.requestPermission(function (status) {
-                        console.log(status);
                         if (Notification.permission !== status) {
                             Notification.permission = status;
                         }
@@ -380,6 +378,21 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 });
             }
         };
+    }])
+
+    .factory('DateTimeService', ['$http', '$rootScope', function($http, $rootScope) {
+        var resyncURL = 'sync.php';
+
+        return {
+            resync: function() {
+                $http.get(resyncURL).then(
+                    function(data) {
+                        //this isn't really that accurate but within ping time so close enough
+                        $rootScope.offset = data.data.time - moment().valueOf();
+                    }
+                );
+            }
+        }
     }])
 
     .directive('dateTimePicker', [function() {

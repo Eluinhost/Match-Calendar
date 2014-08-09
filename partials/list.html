@@ -13,7 +13,7 @@
                         <!-- TODO add a feature to save favorite/bad reddit hosts -->
                         <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit"></i>
                         <br>
-                        <span ng-bind="post.region"></span> <i class="fa fa-globe"></i>
+                        <span ng-bind="post.region"></span> <i class="fa fa-globe"></i>&nbsp;
                     </div>
                     <div class="col-xs-2 text-left">
                         <i class="fa fa-clock-o"></i> <em ng-bind="post.opens != null ? post.opens.from(currentTime()) : '???'"></em>

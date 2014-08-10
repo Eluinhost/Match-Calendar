@@ -19,6 +19,10 @@ body {
     cursor: pointer;
 }
 
+.unsynced {
+    color: #ff5050;
+}
+
 .unpadded-page {
     margin-top: -15px;
 }

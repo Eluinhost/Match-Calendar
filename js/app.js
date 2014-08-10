@@ -4,10 +4,8 @@
 angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard'])
 
     .run(['$rootScope', '$cookieStore', 'DateTimeService', function($rootScope, $cookieStore, DateTimeService) {
+        $rootScope.timeOffset = DateTimeService;
         DateTimeService.resync();
-        $rootScope.currentTime = function() {
-            return moment().add('ms', $rootScope.offset);
-        };
 
         $rootScope.settings = {
             time_formats: ['12h', '24h'],
@@ -95,14 +93,14 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             RedditPostsService.query($scope.settings.subreddits).then(function(data) {
                 $scope.posts = data;
                 $scope.updatingPosts = false;
-                $scope.lastUpdated = $scope.currentTime();
+                $scope.lastUpdated = $scope.timeOffset.currentTime();
             });
         };
 
         $scope.$watchCollection('settings.subreddits', $scope.updatePosts);
 
         (function tick() {
-            $scope.current_time = $scope.currentTime();
+            $scope.current_time = $scope.timeOffset.currentTime();
             $timeout(tick, 1000);
          })();
 
@@ -114,7 +112,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
                     var timeLeft = post.opens.diff($scope.current_time);
                     if(timeLeft < 1000 * 60 * 15) {
-                        HtmlNotifications.notify('Game opening ' + post.opens.from($scope.currentTime()), post.title);
+                        HtmlNotifications.notify('Game opening ' + post.opens.from($scope.timeOffset.currentTime()), post.title);
                     }
                 });
             }
@@ -177,8 +175,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.generatedLink = '[' + JSON.stringify(newValue) + '](/matchpost)';
         }, true);
 
-        $scope.opens = $scope.currentTime();
-        $scope.starts = $scope.currentTime();
+        $scope.opens = $scope.timeOffset.currentTime();
+        $scope.starts = $scope.timeOffset.currentTime();
         $scope.address = '192.168.0.1';
         $scope.post_title = 'Game Title';
         $scope.region = 'NA';
@@ -254,7 +252,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             if(post.starts != null) {
                 if (!post.starts.isValid()) {
                     post.starts = null;
-                } else if (post.starts.diff($rootScope.currentTime()) < 0) {
+                } else if (post.starts.diff($rootScope.timeOffset.currentTime()) < 0) {
                     //if it's in the past don't show it at all
                     return null;
                 }
@@ -413,17 +411,30 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         };
     }])
 
-    .factory('DateTimeService', ['$http', '$rootScope', function($http, $rootScope) {
+    .factory('DateTimeService', ['$http', function($http) {
         var resyncURL = 'sync.php';
 
         return {
+            synced: false,
+            offset: null,
             resync: function() {
+                var service = this;
+                console.log('syncing');
                 $http.get(resyncURL).then(
                     function(data) {
+                        service.synced = true;
+                        console.log('synced');
                         //this isn't really that accurate but within ping time so close enough
-                        $rootScope.offset = data.data.time - moment().valueOf();
+                        service.offset = data.data.time - moment().valueOf();
                     }
                 );
+            },
+            currentTime: function() {
+                var current = moment();
+                if (this.synced) {
+                    current.add('ms', this.offset);
+                }
+                return current;
             }
         }
     }])

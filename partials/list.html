@@ -14,7 +14,7 @@
                         <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
                         <br>
                         <small tooltip="Time posted">
-                            <i class="fa fa-reply fa-rotate-180"></i> <span ng-bind="post.posted.from(currentTime())"></span>
+                            <i class="fa fa-reply fa-rotate-180"></i> <span ng-bind="post.posted.from(timeOffset.currentTime())"></span>
                             - <span ng-bind="post.starts == null ? 'N/A' : post.posted.from(post.starts, true)"></span> in advance.
                         </small>
                     </div>
@@ -27,11 +27,11 @@
                     </div>
                     <div class="col-xs-2 text-left">
                         <span tooltip="Opens">
-                            <i class="fa fa-clock-o"></i> <em ng-bind="post.opens != null ? post.opens.from(currentTime()) : 'Unknown'"></em>
+                            <i class="fa fa-clock-o"></i> <em ng-bind="post.opens != null ? post.opens.from(timeOffset.currentTime()) : 'Unknown'"></em>
                         </span>
                         <br>
                         <span tooltip="Starts">
-                            <i class="fa fa-caret-square-o-right"></i> <em ng-bind="post.starts != null ? post.starts.from(currentTime()) : 'Unknown'"></em>
+                            <i class="fa fa-caret-square-o-right"></i> <em ng-bind="post.starts != null ? post.starts.from(timeOffset.currentTime()) : 'Unknown'"></em>
                         </span>
                     </div>
                 </div>

@@ -24,7 +24,7 @@
                                 <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
                                 <br>
                                 <span tooltip="Server Region">
-                                    <span ng-bind="post.region == null ? 'N/A' : post.region"></span> <i class="fa fa-globe"></i>&nbsp;
+                                    <small ng-bind="post.region == null ? 'N/A' : post.region"></small> <i class="fa fa-globe"></i>&nbsp;
                                 </span>
                             </div>
                             <div class="col-xs-1 text-center">
@@ -32,11 +32,11 @@
                             </div>
                             <div class="col-xs-5 text-left">
                                 <span tooltip="Opens">
-                                    <i class="fa fa-clock-o"></i> <em ng-bind="post.opens != null ? post.opens.from(timeOffset.currentTime()) : 'Unknown'"></em>
+                                    <i class="fa fa-clock-o"></i> <small ng-bind="post.opens != null ? post.opens.from(timeOffset.currentTime()) : 'Unknown'"></small>
                                 </span>
                                 <br>
                                 <span tooltip="Starts">
-                                    <i class="fa fa-caret-square-o-right"></i> <em ng-bind="post.starts != null ? post.starts.from(timeOffset.currentTime()) : 'Unknown'"></em>
+                                    <i class="fa fa-caret-square-o-right"></i> <small ng-bind="post.starts != null ? post.starts.from(timeOffset.currentTime()) : 'Unknown'"></small>
                                 </span>
                             </div>
                         </div>

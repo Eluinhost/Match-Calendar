@@ -187,12 +187,13 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     //a match post model
     .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', function (MarkdownLinkDataService, $rootScope) {
 
-        function MatchPost(id, title, selftext, author, permalink) {
+        function MatchPost(id, title, selftext, author, permalink, posted) {
             this.id = id;
             this.title = title;
             this.selftext = selftext;
             this.author = author;
             this.permalink = permalink;
+            this.posted = posted;
 
             this.region = null;
             this.starts = null;
@@ -223,7 +224,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         MatchPost.parseData = function (element) {
             var linkData = MarkdownLinkDataService.fetch('/matchpost', element.selftext);
 
-            var post = new MatchPost(element.id, element.title, element.selftext, element.author, 'http://reddit.com/' + element.permalink);
+            var post = new MatchPost(element.id, element.title, element.selftext, element.author, 'http://reddit.com/' + element.permalink, moment(element.created_utc, 'X'));
 
             var parsedLink = false;
             if(linkData != null) {

@@ -12,6 +12,10 @@
                     </div>
                     <div class="col-xs-5 text-left">
                         <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
+                        <br>
+                        <small tooltip="Time posted">
+                            <i class="fa fa-reply fa-rotate-180"></i> <span ng-bind="post.posted.from(currentTime())"></span>
+                        </small>
                     </div>
                     <div class="col-xs-3 text-right">
                         <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>

@@ -197,6 +197,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             this.region = null;
             this.starts = null;
             this.opens = null;
+            this.address = null;
         }
 
         MatchPost.prototype.setRegion = function(region) {
@@ -209,6 +210,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
         MatchPost.prototype.setStarts = function(starts) {
             this.starts = starts;
+        };
+
+        MatchPost.prototype.setAddress = function(address) {
+            this.address = address;
         };
 
         /**
@@ -228,6 +233,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                     post.setOpens(moment(json.opens, 'YYYY-MM-DDTHH:mm:ssZ'));
                     post.setStarts(moment(json.starts, 'YYYY-MM-DDTHH:mm:ssZ'));
                     post.setRegion(json.region);
+                    post.setAddress(json.address);
 
                     parsedLink = true;
                 } catch (err) {}

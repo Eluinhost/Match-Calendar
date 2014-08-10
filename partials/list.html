@@ -5,6 +5,10 @@
                 <div class="row text-center">
                     <div class="col-xs-2 text-right">
                         <b ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.time_zone).format(settings.time_format == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b>
+                        <br>
+                        <small tooltip="Server address">
+                            <span ng-bind="post.address == null ? 'Unknown' : post.address"></span> <i class="fa fa-cubes"></i>
+                        </small>
                     </div>
                     <div class="col-xs-5 text-left">
                         <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>

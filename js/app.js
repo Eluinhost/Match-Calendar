@@ -187,16 +187,29 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     //a match post model
     .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', function (MarkdownLinkDataService, $rootScope) {
 
-        function MatchPost(id, region, title, selftext, author, opens, starts, permalink) {
+        function MatchPost(id, title, selftext, author, permalink) {
             this.id = id;
-            this.region = region;
             this.title = title;
             this.selftext = selftext;
             this.author = author;
-            this.opens = opens;
-            this.starts = starts;
             this.permalink = permalink;
+
+            this.region = null;
+            this.starts = null;
+            this.opens = null;
         }
+
+        MatchPost.prototype.setRegion = function(region) {
+            this.region = region;
+        };
+
+        MatchPost.prototype.setOpens = function(opens) {
+            this.opens = opens;
+        };
+
+        MatchPost.prototype.setStarts = function(starts) {
+            this.starts = starts;
+        };
 
         /**
          * @param element the raw post element from the JSON api
@@ -205,17 +218,16 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         MatchPost.parseData = function (element) {
             var linkData = MarkdownLinkDataService.fetch('/matchpost', element.selftext);
 
-            var opens, starts, title, region;
+            var post = new MatchPost(element.id, element.title, element.selftext, element.author, 'http://reddit.com/' + element.permalink);
 
             var parsedLink = false;
             if(linkData != null) {
                 try {
                     var json = JSON.parse(linkData);
 
-                    opens = moment(json.opens, 'YYYY-MM-DDTHH:mm:ssZ');
-                    starts = moment(json.starts, 'YYYY-MM-DDTHH:mm:ssZ');
-                    region = json.region;
-                    title = element.title;
+                    post.setOpens(moment(json.opens, 'YYYY-MM-DDTHH:mm:ssZ'));
+                    post.setStarts(moment(json.starts, 'YYYY-MM-DDTHH:mm:ssZ'));
+                    post.setRegion(json.region);
 
                     parsedLink = true;
                 } catch (err) {}
@@ -225,32 +237,30 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 //fall back to old style title parsing
 
                 //attempt to parse the date from the post title
-                starts = moment.utc(/[\w]+ [\d]+ [\d]+:[\d]+/.exec(element.title), 'MMM DD HH:mm', 'en');
-                opens = starts;
+                post.setStarts(moment.utc(/[\w]+ [\d]+ [\d]+:[\d]+/.exec(element.title), 'MMM DD HH:mm', 'en'));
 
                 //get everything after the first '- ' in the title as the actual title
-                title = element.title.substring(element.title.indexOf('-') + 2);
-
-                //set a default region to show
-                region = 'Earth';
+                post.title = element.title.substring(element.title.indexOf('-') + 2);
             }
 
             //if it's invalid (no parsable date) read as unparsed
-            if(!starts.isValid()) {
-                starts = null;
-            } else if(starts.diff($rootScope.currentTime()) < 0) {
-                //if it's in the past don't show it at all
-                return null;
+            if(post.starts != null) {
+                if (!post.starts.isValid()) {
+                    post.starts = null;
+                } else if (post.starts.diff($rootScope.currentTime()) < 0) {
+                    //if it's in the past don't show it at all
+                    return null;
+                }
             }
 
-            //if it's invalid (no parsable date) read as unparsed
-            if(!opens.isValid()) {
-                opens = null;
+            if(post.opens != null) {
+                //if it's invalid (no parsable date) read as unparsed
+                if (!post.opens.isValid()) {
+                    post.opens = null;
+                }
             }
 
-            var link = 'http://reddit.com/' + element.permalink;
-
-            return new MatchPost(element.id, region, title, element.selftext, element.author, opens, starts, link);
+            return post;
         };
 
         //Return the constructor function

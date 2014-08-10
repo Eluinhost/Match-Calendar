@@ -18,21 +18,28 @@
                             - <span ng-bind="post.starts == null ? 'N/A' : post.posted.from(post.starts, true)"></span> in advance.
                         </small>
                     </div>
-                    <div class="col-xs-3 text-right">
-                        <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
-                        <br>
-                        <span tooltip="Server Region">
-                            <span ng-bind="post.region == null ? 'N/A' : post.region"></span> <i class="fa fa-globe"></i>&nbsp;
-                        </span>
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        <span tooltip="Opens">
-                            <i class="fa fa-clock-o"></i> <em ng-bind="post.opens != null ? post.opens.from(timeOffset.currentTime()) : 'Unknown'"></em>
-                        </span>
-                        <br>
-                        <span tooltip="Starts">
-                            <i class="fa fa-caret-square-o-right"></i> <em ng-bind="post.starts != null ? post.starts.from(timeOffset.currentTime()) : 'Unknown'"></em>
-                        </span>
+                    <div class="col-xs-5">
+                        <div class="row no-gutter">
+                            <div class="col-xs-6 text-right">
+                                <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
+                                <br>
+                                <span tooltip="Server Region">
+                                    <span ng-bind="post.region == null ? 'N/A' : post.region"></span> <i class="fa fa-globe"></i>&nbsp;
+                                </span>
+                            </div>
+                            <div class="col-xs-1 text-center">
+                                <i class="fa fa-calendar-o"></i>
+                            </div>
+                            <div class="col-xs-5 text-left">
+                                <span tooltip="Opens">
+                                    <i class="fa fa-clock-o"></i> <em ng-bind="post.opens != null ? post.opens.from(timeOffset.currentTime()) : 'Unknown'"></em>
+                                </span>
+                                <br>
+                                <span tooltip="Starts">
+                                    <i class="fa fa-caret-square-o-right"></i> <em ng-bind="post.starts != null ? post.starts.from(timeOffset.currentTime()) : 'Unknown'"></em>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </accordion-heading>

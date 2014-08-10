@@ -35,14 +35,15 @@
     <div class="row options text-center">
         <div class="time-info col-sm-6 col-sm-offset-3">
             <h3>
-                Current Time: <em ng-class="{unsynced: !timeOffset.synced}" ng-bind="current_time.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em>
+                <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="current_time.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
                 <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </h3>
             <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
         </div>
         <div class="refresh-button col-sm-3">
+            Last Updated: <small ng-bind="lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
+            <br>
             <b class="refresh-icon" ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': updatingPosts}"></i> Refresh</b>
-            <b>Last Updated: </b><em ng-bind="lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></em>
         </div>
     </div>
     <div class="row">

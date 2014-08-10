@@ -80,6 +80,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             return HtmlNotifications.currentPermission();
         };
 
+        $scope.toggleFavorite = function(name) {
+            var index = $scope.settings.favorite_hosts.indexOf(name);
+            if(index === -1) {
+                $scope.settings.favorite_hosts.push(name);
+            } else {
+                $scope.settings.favorite_hosts.splice(index, 1);
+            }
+        };
+
         $scope.posts = [];
         $scope.updatePosts = function() {
             $scope.updatingPosts = true;

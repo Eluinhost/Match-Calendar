@@ -7,8 +7,12 @@ body {
     display: block;
 }
 
-.favorite_host > .panel-heading{
+.favorite_host > .panel-heading {
     background-color: #CCFFCC
+}
+
+.favorite_host .fa-reddit {
+    font-weight: bold;
 }
 
 .notify-permission.alert-warning {

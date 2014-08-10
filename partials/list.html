@@ -1,6 +1,6 @@
 <div class="list-page unpadded-page">
     <accordion close-others="false">
-        <accordion-group ng-repeat="post in posts track by post.id">
+        <accordion-group ng-repeat="post in posts track by post.id" ng-class="{favorite_host: settings.favorite_hosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <div class="row text-center">
                     <div class="col-xs-2 text-right">
@@ -11,7 +11,7 @@
                     </div>
                     <div class="col-xs-3 text-right">
                         <!-- TODO add a feature to save favorite/bad reddit hosts -->
-                        <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit"></i>
+                        <a target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
                         <br>
                         <span ng-bind="post.region"></span> <i class="fa fa-globe"></i>&nbsp;
                     </div>
@@ -20,7 +20,6 @@
                         <br>
                         <i class="fa fa-caret-square-o-right"></i> <em ng-bind="post.starts != null ? post.starts.from(currentTime()) : '???'"></em>
                     </div>
-
                 </div>
             </accordion-heading>
             <div class="container" btf-markdown="post.selftext"></div>

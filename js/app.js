@@ -14,8 +14,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             time_zones: moment.tz.names(),
             time_zone: $cookieStore.get('time_zone'),
             time_format: $cookieStore.get('time_format'),
-            subreddits: $cookieStore.get('subreddits')
+            subreddits: $cookieStore.get('subreddits'),
+            favorite_hosts: $cookieStore.get('favorite_hosts')
         };
+
+        $rootScope.$watchCollection('settings.favorite_hosts', function(newValue) {
+            $cookieStore.put('favorite_hosts', newValue);
+        });
+        if(null == $rootScope.settings.favorite_hosts)
+            $rootScope.settings.favorite_hosts = ['Elllzman619'];
 
         $rootScope.$watch('settings.time_zone', function(newValue) {
             $cookieStore.put('time_zone', newValue);
@@ -71,6 +78,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         };
         $scope.currentPermission = function() {
             return HtmlNotifications.currentPermission();
+        };
+
+        $scope.toggleFavorite = function(name) {
+            var index = $scope.settings.favorite_hosts.indexOf(name);
+            if(index === -1) {
+                $scope.settings.favorite_hosts.push(name);
+            } else {
+                $scope.settings.favorite_hosts.splice(index, 1);
+            }
         };
 
         $scope.posts = [];

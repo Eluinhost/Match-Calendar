@@ -15,6 +15,7 @@
                         <br>
                         <small tooltip="Time posted">
                             <i class="fa fa-reply fa-rotate-180"></i> <span ng-bind="post.posted.from(currentTime())"></span>
+                            - <span ng-bind="post.starts == null ? 'N/A' : post.posted.from(post.starts, true)"></span> in advance.
                         </small>
                     </div>
                     <div class="col-xs-3 text-right">

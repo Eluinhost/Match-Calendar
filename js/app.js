@@ -120,7 +120,12 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         })();
     }])
 
-    .controller('TourController', ['$scope', function($scope) {
+    .controller('TourController', ['$scope', '$state', function($scope, $state) {
+
+        $scope.showTour = function() {
+            return $state.current.name === 'list';
+        };
+
         $scope.completedEvent = function () {
             console.log("Completed Event called");
         };

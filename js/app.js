@@ -200,12 +200,12 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 }
             ],
             showStepNumbers: false,
-            exitOnOverlayClick: true,
-            exitOnEsc:true,
-            nextLabel: '<strong>NEXT!</strong>',
-            prevLabel: '<span style="color:green">Previous</span>',
+            exitOnOverlayClick: false,
+            exitOnEsc: true,
+            nextLabel: '<strong>Next</strong>',
+            prevLabel: 'Previous',
             skipLabel: 'Exit',
-            doneLabel: 'Thanks'
+            doneLabel: 'Done'
         };
 
         $scope.shouldAutoStart = function() {

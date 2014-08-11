@@ -120,6 +120,99 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         })();
     }])
 
+    .controller('TourController', ['$scope', function($scope) {
+        $scope.completedEvent = function () {
+            console.log("Completed Event called");
+        };
+
+        $scope.exitEvent = function () {
+            console.log("Exit Event called");
+        };
+
+        $scope.changeEvent = function (targetElement) {
+            console.log("Change Event called");
+            console.log(targetElement);
+        };
+
+        $scope.beforeChangeEvent = function (targetElement) {
+            console.log("Before Change Event called");
+            console.log(targetElement);
+        };
+
+        $scope.afterChangeEvent = function (targetElement) {
+            console.log("After Change Event called");
+            console.log(targetElement);
+        };
+
+        $scope.introOptions = {
+            steps:[
+                {
+                    element: '.synced-time',
+                    intro: 'This is the time synced with the server'
+                },
+                {
+                    element: '.picked-timezone',
+                    intro: 'The selected timezone and format to show times in'
+                },
+                {
+                    element: '.last-updated',
+                    intro: 'The time the list was last updated'
+                },
+                {
+                    element: '.refresh-icon',
+                    intro: 'Force refresh the list. The list is automatically updated every minute'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .abs-game-starts',
+                    intro: 'When the game starts'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .server-address',
+                    intro: 'The server address to connect to'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .post-title',
+                    intro: 'The name of the game'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .time-posted',
+                    intro: 'How long ago and how far in advance the match was posted'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .post-author',
+                    intro: 'The reddit name of the match host'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .fa-reddit',
+                    intro: 'Click the reddit icon to add the user to your favorite hosts list'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .server-region',
+                    intro: 'The region the server is hosted in'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .game-opens',
+                    intro: 'How long until the game opens'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .game-starts',
+                    intro: 'How long until the game starts'
+                }
+            ],
+            showStepNumbers: false,
+            exitOnOverlayClick: true,
+            exitOnEsc:true,
+            nextLabel: '<strong>NEXT!</strong>',
+            prevLabel: '<span style="color:green">Previous</span>',
+            skipLabel: 'Exit',
+            doneLabel: 'Thanks'
+        };
+
+        $scope.shouldAutoStart = function() {
+            return false;
+        }
+    }])
+
     .controller('SettingsCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
         $scope.addSubreddit = function(name) {
             if(name === '' || name === null || name === undefined) {

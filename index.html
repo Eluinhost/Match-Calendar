@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="bower_components/intro.js/introjs.css"/>
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body ng-app="MatchCalendar" ng-controller="AppCtrl">
@@ -33,15 +34,28 @@
 <a target="_blank" href="http://www.reddit.com/r/ultrahardcore"><img id="banner" src="images/banner.png"></a>
 <div class="container-fluid">
     <div class="row options text-center">
-        <div class="time-info col-sm-6 col-sm-offset-3">
-            <h3>
+        <div class="col-sm-3" ng-controller="TourController"
+             ng-intro-options="introOptions"
+             ng-intro-method="callMe"
+             ng-intro-oncomplete="completedEvent"
+             ng-intro-onexit="exitEvent"
+             ng-intro-onchange="changeEvent"
+             ng-intro-onbeforechange="beforeChangeEvent"
+             ng-intro-onafterchange="afterChangeEvent"
+             ng-intro-autostart="shouldAutoStart()">
+            <h3 ng-click="callMe()" ng-show="showTour()">Tour!</h3>
+        </div>
+        <div class="time-info col-sm-6">
+            <h3 class="synced-time">
                 <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="current_time.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
                 <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </h3>
-            <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
+            <span class="picked-timezone">
+                <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
+            </span>
         </div>
         <div class="refresh-button col-sm-3">
-            Last Updated: <small ng-bind="lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
+            Last Updated: <small class="last-updated" ng-bind="lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
             <br>
             <b class="refresh-icon" ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': updatingPosts}"></i> Refresh</b>
         </div>
@@ -67,6 +81,8 @@
 <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js"></script>
 <script src="bower_components/ng-clip/dest/ng-clip.min.js"></script>
 <script src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
+<script src="bower_components/intro.js/intro.js"></script>
+<script src="bower_components/angular-intro.js/build/angular-intro.min.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

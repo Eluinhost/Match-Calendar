@@ -123,20 +123,27 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             }, 2000);
         };
 
-        $scope.$watchCollection('settings.subreddits', $scope.updatePosts);
-
         $scope.clockTick = function() {
             $scope.current_time = $scope.timeOffset.currentTime();
         };
         $interval($scope.clockTick, 1000);
 
+        $scope.scrolled = false;
         $scope.updateTick = function() {
-            $scope.updatePosts();
+            $scope.updatePosts().finally(function() {
+                $timeout(function() {
+                    if(!$scope.scrolled) {
+                        $anchorScroll();
+                        $scope.scrolled = true;
+                    }
+                });
+            });
             if(HtmlNotifications.currentPermission() === 'granted') {
                 //TODO do notifications
             }
         };
         $interval($scope.updateTick, 1000 * 60);
+        $scope.$watchCollection('settings.subreddits', $scope.updateTick);
     }])
 
     .controller('TourController', ['$scope', '$state', function($scope, $state) {

@@ -2,7 +2,7 @@
     <accordion close-others="false">
         <accordion-group ng-repeat="post in posts track by post.id" ng-class="{favorite_host: settings.favorite_hosts.indexOf(post.author) !== -1}">
             <accordion-heading>
-                <div class="row text-center">
+                <div class="row text-center" ng-attr-id="{{ 'post-' + post.id }}">
                     <div class="col-xs-2 text-right">
                         <b class="abs-game-starts" ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.time_zone).format(settings.time_format == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b>
                         <br>

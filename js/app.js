@@ -10,10 +10,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $rootScope.settings = {
             time_formats: ['12h', '24h'],
             time_zones: moment.tz.names(),
-            time_zone: $cookieStore.get('time_zone'),
-            time_format: $cookieStore.get('time_format'),
-            subreddits: $cookieStore.get('subreddits'),
-            favorite_hosts: $cookieStore.get('favorite_hosts'),
+            time_zone: $cookieStore.get('time_zone') || 'Etc/UTC',
+            time_format: $cookieStore.get('time_format') || '24h',
+            subreddits: $cookieStore.get('subreddits') || ['ultrahardcore', 'ghowden'],
+            favorite_hosts: $cookieStore.get('favorite_hosts') || ['Elllzman619'],
             tour: {
                 taken: $cookieStore.get('tour.taken') || false
             }
@@ -26,26 +26,18 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $rootScope.$watchCollection('settings.favorite_hosts', function(newValue) {
             $cookieStore.put('favorite_hosts', newValue);
         });
-        if(null == $rootScope.settings.favorite_hosts)
-            $rootScope.settings.favorite_hosts = ['Elllzman619'];
 
         $rootScope.$watch('settings.time_zone', function(newValue) {
             $cookieStore.put('time_zone', newValue);
         });
-        if(null == $rootScope.settings.time_zone)
-            $rootScope.settings.time_zone = 'Etc/UTC';
 
         $rootScope.$watch('settings.time_format', function(newValue) {
             $cookieStore.put('time_format', newValue);
         });
-        if(null == $rootScope.settings.time_format)
-            $rootScope.settings.time_format = '24h';
 
         $rootScope.$watchCollection('settings.subreddits', function(newValue) {
             $cookieStore.put('subreddits', newValue);
         });
-        if(null == $rootScope.settings.subreddits)
-            $rootScope.settings.subreddits = ['ultrahardcore', 'ghowden'];
     }])
 
     //configuration

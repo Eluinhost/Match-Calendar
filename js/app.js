@@ -96,6 +96,18 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             });
         };
 
+        /**
+         * Changes the address of the post to 'Copied!' for a couple of seconds
+         * @param post {MatchPost}
+         */
+        $scope.triggerCopiedMessage = function (post) {
+            var saved = post.address;
+            post.address = 'Copied!';
+            $timeout(function() {
+                post.address = saved;
+            }, 2000);
+        };
+
         $scope.$watchCollection('settings.subreddits', $scope.updatePosts);
 
         (function tick() {

@@ -6,8 +6,10 @@
                     <div class="col-xs-2 text-right">
                         <b class="abs-game-starts" ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.time_zone).format(settings.time_format == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b>
                         <br>
-                        <small class="server-address" tooltip="Server address">
-                            <span ng-bind="post.address == null ? 'Unknown' : post.address"></span> <i class="fa fa-cubes"></i>
+                        <small class="server-address" tooltip="Server address" ng-click="$event.stopPropagation()">
+                            <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">
+                                <span ng-bind="post.address == null ? 'Unknown' : post.address"></span> <i class="fa fa-cubes"></i>
+                            </span>
                         </small>
                     </div>
                     <div class="col-xs-5 text-left">

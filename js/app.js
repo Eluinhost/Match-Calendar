@@ -286,6 +286,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         // the dash can have any spacing/dashes combo
         var matchPostRegex = /^(\w+ \d+ \d+:\d+)\s*(?:UTC|UCT)?\s*\[?(\w*)\]?[ -]+(.*)$/i;
 
+        var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(\:\d{1,5})?/g;
+
         function MatchPost(id, title, selftext, author, permalink, posted) {
             this.id = id;
             this.title = title;
@@ -354,6 +356,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                     post.region = matches[2];
 
                 post.title = matches[3];
+
+                //basic IP checking for parsed links, this will only work for IP addresses
+                var ipcheck = ipRegex.exec(element.selftext);
+
+                if(null != ipcheck) {
+                    post.address = ipcheck[1];
+                    if(typeof ipcheck[2] !== 'undefined' && ipcheck[2] != '' && ipcheck[2] != ':25565')
+                        post.address += ipcheck[2];
+                }
             }
 
             //if it's invalid (no parsable date) read as unparsed

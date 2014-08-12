@@ -35,16 +35,14 @@
 <a target="_blank" href="http://www.reddit.com/r/ultrahardcore"><img id="banner" src="images/banner.png"></a>
 <div class="container-fluid">
     <div class="row options text-center">
-        <div class="col-sm-3" ng-controller="TourController"
+        <div class="col-sm-3"
+             ng-controller="TourController"
              ng-intro-options="introOptions"
              ng-intro-method="callMe"
              ng-intro-oncomplete="completedEvent"
              ng-intro-onexit="exitEvent"
-             ng-intro-onchange="changeEvent"
-             ng-intro-onbeforechange="beforeChangeEvent"
-             ng-intro-onafterchange="afterChangeEvent"
              ng-intro-autostart="shouldAutoStart()">
-            <h3 ng-click="callMe()" ng-show="showTour()">Tour!</h3>
+            <button class="tour-button btn btn-lg btn-primary" type="button" ng-click="callMe()" ng-show="showTour()" ng-class="{'pulse infinite': !settings.tour.taken}">Take a Tour</button>
         </div>
         <div class="time-info col-sm-6">
             <h3 class="synced-time">

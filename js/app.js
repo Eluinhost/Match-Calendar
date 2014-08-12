@@ -120,14 +120,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         (function tick() {
             $scope.updatePosts();
             if(HtmlNotifications.currentPermission() === 'granted') {
-                angular.forEach($scope.posts, function (post) {
-                    if(post.opens == null) return;
-
-                    var timeLeft = post.opens.diff($scope.current_time);
-                    if(timeLeft < 1000 * 60 * 15) {
-                        HtmlNotifications.notify('Game opening ' + post.opens.from($scope.timeOffset.currentTime()), post.title);
-                    }
-                });
+                //TODO do notifications
             }
             $timeout(tick, 1000 * 60);
         })();

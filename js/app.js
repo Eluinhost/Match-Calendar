@@ -13,8 +13,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             time_zone: $cookieStore.get('time_zone'),
             time_format: $cookieStore.get('time_format'),
             subreddits: $cookieStore.get('subreddits'),
-            favorite_hosts: $cookieStore.get('favorite_hosts')
+            favorite_hosts: $cookieStore.get('favorite_hosts'),
+            tour: {
+                taken: $cookieStore.get('tour.taken') || false
+            }
         };
+
+        $rootScope.$watch('settings.tour.taken', function(newValue) {
+            $cookieStore.put('tour.taken', newValue);
+        });
 
         $rootScope.$watchCollection('settings.favorite_hosts', function(newValue) {
             $cookieStore.put('favorite_hosts', newValue);
@@ -126,27 +133,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             return $state.current.name === 'list';
         };
 
+        $scope.setTaken = function() {
+            $scope.settings.tour.taken = true;
+        };
+
         $scope.completedEvent = function () {
-            console.log("Completed Event called");
+            $scope.setTaken();
         };
-
         $scope.exitEvent = function () {
-            console.log("Exit Event called");
-        };
-
-        $scope.changeEvent = function (targetElement) {
-            console.log("Change Event called");
-            console.log(targetElement);
-        };
-
-        $scope.beforeChangeEvent = function (targetElement) {
-            console.log("Before Change Event called");
-            console.log(targetElement);
-        };
-
-        $scope.afterChangeEvent = function (targetElement) {
-            console.log("After Change Event called");
-            console.log(targetElement);
+            $scope.setTaken();
         };
 
         $scope.introOptions = {

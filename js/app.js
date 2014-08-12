@@ -73,7 +73,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         'HtmlNotifications',
         '$anchorScroll',
         '$q',
-        '$location',
         function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q) {
         $scope.updatingPosts = false;
 
@@ -307,7 +306,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     }])
 
     //a match post model
-    .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', function (MarkdownLinkDataService, $rootScope) {
+    .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', '$location', function (MarkdownLinkDataService, $rootScope, $location) {
 
         //regex to match <date> <UTC|UCT> - <match post>
         // the dash can have any spacing/dashes combo
@@ -322,6 +321,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             this.author = author;
             this.permalink = 'http://reddit.com' + permalink;
             this.posted = posted;
+            this.anchorlink = '#' + $location.path() + '#post-' + id;
 
             this.region = null;
             this.starts = null;

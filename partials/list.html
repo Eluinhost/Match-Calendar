@@ -13,7 +13,7 @@
                         </small>
                     </div>
                     <div class="col-xs-5 text-left">
-                        <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
+                        <a ng-click="$event.stopPropagation()" ng-href="{{post.anchorlink}}" target="_blank"><i class="fa fa-link"></i></a> <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
                         <br>
                         <small class="time-posted" tooltip="Time posted">
                             <i class="fa fa-reply fa-rotate-180"></i> <span ng-bind="post.posted.from(timeOffset.currentTime())"></span>

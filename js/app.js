@@ -179,7 +179,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .server-address',
-                    intro: 'The server address to connect to',
+                    intro: 'The server address to connect to, click on it to copy it to the clipboard',
                     position: 'right'
                 },
                 {

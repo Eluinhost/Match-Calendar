@@ -153,31 +153,38 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             steps:[
                 {
                     element: '.synced-time',
-                    intro: 'This is the time synced with the server'
+                    intro: 'This is the time synced with the server',
+                    position: 'bottom'
                 },
                 {
                     element: '.picked-timezone',
-                    intro: 'The selected timezone and format to show times in'
+                    intro: 'The selected timezone and format to show times in',
+                    position: 'bottom'
                 },
                 {
                     element: '.last-updated',
-                    intro: 'The time the list was last updated'
+                    intro: 'The time the list was last updated',
+                    position: 'left'
                 },
                 {
                     element: '.refresh-icon',
-                    intro: 'Force refresh the list. The list is automatically updated every minute'
+                    intro: 'Force refresh the list. The list is automatically updated every minute',
+                    position: 'left'
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .abs-game-starts',
-                    intro: 'When the game starts'
+                    intro: 'When the game starts',
+                    position: 'right'
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .server-address',
-                    intro: 'The server address to connect to'
+                    intro: 'The server address to connect to',
+                    position: 'right'
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .post-title',
-                    intro: 'The name of the game'
+                    intro: 'The name of the game',
+                    position: 'bottom'
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .time-posted',
@@ -185,23 +192,28 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .post-author',
-                    intro: 'The reddit name of the match host'
+                    intro: 'The reddit name of the match host',
+                    position: 'left'
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .fa-reddit',
-                    intro: 'Click the reddit icon to add the user to your favorite hosts list'
+                    intro: 'Click the reddit icon to add the user to your favorite hosts list',
+                    position: 'left'
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .server-region',
-                    intro: 'The region the server is hosted in'
+                    intro: 'The region the server is hosted in',
+                    position: 'left'
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .game-opens',
-                    intro: 'How long until the game opens'
+                    intro: 'How long until the game opens',
+                    position: 'left'
                 },
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .game-starts',
-                    intro: 'How long until the game starts'
+                    intro: 'How long until the game starts',
+                    position: 'left'
                 }
             ],
             showStepNumbers: false,

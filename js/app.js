@@ -101,6 +101,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
          * @param post {MatchPost}
          */
         $scope.triggerCopiedMessage = function (post) {
+            if(null == post.address)
+                return;
             var saved = post.address;
             post.address = 'Copied!';
             $timeout(function() {

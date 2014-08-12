@@ -64,8 +64,17 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     }])
 
     //controller for the application
-    .controller('AppCtrl', ['$scope', 'RedditPostsService', '$cookieStore', '$timeout', 'HtmlNotifications', function($scope, RedditPostsService, $cookieStore, $timeout, HtmlNotifications) {
-
+    .controller('AppCtrl', [
+        '$scope',
+        'RedditPostsService',
+        '$cookieStore',
+        '$interval',
+        '$timeout',
+        'HtmlNotifications',
+        '$anchorScroll',
+        '$q',
+        '$location',
+        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q) {
         $scope.updatingPosts = false;
 
         $scope.requestPermissions = function() {
@@ -88,12 +97,16 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
         $scope.posts = [];
         $scope.updatePosts = function() {
+            var def = $q.defer();
             $scope.updatingPosts = true;
             RedditPostsService.query($scope.settings.subreddits).then(function(data) {
                 $scope.posts = data;
                 $scope.updatingPosts = false;
                 $scope.lastUpdated = $scope.timeOffset.currentTime();
+                console.log('updated');
+                def.resolve();
             });
+            return def.promise;
         };
 
         /**
@@ -112,18 +125,18 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
         $scope.$watchCollection('settings.subreddits', $scope.updatePosts);
 
-        (function tick() {
+        $scope.clockTick = function() {
             $scope.current_time = $scope.timeOffset.currentTime();
-            $timeout(tick, 1000);
-         })();
+        };
+        $interval($scope.clockTick, 1000);
 
-        (function tick() {
+        $scope.updateTick = function() {
             $scope.updatePosts();
             if(HtmlNotifications.currentPermission() === 'granted') {
                 //TODO do notifications
             }
-            $timeout(tick, 1000 * 60);
-        })();
+        };
+        $interval($scope.updateTick, 1000 * 60);
     }])
 
     .controller('TourController', ['$scope', '$state', function($scope, $state) {
@@ -300,7 +313,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             this.title = title;
             this.selftext = selftext;
             this.author = author;
-            this.permalink = permalink;
+            this.permalink = 'http://reddit.com' + permalink;
             this.posted = posted;
 
             this.region = null;
@@ -332,7 +345,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         MatchPost.parseData = function (element) {
             var linkData = MarkdownLinkDataService.fetch('/matchpost', element.selftext);
 
-            var post = new MatchPost(element.id, element.title, element.selftext, element.author, 'http://reddit.com/' + element.permalink, moment(element.created_utc, 'X'));
+            var post = new MatchPost(element.id, element.title, element.selftext, element.author, element.permalink, moment(element.created_utc, 'X'));
 
             var parsedLink = false;
             if(linkData != null) {

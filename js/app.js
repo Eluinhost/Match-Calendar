@@ -44,7 +44,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('list', {
-                url: '/list',
+                url: '/list?post',
                 templateUrl: 'partials/list.html'
             })
 
@@ -73,7 +73,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         'HtmlNotifications',
         '$anchorScroll',
         '$q',
-        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q) {
+        '$stateParams',
+        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q, $stateParams) {
         $scope.updatingPosts = false;
 
         $scope.requestPermissions = function() {
@@ -102,7 +103,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 $scope.posts = data;
                 $scope.updatingPosts = false;
                 $scope.lastUpdated = $scope.timeOffset.currentTime();
-                console.log('updated');
                 def.resolve();
             });
             return def.promise;
@@ -132,7 +132,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.updatePosts().finally(function() {
                 $timeout(function() {
                     if(!$scope.scrolled) {
-                        $anchorScroll();
+                        if($stateParams.post != null)
+                            document.getElementById('post-' + $stateParams.post).scrollIntoView();
                         $scope.scrolled = true;
                     }
                 });
@@ -321,7 +322,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             this.author = author;
             this.permalink = 'http://reddit.com' + permalink;
             this.posted = posted;
-            this.anchorlink = '#' + $location.path() + '#post-' + id;
+            this.anchorlink = '#' + $location.path() + '?post=' + id;
 
             this.region = null;
             this.starts = null;

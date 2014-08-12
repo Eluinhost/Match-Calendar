@@ -282,6 +282,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     //a match post model
     .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', function (MarkdownLinkDataService, $rootScope) {
 
+        //regex to match <date> <UTC|UCT> - <match post>
+        // the dash can have any spacing/dashes combo
+        var matchPostRegex = /^(\w+ \d+ \d+:\d+)\s*(?:UTC|UCT)?\s*\[?(\w*)\]?[ -]+(.*)$/i;
+
         function MatchPost(id, title, selftext, author, permalink, posted) {
             this.id = id;
             this.title = title;
@@ -337,12 +341,19 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
 
             if(!parsedLink) {
                 //fall back to old style title parsing
+                var matches = matchPostRegex.exec(element.title);
+
+                if(null == matches)
+                    //post isnt formatted correctly, don't display it at all
+                    return null;
 
                 //attempt to parse the date from the post title
-                post.setStarts(moment.utc(/[\w]+ [\d]+ [\d]+:[\d]+/.exec(element.title), 'MMM DD HH:mm', 'en'));
+                post.setStarts(moment.utc(matches[1], 'MMM DD HH:mm', 'en'));
 
-                //get everything after the first '- ' in the title as the actual title
-                post.title = element.title.substring(element.title.indexOf('-') + 2);
+                if(matches[2] !== '')
+                    post.region = matches[2];
+
+                post.title = matches[3];
             }
 
             //if it's invalid (no parsable date) read as unparsed

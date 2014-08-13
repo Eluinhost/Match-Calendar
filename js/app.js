@@ -128,20 +128,29 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         };
 
         $scope.toggleNotifications = function(postid) {
-            var index = $scope.settings.notify_for.indexOf(postid);
-            if(index === -1) {
-                $scope.settings.notify_for.push(postid);
+            var notify = $scope.settings.notify_for[postid];
+            if(typeof notify === 'undefined') {
+                //set the last notification time to null to say we havn't done any
+                $scope.settings.notify_for[postid] = null;
             } else {
-                $scope.settings.notify_for.splice(index, 1);
+                delete $scope.settings.notify_for[postid];
             }
         };
 
         $scope.willNotify = function(postid) {
-            return $scope.settings.notify_for.indexOf(postid) !== -1;
+            return typeof $scope.settings.notify_for[postid] !== 'undefined';
         };
 
         $scope.clockTick = function() {
             $scope.current_time = $scope.timeOffset.currentTime();
+            if(HtmlNotifications.currentPermission() === 'granted') {
+                for (var postid in $scope.settings.notify_for) {
+                    if (!$scope.settings.notify_for.hasOwnProperty(postid))
+                        continue;
+                    var lastnotify = $scope.settings.notify_for[postid];
+                    //TODO notifications e.t.c.
+                }
+            }
         };
         $interval($scope.clockTick, 1000);
 
@@ -156,9 +165,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                     }
                 });
             });
-            if(HtmlNotifications.currentPermission() === 'granted') {
-                //TODO do notifications
-            }
         };
         $interval($scope.updateTick, 1000 * 60);
         $scope.$watchCollection('settings.subreddits', $scope.updateTick);

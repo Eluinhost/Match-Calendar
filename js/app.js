@@ -17,7 +17,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             tour: {
                 taken: $cookieStore.get('tour.taken') || false
             },
-            notify_for: $cookieStore.get('notify_for') || [],
+            notify_for: $cookieStore.get('notify_for') || {},
             notification_times: $cookieStore.get('notification_times') || [{value: 600}]
         };
 
@@ -25,9 +25,9 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $cookieStore.put('notification_times', newValue);
         }, true);
 
-        $rootScope.$watchCollection('settings.notify_for', function(newValue) {
+        $rootScope.$watch('settings.notify_for', function(newValue) {
             $cookieStore.put('notify_for', newValue);
-        });
+        }, true);
 
         $rootScope.$watch('settings.tour.taken', function(newValue) {
             $cookieStore.put('tour.taken', newValue);
@@ -136,8 +136,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.toggleNotifications = function(postid) {
             var notify = $scope.settings.notify_for[postid];
             if(typeof notify === 'undefined') {
-                //set the last notification time to null to say we havn't done any
-                $scope.settings.notify_for[postid] = null;
+                //set the last notification time to 0 to say we havn't done any
+                $scope.settings.notify_for[postid] = {value: 0};
             } else {
                 delete $scope.settings.notify_for[postid];
             }
@@ -168,7 +168,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                             angular.forEach($scope.settings.notification_times, function(notifcation_time) {
                                 var notifyTime = post[0].starts - (notifcation_time.value * 1000);
                                 if($scope.current_time >= notifyTime) {
-                                    if($scope.settings.notify_for[postid] < notifyTime) {
+                                    if($scope.settings.notify_for[postid].value < notifyTime) {
                                         var difference = post[0].starts  - $scope.current_time;
                                         HtmlNotifications.notify('Game starts in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference/1000)), post[0].title);
                                         $scope.settings.notify_for[postid] = $scope.current_time;
@@ -663,11 +663,9 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             offset: null,
             resync: function() {
                 var service = this;
-                console.log('syncing');
                 $http.get(resyncURL).then(
                     function(data) {
                         service.synced = true;
-                        console.log('synced');
                         //this isn't really that accurate but within ping time so close enough
                         service.offset = data.data.time - moment().valueOf();
                     }

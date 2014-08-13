@@ -84,7 +84,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         '$anchorScroll',
         '$q',
         '$stateParams',
-        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q, $stateParams) {
+        'NotifcationTimeFormat',
+        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q, $stateParams, NotifcationTimeFormat) {
         $scope.updatingPosts = false;
 
         $scope.requestPermissions = function() {
@@ -149,11 +150,33 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.clockTick = function() {
             $scope.current_time = $scope.timeOffset.currentTime();
             if(HtmlNotifications.currentPermission() === 'granted') {
-                for (var postid in $scope.settings.notify_for) {
-                    if (!$scope.settings.notify_for.hasOwnProperty(postid))
-                        continue;
-                    var lastnotify = $scope.settings.notify_for[postid];
-                    //TODO notifications e.t.c.
+                if($scope.posts.length != 0) {
+                    for (var pid in $scope.settings.notify_for) {
+                        if (!$scope.settings.notify_for.hasOwnProperty(pid))
+                            continue;
+                        (function (postid) {
+                            var post = $scope.posts.filter(function (mpost) {
+                                if (mpost.id === postid) {
+                                    return true;
+                                }
+                            });
+                            //if the post no longer exists
+                            if (post.length == 0) {
+                                delete $scope.settings.notify_for[postid];
+                                return;
+                            }
+                            angular.forEach($scope.settings.notification_times, function(notifcation_time) {
+                                var notifyTime = post[0].starts - (notifcation_time.value * 1000);
+                                if($scope.current_time >= notifyTime) {
+                                    if($scope.settings.notify_for[postid] < notifyTime) {
+                                        var difference = post[0].starts  - $scope.current_time;
+                                        HtmlNotifications.notify('Game starts in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference/1000)), post[0].title);
+                                        $scope.settings.notify_for[postid] = $scope.current_time;
+                                    }
+                                }
+                            });
+                        })(pid);
+                    }
                 }
             }
         };
@@ -273,7 +296,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         }
     }])
 
-    .controller('SettingsCtrl', ['$scope', function($scope) {
+    .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', function($scope, NotifcationTimeFormat) {
         $scope.addSubreddit = function(name) {
             if(name === '' || name === null || name === undefined) {
                 return;
@@ -292,30 +315,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $scope.settings.notification_times.push({value: 600});
         };
         $scope.translateSeconds =  function (duration){
-            var hour = 0;
-            var min = 0;
-            var sec = 0;
-
-            if (duration){
-                if (duration >= 60){
-                    min = Math.floor(duration / 60);
-                    sec = duration % 60;
-                }
-                else{
-                    sec = duration;
-                }
-
-                if (min >= 60){
-                    hour = Math.floor(min / 60);
-                    min = min - hour * 60;
-                }
-
-                if ( hour < 10 ){ hour = '0'+hour; }
-                if ( min < 10 ){ min = '0'+min; }
-                if ( sec < 10 ){ sec = '0'+sec; }
-            }
-            return hour +":"+ min +":"+ sec;
-        }
+            return NotifcationTimeFormat.translateSeconds(duration);
+        };
     }])
 
     .controller('HeaderGeneratorCtrl', ['$scope', function($scope) {
@@ -364,6 +365,42 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.address = '192.168.0.1';
         $scope.post_title = 'Game Title';
         $scope.region = 'NA';
+    }])
+
+    .factory('NotifcationTimeFormat', [function() {
+        return {
+            translateSeconds: function (duration) {
+                var hour = 0;
+                var min = 0;
+                var sec = 0;
+
+                if (duration) {
+                    if (duration >= 60) {
+                        min = Math.floor(duration / 60);
+                        sec = duration % 60;
+                    }
+                    else {
+                        sec = duration;
+                    }
+
+                    if (min >= 60) {
+                        hour = Math.floor(min / 60);
+                        min = min - hour * 60;
+                    }
+
+                    if (hour < 10) {
+                        hour = '0' + hour;
+                    }
+                    if (min < 10) {
+                        min = '0' + min;
+                    }
+                    if (sec < 10) {
+                        sec = '0' + sec;
+                    }
+                }
+                return hour + ":" + min + ":" + sec;
+            }
+        }
     }])
 
     //a match post model

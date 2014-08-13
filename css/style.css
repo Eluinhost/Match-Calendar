@@ -34,8 +34,12 @@ body {
     color: #ff5050;
 }
 
-.unpadded-page {
-    margin-top: -15px;
+.page-view {
+    padding-top: 15px;
+}
+
+.list-page {
+    margin-top: -10px;
 }
 
 .navbar {
@@ -43,7 +47,7 @@ body {
 }
 
 .time-info {
-    margin-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .options,

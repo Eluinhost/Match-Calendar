@@ -285,7 +285,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.removeSubreddit = function(index) {
             $scope.settings.subreddits.splice(index, 1);
         };
-        $scope.newNotification = function() {
+        $scope.removeNotificationTime = function(index) {
+            $scope.settings.notification_times.splice(index, 1);
+        };
+        $scope.newNotificationTime = function() {
             $scope.settings.notification_times.push({value: 600});
         };
         $scope.translateSeconds =  function (duration){

@@ -1,7 +1,9 @@
 'use strict';
 
+var cookie_version = '1';
+
 // Main application
-angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard', 'angular-intro'])
+angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard', 'angular-intro', 'vr.directives.slider'])
 
     .run(['$rootScope', '$cookieStore', 'DateTimeService', function($rootScope, $cookieStore, DateTimeService) {
         $rootScope.timeOffset = DateTimeService;
@@ -16,8 +18,21 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             favorite_hosts: $cookieStore.get('favorite_hosts') || ['Elllzman619'],
             tour: {
                 taken: $cookieStore.get('tour.taken') || false
-            }
+            },
+            notify_for: $cookieStore.get('notify_for') || {},
+            notification_times: $cookieStore.get('notification_times') || [{value: 600}],
+
+            //store the version of the cookie we have so we can modify the cookie data if needed in future versions
+            stored_cookie_version: $cookieStore.get('cookie_version') || cookie_version
         };
+
+        $rootScope.$watch('settings.notification_times', function (newValue) {
+            $cookieStore.put('notification_times', newValue);
+        }, true);
+
+        $rootScope.$watch('settings.notify_for', function(newValue) {
+            $cookieStore.put('notify_for', newValue);
+        }, true);
 
         $rootScope.$watch('settings.tour.taken', function(newValue) {
             $cookieStore.put('tour.taken', newValue);
@@ -74,7 +89,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         '$anchorScroll',
         '$q',
         '$stateParams',
-        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q, $stateParams) {
+        'NotifcationTimeFormat',
+        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q, $stateParams, NotifcationTimeFormat) {
         $scope.updatingPosts = false;
 
         $scope.requestPermissions = function() {
@@ -122,8 +138,52 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             }, 2000);
         };
 
+        $scope.toggleNotifications = function(postid) {
+            var notify = $scope.settings.notify_for[postid];
+            if(typeof notify === 'undefined') {
+                //set the last notification time to 0 to say we havn't done any
+                $scope.settings.notify_for[postid] = {value: 0};
+            } else {
+                delete $scope.settings.notify_for[postid];
+            }
+        };
+
+        $scope.willNotify = function(postid) {
+            return typeof $scope.settings.notify_for[postid] !== 'undefined';
+        };
+
         $scope.clockTick = function() {
             $scope.current_time = $scope.timeOffset.currentTime();
+            if(HtmlNotifications.currentPermission() === 'granted') {
+                if($scope.posts.length != 0) {
+                    for (var pid in $scope.settings.notify_for) {
+                        if (!$scope.settings.notify_for.hasOwnProperty(pid))
+                            continue;
+                        (function (postid) {
+                            var post = $scope.posts.filter(function (mpost) {
+                                if (mpost.id === postid) {
+                                    return true;
+                                }
+                            });
+                            //if the post no longer exists
+                            if (post.length == 0) {
+                                delete $scope.settings.notify_for[postid];
+                                return;
+                            }
+                            angular.forEach($scope.settings.notification_times, function(notifcation_time) {
+                                var notifyTime = post[0].starts - (notifcation_time.value * 1000);
+                                if($scope.current_time >= notifyTime) {
+                                    if($scope.settings.notify_for[postid].value < notifyTime) {
+                                        var difference = post[0].starts  - $scope.current_time;
+                                        HtmlNotifications.notify('Game starts in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference/1000)), post[0].title);
+                                        $scope.settings.notify_for[postid] = $scope.current_time;
+                                    }
+                                }
+                            });
+                        })(pid);
+                    }
+                }
+            }
         };
         $interval($scope.clockTick, 1000);
 
@@ -138,9 +198,6 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                     }
                 });
             });
-            if(HtmlNotifications.currentPermission() === 'granted') {
-                //TODO do notifications
-            }
         };
         $interval($scope.updateTick, 1000 * 60);
         $scope.$watchCollection('settings.subreddits', $scope.updateTick);
@@ -244,17 +301,26 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         }
     }])
 
-    .controller('SettingsCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+    .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', function($scope, NotifcationTimeFormat) {
         $scope.addSubreddit = function(name) {
             if(name === '' || name === null || name === undefined) {
                 return;
             }
-            if($rootScope.settings.subreddits.indexOf(name) === -1) {
-                $rootScope.settings.subreddits.push(name);
+            if($scope.settings.subreddits.indexOf(name) === -1) {
+                $scope.settings.subreddits.push(name);
             }
         };
         $scope.removeSubreddit = function(index) {
-            $rootScope.settings.subreddits.splice(index, 1);
+            $scope.settings.subreddits.splice(index, 1);
+        };
+        $scope.removeNotificationTime = function(index) {
+            $scope.settings.notification_times.splice(index, 1);
+        };
+        $scope.newNotificationTime = function() {
+            $scope.settings.notification_times.push({value: 600});
+        };
+        $scope.translateSeconds =  function (duration){
+            return NotifcationTimeFormat.translateSeconds(duration);
         };
     }])
 
@@ -304,6 +370,42 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.address = '192.168.0.1';
         $scope.post_title = 'Game Title';
         $scope.region = 'NA';
+    }])
+
+    .factory('NotifcationTimeFormat', [function() {
+        return {
+            translateSeconds: function (duration) {
+                var hour = 0;
+                var min = 0;
+                var sec = 0;
+
+                if (duration) {
+                    if (duration >= 60) {
+                        min = Math.floor(duration / 60);
+                        sec = duration % 60;
+                    }
+                    else {
+                        sec = duration;
+                    }
+
+                    if (min >= 60) {
+                        hour = Math.floor(min / 60);
+                        min = min - hour * 60;
+                    }
+
+                    if (hour < 10) {
+                        hour = '0' + hour;
+                    }
+                    if (min < 10) {
+                        min = '0' + min;
+                    }
+                    if (sec < 10) {
+                        sec = '0' + sec;
+                    }
+                }
+                return hour + ":" + min + ":" + sec;
+            }
+        }
     }])
 
     //a match post model
@@ -566,11 +668,9 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             offset: null,
             resync: function() {
                 var service = this;
-                console.log('syncing');
                 $http.get(resyncURL).then(
                     function(data) {
                         service.synced = true;
-                        console.log('synced');
                         //this isn't really that accurate but within ping time so close enough
                         service.offset = data.data.time - moment().valueOf();
                     }

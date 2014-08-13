@@ -253,6 +253,11 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                     position: 'right'
                 },
                 {
+                    element: '.list-page > accordion .panel:nth-child(2) .anchor-link',
+                    intro: 'This link will go directly to this match post if it exists in the list',
+                    position: 'right'
+                },
+                {
                     element: '.list-page > accordion .panel:nth-child(2) .post-title',
                     intro: 'The name of the game',
                     position: 'bottom'
@@ -274,6 +279,11 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 {
                     element: '.list-page > accordion .panel:nth-child(2) .server-region',
                     intro: 'The region the server is hosted in',
+                    position: 'left'
+                },
+                {
+                    element: '.list-page > accordion .panel:nth-child(2) .fa-calendar-o',
+                    intro: 'Click this to enable notifications for this game, notification timings can be found on the settings page',
                     position: 'left'
                 },
                 {

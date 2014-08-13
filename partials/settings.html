@@ -56,6 +56,7 @@
                     <span ng-repeat="notification_time in settings.notification_times">
                         <slider ng-model="notification_time.value" floor="1" ceiling="7200" step="1" stretch="1" translate-fn="translateSeconds"></slider>
                     </span>
+                    <button class="btn btn-primary" type="button" ng-click="newNotification()">New notification</button>
                 </div>
             </div>
         </div>

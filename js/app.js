@@ -273,17 +273,20 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         }
     }])
 
-    .controller('SettingsCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+    .controller('SettingsCtrl', ['$scope', function($scope) {
         $scope.addSubreddit = function(name) {
             if(name === '' || name === null || name === undefined) {
                 return;
             }
-            if($rootScope.settings.subreddits.indexOf(name) === -1) {
-                $rootScope.settings.subreddits.push(name);
+            if($scope.settings.subreddits.indexOf(name) === -1) {
+                $scope.settings.subreddits.push(name);
             }
         };
         $scope.removeSubreddit = function(index) {
-            $rootScope.settings.subreddits.splice(index, 1);
+            $scope.settings.subreddits.splice(index, 1);
+        };
+        $scope.newNotification = function() {
+            $scope.settings.notification_times.push({value: 600});
         };
         $scope.translateSeconds =  function (duration){
             var hour = 0;

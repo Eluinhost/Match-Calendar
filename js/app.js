@@ -17,8 +17,13 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             tour: {
                 taken: $cookieStore.get('tour.taken') || false
             },
-            notify_for: $cookieStore.get('notify_for') || []
+            notify_for: $cookieStore.get('notify_for') || [],
+            notification_times: $cookieStore.get('notification_times') || [{value: 600}]
         };
+
+        $rootScope.$watch('settings.notification_times', function (newValue) {
+            $cookieStore.put('notification_times', newValue);
+        }, true);
 
         $rootScope.$watchCollection('settings.notify_for', function(newValue) {
             $cookieStore.put('notify_for', newValue);

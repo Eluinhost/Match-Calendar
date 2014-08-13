@@ -53,7 +53,9 @@
                 </div>
                 <div class="panel-body">
                     <p class="help-block">When to send notifications before a game starts:</p>
-                    <slider ng-model="test" floor="1" ceiling="7200" step="1" stretch="1" translate-fn="translateSeconds"></slider>
+                    <span ng-repeat="notification_time in settings.notification_times">
+                        <slider ng-model="notification_time.value" floor="1" ceiling="7200" step="1" stretch="1" translate-fn="translateSeconds"></slider>
+                    </span>
                 </div>
             </div>
         </div>

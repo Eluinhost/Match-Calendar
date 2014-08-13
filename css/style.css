@@ -94,3 +94,8 @@ a[href$="/matchpost"] {
 .scheduled {
     color: #FF2222;
 }
+
+/*noinspection CssInvalidPseudoSelector*/
+::-ms-tooltip {
+    display: none;
+}

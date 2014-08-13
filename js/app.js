@@ -127,13 +127,17 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             }, 2000);
         };
 
-        $scope.toggleNotifications = function(post) {
-            var index = $scope.settings.notify_for.indexOf(post);
+        $scope.toggleNotifications = function(postid) {
+            var index = $scope.settings.notify_for.indexOf(postid);
             if(index === -1) {
-                $scope.settings.notify_for.push(post);
+                $scope.settings.notify_for.push(postid);
             } else {
                 $scope.settings.notify_for.splice(index, 1);
             }
+        };
+
+        $scope.willNotify = function(postid) {
+            return $scope.settings.notify_for.indexOf(postid) !== -1;
         };
 
         $scope.clockTick = function() {

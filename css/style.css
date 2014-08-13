@@ -18,6 +18,9 @@ body {
 .notify-permission.alert-warning {
     cursor: pointer;
 }
+.notify-permission {
+    margin-bottom: 0;
+}
 
 .row.no-gutter {
     margin-left: 0;

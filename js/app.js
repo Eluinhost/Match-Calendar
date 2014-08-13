@@ -1,5 +1,7 @@
 'use strict';
 
+var cookie_version = '1';
+
 // Main application
 angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard', 'angular-intro', 'vr.directives.slider'])
 
@@ -18,7 +20,10 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 taken: $cookieStore.get('tour.taken') || false
             },
             notify_for: $cookieStore.get('notify_for') || {},
-            notification_times: $cookieStore.get('notification_times') || [{value: 600}]
+            notification_times: $cookieStore.get('notification_times') || [{value: 600}],
+
+            //store the version of the cookie we have so we can modify the cookie data if needed in future versions
+            stored_cookie_version: $cookieStore.get('cookie_version') || cookie_version
         };
 
         $rootScope.$watch('settings.notification_times', function (newValue) {

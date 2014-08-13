@@ -29,8 +29,8 @@
                                     <small ng-bind="post.region == null ? 'N/A' : post.region"></small> <i class="fa fa-globe"></i>&nbsp;
                                 </span>
                             </div>
-                            <div class="col-xs-1 text-center">
-                                <i class="fa fa-calendar-o"></i>
+                            <div class="col-xs-1 text-center" ng-class="{'scheduled': settings.notify_for.indexOf(post.id) !== -1}">
+                                <i ng-click="toggleNotifications(post.id); $event.stopPropagation()" class="fa fa-calendar-o"></i>
                             </div>
                             <div class="col-xs-5 text-left">
                                 <span tooltip="Opens" class="game-opens">

@@ -16,8 +16,13 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             favorite_hosts: $cookieStore.get('favorite_hosts') || ['Elllzman619'],
             tour: {
                 taken: $cookieStore.get('tour.taken') || false
-            }
+            },
+            notify_for: $cookieStore.get('notify_for') || []
         };
+
+        $rootScope.$watchCollection('settings.notify_for', function(newValue) {
+            $cookieStore.put('notify_for', newValue);
+        });
 
         $rootScope.$watch('settings.tour.taken', function(newValue) {
             $cookieStore.put('tour.taken', newValue);
@@ -120,6 +125,15 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             $timeout(function() {
                 post.address = saved;
             }, 2000);
+        };
+
+        $scope.toggleNotifications = function(post) {
+            var index = $scope.settings.notify_for.indexOf(post);
+            if(index === -1) {
+                $scope.settings.notify_for.push(post);
+            } else {
+                $scope.settings.notify_for.splice(index, 1);
+            }
         };
 
         $scope.clockTick = function() {

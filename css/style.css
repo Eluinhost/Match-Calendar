@@ -90,3 +90,7 @@ a[href$="/matchpost"] {
     -ms-animation-iteration-count: infinite;
     -o-animation-iteration-count: infinite;
 }
+
+.scheduled {
+    color: #FF2222;
+}

@@ -1,10 +1,10 @@
 body {
     font-family: Helvetica, serif;
+    background-image: url('./../images/pw_maze_white.png');
 }
-
-#banner {
-    width: 100%;
-    display: block;
+html,
+body {
+    height:100%;
 }
 
 .favorite_host > .panel-heading {
@@ -55,10 +55,8 @@ body {
     padding-bottom: 20px;
 }
 
-.options,
-.navbar-default {
-    background: #CCCCCC;
-    border-color: #CCCCCC;
+.options {
+    background-image: url('./../images/pw_maze_white.png');
 }
 
 .refresh-button {

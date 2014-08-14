@@ -491,6 +491,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                     post.setStarts(moment(json.starts, 'YYYY-MM-DDTHH:mm:ssZ'));
                     post.setRegion(json.region);
                     post.setAddress(json.address);
+                    post.title = json.title;
 
                     parsedLink = true;
                 } catch (err) {}

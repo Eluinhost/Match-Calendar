@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body ng-app="MatchCalendar" ng-controller="AppCtrl">
-<a href="https://github.com/Eluinhost/Match-Calendar"><img style="position: absolute; top: 0; left: 0; border: 0; z-index: 100000" src="images/wip.png" alt="WIP"></a>
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -34,7 +33,7 @@
 </nav>
 <div class="container-fluid">
     <div class="row options text-center">
-        <div class="col-sm-3"
+        <div class="col-sm-3 text-left"
              ng-controller="TourController"
              ng-intro-options="introOptions"
              ng-intro-method="callMe"
@@ -52,7 +51,7 @@
                 <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
             </span>
         </div>
-        <div class="refresh-button col-sm-3">
+        <div class="refresh-button col-sm-3 text-right">
             Last Updated: <small class="last-updated" ng-bind="posts.lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
             <br>
             <b class="refresh-icon" ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': posts.updatingPosts}"></i> Refresh</b>

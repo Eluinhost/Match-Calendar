@@ -181,3 +181,17 @@ slider span.bubble.selection {
 slider span.bubble.limit {
     color: #808080;
 }
+.match-post.ng-enter {
+    animation: zoomInLeft 1s;
+    -moz-animation: zoomInLeft 1s;
+    -o-animation: zoomInLeft 1s;
+    -ms-animation: zoomInLeft 1s;
+    -webkit-animation: zoomInLeft 1s;
+}
+.match-post.ng-leave {
+    animation: zoomOutRight 1s;
+    -moz-animation: zoomOutRight 1s;
+    -o-animation: zoomOutRight 1s;
+    -ms-animation: zoomOutRight 1s;
+    -webkit-animation: zoomOutRight 1s;
+}

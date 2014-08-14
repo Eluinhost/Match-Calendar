@@ -3,7 +3,7 @@
 var cookie_version = '1';
 
 // Main application
-angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard', 'angular-intro', 'vr.directives.slider'])
+angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btford.markdown', 'ui.router', 'ngClipboard', 'angular-intro', 'vr.directives.slider', 'ngAnimate'])
 
     .run(['$rootScope', '$cookieStore', 'DateTimeService', function($rootScope, $cookieStore, DateTimeService) {
         $rootScope.timeOffset = DateTimeService;

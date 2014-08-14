@@ -33,14 +33,14 @@
 </nav>
 <div class="container-fluid">
     <div class="row options text-center">
-        <div class="col-sm-3 text-left"
+        <div class="col-sm-3"
              ng-controller="TourController"
              ng-intro-options="introOptions"
              ng-intro-method="callMe"
              ng-intro-oncomplete="completedEvent"
              ng-intro-onexit="exitEvent"
              ng-intro-autostart="shouldAutoStart()">
-            <button class="tour-button btn btn-lg btn-primary" type="button" ng-click="callMe()" ng-show="showTour()" ng-class="{'pulse infinite': !settings.tour.taken}">Take a Tour</button>
+            <button class="tour-button btn btn-lg btn-primary" type="button" ng-click="callMe()" ng-show="showTour()" ng-class="{'tour-button-animation pulse infinite': !settings.tour.taken}">Take a Tour</button>
         </div>
         <div class="time-info col-sm-6">
             <h3 class="synced-time">
@@ -51,7 +51,7 @@
                 <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
             </span>
         </div>
-        <div class="refresh-button col-sm-3 text-right">
+        <div class="refresh-button col-sm-3">
             Last Updated: <small class="last-updated" ng-bind="posts.lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
             <br>
             <b class="refresh-icon" ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': posts.updatingPosts}"></i> Refresh</b>

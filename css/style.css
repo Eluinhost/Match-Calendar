@@ -82,6 +82,9 @@ a[href$="/matchpost"] {
 
 .tour-button {
     margin-top: 15px;
+}
+
+.tour-button-animation {
     -webkit-animation-delay: 5s;
     -moz-animation-delay: 5s;
     -ms-animation-delay: 5s;

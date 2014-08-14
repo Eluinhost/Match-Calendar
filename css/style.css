@@ -21,7 +21,9 @@ body {
 .notify-permission {
     margin-bottom: 0;
 }
-
+.panel.search-panel {
+    margin-bottom: 5px;
+}
 .row.no-gutter {
     margin-left: 0;
     margin-right: 0;

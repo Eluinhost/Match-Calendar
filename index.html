@@ -54,9 +54,9 @@
             </span>
         </div>
         <div class="refresh-button col-sm-3">
-            Last Updated: <small class="last-updated" ng-bind="lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
+            Last Updated: <small class="last-updated" ng-bind="posts.lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
             <br>
-            <b class="refresh-icon" ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': updatingPosts}"></i> Refresh</b>
+            <b class="refresh-icon" ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': posts.updatingPosts}"></i> Refresh</b>
         </div>
     </div>
     <div class="row">

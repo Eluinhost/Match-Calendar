@@ -90,9 +90,8 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         '$q',
         '$stateParams',
         'NotifcationTimeFormat',
-        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q, $stateParams, NotifcationTimeFormat) {
-        $scope.updatingPosts = false;
-
+        '$filter',
+        function($scope, RedditPostsService, $cookieStore, $interval, $timeout, HtmlNotifications, $anchorScroll, $q, $stateParams, NotifcationTimeFormat, $filter) {
         $scope.requestPermissions = function() {
             HtmlNotifications.requestPermission().then(function() {
                 HtmlNotifications.notify('Notifications Enabled!');
@@ -111,18 +110,34 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
             }
         };
 
-        $scope.posts = [];
+        $scope.posts = {
+            posts: [],
+            filteredposts: [],
+            postfilter: '',
+            updating: false,
+            lastUpdated: null
+        };
         $scope.updatePosts = function() {
             var def = $q.defer();
-            $scope.updatingPosts = true;
+            $scope.posts.updatingPosts = true;
             RedditPostsService.query($scope.settings.subreddits).then(function(data) {
-                $scope.posts = data;
-                $scope.updatingPosts = false;
-                $scope.lastUpdated = $scope.timeOffset.currentTime();
+                $scope.posts.posts = data;
+                $scope.posts.updatingPosts = false;
+                $scope.posts.lastUpdated = $scope.timeOffset.currentTime();
                 def.resolve();
             });
             return def.promise;
         };
+
+        $scope.refilter = function() {
+            $scope.posts.filteredposts = $filter('filter')($scope.posts.posts, $scope.posts.postfilter);
+        };
+        $scope.$watch('posts.postfilter', function() {
+            $scope.refilter();
+        });
+        $scope.$watch('posts.posts', function() {
+            $scope.refilter();
+        });
 
         /**
          * Changes the address of the post to 'Copied!' for a couple of seconds
@@ -155,12 +170,12 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $scope.clockTick = function() {
             $scope.current_time = $scope.timeOffset.currentTime();
             if(HtmlNotifications.currentPermission() === 'granted') {
-                if($scope.posts.length != 0) {
+                if($scope.posts.posts.length != 0) {
                     for (var pid in $scope.settings.notify_for) {
                         if (!$scope.settings.notify_for.hasOwnProperty(pid))
                             continue;
                         (function (postid) {
-                            var post = $scope.posts.filter(function (mpost) {
+                            var post = $scope.posts.posts.filter(function (mpost) {
                                 if (mpost.id === postid) {
                                     return true;
                                 }

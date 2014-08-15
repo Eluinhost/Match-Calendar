@@ -41,7 +41,7 @@
                                 <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
                                 <br>
                                 <span class="server-region" tooltip="Server Region">
-                                    <small ng-bind="post.region == null ? 'N/A' : post.region"></small> <i class="fa fa-globe"></i>&nbsp;
+                                    <small ng-bind="post.region == null ? 'Unknown' : post.region"></small> <i class="fa fa-globe"></i>&nbsp;
                                 </span>
                             </div>
                             <div class="col-xs-1 text-center" ng-class="{'scheduled': willNotify(post.id)}">

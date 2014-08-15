@@ -540,6 +540,9 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 }
             }
 
+            //fix &amp;
+            post.title = post.title.replace(/&amp;/g, '&');
+
             return post;
         };
 

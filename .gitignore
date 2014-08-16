@@ -1,3 +1,2 @@
 bower_components
-web/*
-!web/.gitkeep
+web

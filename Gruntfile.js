@@ -82,7 +82,8 @@ module.exports = function(grunt) {
                 exclude: [
                     /.*bower_components.bootstrap.dist.js.bootstrap.js$/,
                     /.*bower_components.jquery.dist.jquery.js$/
-                ]
+                ],
+                includeSelf: true
             }
         },
         useminPrepare: {

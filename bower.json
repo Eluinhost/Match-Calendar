@@ -24,5 +24,6 @@
     "showdown": {
       "main": "src/showdown.js"
     }
-  }
+  },
+  "main": ["src/js/**/*.js", "src/css/**/*.css"]
 }

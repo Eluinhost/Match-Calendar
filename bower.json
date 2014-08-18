@@ -19,5 +19,10 @@
   },
   "resolutions": {
     "angular": "~1.2.19"
+  },
+  "overrides": {
+    "showdown": {
+      "main": "src/showdown.js"
+    }
   }
 }

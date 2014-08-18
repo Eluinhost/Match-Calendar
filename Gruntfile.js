@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-ng-annotate');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.initConfig({
         clean: {
@@ -16,6 +17,25 @@ module.exports = function(grunt) {
             images: 'web/images',
             php: 'web/**/*.php',
             tmp: '.tmp'
+        },
+        watch: {
+            fullbuild: {
+                files: ['bower.json', 'src/index.html', 'src/css/*', 'src/js/*'],
+                tasks: ['clean:web', 'build'],
+                debounceDelay: 2000
+            },
+            htmls: {
+                files: ['src/partials/**/*.html'],
+                tasks: ['copy:html']
+            },
+            images: {
+                files: ['src/images/*'],
+                tasks: ['copy:images']
+            },
+            php: {
+                files: ['src/**/*.php'],
+                tasks: ['copy:php']
+            }
         },
         ngAnnotate: {
             vendor: {

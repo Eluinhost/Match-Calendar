@@ -16,6 +16,7 @@ module.exports = function(grunt) {
             partials: 'web/partials/**/*.html',
             images: 'web/images',
             php: 'web/**/*.php',
+            fonts: 'web/fonts',
             tmp: '.tmp'
         },
         watch: {
@@ -27,6 +28,10 @@ module.exports = function(grunt) {
             htmls: {
                 files: ['src/partials/**/*.html'],
                 tasks: ['copy:html']
+            },
+            fonts: {
+                files: ['src/fonts/*'],
+                tasks: ['copy:fonts']
             },
             images: {
                 files: ['src/images/*'],
@@ -74,6 +79,12 @@ module.exports = function(grunt) {
                 dest: 'web/fonts/',
                 cwd: 'bower_components/bootstrap/fonts',
                 expand: true
+            },
+            appfonts: {
+                src: ['**/*'],
+                dest: 'web/fonts/',
+                cwd: 'src/fonts',
+                expand: true
             }
         },
         wiredep: {
@@ -109,6 +120,7 @@ module.exports = function(grunt) {
         'copy:php',
         'copy:fafonts',
         'copy:bsfonts',
+        'copy:appfonts',
         'concat:generated',
         'ngAnnotate:vendor',
         'cssmin:generated',

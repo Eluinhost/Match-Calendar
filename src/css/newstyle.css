@@ -1,6 +1,16 @@
+/**
+ * GLOBALS
+ */
+@font-face {
+    font-family: 'Pen';
+    src: url('../fonts/pen.ttf');
+}
+
 body {
     text-align: center;
-    background-image: url('./../images/pw_maze_white.png');
+    background-image: url('./../images/linedpaper.png');
+    font-family: 'Pen', cursive;
+    font-weight: 500;
 }
 
 /**
@@ -21,6 +31,7 @@ body {
     font-variant: small-caps;
     padding-top: 2px;
     padding-bottom: 2px;
+    font-weight: bold;
 }
 
 .site-nav {

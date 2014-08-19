@@ -103,6 +103,10 @@ body {
     padding-bottom: 18px;
 }
 
+.clock-bar-center {
+    background-image: url('./../images/paper.png');
+}
+
 /* sm devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .clock-bar-center {

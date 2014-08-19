@@ -43,14 +43,18 @@ body {
 @media (min-width: 768px) {
     .nav-button {
         border-right: 1px #aa1a1a dashed;
-        border-left: 1px #aa1a1a dashed;
+    }
+    .nav-button:last-child {
+        border-right: 0;
     }
 }
 
 @media (max-width: 767px) {
     .nav-button {
         border-bottom: 1px #aa1a1a dashed;
-        border-top: 1px #aa1a1a dashed;
+    }
+    .nav-button:last-child {
+        border-bottom: 0;
     }
 }
 
@@ -75,7 +79,7 @@ body {
 /* sm devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .clock-bar-center {
-        border-right: 2px #aa1a1a dotted;
-        border-left: 2px #aa1a1a dotted;
+        border-right: 1px #aa1a1a dashed;
+        border-left: 1px #aa1a1a dashed;
     }
 }

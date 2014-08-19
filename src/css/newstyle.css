@@ -110,6 +110,7 @@ body {
         -moz-border-image: url(../images/outline.png) 5 5 5 5 repeat;
         -webkit-border-image: url(../images/outline.png) 5 5 5 5 repeat;
         border-width: 0 3px 0 3px;
+        border-image-outset: 0 0 0 2px;
 
         /* fallback for <IE-11 */
         border-style: solid;

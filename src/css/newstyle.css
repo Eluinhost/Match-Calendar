@@ -1,0 +1,70 @@
+body {
+    text-align: center;
+    background-image: url('./../images/pw_maze_white.png');
+}
+
+/**
+ * HEADER STUFFS
+ */
+.site-header-image {
+    min-height: 80px;
+}
+
+.subreddit-link {
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+/**
+ * NAV BAR/BUTTON LINKS
+ */
+.nav-button {
+    font-variant: small-caps;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.site-nav {
+    border-top: 3px #aa1a1a solid;
+    border-bottom: 3px #aa1a1a solid;
+}
+
+/* sm devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .nav-button {
+        border-right: 1px #aa1a1a dashed;
+        border-left: 1px #aa1a1a dashed;
+    }
+}
+
+@media (max-width: 767px) {
+    .nav-button {
+        border-bottom: 1px #aa1a1a dashed;
+        border-top: 1px #aa1a1a dashed;
+    }
+}
+
+/**
+ * CLOCK/TIME INFO BAR
+ */
+.clock-bar {
+    border-bottom: 8px #aa1a1a solid;
+}
+
+.clock-bar-time {
+    font-weight: 700;
+    font-size: 32px;
+    padding-top: 15px;
+}
+
+.clock-bar-timezone {
+    font-style: italic;
+    padding-bottom: 18px;
+}
+
+/* sm devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .clock-bar-center {
+        border-right: 2px #aa1a1a dotted;
+        border-left: 2px #aa1a1a dotted;
+    }
+}

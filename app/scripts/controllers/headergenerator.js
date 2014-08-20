@@ -54,4 +54,4 @@ angular.module('matchCalendarApp')
         $scope.address = '192.168.0.1';
         $scope.post_title = 'Game Title';
         $scope.region = 'NA';
-    }])
+    }]);

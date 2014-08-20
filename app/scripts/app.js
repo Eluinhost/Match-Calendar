@@ -78,27 +78,7 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
         $urlRouterProvider.otherwise('/list');
     }])
 
-    //service for matching markdown links to specific URL path
-    .factory( 'MarkdownLinkDataService', [function() {
-        return {
-            /**
-             * Returns the raw string for the markdown link in format [data](link)
-             * @param path {string} the URL that was linked to
-             * @param markdown {string} the markdown
-             * @returns {string} data for the link
-             */
-            fetch: function(path, markdown) {
-                //simple regex for [data](/link) type links
-                var regex = new RegExp('\\[([^\\[\\]]+)\\]\\('+path+'\\)', 'g');
-                var matches = regex.exec(markdown);
-                if(matches == null) {
-                    return null;
-                } else {
-                    return matches[1];
-                }
-            }
-        }
-    }])
+
 
     //service for fetching reddit posts from the JSON api
     .factory( 'RedditPostsService', ['$http', '$q', '$filter', 'MatchPost', function( $http, $q, $filter, MatchPost ) {

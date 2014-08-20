@@ -124,4 +124,4 @@ angular.module('matchCalendarApp')
 
         //Return the constructor function
         return MatchPost;
-    }])
+    }]);

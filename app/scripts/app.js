@@ -60,18 +60,18 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
         $stateProvider
             .state('list', {
                 url: '/list?post',
-                templateUrl: 'partials/list.html'
+                templateUrl: 'views/list.html'
             })
 
             .state('generate', {
                 url: '/generate',
-                templateUrl: 'partials/generator.html',
+                templateUrl: 'views/generator.html',
                 controller: 'HeaderGeneratorCtrl'
             })
 
             .state('settings', {
                 url: '/settings',
-                templateUrl: 'partials/settings.html',
+                templateUrl: 'views/settings.html',
                 controller: 'SettingsCtrl'
             });
 
@@ -690,7 +690,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
     }])
 
     .factory('DateTimeService', ['$http', function($http) {
-        var resyncURL = 'sync.php';
+        var resyncURL = 'php/sync.php';
 
         return {
             synced: false,
@@ -724,7 +724,7 @@ angular.module('MatchCalendar', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'btf
                 meridian: '=',
                 timeZone: '='
             },
-            templateUrl: 'partials/dateTimePicker.html',
+            templateUrl: 'views/dateTimePicker.html',
             link: function($scope, $element, $attr) {
                 $scope.opened = false;
 

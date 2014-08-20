@@ -85,20 +85,9 @@ a[href$="/matchpost"] {
 }
 
 .tour-button-animation {
-    -webkit-animation-delay: 5s;
-    -moz-animation-delay: 5s;
-    -ms-animation-delay: 5s;
-    -o-animation-delay: 5s;
-
-    -webkit-animation-duration: 2s;
-    -moz-animation-duration: 2s;
-    -ms-animation-duration: 2s;
-    -o-animation-duration: 2s;
-
-    -webkit-animation-iteration-count: infinite;
-    -moz-animation-iteration-count: infinite;
-    -ms-animation-iteration-count: infinite;
-    -o-animation-iteration-count: infinite;
+    animation-delay: 5s;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }
 
 .scheduled {
@@ -132,7 +121,6 @@ slider span.bar {
     height: 100%;
     z-index: 0;
     background: #F5F5F5;
-    -webkit-border-radius: 1em/1em;
     border-radius: 1em/1em;
     border: 1px solid #E3E3E3;
 }
@@ -149,7 +137,6 @@ slider span.pointer {
     background-color: #fff;
     border: 1px solid #000;
     z-index: 2;
-    -webkit-border-radius: 1em/1em;
     border-radius: 1em/1em;
 }
 slider span.pointer:after {
@@ -160,7 +147,6 @@ slider span.pointer:after {
     position: absolute;
     top: 6px;
     left: 6px;
-    -webkit-border-radius: 1em/1em;
     border-radius: 1em/1em;
 }
 slider span.pointer:hover:after {
@@ -184,15 +170,7 @@ slider span.bubble.limit {
 }
 .match-post.ng-enter {
     animation: zoomInLeft 1s;
-    -moz-animation: zoomInLeft 1s;
-    -o-animation: zoomInLeft 1s;
-    -ms-animation: zoomInLeft 1s;
-    -webkit-animation: zoomInLeft 1s;
 }
 .match-post.ng-leave {
     animation: zoomOutRight 1s;
-    -moz-animation: zoomOutRight 1s;
-    -o-animation: zoomOutRight 1s;
-    -ms-animation: zoomOutRight 1s;
-    -webkit-animation: zoomOutRight 1s;
 }

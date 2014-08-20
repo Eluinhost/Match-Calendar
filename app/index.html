@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 </head>
-<body ng-app="MatchCalendar" ng-controller="AppCtrl">
+<body ng-app="matchCalendarApp" ng-controller="ApplicationCtrl">
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -39,7 +39,7 @@
 <div class="container-fluid">
     <div class="row options text-center">
         <div class="col-sm-3"
-             ng-controller="TourController"
+             ng-controller="TourCtrl"
              ng-intro-options="introOptions"
              ng-intro-method="callMe"
              ng-intro-oncomplete="completedEvent"
@@ -104,6 +104,18 @@
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
+<script src="scripts/controllers/application.js"></script>
+<script src="scripts/controllers/tour.js"></script>
+<script src="scripts/controllers/settings.js"></script>
+<script src="scripts/controllers/headergenerator.js"></script>
+<script src="scripts/services/notificationtimeformat.js"></script>
+<script src="scripts/services/matchpost.js"></script>
+<script src="scripts/services/markdownlinkdataservice.js"></script>
+<script src="scripts/services/redditpostsservice.js"></script>
+<script src="scripts/services/htmlnotifications.js"></script>
+<script src="scripts/services/datetimeservice.js"></script>
+<script src="scripts/directives/datetimepicker.js"></script>
+<script src="scripts/directives/keybind.js"></script>
 <!-- endbuild -->
 
 </body>

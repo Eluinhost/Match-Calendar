@@ -61,6 +61,7 @@ body {
     /* fallback for <IE-11 */
     border-style: solid;
     border-color: #119933;
+    filter: hue-rotate(180deg);
 }
 
 .site-nav {
@@ -124,6 +125,7 @@ body {
         border-image: url(../images/outline.png) 5 5 5 5 repeat;
         border-width: 0 3px 0 3px;
         border-image-outset: 0 0 0 2px;
+        filter: hue-rotate(180deg);
 
         /* fallback for <IE-11 */
         border-style: solid;

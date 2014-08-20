@@ -61,8 +61,6 @@ body {
 
 .site-nav {
     border-image: url(../images/outline.png) 5 5 5 5 repeat;
-    -moz-border-image: url(../images/outline.png) 5 5 5 5 repeat;
-    -webkit-border-image: url(../images/outline.png) 5 5 5 5 repeat;
     border-width: 3px 0 3px 0;
 
     /* fallback for <IE-11 */
@@ -74,8 +72,6 @@ body {
 @media (min-width: 768px) {
     .nav-button {
         border-image: url(../images/outline.png) 5 5 5 5 repeat;
-        -moz-border-image: url(../images/outline.png) 5 5 5 5 repeat;
-        -webkit-border-image: url(../images/outline.png) 5 5 5 5 repeat;
         border-width: 0 3px 0 0;
 
         /* fallback for <IE-11 */
@@ -90,8 +86,6 @@ body {
 @media (max-width: 767px) {
     .nav-button {
         border-image: url(../images/outline.png) 5 5 5 5 repeat;
-        -moz-border-image: url(../images/outline.png) 5 5 5 5 repeat;
-        -webkit-border-image: url(../images/outline.png) 5 5 5 5 repeat;
         border-width: 0 0 3px 0;
 
         /* fallback for <IE-11 */
@@ -108,8 +102,6 @@ body {
  */
 .clock-bar {
     border-image: url(../images/outline.png) 5 5 5 5 repeat;
-    -moz-border-image: url(../images/outline.png) 5 5 5 5 repeat;
-    -webkit-border-image: url(../images/outline.png) 5 5 5 5 repeat;
     border-width: 0 0 5px 0;
 
     /* fallback for <IE-11 */
@@ -136,8 +128,6 @@ body {
 @media (min-width: 768px) {
     .clock-bar-center {
         border-image: url(../images/outline.png) 5 5 5 5 repeat;
-        -moz-border-image: url(../images/outline.png) 5 5 5 5 repeat;
-        -webkit-border-image: url(../images/outline.png) 5 5 5 5 repeat;
         border-width: 0 3px 0 3px;
         border-image-outset: 0 0 0 2px;
 

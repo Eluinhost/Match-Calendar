@@ -73,4 +73,4 @@ angular.module('matchCalendarApp')
                 return deferred.promise;
             }
         };
-    }])
+    }]);

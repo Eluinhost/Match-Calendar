@@ -1,0 +1,19 @@
+.clock-bar
+    +crayon-border(5)
+    border-width: 0 0 5px 0
+
+.clock-bar-time
+    font-weight: 700
+    font-size: 32px
+    padding-top: 15px
+
+.clock-bar-timezone
+    font-style: italic
+    padding-bottom: 18px
+
+.clock-bar-center
+    background-image: url($path-scribble-paper)
+    @media (min-width: $screen-sm)
+        +crayon-border(5, 180)
+        border-width: 0 3px 0 3px
+        border-image-outset: 0 0 0 2px

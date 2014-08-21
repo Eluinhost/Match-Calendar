@@ -1,0 +1,18 @@
+.nav-button
+    font-variant: small-caps
+    padding-top: 2px
+    padding-bottom: 2px
+    font-weight: bold
+    +crayon-border(5, 180)
+    @media (min-width: $screen-sm)
+        border-width: 0 3px 0 0
+        &:last-child
+            border-right: 0
+    @media (max-width: $screen-xs-max)
+        border-width: 0 0 3px 0
+        &:last-child
+            border-bottom: 0
+
+.site-nav
+    +crayon-border(5)
+    border-width: 3px 0 3px 0

@@ -1,0 +1,106 @@
+$path-lined-paper: '../images/linedpaper.png'
+$path-pen-font: '../fonts/pen.ttf'
+$path-crayon-outline: '../images/outline.png'
+$path-css-filters: '../filters/filters.xml'
+$path-scribble-paper: '../images/paper.png'
+
+/*
+ * MIXINS
+ */
+
+//the crayon border with configurable colour (gecko+webkit others are green, IE shows solid lines)
+=crayon-border($width, $rotation: 0)
+    border-image: url($path-crayon-outline) 5 5 5 5 repeat
+    filter: url($path-css-filters + '#hue-rotate-' + $rotation)
+    //fallback for <IE-11
+    border-style: solid
+    border-color: #119933
+
+/*
+ * GLOBALS + Utility
+ */
+
+//set up default font
+@font-face
+    font-family: 'Pen'
+    src: url($path-pen-font)
+
+//set up body styles
+body
+    text-align: center
+    background-image: url($path-lined-paper)
+    font-family: 'Pen', cursive
+    font-weight: 500
+
+@media (min-width: $screen-sm)
+    .text-right-sm
+        text-align: right
+    .text-left-sm
+        text-align: left
+    .text-center-sm
+        text-align: center
+
+/**
+ * HEADER STUFFS
+ */
+.site-header
+    padding-top: 10px
+
+.site-header-brand
+    font-size: 40px
+    div
+        min-height: 80px
+        line-height: 80px
+
+.site-header-image
+    height: 80px
+    width: 80px
+
+.subreddit-link
+    padding-top: 10px
+    padding-bottom: 2px
+
+/**
+ * NAV BAR/BUTTON LINKS
+ */
+.nav-button
+    font-variant: small-caps
+    padding-top: 2px
+    padding-bottom: 2px
+    font-weight: bold
+    +crayon-border(5, 180)
+    @media (min-width: $screen-sm)
+        border-width: 0 3px 0 0
+        &:last-child
+            border-right: 0
+    @media (max-width: $screen-xs-max)
+        border-width: 0 0 3px 0
+        &:last-child
+            border-bottom: 0
+
+.site-nav
+    +crayon-border(5)
+    border-width: 3px 0 3px 0
+
+/**
+ * CLOCK/TIME INFO BAR
+ */
+.clock-bar
+    +crayon-border(5)
+    border-width: 0 0 5px 0
+
+.clock-bar-time
+    font-weight: 700
+    font-size: 32px
+    padding-top: 15px
+
+.clock-bar-timezone
+    font-style: italic
+    padding-bottom: 18px
+
+.clock-bar-center
+    background-image: url($path-scribble-paper)
+    @media (min-width: $screen-sm)
+        +crayon-border(5, 180)
+        border-width: 0 3px 0 3px
+        border-image-outset: 0 0 0 2px

@@ -14,6 +14,8 @@ module.exports = function (grunt) {
     dist: 'web'
   };
 
+  var phpMiddleware = require('connect-php');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -69,6 +71,7 @@ module.exports = function (grunt) {
           open: true,
           middleware: function (connect) {
             return [
+              phpMiddleware(appConfig.app),
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',

@@ -146,7 +146,10 @@ angular.module('matchCalendarApp')
                     $timeout(function () {
                         if (!$scope.scrolled) {
                             if ($stateParams.post !== null) {
-                                document.getElementById('post-' + $stateParams.post).scrollIntoView();
+                                var element = document.getElementById('post-' + $stateParams.post);
+                                if (element !== null) {
+                                    element.scrollIntoView();
+                                }
                             }
                             $scope.scrolled = true;
                         }

@@ -134,7 +134,7 @@ angular.module('matchCalendarApp')
                     }
                 }
             };
-            $interval($scope.clockTick, 1000);
+            var clockTicker = $interval($scope.clockTick, 1000);
 
             $scope.scrolled = false;
             $scope.updateTick = function () {
@@ -148,6 +148,11 @@ angular.module('matchCalendarApp')
                     });
                 });
             };
-            $interval($scope.updateTick, 1000 * 60);
+            var updateTicker = $interval($scope.updateTick, 1000 * 60);
             $scope.$watchCollection('settings.subreddits', $scope.updateTick);
+
+            $scope.$on('$destroy',function() {
+                $timeout.cancel(clockTicker);
+                $timeout.cancel(updateTicker);
+            });
         }]);

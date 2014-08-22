@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/newmain.css">
     <!-- endbuild -->
 </head>
-<body>
+<body ng-app="matchCalendarApp" ng-controller="ApplicationCtrl">
 <div class="site-header row">
     <div class="col-sm-8 col-sm-offset-2 site-header-brand">
         <div class="col-sm-2 col-sm-push-5"><img src="images/heart.png" class="site-header-image"/></div>
@@ -50,12 +50,13 @@
         <div class="col-sm-6 clock-bar-center">
             <div class="row">
                 <div class="col-xs-12 clock-bar-time">
-                    15:20:29
+                    <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
+                    <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 clock-bar-timezone">
-                    Antartica/Fucking_Cold <i class="fa fa-edit"></i>
+                    <b ng-bind="settings.timeZone"></b> <i class="fa fa-edit"></i>
                 </div>
             </div>
         </div>

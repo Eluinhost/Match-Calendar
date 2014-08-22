@@ -39,7 +39,7 @@ angular.module('matchCalendarApp')
                         sec = '0' + sec;
                     }
                 }
-                return hour + ":" + min + ":" + sec;
+                return hour + ':' + min + ':' + sec;
             }
-        }
+        };
     }]);

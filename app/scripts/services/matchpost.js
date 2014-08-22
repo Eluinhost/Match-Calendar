@@ -55,10 +55,11 @@ angular.module('matchCalendarApp')
         MatchPost.parseData = function (element) {
             var linkData = MarkdownLinkDataService.fetch('/matchpost', element.selftext);
 
+            /*jshint camelcase: false */
             var post = new MatchPost(element.id, element.title, element.selftext, element.author, element.permalink, moment(element.created_utc, 'X'));
 
             var parsedLink = false;
-            if (linkData != null) {
+            if (linkData !== null) {
                 try {
                     var json = JSON.parse(linkData);
 
@@ -77,30 +78,33 @@ angular.module('matchCalendarApp')
                 //fall back to old style title parsing
                 var matches = matchPostRegex.exec(element.title);
 
-                if (null == matches)
                 //post isnt formatted correctly, don't display it at all
+                if (null === matches) {
                     return null;
+                }
 
                 //attempt to parse the date from the post title
                 post.setStarts(moment.utc(matches[1], 'MMM DD HH:mm', 'en'));
 
-                if (matches[2] !== '')
+                if (matches[2] !== '') {
                     post.region = matches[2];
+                }
 
                 post.title = matches[3];
 
                 //basic IP checking for parsed links, this will only work for IP addresses
                 var ipcheck = ipRegex.exec(element.selftext);
 
-                if (null != ipcheck) {
+                if (null !== ipcheck) {
                     post.address = ipcheck[1];
-                    if (typeof ipcheck[2] !== 'undefined' && ipcheck[2] != '' && ipcheck[2] != ':25565')
+                    if (typeof ipcheck[2] !== 'undefined' && ipcheck[2] !== '' && ipcheck[2] !== ':25565') {
                         post.address += ipcheck[2];
+                    }
                 }
             }
 
             //if it's invalid (no parsable date) read as unparsed
-            if (post.starts != null) {
+            if (post.starts !== null) {
                 if (!post.starts.isValid()) {
                     post.starts = null;
                 } else if (post.starts.diff($rootScope.timeOffset.currentTime()) < 0) {
@@ -109,7 +113,7 @@ angular.module('matchCalendarApp')
                 }
             }
 
-            if (post.opens != null) {
+            if (post.opens !== null) {
                 //if it's invalid (no parsable date) read as unparsed
                 if (!post.opens.isValid()) {
                     post.opens = null;

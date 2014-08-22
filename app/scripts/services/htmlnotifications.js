@@ -14,7 +14,7 @@ angular.module('matchCalendarApp')
              * @returns boolean true if notification available, false otherwise
              */
             supports: function () {
-                return "Notification" in window;
+                return 'Notification' in window;
             },
             currentPermission: function () {
                 if (!Notification.permission) {
@@ -33,7 +33,11 @@ angular.module('matchCalendarApp')
                         if (Notification.permission !== status) {
                             Notification.permission = status;
                         }
-                        status === 'granted' ? def.resolve() : def.reject();
+                        if(status === 'granted') {
+                            def.resolve();
+                        } else {
+                            def.reject();
+                        }
                     });
                 } else {
                     def.resolve();

@@ -113,5 +113,5 @@ angular.module('matchCalendarApp')
 
         $scope.shouldAutoStart = function () {
             return false;
-        }
+        };
     }]);

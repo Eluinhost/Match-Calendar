@@ -17,7 +17,7 @@ angular.module('matchCalendarApp')
                 timeZone: '='
             },
             templateUrl: 'views/dateTimePicker.html',
-            link: function ($scope, $element, $attr) {
+            link: function ($scope) {
                 $scope.opened = false;
 
                 $scope.internalJSDate = $scope.pickedDate.toDate();
@@ -40,7 +40,7 @@ angular.module('matchCalendarApp')
                     $event.preventDefault();
                     $event.stopPropagation();
                     $scope.opened = !$scope.opened;
-                }
+                };
             }
-        }
+        };
     }]);

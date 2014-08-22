@@ -29,12 +29,16 @@ angular.module('matchCalendarApp')
                                 //parse the post
                                 var matchPost = MatchPost.parseData(element.data);
 
-                                if (null == matchPost) {
+                                if (null === matchPost) {
                                     return;
                                 }
 
                                 //if time was invalid push to the invalid stack
-                                matchPost.starts == null ? unparsed.push(matchPost) : parsed.push(matchPost);
+                                if (matchPost.starts === null) {
+                                    unparsed.push(matchPost);
+                                } else {
+                                    parsed.push(matchPost);
+                                }
                             });
                             deferred.resolve({
                                 parsed: parsed,

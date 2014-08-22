@@ -15,11 +15,11 @@
         </div>
     </div>
     <accordion close-others="false">
-        <accordion-group class="match-post" ng-repeat="post in posts.filteredposts track by post.id" ng-class="{favorite_host: settings.favorite_hosts.indexOf(post.author) !== -1}">
+        <accordion-group class="match-post" ng-repeat="post in posts.filteredposts track by post.id" ng-class="{favorite_host: settings.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <div class="row text-center" ng-attr-id="{{ 'post-' + post.id }}">
                     <div class="col-xs-2 text-right">
-                        <b class="abs-game-starts" ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.time_zone).format(settings.time_format == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b>
+                        <b class="abs-game-starts" ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b>
                         <br>
                         <small class="server-address" tooltip="Server address" ng-click="$event.stopPropagation()">
                             <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">

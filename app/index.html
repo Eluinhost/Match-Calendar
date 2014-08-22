@@ -49,15 +49,15 @@
         </div>
         <div class="time-info col-sm-6">
             <h3 class="synced-time">
-                <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="current_time.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
+                <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
                 <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </h3>
             <span class="picked-timezone">
-                <b ng-bind="settings.time_zone"></b> - <span ng-bind="settings.time_format"></span> <i class="fa fa-cog" ui-sref="settings"></i>
+                <b ng-bind="settings.timeZone"></b> - <span ng-bind="settings.timeFormat"></span> <i class="fa fa-cog" ui-sref="settings"></i>
             </span>
         </div>
         <div class="refresh-button col-sm-3">
-            Last Updated: <small class="last-updated" ng-bind="posts.lastUpdated.tz(settings.time_zone).format(settings.time_format == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
+            Last Updated: <small class="last-updated" ng-bind="posts.lastUpdated.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
             <br>
             <b class="refresh-icon" ng-click="updatePosts()"><i class="fa fa-refresh" ng-class="{'fa-spin': posts.updatingPosts}"></i> Refresh</b>
         </div>

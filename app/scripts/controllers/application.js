@@ -36,11 +36,11 @@ angular.module('matchCalendarApp')
             };
 
             $scope.toggleFavorite = function (name) {
-                var index = $scope.settings.favorite_hosts.indexOf(name);
+                var index = $scope.settings.favoriteHosts.indexOf(name);
                 if (index === -1) {
-                    $scope.settings.favorite_hosts.push(name);
+                    $scope.settings.favoriteHosts.push(name);
                 } else {
-                    $scope.settings.favorite_hosts.splice(index, 1);
+                    $scope.settings.favoriteHosts.splice(index, 1);
                 }
             };
 
@@ -78,8 +78,9 @@ angular.module('matchCalendarApp')
              * @param post {MatchPost}
              */
             $scope.triggerCopiedMessage = function (post) {
-                if (null == post.address)
+                if (null === post.address) {
                     return;
+                }
                 var saved = post.address;
                 post.address = 'Copied!';
                 $timeout(function () {
@@ -88,48 +89,51 @@ angular.module('matchCalendarApp')
             };
 
             $scope.toggleNotifications = function (postid) {
-                var notify = $scope.settings.notify_for[postid];
+                var notify = $scope.settings.notifyFor[postid];
                 if (typeof notify === 'undefined') {
                     //set the last notification time to 0 to say we havn't done any
-                    $scope.settings.notify_for[postid] = {value: 0};
+                    $scope.settings.notifyFor[postid] = {value: 0};
                 } else {
-                    delete $scope.settings.notify_for[postid];
+                    delete $scope.settings.notifyFor[postid];
                 }
             };
 
             $scope.willNotify = function (postid) {
-                return typeof $scope.settings.notify_for[postid] !== 'undefined';
+                return typeof $scope.settings.notifyFor[postid] !== 'undefined';
+            };
+
+            $scope.checkNotificationForPostId = function(postid) {
+                var post = $scope.posts.posts.filter(function (mpost) {
+                    if (mpost.id === postid) {
+                        return true;
+                    }
+                });
+                //if the post no longer exists
+                if (post.length === 0) {
+                    delete $scope.settings.notifyFor[postid];
+                    return;
+                }
+                angular.forEach($scope.settings.notificationTimes, function (notifcationTime) {
+                    var notifyTime = post[0].starts - (notifcationTime.value * 1000);
+                    if ($scope.currentTime >= notifyTime) {
+                        if ($scope.settings.notifyFor[postid].value < notifyTime) {
+                            var difference = post[0].starts - $scope.currentTime;
+                            HtmlNotifications.notify('Game starts in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference / 1000)), post[0].title);
+                            $scope.settings.notifyFor[postid] = $scope.currentTime;
+                        }
+                    }
+                });
             };
 
             $scope.clockTick = function () {
-                $scope.current_time = $scope.timeOffset.currentTime();
+                $scope.currentTime = $scope.timeOffset.currentTime();
                 if (HtmlNotifications.currentPermission() === 'granted') {
-                    if ($scope.posts.posts.length != 0) {
-                        for (var pid in $scope.settings.notify_for) {
-                            if (!$scope.settings.notify_for.hasOwnProperty(pid))
+                    if ($scope.posts.posts.length !== 0) {
+                        for (var pid in $scope.settings.notifyFor) {
+                            if (!$scope.settings.notifyFor.hasOwnProperty(pid)) {
                                 continue;
-                            (function (postid) {
-                                var post = $scope.posts.posts.filter(function (mpost) {
-                                    if (mpost.id === postid) {
-                                        return true;
-                                    }
-                                });
-                                //if the post no longer exists
-                                if (post.length == 0) {
-                                    delete $scope.settings.notify_for[postid];
-                                    return;
-                                }
-                                angular.forEach($scope.settings.notification_times, function (notifcation_time) {
-                                    var notifyTime = post[0].starts - (notifcation_time.value * 1000);
-                                    if ($scope.current_time >= notifyTime) {
-                                        if ($scope.settings.notify_for[postid].value < notifyTime) {
-                                            var difference = post[0].starts - $scope.current_time;
-                                            HtmlNotifications.notify('Game starts in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference / 1000)), post[0].title);
-                                            $scope.settings.notify_for[postid] = $scope.current_time;
-                                        }
-                                    }
-                                });
-                            })(pid);
+                            }
+                            $scope.checkNotificationForPostId(pid);
                         }
                     }
                 }
@@ -141,8 +145,9 @@ angular.module('matchCalendarApp')
                 $scope.updatePosts().finally(function () {
                     $timeout(function () {
                         if (!$scope.scrolled) {
-                            if ($stateParams.post != null)
+                            if ($stateParams.post !== null) {
                                 document.getElementById('post-' + $stateParams.post).scrollIntoView();
+                            }
                             $scope.scrolled = true;
                         }
                     });

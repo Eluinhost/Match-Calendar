@@ -21,11 +21,11 @@ angular.module('matchCalendarApp')
                 //simple regex for [data](/link) type links
                 var regex = new RegExp('\\[([^\\[\\]]+)\\]\\(' + path + '\\)', 'g');
                 var matches = regex.exec(markdown);
-                if (matches == null) {
+                if (matches === null) {
                     return null;
                 } else {
                     return matches[1];
                 }
             }
-        }
+        };
     }]);

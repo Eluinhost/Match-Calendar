@@ -4,6 +4,7 @@
     padding-bottom: 2px
     font-weight: bold
     +crayon-border-black()
+    +watercolour-black()
     @media (min-width: $screen-sm)
         border-width: 0
         &:nth-child(3)
@@ -15,7 +16,7 @@
         &:last-child
             border-bottom: 0
     &.nav-active
-        background-image: url($path-scribble-paper)
+        +watercolour-red()
 
 .site-nav
     +crayon-border-red()

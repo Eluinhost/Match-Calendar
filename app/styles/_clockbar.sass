@@ -1,5 +1,6 @@
 .clock-bar
     +crayon-border-red()
+    +watercolour-black()
     border-width: 0 0 5px 0
 
 .clock-bar-time
@@ -12,7 +13,7 @@
     padding-bottom: 18px
 
 .clock-bar-center
-    background-image: url($path-scribble-paper)
+    +watercolour-red()
     @media (min-width: $screen-sm)
         +crayon-border-black()
         border-width: 0 3px 0 3px

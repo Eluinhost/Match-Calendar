@@ -1,7 +1,13 @@
-//the crayon border with configurable colour (gecko+webkit others are green, IE shows solid lines)
-=crayon-border($width, $rotation: 0)
-    border-image: url($path-crayon-outline) 5 5 5 5 repeat
-    filter: url($path-css-filters + '#hue-rotate-' + $rotation)
+=crayon-border($color, $defaultColor, $width: $default-crayon-border-width)
+    border-image: url($path-crayon-base + '-' + $color + $path-crayon-ext) $width $width $width $width repeat
+
     //fallback for <IE-11
     border-style: solid
-    border-color: #119933
+    border-color: $defaultColor
+
+=crayon-border-green($width: $default-crayon-border-width)
+    +crayon-border('green', #119933, $width)
+
+//TODO create a real purple border
+=crayon-border-purple($width: $default-crayon-border-width)
+    +crayon-border('purple', #991177, $width)

@@ -1,8 +1,0 @@
-<svg height="0" xmlns="http://www.w3.org/2000/svg">
-    <filter id="hue-rotate-180">
-        <feColorMatrix type="hueRotate" values="180"/>
-    </filter>
-    <filter id="hue-rotate-0">
-        <feColorMatrix type="hueRotate" values="0"/>
-    </filter>
-</svg>

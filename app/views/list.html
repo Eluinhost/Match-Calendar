@@ -15,7 +15,7 @@
         </div>
     </div>
     <accordion close-others="false">
-        <accordion-group class="match-post" ng-repeat="post in posts.filteredposts track by post.id" ng-class="{favorite_host: settings.favorite_hosts.indexOf(post.author) !== -1}">
+        <accordion-group class="match-post" ng-repeat="post in posts.filteredposts track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <div class="row text-center" ng-attr-id="{{ 'post-' + post.id }}">
                     <div class="col-xs-2 text-right">

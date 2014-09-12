@@ -15,7 +15,7 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
             timeZone: $cookieStore.get('timeZone') || 'Etc/UTC',
             timeFormat: $cookieStore.get('timeFormat') || '24h',
             subreddits: $cookieStore.get('subreddits') || ['ultrahardcore', 'ghowden'],
-            favoriteHosts: $cookieStore.get('favoriteHosts') || ['Elllzman619'],
+            favoriteHosts: $cookieStore.get('favoriteHosts') || [],
             tour: {
                 taken: $cookieStore.get('tour.taken') || false
             },

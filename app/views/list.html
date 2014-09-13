@@ -1,15 +1,31 @@
 <div class="list-page">
     <div class="panel panel-default search-panel">
-        <div class="panel-heading">
+        <div class="panel-heading post-list-filter">
             <div class="row">
-                <div class="col-sm-4 col-sm-offset-4">
+                <div class="col-sm-5 col-sm-offset-1">
                     <div class="input-group">
                         <div class="input-group-addon">Filter Posts</div>
                         <input ng-model="posts.postfilter" class="form-control" type="search" placeholder="Search">
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <small ng-bind="'Showing ' + posts.filteredposts.length + '/' + posts.posts.length + ' total posts.'"></small>
+                <div class="col-sm-3 text-left">
+                    <small ng-bind="posts.filteredposts.length + '/' + posts.posts.length + ' total posts.'"></small>
+                </div>
+                <div class="col-sm-3 refresh-button">
+                    <b class="refresh-icon" ng-click="updatePosts()">
+                        <i class="fa fa-refresh" ng-class="{'fa-spin': posts.updatingPosts}"></i> Refresh
+                    </b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-1 text-left">
+                    <b>Regions:</b>
+                    EU: <input type="checkbox">
+                    US: <input type="checkbox">
+                    NA: <input type="checkbox">
+                </div>
+                <div class="col-sm-3">
+                    Last Updated: <small class="last-updated" ng-bind="posts.lastUpdated.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
                 </div>
             </div>
         </div>

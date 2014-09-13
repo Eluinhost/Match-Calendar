@@ -19,6 +19,7 @@ angular.module('matchCalendarApp')
             link: function (scope, element, attrs) {
                 scope.$watch(attrs.content, function (newVal) {
                     element.html($sanitize(markdownConverter.render(scope.content)));
+                    element.find('a').attr('target', '_blank');
                 });
             }
         };

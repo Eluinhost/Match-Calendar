@@ -32,7 +32,8 @@
     "jasmine": false,
     "spyOn": false,
     "moment": false,
-    "Notification": false
+    "Notification": false,
+    "SnuOwnd": false
   }
 }
 

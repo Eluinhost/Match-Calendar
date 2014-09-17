@@ -1,0 +1,3 @@
+<?php
+
+const CLIENT_ID = 'APP CLIENT ID';

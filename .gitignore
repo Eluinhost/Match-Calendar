@@ -3,3 +3,5 @@ web
 .tmp
 .sass-cache
 bower_components
+vendor
+composer.lock

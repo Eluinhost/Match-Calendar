@@ -2,12 +2,19 @@
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 require __DIR__ . '/../../vendor/autoload.php';
 require 'config.php';
 
 $request = Request::createFromGlobals();
+
+if(!$request->query->has('callback')) {
+    $response = new Response('Invalid use of auth.php, must provide callback URL', 400);
+    $response->prepare($request)->send();
+    return;
+}
 
 $SCOPE = 'identity';
 $URI = $request->getSchemeAndHttpHost() . '/php/callback.php';

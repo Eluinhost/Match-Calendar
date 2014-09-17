@@ -1,5 +1,7 @@
 <?php
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Post\PostBody;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +56,39 @@ if($request->query->has('error')) {
 $code = $request->query->get('code');
 
 //the URI to redirect to for the next thing
-$REDIRECT_URI = $request->getSchemeAndHttpHost() . '/' . $request->getBaseUrl();
+$REDIRECT_URI = $request->getSchemeAndHttpHost() . $request->getBaseUrl();
 
-//TODO get the access token and stuffs
+$client = new Client([
+    'defaults' => [
+        'auth'      => [
+            CLIENT_ID,
+            CLIENT_SECRET
+        ]
+    ]
+]);
+$req = $client->createRequest('POST', 'https://ssl.reddit.com/api/v1/access_token');
+
+/** @var PostBody $postBody */
+$postBody = $req->getBody();
+$postBody->setField('grant_type', 'authorization_code');
+$postBody->setField('code', $code);
+$postBody->setField('redirect_uri', $REDIRECT_URI);
+
+$res = $client->send($req);
+
+if($res->getStatusCode() != 200) {
+    $respone = new RedirectResponse($callbackBase . '?error=' . urlencode('Invalid client secret/id'));
+    $respone->prepare($request);
+    $respone->send();
+
+    $session->invalidate();
+    return;
+}
+
+$json = $res->json();
+
+$respone = new RedirectResponse($callbackBase . '?access_token=' . urlencode($json['access_token']) . '&refresh_token=' . urlencode($json['refresh_token']));
+$respone->prepare($request);
+$respone->send();
+
+$session->invalidate();

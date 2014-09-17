@@ -8,13 +8,13 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  var gateway = require('gateway');
+
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
     dist: 'web'
   };
-
-  var phpMiddleware = require('connect-php');
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -71,7 +71,9 @@ module.exports = function (grunt) {
           open: true,
           middleware: function (connect) {
             return [
-              phpMiddleware(appConfig.app),
+              gateway(__dirname + '/app', {
+                '.php': 'php-cgi'
+              }),
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',

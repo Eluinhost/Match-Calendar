@@ -66,6 +66,7 @@ class ApiBridge
         /** @var PostBody $postBody */
         $postBody = $req->getBody();
 
+        $postBody->setField('api_type', 'json');
         $postBody->setField('kind', 'self');
         $postBody->setField('text', $content);
         $postBody->setField('title', $title);

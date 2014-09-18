@@ -1,4 +1,16 @@
 <div class="container text-center generator-page">
+    <accordion close-others="false">
+        <accordion-group>
+            <accordion-heading>
+                Post Template
+            </accordion-heading>
+            <textarea class="generator-template" ng-model="templating.raw" ng-change="updateTemplate()"></textarea>
+            <hr>
+            <div class="container">
+                <markdown class="md" content="templating.parsed"></markdown>
+            </div>
+        </accordion-group>
+    </accordion>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">

@@ -10,4 +10,6 @@ $app->get('/sync', 'UltraSoftcore\\MatchCalendar\\Sync::sync');
 $app->get('/callback', 'UltraSoftcore\\MatchCalendar\\Authentication::callback')->bind('callback');
 $app->get('/auth', 'UltraSoftcore\\MatchCalendar\\Authentication::startAuth');
 
+$app->get('/userinfo', 'UltraSoftcore\\MatchCalendar\\ApiBridge::me');
+
 $app->run();

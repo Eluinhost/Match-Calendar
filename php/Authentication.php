@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
 
 class Authentication {
 
-    const SCOPE = 'identity';
+    const SCOPE = 'identity,submit';
 
     public function startAuth(Request $request, Application $app)
     {

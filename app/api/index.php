@@ -2,6 +2,7 @@
 require __DIR__ . '/../../vendor/autoload.php';
 
 $app = new Silex\Application();
+$app['debug'] = true;
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 //register the time sync endpoint
@@ -11,5 +12,6 @@ $app->get('/callback', 'UltraSoftcore\\MatchCalendar\\Authentication::callback')
 $app->get('/auth', 'UltraSoftcore\\MatchCalendar\\Authentication::startAuth');
 
 $app->get('/userinfo', 'UltraSoftcore\\MatchCalendar\\ApiBridge::me');
+$app->post('/self', 'UltraSoftcore\\MatchCalendar\\ApiBridge::submitSelf');
 
 $app->run();

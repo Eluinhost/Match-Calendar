@@ -7,8 +7,8 @@
         "silex/silex": "~1.2"
     },
     "autoload": {
-        "psr-0": {
-            "UltraSoftcore/MatchCalendar": "php/"
+        "psr-4": {
+            "UltraSoftcore\\MatchCalendar\\": "php/"
         }
     }
 }

@@ -16,6 +16,20 @@ module.exports = function (grunt) {
     dist: 'web'
   };
 
+  var gateway_rw = require('gateway-rewrite');
+
+  var rwGateway = function (dir){
+    return gateway_rw(require('path').resolve(dir), {
+      rules: [
+        {
+          rule: '^(/api/.+)',
+          cgi:  'php-cgi',
+          to:   '/api/index.php'
+        }
+      ]
+    });
+  };
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -61,19 +75,17 @@ module.exports = function (grunt) {
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9000,
+        port: 9005,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
-        livereload: 35729
+        livereload: 35790
       },
       livereload: {
         options: {
           open: true,
           middleware: function (connect) {
             return [
-              gateway(__dirname + '/app', {
-                '.php': 'php-cgi'
-              }),
+              rwGateway(__dirname + '/app'),
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',

@@ -2,7 +2,6 @@
 require __DIR__ . '/../../vendor/autoload.php';
 
 $app = new Silex\Application();
-$app['debug'] = true;
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 //register the time sync endpoint

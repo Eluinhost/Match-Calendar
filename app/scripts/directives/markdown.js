@@ -17,10 +17,10 @@ angular.module('matchCalendarApp')
             },
             restrict: 'EA',
             link: function (scope, element, attrs) {
-                scope.$watch(attrs.content, function () {
+                scope.$watch('content', function () {
                     element.html($sanitize(markdownConverter.render(scope.content)));
                     element.find('a').attr('target', '_blank');
-                });
+                }, true);
             }
         };
     });

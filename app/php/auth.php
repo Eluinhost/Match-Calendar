@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 require __DIR__ . '/../../vendor/autoload.php';
-require 'config.php';
+require 'config/config.php';
 
 $request = Request::createFromGlobals();
 

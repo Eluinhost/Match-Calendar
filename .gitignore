@@ -5,4 +5,4 @@ web
 bower_components
 vendor
 composer.lock
-app/php/config.php
+app/php/config/config.php

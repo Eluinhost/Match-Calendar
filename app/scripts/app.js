@@ -73,6 +73,12 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
                 url: '/settings',
                 templateUrl: 'views/settings.html',
                 controller: 'SettingsCtrl'
+            })
+
+            .state('auth', {
+                url: '/auth/reddit?error&access_token&refresh_token',
+                templateUrl: 'views/auth.html',
+                controller: 'AuthCtrl'
             });
 
         $urlRouterProvider.otherwise('/list');

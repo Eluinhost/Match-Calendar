@@ -8,7 +8,7 @@
  * Controller of the matchCalendarApp
  */
 angular.module('matchCalendarApp')
-    .controller('HeadergeneratorCtrl', ['$scope', function ($scope) {
+    .controller('HeadergeneratorCtrl', ['$scope', '$window', '$state', '$location', function ($scope, $window, $state, $location) {
         $scope.regions = {
             'AF': 'Africa',
             'AN': 'Antartica',
@@ -54,4 +54,8 @@ angular.module('matchCalendarApp')
         $scope.address = '192.168.0.1';
         $scope.postTitle = 'Game Title';
         $scope.region = 'NA';
+
+        $scope.sendToReddit = function() {
+            $window.location.href = '/api/auth?callback=' + encodeURIComponent($state.href('auth', {}, {absolute: true}));
+        };
     }]);

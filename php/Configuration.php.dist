@@ -1,0 +1,10 @@
+<?php
+
+namespace UltraSoftcore\MatchCalendar;
+
+
+class Configuration {
+
+    const CLIENT_ID = 'APP CLIENT ID';
+    const CLIENT_SECRET = 'CLIENT SECRET';
+}

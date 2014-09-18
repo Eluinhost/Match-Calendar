@@ -346,7 +346,7 @@ module.exports = function (grunt) {
             'views/**/*.html',
             'images/**/*.{webp}',
             'fonts/*',
-            'php/**/*.php'
+            'api/**/*.php'
           ]
         }, {
           expand: true,

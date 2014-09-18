@@ -9,7 +9,7 @@
  */
 angular.module('matchCalendarApp')
     .factory('DateTimeService', ['$http', function ($http) {
-        var resyncURL = 'php/sync.php';
+        var resyncURL = '/api/sync';
 
         return {
             synced: false,

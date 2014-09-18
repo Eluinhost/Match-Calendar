@@ -14,10 +14,10 @@ module.exports = function (grunt) {
     dist: 'web'
   };
 
-  var gateway_rw = require('gateway-rewrite');
+  var gatewayRw = require('gateway-rewrite');
 
   var rwGateway = function (dir){
-    return gateway_rw(require('path').resolve(dir), {
+    return gatewayRw(require('path').resolve(dir), {
       rules: [
         {
           rule: '^(/api/.+)',

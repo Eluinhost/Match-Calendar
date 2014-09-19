@@ -19,39 +19,23 @@ angular.module('matchCalendarApp')
             'SA': 'South America'
         };
 
-        $scope.templateVars = {
-            opens: '',
-            starts: '',
-            address: '',
-            title: '',
-            region: ''
+        $scope.gameDetails = {
+            opens: $scope.timeOffset.currentTime(),
+            starts: $scope.timeOffset.currentTime(),
+            address: '192.168.0.1',
+            postTitle: 'Game Title',
+            region: 'NA',
+            opensUTC: function() {
+                return $scope.gameDetails.opens.utc().format('DD MMM HH:mm UTC');
+            },
+            startsUTC: function() {
+                return $scope.gameDetails.starts.utc().format('DD MMM HH:mm UTC');
+            }
         };
 
-        $scope.$watch('opens', function (newValue) {
-            $scope.templateVars.opens = newValue.utc().format('DD MMM HH:mm UTC');
+        $scope.$watch('templating.raw', function() {
+            $scope.templating.parsed = $interpolate($scope.templating.raw, false, null, true)($scope.gameDetails);
         });
-        $scope.$watch('starts', function (newValue) {
-            $scope.templateVars.starts = newValue.utc().format('DD MMM HH:mm UTC');
-        });
-        $scope.$watch('address', function (newValue) {
-            $scope.templateVars.address = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
-        });
-        $scope.$watch('postTitle', function (newValue) {
-            $scope.templateVars.title = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
-        });
-        $scope.$watch('region', function (newValue) {
-            $scope.templateVars.region = newValue;
-        });
-
-        $scope.$watch('templateVars', function() {
-            $scope.updateTemplate();
-        }, true);
-
-        $scope.opens = $scope.timeOffset.currentTime();
-        $scope.starts = $scope.timeOffset.currentTime();
-        $scope.address = '192.168.0.1';
-        $scope.postTitle = 'Game Title';
-        $scope.region = 'NA';
 
         $scope.templating = {
             raw: '**If you are new, be sure to read the [rules](RULES POST) and [Player FAQ](http://www.reddit.com/r/ultrahardcore/wiki/playerfaq)!**\n' +
@@ -60,9 +44,9 @@ angular.module('matchCalendarApp')
                 '\n' +
                 '***General Info***\n' +
                 '\n' +
-                'IP Address | Opens | Starts |\n' +
-                '-----------|--------|-------|\n' +
-                '{{ address }} | {{ opens }} | {{ starts }}\n' +
+                'IP Address    | Opens            | Starts           |\n' +
+                '--------------|------------------|------------------|\n' +
+                '{{ address }} | {{ opensUTC() }} | {{ startsUTC() }}\n' +
                 '\n' +
                 '---\n' +
                 '\n' +
@@ -88,10 +72,6 @@ angular.module('matchCalendarApp')
                 '***Scenario(s)***\n' +
                 '\n' +
                 '* Vanilla+ - Vanilla with a few minor changes'
-        };
-
-        $scope.updateTemplate = function() {
-            $scope.templating.parsed = $interpolate($scope.templating.raw, false, null, true)($scope.templateVars);
         };
 
         $scope.sendToReddit = function() {

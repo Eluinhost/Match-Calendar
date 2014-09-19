@@ -12,31 +12,7 @@
         </accordion-group>
     </accordion>
     <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Opens: </h3><span ng-bind="simpleUtcOpens"></span>
-                </div>
-                <div class="panel-body">
-                    <p class="help-block">Time game will open (in your selected timezone)</p>
-                    <date-time-picker picked-date="opens" time-zone="settings.timeZone" min-date="currentTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Starts: </h3><span ng-bind="simpleUtcStarts"></span>
-                </div>
-                <div class="panel-body">
-                    <p class="help-block">Time game will start (in your selected timezone)</p>
-                    <date-time-picker picked-date="starts" time-zone="settings.timeZone" min-date="currentTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Title
@@ -47,14 +23,27 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Server Address
+                    <h3 class="panel-title">Opens: </h3><span ng-bind="opens.utc().format('YYYY-MM-DD HH:mm UTC')"></span>
                 </div>
                 <div class="panel-body">
-                    <span class="help-block">The server address/IP to connect to</span>
-                    <input class="form-control" type="text" ng-model="address"/>
+                    <p class="help-block">Time game will open (in your selected timezone)</p>
+                    <date-time-picker picked-date="opens" time-zone="settings.timeZone" min-date="currentTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Starts: </h3><span ng-bind="starts.utc().format('YYYY-MM-DD HH:mm UTC')"></span>
+                </div>
+                <div class="panel-body">
+                    <p class="help-block">Time game will start (in your selected timezone)</p>
+                    <date-time-picker picked-date="starts" time-zone="settings.timeZone" min-date="currentTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
                 </div>
             </div>
         </div>
@@ -72,17 +61,23 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="panel panel-info">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                    Paste the text below and add it to your reddit post &nbsp; <a href="" clip-copy="generatedLink"><i class="fa fa-clipboard"></i>Copy to clipboard</a>
+                    Server Address
                 </div>
-                <div class="panel-body" ng-bind="generatedLink"></div>
+                <div class="panel-body">
+                    <span class="help-block">The server address/IP to connect to</span>
+                    <input class="form-control" type="text" ng-model="address"/>
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-md-6">
             <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="sendToReddit()">Send to Reddit</button>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="openLinkModal()">Post Link</button>
         </div>
     </div>
 </div>

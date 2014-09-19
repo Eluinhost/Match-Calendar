@@ -8,7 +8,7 @@
  * Controller of the matchCalendarApp
  */
 angular.module('matchCalendarApp')
-    .controller('HeadergeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', function ($scope, $window, $state, $interpolate) {
+    .controller('HeadergeneratorCtrl', function ($scope, $window, $state, $interpolate, $modal) {
         $scope.regions = {
             'AF': 'Africa',
             'AN': 'Antartica',
@@ -17,14 +17,6 @@ angular.module('matchCalendarApp')
             'NA': 'North America',
             'OC': 'Oceania',
             'SA': 'South America'
-        };
-
-        $scope.linkText = {
-            opens: '',
-            starts: '',
-            address: '',
-            title: '',
-            region: ''
         };
 
         $scope.templateVars = {
@@ -36,35 +28,22 @@ angular.module('matchCalendarApp')
         };
 
         $scope.$watch('opens', function (newValue) {
-            $scope.linkText.opens = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
             $scope.templateVars.opens = newValue.utc().format('DD MMM HH:mm UTC');
-            $scope.simpleUtcOpens = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
         });
         $scope.$watch('starts', function (newValue) {
-            $scope.linkText.starts = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
             $scope.templateVars.starts = newValue.utc().format('DD MMM HH:mm UTC');
-            $scope.simpleUtcStarts = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
         });
         $scope.$watch('address', function (newValue) {
-            var address = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
-            $scope.linkText.address = address;
-            $scope.templateVars.address = address;
+            $scope.templateVars.address = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
         $scope.$watch('postTitle', function (newValue) {
-            var title = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
-            $scope.linkText.title = title;
-            $scope.templateVars.title = title;
+            $scope.templateVars.title = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
         $scope.$watch('region', function (newValue) {
-            $scope.linkText.region = newValue;
             $scope.templateVars.region = newValue;
         });
 
-        $scope.$watch('linkText', function (newValue) {
-            $scope.generatedLink = '[' + JSON.stringify(newValue) + '](/matchpost)';
-        }, true);
-
-        $scope.$watch('templateVars', function(newValue) {
+        $scope.$watch('templateVars', function() {
             $scope.updateTemplate();
         }, true);
 
@@ -118,4 +97,21 @@ angular.module('matchCalendarApp')
         $scope.sendToReddit = function() {
             $window.location.href = '/api/auth?callback=' + encodeURIComponent($state.href('auth', {}, {absolute: true}));
         };
-    }]);
+
+        $scope.openLinkModal = function() {
+            var generatedVersion = {
+                opens: $scope.opens.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
+                starts: $scope.starts.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
+                address: $scope.address.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
+                title: $scope.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
+                region: $scope.region
+            };
+
+            $scope.generatedLink = '[' + JSON.stringify(generatedVersion) + '](/matchpost)';
+
+            $modal.open({
+                templateUrl: 'views/matchPostLink.html',
+                scope: $scope
+            });
+        };
+    });

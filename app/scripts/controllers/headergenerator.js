@@ -65,9 +65,9 @@ angular.module('matchCalendarApp')
                 '\n' +
                 '---\n' +
                 '\n' +
-                '    Winner: |\n' +
-                '---|\n' +
-                'TBA |\n' +
+                'Winner: |\n' +
+                '--------|\n' +
+                'TBA     |\n' +
                 '\n' +
                 '***Scenario(s)***\n' +
                 '\n' +

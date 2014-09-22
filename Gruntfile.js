@@ -399,6 +399,23 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+
+    //appcache settings
+    appcache: {
+      options: {
+        basePath: 'web'
+      },
+      all: {
+        dest: 'web/manifest.appcache',
+        cache: {
+          patterns: [
+            'web/**/*',
+            '!web/php/**/*'
+          ]
+        },
+        network: '*'
+      }
     }
   });
 
@@ -445,7 +462,8 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'appcache'
   ]);
 
   grunt.registerTask('default', [

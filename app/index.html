@@ -17,6 +17,7 @@
     <link href='http://fonts.googleapis.com/css?family=Short+Stack' rel='stylesheet' type='text/css'>
 </head>
 <body ng-app="matchCalendarApp" ng-controller="ApplicationCtrl">
+<div class="container-fluid">
 <div class="site-header row">
     <div class="col-sm-8 col-sm-offset-2 site-header-brand">
         <div class="col-sm-2 col-sm-push-5"><img src="images/heart.png" class="site-header-image"/></div>
@@ -27,47 +28,43 @@
         A match calendar of UHC games from <a href="http://reddit.com/r/ultrahardcore">reddit</a>.
     </div>
 </div>
-<div class="container-fluid">
-    <div class="site-nav row">
-        <div class="col-sm-3 nav-button" ui-sref="list" ui-sref-active="nav-active">
-            Matches
-        </div>
-        <div class="col-sm-3 nav-button" ui-sref="generate" ui-sref-active="nav-active">
-            Post Creator
-        </div>
-        <div class="col-sm-3 nav-button" ui-sref="settings" ui-sref-active="nav-active">
-            Settings
-        </div>
-        <div class="col-sm-3 nav-button" ui-sref="help" ui-sref-active="nav-active">
-            Help
-        </div>
+<div class="site-nav row">
+    <div class="col-sm-3 nav-button" ui-sref="list" ui-sref-active="nav-active">
+        Matches
+    </div>
+    <div class="col-sm-3 nav-button" ui-sref="generate" ui-sref-active="nav-active">
+        Post Creator
+    </div>
+    <div class="col-sm-3 nav-button" ui-sref="settings" ui-sref-active="nav-active">
+        Settings
+    </div>
+    <div class="col-sm-3 nav-button" ui-sref="help" ui-sref-active="nav-active">
+        Help
     </div>
 </div>
-<div class="clock-bar container-fluid">
-    <div class="row">
-        <div class="col-sm-3 clock-bar-left">
+<div class="row clock-bar">
+    <div class="col-sm-3 clock-bar-left">
 
-        </div>
-        <div class="col-sm-6 clock-bar-center">
-            <div class="row">
-                <div class="col-xs-12 clock-bar-time">
-                    <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
-                    <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 clock-bar-timezone">
-                    <b ng-bind="settings.timeZone"></b> <i class="fa fa-edit"></i>
-                </div>
+    </div>
+    <div class="col-sm-6 clock-bar-center">
+        <div class="row">
+            <div class="col-xs-12 clock-bar-time">
+                <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
+                <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </div>
         </div>
-        <div class="col-sm-3 clock-bar-right">
-
+        <div class="row">
+            <div class="col-xs-12 clock-bar-timezone">
+                <b ng-bind="settings.timeZone"></b> <i class="fa fa-edit"></i>
+            </div>
         </div>
+    </div>
+    <div class="col-sm-3 clock-bar-right">
+
     </div>
 </div>
 <div class="row page-view" ui-view></div>
-
+</div>
 <!-- build:js(.) scripts/oldieshim.js -->
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.js"></script>

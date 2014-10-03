@@ -17,7 +17,7 @@ angular.module('matchCalendarApp')
 
         var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(\:\d{1,5})?/g;
 
-        function MatchPost(id, title, selftext, author, permalink, posted, upvotes) {
+        function MatchPost(id, title, selftext, author, permalink, posted) {
             this.id = id;
             this.title = title;
             this.selftext = selftext;
@@ -25,7 +25,6 @@ angular.module('matchCalendarApp')
             this.permalink = 'http://reddit.com' + permalink;
             this.posted = posted;
             this.anchorlink = '#' + $location.path() + '?post=' + id;
-            this.upvotes = upvotes;
 
             this.region = null;
             this.starts = null;
@@ -57,7 +56,7 @@ angular.module('matchCalendarApp')
             var linkData = MarkdownLinkDataService.fetch('/matchpost', element.selftext);
 
             /*jshint camelcase: false */
-            var post = new MatchPost(element.id, element.title, element.selftext, element.author, element.permalink, moment(element.created_utc, 'X'), element.ups);
+            var post = new MatchPost(element.id, element.title, element.selftext, element.author, element.permalink, moment(element.created_utc, 'X'));
 
             var parsedLink = false;
             if (linkData !== null) {

@@ -60,7 +60,9 @@
                         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
                     </div>
                     <div class="col-lg-2 text-left-lg text-center col-xs-12 text-center text-right-lg">
-                        <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a>
+                        <small>
+                            <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a>
+                        </small>
                         &nbsp;<i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
                         <span ng-show="post.address !== null">
                             <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">

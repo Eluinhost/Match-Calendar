@@ -34,29 +34,17 @@
         <accordion-group class="match-post" ng-repeat="post in posts.filteredposts track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <div class="row text-center" ng-attr-id="{{ 'post-' + post.id }}">
-                    <div class="col-xs-2 text-right">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="abs-game-starts" tooltip="Time starts">
-                                    <b ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b> <i class="fa fa-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="server-region" tooltip="Server Region">
-                                    <small ng-bind="post.region == null ? 'Unknown' : post.region"></small> <i class="fa fa-globe"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="upvotes">
-                                    <small>10</small>
-                                    <i class="fa fa-arrow-up"></i>
-                                </span>
-                            </div>
-                        </div>
+                    <div class="col-lg-2 col-xs-12 text-center text-right-lg">
+                        <span class="abs-game-starts" tooltip="Time starts">
+                            <b ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b>
+                            &nbsp;<i class="fa fa-calendar"></i>
+                        </span>
+                        <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
+                            &nbsp;
+                            <small ng-bind="post.region == null ? 'Unknown' : post.region"></small>
+                            <i class="fa fa-globe"></i>
+                        </span>
+                        <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
                     </div>
                     <div class="col-lg-6 text-left-lg text-center col-xs-12">
                         <div>

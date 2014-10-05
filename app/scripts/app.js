@@ -73,6 +73,12 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
                 url: '/settings',
                 templateUrl: 'views/settings.html',
                 controller: 'SettingsCtrl'
+            })
+
+            .state('about', {
+                url: '/about',
+                templateUrl: 'views/about.html',
+                controller: 'AboutCtrl'
             });
 
         $urlRouterProvider.otherwise('/list');

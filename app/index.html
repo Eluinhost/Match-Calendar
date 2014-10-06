@@ -9,6 +9,7 @@
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
+    <link rel="stylesheet" href="bower_components/outdated-browser/outdatedbrowser/outdatedbrowser.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -76,6 +77,8 @@
 </div>
 <div class="row page-view" ui-view></div>
 </div>
+
+<div id="outdated"></div>
 <!-- build:js(.) scripts/oldieshim.js -->
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -85,6 +88,7 @@
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
+<script src="bower_components/outdated-browser/outdatedbrowser/outdatedbrowser.min.js"></script>
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/moment/moment.js"></script>
@@ -102,6 +106,28 @@
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
+
+<script type="text/javascript">
+    //event listener: DOM ready
+    function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function') {
+            window.onload = func;
+        } else {
+            window.onload = function() {
+                oldonload();
+                func();
+            }
+        }
+    }
+    //call plugin function after DOM ready
+    addLoadEvent(
+        outdatedBrowser({
+            lowerThan: 'borderImage',
+            languagePath: 'default'
+        })
+    );
+</script>
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>

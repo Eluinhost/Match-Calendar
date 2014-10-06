@@ -63,6 +63,11 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
                 templateUrl: 'views/list.html'
             })
 
+            .state('listhelp', {
+                url: '/list/help',
+                templateUrl: 'views/listhelp.html'
+            })
+
             .state('generate', {
                 url: '/generate',
                 templateUrl: 'views/generator.html',

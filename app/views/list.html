@@ -41,6 +41,9 @@
         <alert ng-show="currentPermission() === 'denied'" class="notify-permission" type="danger">
             Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
         </alert>
+        <alert ng-show="currentPermission() === 'unsupported'" class="notify-permission" type="danger">
+            Desktop alerts are not supported by your browser, no notifications will be made.
+        </alert>
     </div>
     <accordion close-others="false">
         <accordion-group class="match-post" ng-repeat="post in posts.filtered=(posts.posts | filter:posts.filterPosts | filter:posts.postfilter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">

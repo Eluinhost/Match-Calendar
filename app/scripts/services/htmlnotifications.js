@@ -17,9 +17,14 @@ angular.module('matchCalendarApp')
                 return 'Notification' in window;
             },
             currentPermission: function () {
-                if (!Notification.permission) {
+                if(!this.supports()) {
+                    return 'unsupported';
+                }
+
+                if (! 'permission' in Notification) {
                     Notification.permission = 'default';
                 }
+
                 return Notification.permission;
             },
             /**

@@ -8,35 +8,35 @@
  * Factory in the matchCalendarApp.
  */
 angular.module('matchCalendarApp')
-    .factory('HtmlNotifications', ['$q', function ($q) {
+    .factory('HtmlNotifications', ['$q', '$window', function ($q, $window) {
         return {
             /**
              * @returns boolean true if notification available, false otherwise
              */
             supports: function () {
-                return 'Notification' in window;
+                return 'Notification' in $window;
             },
             currentPermission: function () {
                 if(!this.supports()) {
                     return 'unsupported';
                 }
 
-                if (! 'permission' in Notification) {
-                    Notification.permission = 'default';
+                if (! 'permission' in $window.Notification) {
+                    $window.Notification.permission = 'default';
                 }
 
-                return Notification.permission;
+                return $window.Notification.permission;
             },
             /**
              * @returns {promise} resolves on granted, rejects on not
              */
             requestPermission: function () {
                 var def = $q.defer();
-                if (Notification.permission !== 'granted') {
+                if ($window.Notification.permission !== 'granted') {
                     //request the permission and update the permission value
-                    Notification.requestPermission(function (status) {
-                        if (Notification.permission !== status) {
-                            Notification.permission = status;
+                    $window.Notification.requestPermission(function (status) {
+                        if ($window.Notification.permission !== status) {
+                            $window.Notification.permission = status;
                         }
                         if(status === 'granted') {
                             def.resolve();
@@ -60,7 +60,7 @@ angular.module('matchCalendarApp')
                     options.icon = options.icon || 'images/favicon.png';
                     options.body = body || '';
 
-                    new Notification(title, options);
+                    new $window.Notification(title, options);
                 });
             }
         };

@@ -11,8 +11,10 @@
                     <div class="center-block text-left-lg">
                         <b>Regions:</b>
                         <span ng-repeat="(region, x) in posts.regions">
-                            <small ng-bind="region"></small>
-                            <input type="checkbox" ng-model="posts.regions[region]">
+                            <label>
+                                <small ng-bind="region"></small>
+                                <input type="checkbox" ng-model="posts.regions[region]">
+                            </label>
                         </span>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will open (in your selected timezone)</p>
-                    <date-time-picker picked-date="opens" time-zone="settings.time_zone" min-date="current_time" meridian="settings.time_format == '12h'"></date-time-picker>
+                    <date-time-picker picked-date="opens" time-zone="settings.timeZone" min-date="currentTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will start (in your selected timezone)</p>
-                    <date-time-picker picked-date="starts" time-zone="settings.time_zone" min-date="current_time" meridian="settings.time_format == '12h'"></date-time-picker>
+                    <date-time-picker picked-date="starts" time-zone="settings.timeZone" min-date="currentTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="panel-body">
                     <span class="help-block">The title to show on the list</span>
-                    <input class="form-control" type="text" ng-model="post_title"/>
+                    <input class="form-control" type="text" ng-model="postTitle"/>
                 </div>
             </div>
         </div>

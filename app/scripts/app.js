@@ -1,59 +1,60 @@
 'use strict';
 
-var cookie_version = '1';
+var cookieVersion = '1';
 
 // Main application
-angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'angular-intro', 'vr.directives.slider', 'ngAnimate'])
+angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
 
-    .run(['$rootScope', '$cookieStore', 'DateTimeService', function($rootScope, $cookieStore, DateTimeService) {
+    .run(function($rootScope, $cookieStore, DateTimeService, editableOptions) {
+        editableOptions.theme = 'bs3';
         $rootScope.timeOffset = DateTimeService;
         DateTimeService.resync();
 
         $rootScope.settings = {
-            time_formats: ['12h', '24h'],
-            time_zones: moment.tz.names(),
-            time_zone: $cookieStore.get('time_zone') || 'Etc/UTC',
-            time_format: $cookieStore.get('time_format') || '24h',
+            timeFormats: ['12h', '24h'],
+            timeZones: moment.tz.names(),
+            timeZone: $cookieStore.get('timeZone') || 'Etc/UTC',
+            timeFormat: $cookieStore.get('timeFormat') || '24h',
             subreddits: $cookieStore.get('subreddits') || ['ultrahardcore', 'ghowden'],
-            favorite_hosts: $cookieStore.get('favorite_hosts') || [],
+            favoriteHosts: $cookieStore.get('favoriteHosts') || [],
             tour: {
                 taken: $cookieStore.get('tour.taken') || false
             },
-            notify_for: $cookieStore.get('notify_for') || {},
-            notification_times: $cookieStore.get('notification_times') || [{value: 600}],
+            notifyFor: $cookieStore.get('notifyFor') || {},
+            notificationTimes: $cookieStore.get('notificationTimes') || [{value: 600}],
 
             //store the version of the cookie we have so we can modify the cookie data if needed in future versions
-            stored_cookie_version: $cookieStore.get('cookie_version') || cookie_version
+            storedCookieVersion: $cookieStore.get('cookieVersion') || cookieVersion
         };
 
-        $rootScope.$watch('settings.notification_times', function (newValue) {
-            $cookieStore.put('notification_times', newValue);
+        $rootScope.$watch('settings.notificationTimes', function (newValue) {
+            $cookieStore.put('notificationTimes', newValue);
         }, true);
 
-        $rootScope.$watch('settings.notify_for', function(newValue) {
-            $cookieStore.put('notify_for', newValue);
+        $rootScope.$watch('settings.notifyFor', function(newValue) {
+            $cookieStore.put('notifyFor', newValue);
         }, true);
 
         $rootScope.$watch('settings.tour.taken', function(newValue) {
             $cookieStore.put('tour.taken', newValue);
         });
 
-        $rootScope.$watchCollection('settings.favorite_hosts', function(newValue) {
-            $cookieStore.put('favorite_hosts', newValue);
+        $rootScope.$watchCollection('settings.favoriteHosts', function(newValue) {
+            $cookieStore.put('favoriteHosts', newValue);
         });
 
-        $rootScope.$watch('settings.time_zone', function(newValue) {
-            $cookieStore.put('time_zone', newValue);
+        $rootScope.$watch('settings.timeZone', function(newValue) {
+            $cookieStore.put('timeZone', newValue);
         });
 
-        $rootScope.$watch('settings.time_format', function(newValue) {
-            $cookieStore.put('time_format', newValue);
+        $rootScope.$watch('settings.timeFormat', function(newValue) {
+            $cookieStore.put('timeFormat', newValue);
         });
 
         $rootScope.$watchCollection('settings.subreddits', function(newValue) {
             $cookieStore.put('subreddits', newValue);
         });
-    }])
+    })
 
     //configuration
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -61,6 +62,11 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
             .state('list', {
                 url: '/list?post',
                 templateUrl: 'views/list.html'
+            })
+
+            .state('listhelp', {
+                url: '/list/help',
+                templateUrl: 'views/listhelp.html'
             })
 
             .state('generate', {
@@ -73,6 +79,12 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
                 url: '/settings',
                 templateUrl: 'views/settings.html',
                 controller: 'SettingsCtrl'
+            })
+
+            .state('about', {
+                url: '/about',
+                templateUrl: 'views/about.html',
+                controller: 'AboutCtrl'
             });
 
         $urlRouterProvider.otherwise('/list');

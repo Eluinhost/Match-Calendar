@@ -38,7 +38,7 @@ angular.module('matchCalendarApp')
         $scope.$watch('address', function (newValue) {
             $scope.generated.address = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
-        $scope.$watch('post_title', function (newValue) {
+        $scope.$watch('postTitle', function (newValue) {
             $scope.generated.title = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
         $scope.$watch('region', function (newValue) {
@@ -52,6 +52,6 @@ angular.module('matchCalendarApp')
         $scope.opens = $scope.timeOffset.currentTime();
         $scope.starts = $scope.timeOffset.currentTime();
         $scope.address = '192.168.0.1';
-        $scope.post_title = 'Game Title';
+        $scope.postTitle = 'Game Title';
         $scope.region = 'NA';
     }]);

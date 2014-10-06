@@ -1,0 +1,23 @@
+.nav-button
+    font-variant: small-caps
+    padding-top: 2px
+    padding-bottom: 2px
+    font-weight: bold
+    +crayon-border-black()
+    +watercolour-black()
+    @media (min-width: $screen-sm)
+        border-width: 0
+        &:nth-child(3)
+            border-width: 0 3px 0 0
+        &:nth-child(2)
+            border-width: 0 3px 0 3px
+    @media (max-width: $screen-xs-max)
+        border-width: 0 0 3px 0
+        &:last-child
+            border-bottom: 0
+    &.nav-active
+        +watercolour-red()
+
+.site-nav
+    +crayon-border-red()
+    border-width: 3px 0 3px 0

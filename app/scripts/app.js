@@ -3,9 +3,10 @@
 var cookieVersion = '1';
 
 // Main application
-angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate'])
+angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
 
-    .run(['$rootScope', '$cookieStore', 'DateTimeService', function($rootScope, $cookieStore, DateTimeService) {
+    .run(function($rootScope, $cookieStore, DateTimeService, editableOptions) {
+        editableOptions.theme = 'bs3';
         $rootScope.timeOffset = DateTimeService;
         DateTimeService.resync();
 
@@ -53,7 +54,7 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
         $rootScope.$watchCollection('settings.subreddits', function(newValue) {
             $cookieStore.put('subreddits', newValue);
         });
-    }])
+    })
 
     //configuration
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {

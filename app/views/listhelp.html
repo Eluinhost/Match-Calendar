@@ -59,17 +59,6 @@
 
                 <hr>
 
-                <h3>Donations</h3>
-
-                <p><strong><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;amp;hosted_button_id=KGNH7JEXX6S96" target="_blank">DONATE HERE</a></strong> </p>
-
-                <ul>
-                    <li><p>I put a lot of time and effort in to hosting these UHCs for the community, and it costs a lot to run a server, so if you want to help me out, donate via the link above.</p></li>
-                    <li><p><strong>Any amount helps to keep the Orion server up and running, thank you</strong></p>
-
-                        <hr></li>
-                </ul>
-
                 <h3>Server Info</h3>
 
                 <ul>
@@ -132,69 +121,83 @@
     </accordion-group>
 </accordion>
 
-Most parts of a post can also be hovered over for an explanation. Clicking on the bar itself will show the contents of the post.
+<div class="container">
+    Most parts of a post can also be hovered over for an explanation. Clicking on the bar itself will show the contents of the post.
 
-<h2>Start Time</h2>
-This is the time (in the selected timezone) that the match starts
-<div class="well">
-    <span class="abs-game-starts" tooltip="Time starts">
-        <b>Oct 06 - 16:00</b>
-        &nbsp;<i class="fa fa-calendar"></i>
-    </span>
-</div>
-
-<h2>Server Region</h2>
-This is the region the server is hosted in
-<div class="well">
-    <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
-        &nbsp;
-        <small>EU</small>
-        <i class="fa fa-globe"></i>
-    </span>
-</div>
-
-<h2>Post Title</h2>
-This is the title of the post. Clicking it will open the match post in a new window.
-<div class="well">
-    <div>
-        <a class="anchor-link" href="#"><i class="fa fa-link"></i></a>
-        <a class="post-title" href="#">Naeco's #187 - FFA</a>
+    <h2>Start Time</h2>
+    <p>
+        This is the time (in the selected timezone) that the match starts.
+    </p>
+    <p>
+        Clicking on the calendar will make it turn red and
+    (if notifications are enabled) you will get notifications when the match start time hits the levels chosen in the settings.
+    Default notification time is 10 minutes only.
+    </p>
+    <div class="well">
+        <span class="abs-game-starts" tooltip="Time starts">
+            <b>Oct 06 - 16:00</b>
+            &nbsp;<i class="fa fa-calendar"></i>
+        </span>
     </div>
-    <div class="visible-lg-block">
-        <small class="time-posted" tooltip="Time posted">
-            <i class="fa fa-reply fa-rotate-180"></i> <span>16 hours ago</span>
-            - <span>a day</span> in advance.
+
+    <h2>Server Region</h2>
+    This is the region the server is hosted in
+    <div class="well">
+        <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
+            &nbsp;
+            <small>EU</small>
+            <i class="fa fa-globe"></i>
+        </span>
+    </div>
+
+    <h2>Post Title</h2>
+    This is the title of the post. Clicking it will open the match post in a new window.
+    <div class="well">
+        <div>
+            <a class="anchor-link" href="#"><i class="fa fa-link"></i></a>
+            <a class="post-title" href="#">Naeco's #187 - FFA</a>
+        </div>
+        <div class="visible-lg-block">
+            <small class="time-posted" tooltip="Time posted">
+                <i class="fa fa-reply fa-rotate-180"></i> <span>16 hours ago</span>
+                - <span>a day</span> in advance.
+            </small>
+        </div>
+    </div>
+
+    <h2>Match Host</h2>
+    <p>
+        This is the reddit name of the match host. Clicking it will open their user profile.
+    </p>
+    <p>
+        Clicking the Reddit alien will
+        add the host to your 'favourite' list and their matches will show up green in the post list.
+    </p>
+    <div class="well">
+        <small>
+            <a class="post-author" target="_blank" href="http://reddit.com/u/naecomc">naecomc</a>
         </small>
+        &nbsp;<i class="fa fa-reddit" tooltip="Toggle Favorite"></i>
     </div>
-</div>
 
-<h2>Match Host</h2>
-This is the reddit name of the match host. Clicking it will open their user profile. Clicking the Reddit alien will
-add the host to your 'favourite' list and their matches will show up green in the post list.
-<div class="well">
-    <small>
-        <a class="post-author" target="_blank" href="http://reddit.com/u/naecomc">naecomc</a>
-    </small>
-    &nbsp;<i class="fa fa-reddit" tooltip="Toggle Favorite"></i>
-</div>
+    <h2>Server Address</h2>
+    This is the address to connect to to play the game. Clicking it will cause the IP to be copied to the clipboard (not
+    on this example)
+    <div class="well">
+        <span>
+            <small>46.105.121.183:19969</small> <i class="fa fa-cubes"></i>
+        </span>
+    </div>
 
-<h2>Server Address</h2>
-This is the address to connect to to play the game. Clicking it will cause the IP to be copied to the clipboard (not
-on this example)
-<div class="well">
-    <span>
-        <small>46.105.121.183:19969</small> <i class="fa fa-cubes"></i>
-    </span>
-</div>
-
-<h2>Start and Open Times</h2>
-These show how long until start/open time. Only post made with the <a ui-sref="generate">Post Generator</a> will have
-an opens time.
-<div class="well">
-    <span tooltip="Opens" class="game-opens">
-        <i class="fa fa-clock-o"></i> <small>in 10 minutes</small>
-    </span>
-    <span tooltip="Starts" class="game-starts visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-        <i class="fa fa-caret-square-o-right"></i> <small>in 30 minutes</small>
-    </span>
+    <h2>Start and Open Times</h2>
+    These show how long until start/open time. Only post made with the <a ui-sref="generate">Post Generator</a> will have
+    an opens time.
+    <div class="well">
+        <span tooltip="Opens" class="game-opens">
+            <i class="fa fa-clock-o"></i> <small>in 10 minutes</small>
+        </span>
+        <span tooltip="Starts" class="game-starts visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+            <i class="fa fa-caret-square-o-right"></i> <small>in 30 minutes</small>
+        </span>
+    </div>
 </div>

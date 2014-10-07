@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.DateTimeService
+ * @name MatchCalendarApp.DateTimeService
  * @description
  * # DateTimeService
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .factory('DateTimeService', ['$http', function ($http) {
-        var resyncURL = 'php/sync.php';
+        var resyncURL = 'api/sync';
 
         return {
             synced: false,

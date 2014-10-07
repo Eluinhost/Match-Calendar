@@ -3,7 +3,7 @@
 var cookieVersion = '1';
 
 // Main application
-angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
+angular.module('MatchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
 
     .run(function($rootScope, $cookieStore, DateTimeService, editableOptions) {
         editableOptions.theme = 'bs3';
@@ -61,29 +61,29 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
         $stateProvider
             .state('list', {
                 url: '/list?post',
-                templateUrl: 'views/list.html'
+                templateUrl: 'components/PostList/list.html'
             })
 
             .state('listhelp', {
                 url: '/list/help',
-                templateUrl: 'views/listhelp.html'
+                templateUrl: 'components/PostList/listhelp.html'
             })
 
             .state('generate', {
                 url: '/generate',
-                templateUrl: 'views/generator.html',
+                templateUrl: 'components/Generator/generator.html',
                 controller: 'HeadergeneratorCtrl'
             })
 
             .state('settings', {
                 url: '/settings',
-                templateUrl: 'views/settings.html',
+                templateUrl: 'components/Settings/settings.html',
                 controller: 'SettingsCtrl'
             })
 
             .state('about', {
                 url: '/about',
-                templateUrl: 'views/about.html',
+                templateUrl: 'components/About/about.html',
                 controller: 'AboutCtrl'
             });
 

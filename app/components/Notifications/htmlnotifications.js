@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.HtmlNotifications
+ * @name MatchCalendarApp.HtmlNotifications
  * @description
  * # HtmlNotifications
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .factory('HtmlNotifications', ['$q', '$window', function ($q, $window) {
         return {
             /**
@@ -21,7 +21,7 @@ angular.module('matchCalendarApp')
                     return 'unsupported';
                 }
 
-                if (! 'permission' in $window.Notification) {
+                if ('permission' in $window.Notification === false) {
                     $window.Notification.permission = 'default';
                 }
 

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name matchCalendarApp.controller:HeadergeneratorCtrl
+ * @name MatchCalendarApp.controller:HeadergeneratorCtrl
  * @description
  * # HeadergeneratorCtrl
- * Controller of the matchCalendarApp
+ * Controller of the MatchCalendarApp
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .controller('HeadergeneratorCtrl', ['$scope', function ($scope) {
         $scope.regions = {
             'AF': 'Africa',

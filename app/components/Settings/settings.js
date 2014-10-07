@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name matchCalendarApp.controller:SettingsCtrl
+ * @name MatchCalendarApp.controller:SettingsCtrl
  * @description
  * # SettingsCtrl
- * Controller of the matchCalendarApp
+ * Controller of the MatchCalendarApp
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', function ($scope, NotifcationTimeFormat) {
         $scope.addSubreddit = function (name) {
             if (name === '' || name === null || name === undefined) {

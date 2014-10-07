@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name matchCalendarApp.directive:DateTimePicker
+ * @name MatchCalendarApp.directive:DateTimePicker
  * @description
  * # DateTimePicker
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .directive('dateTimePicker', [function () {
         return {
             restrict: 'AE',
@@ -16,7 +16,7 @@ angular.module('matchCalendarApp')
                 meridian: '=',
                 timeZone: '='
             },
-            templateUrl: 'views/dateTimePicker.html',
+            templateUrl: 'components/Time/dateTimePicker.html',
             link: function ($scope) {
                 $scope.opened = false;
 

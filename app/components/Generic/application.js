@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name matchCalendarApp.controller:ApplicationCtrl
+ * @name MatchCalendarApp.controller:ApplicationCtrl
  * @description
  * # ApplicationCtrl
- * Controller of the matchCalendarApp
+ * Controller of the MatchCalendarApp
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .controller('ApplicationCtrl', [
         '$scope',
         'RedditPostsService',
@@ -19,12 +19,11 @@ angular.module('matchCalendarApp')
         '$q',
         '$stateParams',
         'NotifcationTimeFormat',
-        '$filter',
         function (
             $scope, RedditPostsService, $cookieStore,
             $interval, $timeout, HtmlNotifications,
             $anchorScroll, $q, $stateParams,
-            NotifcationTimeFormat, $filter)
+            NotifcationTimeFormat)
         {
             $scope.requestPermissions = function () {
                 HtmlNotifications.requestPermission().then(function () {
@@ -52,7 +51,7 @@ angular.module('matchCalendarApp')
                 lastUpdated: null,
                 regions: {},
                 filterPosts: function(element) {
-                    return $scope.posts.regions[element.region || 'Unknown']
+                    return $scope.posts.regions[element.region || 'Unknown'];
                 }
             };
             $scope.updatePosts = function () {

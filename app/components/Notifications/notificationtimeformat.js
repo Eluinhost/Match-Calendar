@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.NotificationTimeFormat
+ * @name MatchCalendarApp.NotificationTimeFormat
  * @description
  * # NotificationTimeFormat
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .factory('NotifcationTimeFormat', [function () {
         return {
             translateSeconds: function (duration) {

@@ -21,7 +21,7 @@ angular.module('MatchCalendarApp')
                     return 'unsupported';
                 }
 
-                if (! 'permission' in $window.Notification) {
+                if ('permission' in $window.Notification === false) {
                     $window.Notification.permission = 'default';
                 }
 

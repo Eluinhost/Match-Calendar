@@ -102,7 +102,6 @@ module.exports = function (grunt) {
                     port: 9001,
                     middleware: function (connect) {
                         return [
-                            phpMiddleware(appConfig.app),
                             rwGateway(appConfig.app),
                             connect.static('.tmp'),
                             connect().use(

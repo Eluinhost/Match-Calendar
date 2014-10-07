@@ -19,12 +19,11 @@ angular.module('MatchCalendarApp')
         '$q',
         '$stateParams',
         'NotifcationTimeFormat',
-        '$filter',
         function (
             $scope, RedditPostsService, $cookieStore,
             $interval, $timeout, HtmlNotifications,
             $anchorScroll, $q, $stateParams,
-            NotifcationTimeFormat, $filter)
+            NotifcationTimeFormat)
         {
             $scope.requestPermissions = function () {
                 HtmlNotifications.requestPermission().then(function () {
@@ -52,7 +51,7 @@ angular.module('MatchCalendarApp')
                 lastUpdated: null,
                 regions: {},
                 filterPosts: function(element) {
-                    return $scope.posts.regions[element.region || 'Unknown']
+                    return $scope.posts.regions[element.region || 'Unknown'];
                 }
             };
             $scope.updatePosts = function () {

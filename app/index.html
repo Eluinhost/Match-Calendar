@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html class="no-js" manifest="manifest.appcache" ng-app="matchCalendarApp" ng-controller="ApplicationCtrl">
+<html class="no-js" manifest="manifest.appcache" ng-app="MatchCalendarApp" ng-controller="ApplicationCtrl">
 <head>
-    <title ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm' : 'hh:mm a') + ' - Calendar'">Calendar</title>
+    <title ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == &apos;24h&apos; ? &apos;HH:mm&apos; : &apos;hh:mm a&apos;) + &apos; - Calendar&apos;">Calendar</title>
     <link rel="icon" href="images/favicon.png">
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -15,7 +15,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    <link href='http://fonts.googleapis.com/css?family=Short+Stack' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Short+Stack" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container-fluid">
@@ -23,12 +23,12 @@
     <div class="row site-header-brand text-center">
         <div class="visible-xs-block">
             <div class="col-sm-5">Match</div>
-            <div class="col-sm-2"><img src="images/heart.png" class="site-header-image"/></div>
+            <div class="col-sm-2"><img src="images/heart.png" class="site-header-image"></div>
             <div class="col-sm-5">Calendar</div>
         </div>
         <div class="visible-sm-block visible-lg-block visible-md-block">
             <div class="col-xs-12">
-                Match <img src="images/heart.png" class="site-header-image"/> Calendar
+                Match <img src="images/heart.png" class="site-header-image"> Calendar
             </div>
         </div>
     </div>
@@ -57,17 +57,14 @@
     <div class="col-sm-6 clock-bar-center">
         <div class="row">
             <div class="col-xs-12 clock-bar-time">
-                <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
+                <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == &apos;24h&apos; ? &apos;HH:mm:ss&apos; : &apos;hh:mm:ss a&apos;)"></strong>
                 <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 clock-bar-timezone">
-                <b editable-select="settings.timeZone"
-                   e-ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in settings.timeZones"
-                   e-form="inlineTimeZoneForm"
-                   ng-bind="settings.timeZone">
-                </b>&nbsp;&nbsp;<i ng-click="inlineTimeZoneForm.$show()" class="fa fa-edit"></i>
+                <b editable-select="settings.timeZone" e-ng-options="o as o group by o.indexOf(&apos;/&apos;) == -1 ? &apos;Other&apos; : o.substring(0, o.indexOf(&apos;/&apos;)) for o in settings.timeZones" e-form="inlineTimeZoneForm" ng-bind="settings.timeZone">
+                </b>&#xA0;&#xA0;<i ng-click="inlineTimeZoneForm.$show()" class="fa fa-edit"></i>
             </div>
         </div>
     </div>
@@ -75,7 +72,7 @@
 
     </div>
 </div>
-<div class="row page-view" ui-view></div>
+<div class="row page-view" ui-view=""></div>
 </div>
 
 <div id="outdated"></div>
@@ -88,9 +85,20 @@
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
-<script src="bower_components/outdated-browser/outdatedbrowser/outdatedbrowser.min.js"></script>
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
 <script src="bower_components/moment/moment.js"></script>
 <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -104,6 +112,7 @@
 <script src="bower_components/venturocket-angular-slider/build/angular-slider.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+<script src="bower_components/outdated-browser/outdatedbrowser/outdatedbrowser.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -130,20 +139,20 @@
 </script>
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
-<script src="scripts/app.js"></script>
-<script src="scripts/controllers/application.js"></script>
-<script src="scripts/controllers/settings.js"></script>
-<script src="scripts/controllers/headergenerator.js"></script>
-<script src="scripts/controllers/about.js"></script>
-<script src="scripts/services/notificationtimeformat.js"></script>
-<script src="scripts/services/matchpost.js"></script>
-<script src="scripts/services/markdownlinkdataservice.js"></script>
-<script src="scripts/services/redditpostsservice.js"></script>
-<script src="scripts/services/htmlnotifications.js"></script>
-<script src="scripts/services/datetimeservice.js"></script>
-<script src="scripts/directives/datetimepicker.js"></script>
-<script src="scripts/directives/keybind.js"></script>
-<script src="scripts/directives/markdown.js"></script>
+<script src="app.js"></script>
+<script src="components/Generic/application.js"></script>
+<script src="components/Settings/settings.js"></script>
+<script src="components/Generator/headergenerator.js"></script>
+<script src="components/About/about.js"></script>
+<script src="components/Notifications/notificationtimeformat.js"></script>
+<script src="components/PostList/matchpost.js"></script>
+<script src="components/PostList/markdownlinkdataservice.js"></script>
+<script src="components/PostList/redditpostsservice.js"></script>
+<script src="components/Notifications/htmlnotifications.js"></script>
+<script src="components/Time/datetimeservice.js"></script>
+<script src="components/Time/datetimepicker.js"></script>
+<script src="components/Generic/keybind.js"></script>
+<script src="components/Markdown/markdown.js"></script>
 <!-- endbuild -->
 </body>
 </html>

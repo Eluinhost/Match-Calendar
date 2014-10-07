@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.RedditPostsService
+ * @name MatchCalendarApp.RedditPostsService
  * @description
  * # RedditPostsService
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .factory('RedditPostsService', ['$http', '$q', '$filter', 'MatchPost', function ($http, $q, $filter, MatchPost) {
         return {
             //fetch all

@@ -1,0 +1,14 @@
+{
+    "name": "ultrasoftcore/match-calendar",
+    "require": {
+        "php": ">=5.3.3",
+        "silex/silex": "~1.2",
+        "igorw/config-service-provider": "~1.2",
+        "symfony/yaml": "~2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "UltraSoftcore\\MatchCalendar\\": "src/"
+        }
+    }
+}

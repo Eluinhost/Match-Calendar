@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.MatchPost
+ * @name MatchCalendarApp.MatchPost
  * @description
  * # MatchPost
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     //a match post model
     .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', '$location', function (MarkdownLinkDataService, $rootScope, $location) {
 

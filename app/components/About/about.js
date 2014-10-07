@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name matchCalendarApp.controller:AboutCtrl
+ * @name MatchCalendarApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the matchCalendarApp
+ * Controller of the MatchCalendarApp
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .controller('AboutCtrl', function ($scope) {
 
     });

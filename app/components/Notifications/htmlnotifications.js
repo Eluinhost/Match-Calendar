@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.HtmlNotifications
+ * @name MatchCalendarApp.HtmlNotifications
  * @description
  * # HtmlNotifications
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .factory('HtmlNotifications', ['$q', '$window', function ($q, $window) {
         return {
             /**

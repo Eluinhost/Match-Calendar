@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name matchCalendarApp.controller:ApplicationCtrl
+ * @name MatchCalendarApp.controller:ApplicationCtrl
  * @description
  * # ApplicationCtrl
- * Controller of the matchCalendarApp
+ * Controller of the MatchCalendarApp
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .controller('ApplicationCtrl', [
         '$scope',
         'RedditPostsService',

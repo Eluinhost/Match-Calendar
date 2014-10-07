@@ -1,58 +1,51 @@
 'use strict';
 
-var cookieVersion = '1';
-
 // Main application
-angular.module('MatchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
+angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
 
-    .run(function($rootScope, $cookieStore, DateTimeService, editableOptions) {
+    .run(function($rootScope, $localForage, DateTimeService, editableOptions) {
         editableOptions.theme = 'bs3';
         $rootScope.timeOffset = DateTimeService;
         DateTimeService.resync();
 
-        $rootScope.settings = {
-            timeFormats: ['12h', '24h'],
-            timeZones: moment.tz.names(),
-            timeZone: $cookieStore.get('timeZone') || 'Etc/UTC',
-            timeFormat: $cookieStore.get('timeFormat') || '24h',
-            subreddits: $cookieStore.get('subreddits') || ['ultrahardcore', 'ghowden'],
-            favoriteHosts: $cookieStore.get('favoriteHosts') || [],
-            tour: {
-                taken: $cookieStore.get('tour.taken') || false
-            },
-            notifyFor: $cookieStore.get('notifyFor') || {},
-            notificationTimes: $cookieStore.get('notificationTimes') || [{value: 600}],
+        $rootScope.settings = $rootScope.$new(true);
 
-            //store the version of the cookie we have so we can modify the cookie data if needed in future versions
-            storedCookieVersion: $cookieStore.get('cookieVersion') || cookieVersion
-        };
+        $rootScope.settings.timeFormats = ['12h', '24h'];
+        $rootScope.settings.timeZones = moment.tz.names();
 
-        $rootScope.$watch('settings.notificationTimes', function (newValue) {
-            $cookieStore.put('notificationTimes', newValue);
-        }, true);
-
-        $rootScope.$watch('settings.notifyFor', function(newValue) {
-            $cookieStore.put('notifyFor', newValue);
-        }, true);
-
-        $rootScope.$watch('settings.tour.taken', function(newValue) {
-            $cookieStore.put('tour.taken', newValue);
+        $localForage.bind($rootScope.settings, {
+            key: 'timeZone',
+            defaultValue: 'Etc/UTC'
         });
 
-        $rootScope.$watchCollection('settings.favoriteHosts', function(newValue) {
-            $cookieStore.put('favoriteHosts', newValue);
+        $localForage.bind($rootScope.settings, {
+            key: 'timeFormat',
+            defaultValue: '24h'
         });
 
-        $rootScope.$watch('settings.timeZone', function(newValue) {
-            $cookieStore.put('timeZone', newValue);
+        $localForage.bind($rootScope.settings, {
+            key: 'subreddits',
+            defaultValue: ['ultrahardcore']
         });
 
-        $rootScope.$watch('settings.timeFormat', function(newValue) {
-            $cookieStore.put('timeFormat', newValue);
+        $localForage.bind($rootScope.settings, {
+            key: 'favoriteHosts',
+            defaultValue: []
         });
 
-        $rootScope.$watchCollection('settings.subreddits', function(newValue) {
-            $cookieStore.put('subreddits', newValue);
+        $localForage.bind($rootScope.settings, {
+            key: 'notifyFor',
+            defaultValue: {}
+        });
+
+        $localForage.bind($rootScope.settings, {
+            key: 'notificationTimes',
+            defaultValue: [{value: 600}]
+        });
+
+        $localForage.bind($rootScope.settings, {
+            key: 'version',
+            defaultValue: 0
         });
     })
 

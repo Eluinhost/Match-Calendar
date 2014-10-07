@@ -8,6 +8,8 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
         $rootScope.timeOffset = DateTimeService;
         DateTimeService.resync();
 
+        $rootScope.appVersion = 1;
+
         $rootScope.settings = $rootScope.$new(true);
 
         $rootScope.settings.timeFormats = ['12h', '24h'];
@@ -39,14 +41,31 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
         });
 
         $localForage.bind($rootScope.settings, {
+            key: 'schemaVersion',
+            defaultValue: -1
+        });
+
+        $localForage.bind($rootScope.settings, {
             key: 'notificationTimes',
             defaultValue: [{value: 600}]
         });
 
-        $localForage.bind($rootScope.settings, {
-            key: 'version',
-            defaultValue: 0
-        });
+
+        $localForage.getItem('schemaVersion').then(function(err, value){
+            //delete the old cookie if we're switching schema
+            if(err || value === -1) {
+                var cookies = document.cookie.split(";");
+
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    var eqPos = cookie.indexOf("=");
+                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+
+                $rootScope.settings.schemaVersion = 1;
+            }
+        })
     })
 
     //configuration

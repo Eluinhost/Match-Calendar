@@ -3,9 +3,10 @@
 var cookieVersion = '1';
 
 // Main application
-angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'angular-intro', 'vr.directives.slider', 'ngAnimate'])
+angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'angular-intro', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
 
-    .run(['$rootScope', '$cookieStore', 'DateTimeService', function($rootScope, $cookieStore, DateTimeService) {
+    .run(function($rootScope, $cookieStore, DateTimeService, editableOptions) {
+        editableOptions.theme = 'bs3';
         $rootScope.timeOffset = DateTimeService;
         DateTimeService.resync();
 
@@ -15,7 +16,7 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
             timeZone: $cookieStore.get('timeZone') || 'Etc/UTC',
             timeFormat: $cookieStore.get('timeFormat') || '24h',
             subreddits: $cookieStore.get('subreddits') || ['ultrahardcore', 'ghowden'],
-            favoriteHosts: $cookieStore.get('favoriteHosts') || ['Elllzman619'],
+            favoriteHosts: $cookieStore.get('favoriteHosts') || [],
             tour: {
                 taken: $cookieStore.get('tour.taken') || false
             },
@@ -53,7 +54,7 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
         $rootScope.$watchCollection('settings.subreddits', function(newValue) {
             $cookieStore.put('subreddits', newValue);
         });
-    }])
+    })
 
     //configuration
     .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -61,6 +62,11 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
             .state('list', {
                 url: '/list?post',
                 templateUrl: 'views/list.html'
+            })
+
+            .state('listhelp', {
+                url: '/list/help',
+                templateUrl: 'views/listhelp.html'
             })
 
             .state('generate', {
@@ -73,6 +79,12 @@ angular.module('matchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', '
                 url: '/settings',
                 templateUrl: 'views/settings.html',
                 controller: 'SettingsCtrl'
+            })
+
+            .state('about', {
+                url: '/about',
+                templateUrl: 'views/about.html',
+                controller: 'AboutCtrl'
             })
 
             .state('auth', {

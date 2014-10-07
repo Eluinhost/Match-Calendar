@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html manifest="manifest.appcache">
+<html class="no-js" manifest="manifest.appcache" ng-app="matchCalendarApp" ng-controller="ApplicationCtrl">
 <head>
-    <title>Calendar</title>
+    <title ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm' : 'hh:mm a') + ' - Calendar'">Calendar</title>
     <link rel="icon" href="images/favicon.png">
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/intro.js/introjs.css" />
     <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+    <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
+    <link rel="stylesheet" href="bower_components/outdated-browser/outdatedbrowser/outdatedbrowser.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -16,59 +17,68 @@
     <!-- endbuild -->
     <link href='http://fonts.googleapis.com/css?family=Short+Stack' rel='stylesheet' type='text/css'>
 </head>
-<body ng-app="matchCalendarApp" ng-controller="ApplicationCtrl">
+<body>
+<div class="container-fluid">
 <div class="site-header row">
-    <div class="col-sm-8 col-sm-offset-2 site-header-brand">
-        <div class="col-sm-2 col-sm-push-5"><img src="images/heart.png" class="site-header-image"/></div>
-        <div class="col-sm-5 col-sm-pull-2 text-right-sm">Match</div>
-        <div class="col-sm-5 text-left-sm">Calendar</div>
+    <div class="row site-header-brand text-center">
+        <div class="visible-xs-block">
+            <div class="col-sm-5">Match</div>
+            <div class="col-sm-2"><img src="images/heart.png" class="site-header-image"/></div>
+            <div class="col-sm-5">Calendar</div>
+        </div>
+        <div class="visible-sm-block visible-lg-block visible-md-block">
+            <div class="col-xs-12">
+                Match <img src="images/heart.png" class="site-header-image"/> Calendar
+            </div>
+        </div>
     </div>
     <div class="col-xs-12 subreddit-link">
         A match calendar of UHC games from <a href="http://reddit.com/r/ultrahardcore">reddit</a>.
     </div>
 </div>
-<div class="container-fluid">
-    <div class="site-nav row">
-        <div class="col-sm-3 nav-button" ui-sref="list" ui-sref-active="nav-active">
-            Matches
-        </div>
-        <div class="col-sm-3 nav-button" ui-sref="generate" ui-sref-active="nav-active">
-            Post Creator
-        </div>
-        <div class="col-sm-3 nav-button" ui-sref="settings" ui-sref-active="nav-active">
-            Settings
-        </div>
-        <div class="col-sm-3 nav-button" ui-sref="help" ui-sref-active="nav-active">
-            Help
-        </div>
+<div class="site-nav row">
+    <div class="col-sm-3 nav-button" ui-sref="list" ui-sref-active="nav-active">
+        Matches
+    </div>
+    <div class="col-sm-3 nav-button" ui-sref="generate" ui-sref-active="nav-active">
+        Post Creator
+    </div>
+    <div class="col-sm-3 nav-button" ui-sref="settings" ui-sref-active="nav-active">
+        Settings
+    </div>
+    <div class="col-sm-3 nav-button" ui-sref="about" ui-sref-active="nav-active">
+        About
     </div>
 </div>
-<div class="clock-bar container-fluid">
-    <div class="row">
-        <div class="col-sm-3 clock-bar-left">
+<div class="row clock-bar">
+    <div class="col-sm-3 clock-bar-left">
 
-        </div>
-        <div class="col-sm-6 clock-bar-center">
-            <div class="row">
-                <div class="col-xs-12 clock-bar-time">
-                    <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
-                    <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 clock-bar-timezone">
-                    <b ng-bind="settings.timeZone"></b> <i class="fa fa-edit"></i>
-                </div>
+    </div>
+    <div class="col-sm-6 clock-bar-center">
+        <div class="row">
+            <div class="col-xs-12 clock-bar-time">
+                <strong ng-class="{unsynced: !timeOffset.synced}" ng-bind="currentTime.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></strong>
+                <i class="fa fa-info-circle" ng-show="!timeOffset.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </div>
         </div>
-        <div class="col-sm-3 clock-bar-right">
-
+        <div class="row">
+            <div class="col-xs-12 clock-bar-timezone">
+                <b editable-select="settings.timeZone"
+                   e-ng-options="o as o group by o.indexOf('/') == -1 ? 'Other' : o.substring(0, o.indexOf('/')) for o in settings.timeZones"
+                   e-form="inlineTimeZoneForm"
+                   ng-bind="settings.timeZone">
+                </b>&nbsp;&nbsp;<i ng-click="inlineTimeZoneForm.$show()" class="fa fa-edit"></i>
+            </div>
         </div>
     </div>
-    <div class="row page-view" ui-view></div>
+    <div class="col-sm-3 clock-bar-right">
+
+    </div>
 </div>
 <div class="row page-view" ui-view></div>
+</div>
 
+<div id="outdated"></div>
 <!-- build:js(.) scripts/oldieshim.js -->
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -78,6 +88,7 @@
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
+<script src="bower_components/outdated-browser/outdatedbrowser/outdatedbrowser.min.js"></script>
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/moment/moment.js"></script>
@@ -89,20 +100,41 @@
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
 <script src="bower_components/ng-clip/dest/ng-clip.min.js"></script>
-<script src="bower_components/intro.js/intro.js"></script>
-<script src="bower_components/angular-intro.js/src/angular-intro.js"></script>
 <script src="bower_components/angular-touch/angular-touch.js"></script>
 <script src="bower_components/venturocket-angular-slider/build/angular-slider.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
+
+<script type="text/javascript">
+    //event listener: DOM ready
+    function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function') {
+            window.onload = func;
+        } else {
+            window.onload = function() {
+                oldonload();
+                func();
+            }
+        }
+    }
+    //call plugin function after DOM ready
+    addLoadEvent(
+        outdatedBrowser({
+            lowerThan: 'borderImage',
+            languagePath: 'default'
+        })
+    );
+</script>
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/application.js"></script>
-<script src="scripts/controllers/tour.js"></script>
 <script src="scripts/controllers/settings.js"></script>
 <script src="scripts/controllers/headergenerator.js"></script>
+<script src="scripts/controllers/about.js"></script>
 <script src="scripts/services/notificationtimeformat.js"></script>
 <script src="scripts/services/matchpost.js"></script>
 <script src="scripts/services/markdownlinkdataservice.js"></script>

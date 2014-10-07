@@ -2,118 +2,99 @@
     <div class="panel panel-default search-panel">
         <div class="panel-heading post-list-filter">
             <div class="row">
-                <div class="col-sm-5 col-sm-offset-1">
+                <div class="col-lg-7 col-lg-offset-1 col-xs-12">
                     <div class="input-group">
                         <div class="input-group-addon">Filter Posts</div>
                         <input ng-model="posts.postfilter" class="form-control" type="search" placeholder="Search">
+                        <div class="input-group-addon" ng-bind="posts.filtered.length + '/' + posts.posts.length"></div>
+                    </div>
+                    <div class="center-block text-left-lg">
+                        <b>Regions:</b>
+                        <span ng-repeat="(region, x) in posts.regions">
+                            <label>
+                                <small ng-bind="region"></small>
+                                <input type="checkbox" ng-model="posts.regions[region]">
+                            </label>
+                        </span>
                     </div>
                 </div>
-                <div class="col-sm-3 text-left">
-                    <small ng-bind="posts.filteredposts.length + '/' + posts.posts.length + ' total posts.'"></small>
-                </div>
-                <div class="col-sm-3 refresh-button">
+                <div class="col-lg-3 col-xs-12 refresh-button text-center">
                     <b class="refresh-icon" ng-click="updatePosts()">
                         <i class="fa fa-refresh" ng-class="{'fa-spin': posts.updatingPosts}"></i> Refresh
+                        <small class="center-block">
+                            Last Updated: <small class="last-updated" ng-bind="posts.lastUpdated.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
+                        </small>
                     </b>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-1 text-left">
-                    <b>Regions:</b>
-                    EU: <input type="checkbox">
-                    US: <input type="checkbox">
-                    NA: <input type="checkbox">
-                </div>
-                <div class="col-sm-3">
-                    Last Updated: <small class="last-updated" ng-bind="posts.lastUpdated.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a')"></small>
+                <div class="col-lg-1 col-xs-12 text-right">
+                    <button type="button" class="btn btn-primary" ui-sref="listhelp">
+                    Help
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <alert ng-show="currentPermission() === 'default'" class="notify-permission" type="warning" ng-click="requestPermissions()">
+            Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
+        </alert>
+        <alert ng-show="currentPermission() === 'denied'" class="notify-permission" type="danger">
+            Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+        </alert>
+        <alert ng-show="currentPermission() === 'unsupported'" class="notify-permission" type="danger">
+            Desktop alerts are not supported by your browser, no notifications will be made.
+        </alert>
+    </div>
     <accordion close-others="false">
-        <accordion-group class="match-post" ng-repeat="post in posts.filteredposts track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
+        <accordion-group class="match-post" ng-repeat="post in posts.filtered=(posts.posts | filter:posts.filterPosts | filter:posts.postfilter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <div class="row text-center" ng-attr-id="{{ 'post-' + post.id }}">
-                    <div class="col-xs-2 text-right">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="abs-game-starts" tooltip="Time starts">
-                                    <b ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b> <i class="fa fa-calendar"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="server-region" tooltip="Server Region">
-                                    <small ng-bind="post.region == null ? 'Unknown' : post.region"></small> <i class="fa fa-globe"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="upvotes">
-                                    <small>10</small>
-                                    <i class="fa fa-arrow-up"></i>
-                                </span>
-                            </div>
-                        </div>
+                    <div class="col-lg-2 col-xs-12 text-center text-right-lg">
+                        <span class="abs-game-starts" tooltip="Time starts">
+                            <b ng-bind="post.starts == null ? 'Unparsed' : post.starts.tz(settings.timeZone).format(settings.timeFormat == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a')"></b>
+                            &nbsp;<i class="fa fa-calendar" ng-click="toggleNotifications(post.id); $event.stopPropagation()" ng-class="{notifications: willNotify(post.id)}"></i>
+                        </span>
+                        <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
+                            &nbsp;
+                            <small ng-bind="post.region == null ? 'Unknown' : post.region"></small>
+                            <i class="fa fa-globe"></i>
+                        </span>
+                        <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
                     </div>
-                    <div class="col-xs-5 text-left">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <a class="anchor-link" ng-click="$event.stopPropagation()" ng-href="{{post.anchorlink}}" target="_blank"><i class="fa fa-link"></i></a>
-                                <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
-                            </div>
+                    <div class="col-lg-6 text-left-lg text-center col-xs-12">
+                        <div>
+                            <a class="anchor-link" ng-click="$event.stopPropagation()" ng-href="{{post.anchorlink}}" target="_blank"><i class="fa fa-link"></i></a>
+                            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
                         </div>
-                        <div class="row" ng-show="post.address !== null">
-                            <div class="col-xs-12">
-                                <small class="server-address" tooltip="Server address" ng-click="$event.stopPropagation()">
-                                    <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">
-                                        <i class="fa fa-cubes"></i>
-                                        <span ng-bind="post.address"></span>
-                                    </span>
-                                </small>
-                            </div>
+                        <div class="visible-lg-block">
+                            <small class="time-posted" tooltip="Time posted">
+                                <i class="fa fa-reply fa-rotate-180"></i> <span ng-bind="post.posted.from(timeOffset.currentTime())"></span>
+                                - <span ng-bind="post.starts == null ? 'N/A' : post.posted.from(post.starts, true)"></span> in advance.
+                            </small>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <small class="time-posted" tooltip="Time posted">
-                                    <i class="fa fa-reply fa-rotate-180"></i> <span ng-bind="post.posted.from(timeOffset.currentTime())"></span>
-                                    - <span ng-bind="post.starts == null ? 'N/A' : post.posted.from(post.starts, true)"></span> in advance.
-                                </small>
-                            </div>
-                        </div>
+                        <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
                     </div>
-                    <div class="col-xs-5">
-                        <div class="row">
-                            <div class="col-xs-6 text-right">
-                                <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a> <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
-                            </div>
-                            <div class="col-xs-6 text-left">
-                                <span tooltip="Opens" class="game-opens">
-                                    <i class="fa fa-clock-o"></i> <small ng-bind="post.opens != null ? post.opens.from(timeOffset.currentTime()) : 'Unknown'"></small>
+                    <div class="col-lg-2 text-left-lg text-center col-xs-12 text-center text-right-lg">
+                        <small>
+                            <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a>
+                        </small>
+                        &nbsp;<i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
+                        <span ng-show="post.address !== null">
+                            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">
+                                <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">
+                                    <small ng-bind="post.address"></small> <i class="fa fa-cubes"></i>
                                 </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6 text-right">
-                                <span tooltip="Toggle Favourite" ng-click="toggleFavorite(post.author); $event.stopPropagation()">
-                                    <small>Favourite</small> <i class="fa fa-arrow-up"></i>
-                                </span>
-                            </div>
-                            <div class="col-xs-6 text-left">
-                                <span tooltip="Starts" class="game-starts">
-                                    <i class="fa fa-caret-square-o-right"></i> <small ng-bind="post.starts != null ? post.starts.from(timeOffset.currentTime()) : 'Unknown'"></small>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6 text-right">
-                                <span tooltip="Toggle Favourite" ng-click="toggleFavorite(post.author); $event.stopPropagation()">
-                                    <small>Block</small> <i class="fa fa-arrow-down"></i>
-                                </span>
-                            </div>
-                        </div>
+                            </span>
+                        </span>
+                        <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
+                    </div>
+                    <div class="col-lg-2 text-left-lg text-center col-xs-12">
+                        <span tooltip="Opens" class="game-opens">
+                            <i class="fa fa-clock-o"></i> <small ng-bind="post.opens != null ? post.opens.from(timeOffset.currentTime()) : 'Unknown'"></small>
+                        </span>
+                        <span tooltip="Starts" class="game-starts visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+                            <i class="fa fa-caret-square-o-right"></i> <small ng-bind="post.starts != null ? post.starts.from(timeOffset.currentTime()) : 'Unknown'"></small>
+                        </span>
                     </div>
                 </div>
             </accordion-heading>

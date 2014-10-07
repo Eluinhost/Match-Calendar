@@ -46,10 +46,14 @@ angular.module('matchCalendarApp')
 
             $scope.posts = {
                 posts: [],
-                filteredposts: [],
+                filtered: [],
                 postfilter: '',
                 updating: false,
-                lastUpdated: null
+                lastUpdated: null,
+                regions: {},
+                filterPosts: function(element) {
+                    return $scope.posts.regions[element.region || 'Unknown']
+                }
             };
             $scope.updatePosts = function () {
                 var def = $q.defer();
@@ -58,20 +62,16 @@ angular.module('matchCalendarApp')
                     $scope.posts.posts = data;
                     $scope.posts.updatingPosts = false;
                     $scope.posts.lastUpdated = $scope.timeOffset.currentTime();
+                    angular.forEach($scope.posts.posts, function(element) {
+                        element.region = element.region || 'Unknown';
+                        if(!angular.isDefined($scope.posts.regions[element.region])) {
+                            $scope.posts.regions[element.region] = true;
+                        }
+                    });
                     def.resolve();
                 });
                 return def.promise;
             };
-
-            $scope.refilter = function () {
-                $scope.posts.filteredposts = $filter('filter')($scope.posts.posts, $scope.posts.postfilter);
-            };
-            $scope.$watch('posts.postfilter', function () {
-                $scope.refilter();
-            });
-            $scope.$watch('posts.posts', function () {
-                $scope.refilter();
-            });
 
             /**
              * Changes the address of the post to 'Copied!' for a couple of seconds

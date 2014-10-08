@@ -10,50 +10,31 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
 
         $rootScope.appVersion = 1;
 
+        //set up a new scope for the global settings to use
         $rootScope.settings = $rootScope.$new(true);
 
+        //constants
         $rootScope.settings.timeFormats = ['12h', '24h'];
         $rootScope.settings.timeZones = moment.tz.names();
 
-        $localForage.bind($rootScope.settings, {
-            key: 'timeZone',
-            defaultValue: 'Etc/UTC'
-        });
+        //user settings
+        $rootScope.settings.timeZone = 'Etc/UTC';
+        $rootScope.settings.timeFormat = '24h';
+        $rootScope.settings.subreddits = ['ultrahardcore'];
+        $rootScope.settings.favoriteHosts = [];
+        $rootScope.settings.notifyFor = {};
+        $rootScope.settings.schemaVersion = -1;
+        $rootScope.settings.notificationTimes = [{value: 600}];
 
-        $localForage.bind($rootScope.settings, {
-            key: 'timeFormat',
-            defaultValue: '24h'
-        });
-
-        $localForage.bind($rootScope.settings, {
-            key: 'subreddits',
-            defaultValue: ['ultrahardcore']
-        });
-
-        $localForage.bind($rootScope.settings, {
-            key: 'favoriteHosts',
-            defaultValue: []
-        });
-
-        $localForage.bind($rootScope.settings, {
-            key: 'notifyFor',
-            defaultValue: {}
-        });
-
-        $localForage.bind($rootScope.settings, {
-            key: 'schemaVersion',
-            defaultValue: -1
-        });
-
-        $localForage.bind($rootScope.settings, {
-            key: 'notificationTimes',
-            defaultValue: [{value: 600}]
-        });
-
-
-        $localForage.getItem('schemaVersion').then(function(err, value){
+        $localForage.bind($rootScope.settings, 'timeZone');
+        $localForage.bind($rootScope.settings, 'timeFormat');
+        $localForage.bind($rootScope.settings, 'subreddits');
+        $localForage.bind($rootScope.settings, 'favoriteHosts');
+        $localForage.bind($rootScope.settings, 'notifyFor');
+        $localForage.bind($rootScope.settings, 'notificationTimes');
+        $localForage.bind($rootScope.settings, 'schemaVersion').then(function() {
             //delete the old cookie if we're switching schema
-            if(err || value === -1) {
+            if(err || $rootScope.settings.schemaVersion === -1) {
                 var cookies = document.cookie.split(";");
 
                 for (var i = 0; i < cookies.length; i++) {
@@ -65,7 +46,7 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
 
                 $rootScope.settings.schemaVersion = 1;
             }
-        })
+        });
     })
 
     //configuration

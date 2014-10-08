@@ -41,12 +41,14 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
                     toRun.push(Migrations[i]);
                 }
             }
-            toRun.reduce(function(prev, next) {
-                prev.then(next);
-            }, $q.when()).then(function() {
-                //update the version after updating the schema
-                $rootScope.settings.schemaVersion = $rootScope.appSchemaVersion;
-            })
+            if(toRun.length > 0) {
+                toRun.reduce(function (prev, next) {
+                    return prev.then(next);
+                }, $q.when()).then(function () {
+                    //update the version after updating the schema
+                    $rootScope.settings.schemaVersion = $rootScope.appSchemaVersion;
+                });
+            }
         });
     })
 

@@ -43,7 +43,10 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
             }
             toRun.reduce(function(prev, next) {
                 prev.then(next);
-            }, $q.when());
+            }, $q.when()).then(function() {
+                //update the version after updating the schema
+                $rootScope.settings.schemaVersion = $rootScope.appSchemaVersion;
+            })
         });
     })
 

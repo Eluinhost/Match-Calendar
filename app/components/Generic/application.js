@@ -108,6 +108,7 @@ angular.module('MatchCalendarApp')
             });
         };
 
+        $scope.currentTime = $scope.timeOffset.currentTime();
         $scope.clockTick = function () {
             $scope.currentTime = $scope.timeOffset.currentTime();
             if (HtmlNotifications.currentPermission() === 'granted') {

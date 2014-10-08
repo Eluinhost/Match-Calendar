@@ -1,58 +1,52 @@
 'use strict';
 
-var cookieVersion = '1';
-
 // Main application
-angular.module('MatchCalendarApp', ['ui.bootstrap', 'ngCookies', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
+angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
 
-    .run(function($rootScope, $cookieStore, DateTimeService, editableOptions) {
+    .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations) {
         editableOptions.theme = 'bs3';
         $rootScope.timeOffset = DateTimeService;
         DateTimeService.resync();
 
-        $rootScope.settings = {
-            timeFormats: ['12h', '24h'],
-            timeZones: moment.tz.names(),
-            timeZone: $cookieStore.get('timeZone') || 'Etc/UTC',
-            timeFormat: $cookieStore.get('timeFormat') || '24h',
-            subreddits: $cookieStore.get('subreddits') || ['ultrahardcore', 'ghowden'],
-            favoriteHosts: $cookieStore.get('favoriteHosts') || [],
-            tour: {
-                taken: $cookieStore.get('tour.taken') || false
-            },
-            notifyFor: $cookieStore.get('notifyFor') || {},
-            notificationTimes: $cookieStore.get('notificationTimes') || [{value: 600}],
+        $rootScope.appSchemaVersion = 1;
 
-            //store the version of the cookie we have so we can modify the cookie data if needed in future versions
-            storedCookieVersion: $cookieStore.get('cookieVersion') || cookieVersion
-        };
+        //set up a new scope for the global settings to use
+        $rootScope.settings = $rootScope.$new(true);
 
-        $rootScope.$watch('settings.notificationTimes', function (newValue) {
-            $cookieStore.put('notificationTimes', newValue);
-        }, true);
+        //constants
+        $rootScope.settings.timeFormats = ['12h', '24h'];
+        $rootScope.settings.timeZones = moment.tz.names();
 
-        $rootScope.$watch('settings.notifyFor', function(newValue) {
-            $cookieStore.put('notifyFor', newValue);
-        }, true);
+        //user settings
+        $rootScope.settings.timeZone = 'Etc/UTC';
+        $rootScope.settings.timeFormat = '24h';
+        $rootScope.settings.subreddits = ['ultrahardcore'];
+        $rootScope.settings.favoriteHosts = [];
+        $rootScope.settings.notifyFor = {};
+        $rootScope.settings.schemaVersion = -1;
+        $rootScope.settings.notificationTimes = [{value: 600}];
 
-        $rootScope.$watch('settings.tour.taken', function(newValue) {
-            $cookieStore.put('tour.taken', newValue);
-        });
-
-        $rootScope.$watchCollection('settings.favoriteHosts', function(newValue) {
-            $cookieStore.put('favoriteHosts', newValue);
-        });
-
-        $rootScope.$watch('settings.timeZone', function(newValue) {
-            $cookieStore.put('timeZone', newValue);
-        });
-
-        $rootScope.$watch('settings.timeFormat', function(newValue) {
-            $cookieStore.put('timeFormat', newValue);
-        });
-
-        $rootScope.$watchCollection('settings.subreddits', function(newValue) {
-            $cookieStore.put('subreddits', newValue);
+        $q.all([
+            $localForage.bind($rootScope.settings, 'timeZone'),
+            $localForage.bind($rootScope.settings, 'timeFormat'),
+            $localForage.bind($rootScope.settings, 'subreddits'),
+            $localForage.bind($rootScope.settings, 'favoriteHosts'),
+            $localForage.bind($rootScope.settings, 'notifyFor'),
+            $localForage.bind($rootScope.settings, 'notificationTimes'),
+            $localForage.bind($rootScope.settings, 'schemaVersion')
+        ]).then(function() {
+            var toRun = [];
+            for(var i = $rootScope.settings.schemaVersion; i < $rootScope.appSchemaVersion; i++) {
+                if( i in Migrations ) {
+                    toRun.push(Migrations[i]);
+                }
+            }
+            toRun.reduce(function(prev, next) {
+                prev.then(next);
+            }, $q.when()).then(function() {
+                //update the version after updating the schema
+                $rootScope.settings.schemaVersion = $rootScope.appSchemaVersion;
+            })
         });
     })
 

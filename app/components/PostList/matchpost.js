@@ -107,7 +107,7 @@ angular.module('MatchCalendarApp')
             if (post.starts !== null) {
                 if (!post.starts.isValid()) {
                     post.starts = null;
-                } else if (post.starts.diff($rootScope.timeOffset.currentTime()) < 0) {
+                } else if (post.starts.diff($rootScope.T.currentTime()) < 0) {
                     //if it's in the past don't show it at all
                     return null;
                 }

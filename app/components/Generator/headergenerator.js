@@ -29,11 +29,9 @@ angular.module('MatchCalendarApp')
 
         $scope.$watch('opens', function (newValue) {
             $scope.generated.opens = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
-            $scope.simpleUtcOpens = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
         });
         $scope.$watch('starts', function (newValue) {
             $scope.generated.starts = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
-            $scope.simpleUtcStarts = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
         });
         $scope.$watch('settings.generator.address', function (newValue) {
             $scope.generated.address = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
@@ -49,6 +47,6 @@ angular.module('MatchCalendarApp')
             $scope.generatedLink = '[' + JSON.stringify(newValue) + '](/matchpost)';
         }, true);
 
-        $scope.opens = $scope.timeOffset.currentTime();
-        $scope.starts = $scope.timeOffset.currentTime();
+        $scope.opens = $scope.T.currentTime();
+        $scope.starts = $scope.T.currentTime();
     });

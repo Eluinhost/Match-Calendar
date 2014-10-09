@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Opens: </h3><span ng-bind="simpleUtcOpens"></span>
+                    <h3 class="panel-title">Opens: </h3><span ng-bind="T.format(T.formats.GENERATOR_SIMPLE, opens.utc(), true)"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will open (in your selected timezone)</p>
@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Starts: </h3><span ng-bind="simpleUtcStarts"></span>
+                    <h3 class="panel-title">Starts: </h3><span ng-bind="T.format(T.formats.GENERATOR_SIMPLE, starts.utc(), true)"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will start (in your selected timezone)</p>

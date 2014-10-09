@@ -44,7 +44,7 @@ angular.module('MatchCalendarApp')
             RedditPostsService.query($scope.settings.subreddits).then(function (data) {
                 $scope.posts.posts = data;
                 $scope.posts.updatingPosts = false;
-                $scope.posts.lastUpdated = $scope.timeOffset.currentTime();
+                $scope.posts.lastUpdated = $scope.T.currentTime();
                 angular.forEach($scope.posts.posts, function (element) {
                     element.region = element.region || 'Unknown';
                     if (!angular.isDefined($scope.posts.regions[element.region])) {
@@ -108,9 +108,9 @@ angular.module('MatchCalendarApp')
             });
         };
 
-        $scope.currentTime = $scope.timeOffset.currentTime();
+        $scope.currentTime = $scope.T.currentTime();
         $scope.clockTick = function () {
-            $scope.currentTime = $scope.timeOffset.currentTime();
+            $scope.currentTime = $scope.T.currentTime();
             if (HtmlNotifications.currentPermission() === 'granted') {
                 if ($scope.posts.posts.length !== 0) {
                     for (var pid in $scope.settings.notifyFor) {

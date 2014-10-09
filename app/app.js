@@ -5,7 +5,7 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
 
     .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations) {
         editableOptions.theme = 'bs3';
-        $rootScope.timeOffset = DateTimeService;
+        $rootScope.T = DateTimeService;
         DateTimeService.resync();
 
         $rootScope.appSchemaVersion = 1;

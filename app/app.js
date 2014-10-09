@@ -64,7 +64,8 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
         $stateProvider
             .state('list', {
                 url: '/list?post',
-                templateUrl: 'components/PostList/list.html'
+                templateUrl: 'components/PostList/list.html',
+                controller: 'PostListCtrl'
             })
 
             .state('listhelp', {

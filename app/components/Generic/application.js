@@ -9,8 +9,5 @@
  */
 angular.module('MatchCalendarApp')
     .controller('ApplicationCtrl', function ($scope) {
-        $scope.currentTime = $scope.T.currentTime();
-        $scope.$on('clockTick', function(current) {
-            $scope.currentTime = current;
-        });
+
     });

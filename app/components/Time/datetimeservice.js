@@ -12,7 +12,7 @@ angular.module('MatchCalendarApp')
         var resyncURL = 'api/sync';
 
         $interval(function() {
-            $rootScope.$broadcast('clockTick', currentTime());
+            $rootScope.$broadcast('clockTick');
         }, 1000);
 
         var synced = false;

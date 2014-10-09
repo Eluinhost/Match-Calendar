@@ -8,7 +8,7 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('HeadergeneratorCtrl', ['$scope', function ($scope) {
+    .controller('HeadergeneratorCtrl', function ($scope, $localForage) {
         $scope.regions = {
             'AF': 'Africa',
             'AN': 'Antartica',
@@ -35,13 +35,13 @@ angular.module('MatchCalendarApp')
             $scope.generated.starts = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
             $scope.simpleUtcStarts = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
         });
-        $scope.$watch('address', function (newValue) {
+        $scope.$watch('settings.generator.address', function (newValue) {
             $scope.generated.address = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
-        $scope.$watch('postTitle', function (newValue) {
+        $scope.$watch('settings.generator.postTitle', function (newValue) {
             $scope.generated.title = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
-        $scope.$watch('region', function (newValue) {
+        $scope.$watch('settings.generator.region', function (newValue) {
             $scope.generated.region = newValue;
         });
 
@@ -51,7 +51,4 @@ angular.module('MatchCalendarApp')
 
         $scope.opens = $scope.timeOffset.currentTime();
         $scope.starts = $scope.timeOffset.currentTime();
-        $scope.address = '192.168.0.1';
-        $scope.postTitle = 'Game Title';
-        $scope.region = 'NA';
-    }]);
+    });

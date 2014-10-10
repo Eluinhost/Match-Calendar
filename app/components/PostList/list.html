@@ -34,16 +34,22 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <alert ng-show="currentPermission() === 'default'" class="notify-permission" type="warning" ng-click="requestPermissions()">
-            Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
-        </alert>
-        <alert ng-show="currentPermission() === 'denied'" class="notify-permission" type="danger">
-            Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
-        </alert>
-        <alert ng-show="currentPermission() === 'unsupported'" class="notify-permission" type="danger">
-            Desktop alerts are not supported by your browser, no notifications will be made.
-        </alert>
+    <div class="row" ng-switch="currentPermission()">
+        <div ng-switch-when="default">
+            <alert class="notify-permission" type="warning" ng-click="requestPermissions()">
+                Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
+            </alert>
+        </div>
+        <div ng-switch-when="denied">
+            <alert class="notify-permission" type="danger">
+                Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+            </alert>
+        </div>
+        <div ng-switch-when="unsupported">
+            <alert class="notify-permission" type="danger">
+                Desktop alerts are not supported by your browser, no notifications will be made.
+            </alert>
+        </div>
     </div>
     <accordion close-others="false">
         <accordion-group bindonce="post" refresh-on="postsUpdated" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.regionFilter | filter:filtered.filter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">

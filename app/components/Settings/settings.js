@@ -8,7 +8,7 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', function ($scope, NotifcationTimeFormat) {
+    .controller('SettingsCtrl', function ($scope, NotifcationTimeFormat, $localForage, $modal, $window) {
         $scope.addSubreddit = function (name) {
             if (name === '' || name === null || name === undefined) {
                 return;
@@ -29,4 +29,14 @@ angular.module('MatchCalendarApp')
         $scope.translateSeconds = function (duration) {
             return NotifcationTimeFormat.translateSeconds(duration);
         };
-    }]);
+
+        $scope.clearStorage = function() {
+            $localForage.clear().then(function() {
+                $window.location.reload();
+            }).fail(function() {
+                $modal.open({
+                    template: 'Failed to clear storage. You may need to clear it manually'
+                });
+            });
+        };
+    });

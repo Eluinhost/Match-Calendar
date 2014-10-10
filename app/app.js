@@ -1,7 +1,7 @@
 'use strict';
 
 // Main application
-angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
+angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable', 'pasvaz.bindonce'])
 
     .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations,
         //eager load some services that we want to run

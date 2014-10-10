@@ -5,8 +5,8 @@
                 <div class="col-lg-7 col-lg-offset-1 col-xs-12">
                     <div class="input-group">
                         <div class="input-group-addon">Filter Posts</div>
-                        <input ng-model="posts.postfilter" class="form-control" type="search" placeholder="Search">
-                        <div class="input-group-addon" ng-bind="posts.filtered.length + '/' + posts.posts.length"></div>
+                        <input ng-model="filtered.filter" class="form-control" type="search" placeholder="Search">
+                        <div class="input-group-addon" ng-bind="filtered.posts.length + '/' + posts.posts.length"></div>
                     </div>
                     <div class="center-block text-left-lg">
                         <b>Regions:</b>
@@ -19,10 +19,10 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-xs-12 refresh-button text-center">
-                    <b class="refresh-icon" ng-click="updatePosts()">
-                        <i class="fa fa-refresh" ng-class="{'fa-spin': posts.updatingPosts}"></i> Refresh
+                    <b class="refresh-icon" ng-click="posts.update()">
+                        <i class="fa fa-refresh" ng-class="{'fa-spin': posts.updating}"></i> Refresh
                         <small class="center-block">
-                            Last Updated: <small class="last-updated" ng-bind="T.format(T.formats.HEADER, posts.lastUpdated)"></small>
+                            Last Updated: <small class="last-updated" ng-bind="T.format(T.formats.HEADER, T.moment.unix(posts.lastUpdated))"></small>
                         </small>
                     </b>
                 </div>
@@ -46,13 +46,13 @@
         </alert>
     </div>
     <accordion close-others="false">
-        <accordion-group class="match-post" ng-repeat="post in posts.filtered=(posts.posts | filter:posts.filterPosts | filter:posts.postfilter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
+        <accordion-group class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.regionFilter | filter:filtered.filter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <div class="row text-center" ng-attr-id="{{ 'post-' + post.id }}">
                     <div class="col-lg-2 col-xs-12 text-center text-right-lg">
                         <span class="abs-game-starts" tooltip="Time starts">
                             <b ng-bind="T.format(T.formats.POST_HEADER, post.starts)"></b>
-                            &nbsp;<i class="fa fa-calendar" ng-click="toggleNotifications(post.id); $event.stopPropagation()" ng-class="{notifications: willNotify(post.id)}"></i>
+                            &nbsp;<i class="fa fa-calendar" ng-click="notifications.toggleNotifications(post.id); $event.stopPropagation()" ng-class="{notifications: notifications.isNotifyingFor(post.id)}"></i>
                         </span>
                         <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
                             &nbsp;

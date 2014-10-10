@@ -8,7 +8,7 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('HeadergeneratorCtrl', function ($scope, $localForage) {
+    .controller('HeadergeneratorCtrl', function ($scope) {
         $scope.regions = {
             'AF': 'Africa',
             'AN': 'Antartica',
@@ -26,6 +26,8 @@ angular.module('MatchCalendarApp')
             title: '',
             region: ''
         };
+
+        $scope.minTime = $scope.T.currentTime();
 
         $scope.$watch('opens', function (newValue) {
             $scope.generated.opens = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');

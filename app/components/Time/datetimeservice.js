@@ -8,11 +8,22 @@
  * Factory in the MatchCalendarApp.
  */
 angular.module('MatchCalendarApp')
-    .factory('DateTimeService', function ($http, $rootScope) {
+    .factory('DateTimeService', function ($http, $rootScope, $interval) {
         var resyncURL = 'api/sync';
 
-        //header
-        //currentTime.tz(settings.timeZone).format(settings.timeFormat == &apos;24h&apos; ? &apos;HH:mm&apos; : &apos;hh:mm a&apos;)
+        $interval(function() {
+            $rootScope.$broadcast('clockTick');
+        }, 1000);
+
+        var synced = false;
+
+        var currentTime = function() {
+            var current = moment();
+            if (synced) {
+                current.add('ms', this.offset);
+            }
+            return current;
+        };
 
         var formats = {
             TITLE: function() {
@@ -30,7 +41,7 @@ angular.module('MatchCalendarApp')
         };
 
         return {
-            synced: false,
+            synced: synced,
             offset: null,
             resync: function () {
                 var service = this;
@@ -42,13 +53,7 @@ angular.module('MatchCalendarApp')
                     }
                 );
             },
-            currentTime: function () {
-                var current = moment();
-                if (this.synced) {
-                    current.add('ms', this.offset);
-                }
-                return current;
-            },
+            currentTime: currentTime,
             /**
              * Format the time
              *
@@ -64,6 +69,7 @@ angular.module('MatchCalendarApp')
                 }
                 return time.format(format());
             },
-            formats: formats
+            formats: formats,
+            moment: moment
         };
     });

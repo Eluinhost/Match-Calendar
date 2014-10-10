@@ -8,7 +8,7 @@
  * Factory in the MatchCalendarApp.
  */
 angular.module('MatchCalendarApp')
-    .factory('HtmlNotifications', ['$q', '$window', function ($q, $window) {
+    .factory('HtmlNotifications', function ($q, $window, $rootScope) {
         return {
             /**
              * @returns boolean true if notification available, false otherwise
@@ -47,6 +47,9 @@ angular.module('MatchCalendarApp')
                 } else {
                     def.resolve();
                 }
+                def.promise.finally(function() {
+                    $rootScope.$broadcast('Notifications:PermissionsAsked');
+                });
                 return def.promise;
             },
             /**
@@ -64,4 +67,4 @@ angular.module('MatchCalendarApp')
                 });
             }
         };
-    }]);
+    });

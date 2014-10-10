@@ -31,12 +31,15 @@ angular.module('MatchCalendarApp')
         };
 
         $scope.clearStorage = function() {
-            $localForage.clear().then(function() {
-                $window.location.reload();
-            }).fail(function() {
-                $modal.open({
-                    template: 'Failed to clear storage. You may need to clear it manually'
-                });
-            });
+            $localForage.clear().then(
+                function() {
+                    $window.location.reload();
+                },
+                function() {
+                    $modal.open({
+                        template: 'Failed to clear storage. You may need to clear it manually'
+                    });
+                }
+            );
         };
     });

@@ -20,7 +20,7 @@
     "angular-xeditable": "~0.1.8",
     "outdated-browser": "~1.1.0",
     "angular-localforage": "~0.2.10",
-    "angular-bindonce": "git://github.com/rileylark/bindonce.git#rebind-debug"
+    "angular-bindonce": "git://github.com/Pasvaz/bindonce.git#rebind-debug"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

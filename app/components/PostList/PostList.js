@@ -54,6 +54,7 @@ angular.module('MatchCalendarApp')
         };
 
         $scope.$on('clockTick', function(){
+            console.log('tick');
             if (HtmlNotifications.currentPermission() === 'granted') {
                 if ($scope.posts.posts.length !== 0) {
                     for (var pid in $scope.settings.notifyFor) {
@@ -93,11 +94,12 @@ angular.module('MatchCalendarApp')
             }
             angular.forEach($scope.settings.notificationTimes, function (notifcationTime) {
                 var notifyTime = post[0].starts - (notifcationTime.value * 1000);
-                if ($scope.currentTime >= notifyTime) {
+                var currentTime = $scope.T.currentTime();
+                if (currentTime >= notifyTime) {
                     if ($scope.settings.notifyFor[postid].value < notifyTime) {
-                        var difference = post[0].starts - $scope.currentTime;
+                        var difference = post[0].starts - currentTime;
                         HtmlNotifications.notify('Game starts in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference / 1000)), post[0].title);
-                        $scope.settings.notifyFor[postid] = $scope.currentTime;
+                        $scope.settings.notifyFor[postid] = currentTime;
                     }
                 }
             });

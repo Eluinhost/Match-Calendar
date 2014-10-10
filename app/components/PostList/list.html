@@ -52,7 +52,7 @@
                     <div class="col-lg-2 col-xs-12 text-center text-right-lg">
                         <span class="abs-game-starts" tooltip="Time starts">
                             <b ng-bind="T.format(T.formats.POST_HEADER, post.starts)"></b>
-                            &nbsp;<i class="fa fa-calendar" ng-click="toggleNotifications(post.id); $event.stopPropagation()" ng-class="{notifications: willNotify(post.id)}"></i>
+                            &nbsp;<i class="fa fa-calendar" ng-click="notifications.toggleNotifications(post.id); $event.stopPropagation()" ng-class="{notifications: notifications.isNotifyingFor(post.id)}"></i>
                         </span>
                         <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
                             &nbsp;

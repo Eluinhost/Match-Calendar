@@ -3,7 +3,10 @@
 // Main application
 angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable'])
 
-    .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations) {
+    .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations,
+        //eager load some services that we want to run
+        Posts, PostNotifications
+        ){
         editableOptions.theme = 'bs3';
         $rootScope.T = DateTimeService;
         DateTimeService.resync();
@@ -22,7 +25,6 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
         $rootScope.settings.timeFormat = '24h';
         $rootScope.settings.subreddits = ['ultrahardcore'];
         $rootScope.settings.favoriteHosts = [];
-        $rootScope.settings.notifyFor = {};
         $rootScope.settings.schemaVersion = -1;
         $rootScope.settings.notificationTimes = [{value: 600}];
 
@@ -37,7 +39,6 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
             $localForage.bind($rootScope.settings, 'timeFormat'),
             $localForage.bind($rootScope.settings, 'subreddits'),
             $localForage.bind($rootScope.settings, 'favoriteHosts'),
-            $localForage.bind($rootScope.settings, 'notifyFor'),
             $localForage.bind($rootScope.settings, 'notificationTimes'),
             $localForage.bind($rootScope.settings, 'schemaVersion'),
             $localForage.bind($rootScope.settings, 'generator')

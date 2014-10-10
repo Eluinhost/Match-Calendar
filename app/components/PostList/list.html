@@ -22,7 +22,7 @@
                     <b class="refresh-icon" ng-click="posts.update()">
                         <i class="fa fa-refresh" ng-class="{'fa-spin': posts.updating}"></i> Refresh
                         <small class="center-block">
-                            Last Updated: <small class="last-updated" ng-bind="T.format(T.formats.HEADER, posts.lastUpdated)"></small>
+                            Last Updated: <small class="last-updated" ng-bind="T.format(T.formats.HEADER, T.moment.unix(posts.lastUpdated))"></small>
                         </small>
                     </b>
                 </div>

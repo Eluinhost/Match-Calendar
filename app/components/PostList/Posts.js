@@ -12,7 +12,7 @@ angular.module('MatchCalendarApp')
 
         var $scope = $rootScope.$new(true);
         $scope.posts = [];
-        $scope.lastUpdated = null;
+        $scope.lastUpdated = 0;
         $scope.regions = {};
         $localForage.bind($scope, 'posts');
         $localForage.bind($scope, 'lastUpdated');
@@ -31,7 +31,7 @@ angular.module('MatchCalendarApp')
                         $scope.regions[element.region] = true;
                     }
                 });
-                $scope.lastUpdated = $rootScope.T.currentTime();
+                $scope.lastUpdated = $rootScope.T.currentTime().unix();
                 $rootScope.$broadcast('postsUpdated', $scope.posts);
                 def.resolve();
             });

@@ -69,6 +69,7 @@ angular.module('MatchCalendarApp')
                 }
                 return time.format(format());
             },
-            formats: formats
+            formats: formats,
+            moment: moment
         };
     });

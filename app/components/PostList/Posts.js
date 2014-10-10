@@ -14,7 +14,6 @@ angular.module('MatchCalendarApp')
         $scope.posts = [];
         $scope.lastUpdated = 0;
         $scope.regions = {};
-        $localForage.bind($scope, 'posts');
         $localForage.bind($scope, 'lastUpdated');
         $localForage.bind($scope, 'regions');
 

@@ -34,55 +34,61 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <alert ng-show="currentPermission() === 'default'" class="notify-permission" type="warning" ng-click="requestPermissions()">
-            Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
-        </alert>
-        <alert ng-show="currentPermission() === 'denied'" class="notify-permission" type="danger">
-            Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
-        </alert>
-        <alert ng-show="currentPermission() === 'unsupported'" class="notify-permission" type="danger">
-            Desktop alerts are not supported by your browser, no notifications will be made.
-        </alert>
+    <div class="row" bindonce bo-switch="currentPermission()" refresh-on="'Notifications:PermissionsAsked'">
+        <div bo-switch-when="default">
+            <alert class="notify-permission" type="warning" ng-click="requestPermissions()">
+                Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
+            </alert>
+        </div>
+        <div bo-switch-when="denied">
+            <alert class="notify-permission" type="danger">
+                Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+            </alert>
+        </div>
+        <div bo-switch-when="unsupported">
+            <alert class="notify-permission" type="danger">
+                Desktop alerts are not supported by your browser, no notifications will be made.
+            </alert>
+        </div>
     </div>
     <accordion close-others="false">
-        <accordion-group class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.regionFilter | filter:filtered.filter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
+        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.regionFilter | filter:filtered.filter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
-                <div class="row text-center" ng-attr-id="{{ 'post-' + post.id }}">
+                <div class="row text-center" bindonce="post" refresh-on="'postsUpdated'" bo-attr bo-attr-foo="'post-' + post.id">
                     <div class="col-lg-2 col-xs-12 text-center text-right-lg">
                         <span class="abs-game-starts" tooltip="Time starts">
-                            <b ng-bind="T.format(T.formats.POST_HEADER, post.starts)"></b>
+                            <b bo-text="T.format(T.formats.POST_HEADER, post.starts)"></b>
                             &nbsp;<i class="fa fa-calendar" ng-click="notifications.toggleNotifications(post.id); $event.stopPropagation()" ng-class="{notifications: notifications.isNotifyingFor(post.id)}"></i>
                         </span>
                         <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
                             &nbsp;
-                            <small ng-bind="post.region || 'Unknown'"></small>
+                            <small bo-text="post.region || 'Unknown'"></small>
                             <i class="fa fa-globe"></i>
                         </span>
                         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
                     </div>
                     <div class="col-lg-6 text-left-lg text-center col-xs-12">
                         <div>
-                            <a class="anchor-link" ng-click="$event.stopPropagation()" ng-href="{{post.anchorlink}}" target="_blank"><i class="fa fa-link"></i></a>
-                            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" ng-href="{{ post.permalink }}" ng-bind="post.title"></a>
+                            <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
+                            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title"></a>
                         </div>
                         <div class="visible-lg-block">
                             <small class="time-posted" tooltip="Time posted">
-                                <i class="fa fa-reply fa-rotate-180"></i> <span ng-bind="post.posted.from(T.currentTime())"></span>
-                                - <span ng-bind="post.posted.from(post.starts, true)"></span> in advance.
+                                <i class="fa fa-reply fa-rotate-180"></i> <span bindonce="post" refresh-on="'clockTick'" bo-text="post.posted.from(T.currentTime())"></span>
+                                - <span bo-text="post.posted.from(post.starts, true)"></span> in advance.
                             </small>
                         </div>
                         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
                     </div>
                     <div class="col-lg-2 text-left-lg text-center col-xs-12 text-center text-right-lg">
                         <small>
-                            <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" ng-href="http://reddit.com/u/{{ post.author }}" ng-bind="post.author"></a>
+                            <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" bo-href="'http://reddit.com/u/' + post.author" bo-text="post.author"></a>
                         </small>
                         &nbsp;<i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
-                        <span ng-show="post.address !== null">
+                        <span bo-show="post.address !== null">
                             <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">
                                 <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">
-                                    <small ng-bind="post.address"></small> <i class="fa fa-cubes"></i>
+                                    <small bo-text="post.address"></small> <i class="fa fa-cubes"></i>
                                 </span>
                             </span>
                         </span>
@@ -90,10 +96,10 @@
                     </div>
                     <div class="col-lg-2 text-left-lg text-center col-xs-12">
                         <span tooltip="Opens" class="game-opens">
-                            <i class="fa fa-clock-o"></i> <small ng-bind="post.opens.from(T.currentTime()) || 'Unknown'"></small>
+                            <i class="fa fa-clock-o"></i> <small bindonce="post" refresh-on="'clockTick'" bo-text="post.opens.from(T.currentTime()) || 'Unknown'"></small>
                         </span>
                         <span tooltip="Starts" class="game-starts visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-                            <i class="fa fa-caret-square-o-right"></i> <small ng-bind="post.starts.from(T.currentTime()) || 'Unknown'"></small>
+                            <i class="fa fa-caret-square-o-right"></i> <small bindonce="post" refresh-on="'clockTick'" bo-text="post.starts.from(T.currentTime()) || 'Unknown'"></small>
                         </span>
                     </div>
                 </div>

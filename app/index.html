@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" manifest="manifest.appcache" ng-app="MatchCalendarApp" ng-controller="ApplicationCtrl">
 <head>
-    <title ng-bind="T.format(T.formats.TITLE) + &apos; - Calendar&apos;">Calendar</title>
+    <title bindonce refresh-on="'clockTick'" bo-text="T.format(T.formats.TITLE) + &apos; - Calendar&apos;">Calendar</title>
     <link rel="icon" href="images/favicon.png">
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -57,7 +57,7 @@
     <div class="col-sm-6 clock-bar-center">
         <div class="row">
             <div class="col-xs-12 clock-bar-time">
-                <strong ng-class="{unsynced: !T.synced}" ng-bind="T.format(T.formats.HEADER)"></strong>
+                <strong ng-class="{unsynced: !T.synced}" bindonce bo-text="T.format(T.formats.HEADER)" refresh-on="'clockTick'"></strong>
                 <i class="fa fa-info-circle" ng-show="!T.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </div>
         </div>

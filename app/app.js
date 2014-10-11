@@ -3,7 +3,7 @@
 // Main application
 angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable', 'pasvaz.bindonce'])
 
-    .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations,
+    .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations, $window, $modal,
         //eager load some services that we want to run
         Posts, PostNotifications
         ){
@@ -58,6 +58,26 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
                 });
             }
         });
+
+        //check appcache status
+        if(angular.isDefined($window.applicationCache)) {
+
+            var onUpdateReady = function() {
+                $modal.open({
+                    template: '<div class="modal-header"><h3 class="modal-title">An update is ready, reload?</h3></div><div class="modal-body"><button class="btn btn-warning" type="button" ng-click="reload()">Reload Now</button></div>',
+                    controller: function($scope, $window) {
+                        $scope.reload = function() {
+                            $window.location.reload();
+                        };
+                    }
+                });
+            };
+
+            $window.applicationCache.addEventListener('updateready', onUpdateReady);
+            if ($window.applicationCache.status === $window.applicationCache.UPDATEREADY) {
+                onUpdateReady();
+            }
+        }
     })
 
     //configuration

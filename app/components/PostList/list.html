@@ -10,9 +10,9 @@
                     </div>
                     <div class="center-block text-left-lg">
                         <b>Regions:</b>
-                        <span ng-repeat="(region, x) in posts.regions">
+                        <span bindonce refresh-on="'postsUpdated'" ng-repeat="region in posts.currentRegions">
                             <label>
-                                <small ng-bind="region"></small>
+                                <small bo-text="region"></small>
                                 <input type="checkbox" ng-model="posts.regions[region]">
                             </label>
                         </span>

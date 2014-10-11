@@ -14,6 +14,7 @@ angular.module('MatchCalendarApp')
         $scope.posts = [];
         $scope.lastUpdated = 0;
         $scope.regions = {};
+        $scope.currentRegions = [];
         $localForage.bind($scope, 'lastUpdated');
         $localForage.bind($scope, 'regions');
 
@@ -24,12 +25,17 @@ angular.module('MatchCalendarApp')
             RedditPostsService.query($rootScope.settings.subreddits).then(function (data) {
                 $scope.posts = data;
                 $scope.updating = false;
+                $scope.currentRegions = [];
                 angular.forEach($scope.posts, function (element) {
                     element.region = element.region || 'Unknown';
+                    if($scope.currentRegions.indexOf(element.region) === -1) {
+                        $scope.currentRegions.push(element.region);
+                    }
                     if (!angular.isDefined($scope.regions[element.region])) {
                         $scope.regions[element.region] = true;
                     }
                 });
+
                 $scope.lastUpdated = $rootScope.T.currentTime().unix();
                 $rootScope.$broadcast('postsUpdated', $scope.posts);
                 def.resolve();

@@ -1,3 +1,0 @@
-# Shared config settings
-imports:
-    - { resource: parameters.yml }

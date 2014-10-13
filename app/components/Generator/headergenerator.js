@@ -101,9 +101,9 @@ angular.module('MatchCalendarApp')
             var generatedVersion = {
                 opens: $scope.opens.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
                 starts: $scope.starts.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
-                address: $scope.address.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
-                title: $scope.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
-                region: $scope.region
+                address: $scope.settings.generator.address.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
+                title: $scope.settings.generator.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
+                region: $scope.settings.generator.region
             };
 
             $scope.generatedLink = '[' + JSON.stringify(generatedVersion) + '](/matchpost)';

@@ -33,7 +33,7 @@ class Authentication {
 
         return new RedirectResponse(
             'https://ssl.reddit.com/api/v1/authorize'
-            .'?client_id=' . urlencode(Configuration::CLIENT_ID)
+            .'?client_id=' . urlencode($app['oauth']['id'])
             .'&response_type=code'
             .'&state=' . urlencode($state)
             .'&redirect_uri=' . urlencode($URI)
@@ -81,8 +81,8 @@ class Authentication {
         $client = new Client([
             'defaults' => [
                 'auth'      => [
-                    Configuration::CLIENT_ID,
-                    Configuration::CLIENT_SECRET
+                    $app['oauth']['id'],
+                    $app['oauth']['secret']
                 ]
             ]
         ]);

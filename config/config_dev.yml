@@ -1,3 +1,4 @@
 # Dev only overrides/settings
-imports:
-    - { resource: config.yml }
+oauth:
+    id: NQ3eJfjd39xjMw
+    secret: jl2jbh1l3NL7Y2t13gzhWKNygk0

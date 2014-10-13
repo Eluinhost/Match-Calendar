@@ -112,7 +112,7 @@ angular.module('matchCalendarApp')
             $scope.generatedLink = '[' + JSON.stringify(generatedVersion) + '](/matchpost)';
 
             $modal.open({
-                templateUrl: 'views/matchPostLink.html',
+                templateUrl: 'components/Generator/matchPostLink.html',
                 scope: $scope
             });
         };

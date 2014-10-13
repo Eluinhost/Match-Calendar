@@ -114,7 +114,7 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
 
             .state('auth', {
                 url: '/auth/reddit?error&access_token&refresh_token',
-                templateUrl: 'views/auth.html',
+                templateUrl: 'components/Auth/auth.html',
                 controller: 'AuthCtrl'
             });
 

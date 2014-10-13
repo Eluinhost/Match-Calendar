@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.MatchPost
+ * @name MatchCalendarApp.MatchPost
  * @description
  * # MatchPost
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     //a match post model
     .factory('MatchPost', ['MarkdownLinkDataService', '$rootScope', '$location', function (MarkdownLinkDataService, $rootScope, $location) {
 
@@ -107,7 +107,7 @@ angular.module('matchCalendarApp')
             if (post.starts !== null) {
                 if (!post.starts.isValid()) {
                     post.starts = null;
-                } else if (post.starts.diff($rootScope.timeOffset.currentTime()) < 0) {
+                } else if (post.starts.diff($rootScope.T.currentTime()) < 0) {
                     //if it's in the past don't show it at all
                     return null;
                 }

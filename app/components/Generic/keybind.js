@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name matchCalendarApp.directive:keybind
+ * @name MatchCalendarApp.directive:keybind
  * @description
  * # keybind
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     //directive with keybind="expression()" key=13
     .directive('keybind', function () {
         return function (scope, element, attrs) {

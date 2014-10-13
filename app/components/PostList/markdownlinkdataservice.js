@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.MarkdownLinkDataService
+ * @name MatchCalendarApp.MarkdownLinkDataService
  * @description
  * # MarkdownLinkDataService
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     //service for matching markdown links to specific URL path
     .factory('MarkdownLinkDataService', [function () {
         return {

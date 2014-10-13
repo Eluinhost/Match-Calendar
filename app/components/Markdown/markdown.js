@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name matchCalendarApp.directive:markdown
+ * @name MatchCalendarApp.directive:markdown
  * @description
  * # markdown
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .factory('markdownConverter', function() {
         return SnuOwnd.getParser();
     })

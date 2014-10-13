@@ -3,6 +3,7 @@ web
 .tmp
 .sass-cache
 bower_components
+config/parameters.yml
 vendor
 composer.lock
 php/Configuration.php

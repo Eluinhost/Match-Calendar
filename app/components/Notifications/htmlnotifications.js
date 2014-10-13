@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name matchCalendarApp.HtmlNotifications
+ * @name MatchCalendarApp.HtmlNotifications
  * @description
  * # HtmlNotifications
- * Factory in the matchCalendarApp.
+ * Factory in the MatchCalendarApp.
  */
-angular.module('matchCalendarApp')
-    .factory('HtmlNotifications', ['$q', '$window', function ($q, $window) {
+angular.module('MatchCalendarApp')
+    .factory('HtmlNotifications', function ($q, $window, $rootScope) {
         return {
             /**
              * @returns boolean true if notification available, false otherwise
@@ -21,7 +21,7 @@ angular.module('matchCalendarApp')
                     return 'unsupported';
                 }
 
-                if (! 'permission' in $window.Notification) {
+                if ('permission' in $window.Notification === false) {
                     $window.Notification.permission = 'default';
                 }
 
@@ -47,6 +47,9 @@ angular.module('matchCalendarApp')
                 } else {
                     def.resolve();
                 }
+                def.promise.finally(function() {
+                    $rootScope.$broadcast('Notifications:PermissionsAsked');
+                });
                 return def.promise;
             },
             /**
@@ -64,4 +67,4 @@ angular.module('matchCalendarApp')
                 });
             }
         };
-    }]);
+    });

@@ -1,0 +1,112 @@
+<div class="list-page">
+    <div class="panel panel-default search-panel">
+        <div class="panel-heading post-list-filter">
+            <div class="row">
+                <div class="col-lg-7 col-lg-offset-1 col-xs-12">
+                    <div class="input-group">
+                        <div class="input-group-addon">Filter Posts</div>
+                        <input ng-model="filtered.filter" class="form-control" type="search" placeholder="Search">
+                        <div class="input-group-addon" ng-bind="filtered.posts.length + '/' + posts.posts.length"></div>
+                    </div>
+                    <div class="center-block text-left-lg">
+                        <b>Regions:</b>
+                        <span bindonce refresh-on="'postsUpdated'" ng-repeat="region in posts.currentRegions">
+                            <label>
+                                <small bo-text="region"></small>
+                                <input type="checkbox" ng-model="posts.regions[region]">
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xs-12 refresh-button text-center">
+                    <b class="refresh-icon" ng-click="posts.update()">
+                        <i class="fa fa-refresh" ng-class="{'fa-spin': posts.updating}"></i> Refresh
+                        <small class="center-block">
+                            Last Updated: <small class="last-updated" ng-bind="T.format(T.formats.HEADER, T.moment.unix(posts.lastUpdated))"></small>
+                        </small>
+                    </b>
+                </div>
+                <div class="col-lg-1 col-xs-12 text-right">
+                    <button type="button" class="btn btn-primary" ui-sref="listhelp">
+                    Help
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" bindonce bo-switch="currentPermission()" refresh-on="'Notifications:PermissionsAsked'">
+        <div bo-switch-when="default">
+            <alert class="notify-permission" type="warning" ng-click="requestPermissions()">
+                Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
+            </alert>
+        </div>
+        <div bo-switch-when="denied">
+            <alert class="notify-permission" type="danger">
+                Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+            </alert>
+        </div>
+        <div bo-switch-when="unsupported">
+            <alert class="notify-permission" type="danger">
+                Desktop alerts are not supported by your browser, no notifications will be made.
+            </alert>
+        </div>
+    </div>
+    <accordion close-others="false">
+        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.regionFilter | filter:filtered.filter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
+            <accordion-heading>
+                <div class="row text-center" bindonce="post" refresh-on="'postsUpdated'" bo-attr bo-attr-foo="'post-' + post.id">
+                    <div class="col-lg-2 col-xs-12 text-center text-right-lg">
+                        <span class="abs-game-starts" tooltip="Time starts">
+                            <b bo-text="T.format(T.formats.POST_HEADER, post.starts)"></b>
+                            &nbsp;<i class="fa fa-calendar" ng-click="notifications.toggleNotifications(post.id); $event.stopPropagation()" ng-class="{notifications: notifications.isNotifyingFor(post.id)}"></i>
+                        </span>
+                        <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
+                            &nbsp;
+                            <small bo-text="post.region || 'Unknown'"></small>
+                            <i class="fa fa-globe"></i>
+                        </span>
+                        <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
+                    </div>
+                    <div class="col-lg-6 text-left-lg text-center col-xs-12">
+                        <div>
+                            <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
+                            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title"></a>
+                        </div>
+                        <div class="visible-lg-block">
+                            <small class="time-posted" tooltip="Time posted">
+                                <i class="fa fa-reply fa-rotate-180"></i> <span bindonce="post" refresh-on="'clockTick'" bo-text="post.posted.from(T.currentTime())"></span>
+                                - <span bo-text="post.posted.from(post.starts, true)"></span> in advance.
+                            </small>
+                        </div>
+                        <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
+                    </div>
+                    <div class="col-lg-2 text-left-lg text-center col-xs-12 text-center text-right-lg">
+                        <small>
+                            <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" bo-href="'http://reddit.com/u/' + post.author" bo-text="post.author"></a>
+                        </small>
+                        &nbsp;<i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
+                        <span bo-show="post.address !== null">
+                            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">
+                                <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">
+                                    <small bo-text="post.address"></small> <i class="fa fa-cubes"></i>
+                                </span>
+                            </span>
+                        </span>
+                        <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
+                    </div>
+                    <div class="col-lg-2 text-left-lg text-center col-xs-12">
+                        <span tooltip="Opens" class="game-opens">
+                            <i class="fa fa-clock-o"></i> <small bindonce="post" refresh-on="'clockTick'" bo-text="post.opens.from(T.currentTime()) || 'Unknown'"></small>
+                        </span>
+                        <span tooltip="Starts" class="game-starts visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+                            <i class="fa fa-caret-square-o-right"></i> <small bindonce="post" refresh-on="'clockTick'" bo-text="post.starts.from(T.currentTime()) || 'Unknown'"></small>
+                        </span>
+                    </div>
+                </div>
+            </accordion-heading>
+            <div class="container text-left">
+                <markdown class="md" content="post.selftext"></markdown>
+            </div>
+        </accordion-group>
+    </accordion>
+</div>

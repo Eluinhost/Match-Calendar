@@ -7,7 +7,7 @@
  * # AuthCtrl
  * Controller of the matchCalendarApp
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .controller('AuthCtrl', function ($scope, $stateParams) {
         $scope.error = $stateParams.error;
         $scope.accessToken = $stateParams.access_token;

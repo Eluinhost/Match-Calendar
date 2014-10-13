@@ -7,7 +7,7 @@
  * # HeadergeneratorCtrl
  * Controller of the MatchCalendarApp
  */
-angular.module('matchCalendarApp')
+angular.module('MatchCalendarApp')
     .controller('HeadergeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', function ($scope, $window, $state, $interpolate, $modal) {
         $scope.regions = {
             'AF': 'Africa',
@@ -27,21 +27,21 @@ angular.module('matchCalendarApp')
             region: ''
         };
 
+        $scope.minTime = $scope.T.currentTime();
+
         $scope.$watch('opens', function (newValue) {
             $scope.generated.opens = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
-            $scope.simpleUtcOpens = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
         });
         $scope.$watch('starts', function (newValue) {
             $scope.generated.starts = newValue.utc().format('YYYY-MM-DDTHH:mm:ssZ');
-            $scope.simpleUtcStarts = newValue.utc().format('YYYY-MM-DD HH:mm UTC');
         });
-        $scope.$watch('address', function (newValue) {
+        $scope.$watch('settings.generator.address', function (newValue) {
             $scope.generated.address = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
-        $scope.$watch('postTitle', function (newValue) {
+        $scope.$watch('settings.generator.postTitle', function (newValue) {
             $scope.generated.title = newValue.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
         });
-        $scope.$watch('region', function (newValue) {
+        $scope.$watch('settings.generator.region', function (newValue) {
             $scope.generated.region = newValue;
         });
 
@@ -49,11 +49,8 @@ angular.module('matchCalendarApp')
             $scope.generatedLink = '[' + JSON.stringify(newValue) + '](/matchpost)';
         }, true);
 
-        $scope.opens = $scope.timeOffset.currentTime();
-        $scope.starts = $scope.timeOffset.currentTime();
-        $scope.address = '192.168.0.1';
-        $scope.postTitle = 'Game Title';
-        $scope.region = 'NA';
+        $scope.opens = $scope.T.currentTime();
+        $scope.starts = $scope.T.currentTime();
 
         $scope.$watch('templating.raw', function() {
             $scope.templating.parsed = $interpolate($scope.templating.raw, false, null, true)($scope.gameDetails);

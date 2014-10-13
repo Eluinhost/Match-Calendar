@@ -1,5 +1,18 @@
 <div class="container text-center generator-page">
     <div class="row">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Title
+                    </div>
+                    <div class="panel-body">
+                        <span class="help-block">The title to show on the list</span>
+                        <input class="form-control" type="text" ng-model="settings.generator.postTitle"/>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -27,11 +40,11 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Title
+                    Region
                 </div>
                 <div class="panel-body">
-                    <span class="help-block">The title to show on the list</span>
-                    <input class="form-control" type="text" ng-model="settings.generator.postTitle"/>
+                    <span class="help-block">The server region</span>
+                    <select class="form-control" ng-model="settings.generator.region" ng-options="o as k for (o,k) in regions"></select>
                 </div>
             </div>
         </div>
@@ -49,31 +62,10 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Region
-                </div>
-                <div class="panel-body">
-                    <span class="help-block">The server region</span>
-                    <select class="form-control" ng-model="settings.generator.region" ng-options="o as k for (o,k) in regions"></select>
-                </div>
-            </div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="sendToReddit()">Post game to Reddit</button>
         </div>
         <div class="col-md-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    Paste the text below and add it to your reddit post &nbsp; <a href="" clip-copy="generatedLink"><i class="fa fa-clipboard"></i>Copy to clipboard</a>
-                </div>
-                <div class="panel-body" ng-bind="generatedLink"></div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="sendToReddit()">Send to Reddit</button>
-        </div>
-        <div class="col-md-6">
-            <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="openLinkModal()">Post Link</button>
+            <button type="button" class="btn btn-warning btn-lg btn-block" ng-click="openLinkModal()">Raw Link for Post</button>
         </div>
     </div>
 </div>

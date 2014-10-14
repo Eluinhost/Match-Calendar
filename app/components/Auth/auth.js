@@ -12,4 +12,5 @@ angular.module('MatchCalendarApp')
         $scope.error = $stateParams.error;
         $scope.accessToken = $stateParams.access_token;
         $scope.refreshToken = $stateParams.refresh_token;
+        $scope.expiresIn = $stateParams.expires_in;
     });

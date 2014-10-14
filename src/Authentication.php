@@ -102,6 +102,6 @@ class Authentication {
         }
 
         $json = $res->json();
-        return new RedirectResponse($callbackBase . '?access_token=' . urlencode($json['access_token']) . '&refresh_token=' . urlencode($json['refresh_token']));
+        return new RedirectResponse($callbackBase . '?expires_in=' . urlencode($json['expires_in']) . '&access_token=' . urlencode($json['access_token']) . '&refresh_token=' . urlencode($json['refresh_token']));
     }
 }

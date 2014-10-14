@@ -5,7 +5,7 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
 
     .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations, $window, $modal,
         //eager load some services that we want to run
-        Posts, PostNotifications
+        Posts, PostNotifications // jshint ignore:line
         ){
         editableOptions.theme = 'bs3';
         $rootScope.T = DateTimeService;

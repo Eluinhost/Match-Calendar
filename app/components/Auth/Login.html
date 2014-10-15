@@ -12,5 +12,5 @@
         bindonce="user"
         bo-show="user.isAuthenticated()"
         refresh-on="'auth.statusChanged'">
-    Logout <span bindonce refresh-on="'auth.statusChanged'" bo-text="user.getUserInfo().username"></span>
+    Logout <span bindonce="user" refresh-on="'auth.statusChanged'" bo-text="user.getUserInfo().name"></span>
 </button>

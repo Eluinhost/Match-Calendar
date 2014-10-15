@@ -10,7 +10,7 @@
 angular.module('MatchCalendarApp')
     .factory('User', function ($rootScope, $localForage, $window, $state, $q, $http) {
 
-        var profilePage = 'https://oauth.reddit.com/api/v1/me';
+        var profilePage = '/api/userinfo';
 
         var $scope = $rootScope.$new(true);
 
@@ -54,7 +54,20 @@ angular.module('MatchCalendarApp')
         };
 
         var updateUserInfo = function() {
-            //TODO update user details from API
+            var def = $q.defer();
+
+            $http.get(profilePage + '?access_token=' + $scope.accessToken)
+                .success(function(data) {
+                    console.log(data);
+                    $scope.profile = data;
+                    $rootScope.$broadcast('auth.statusChanged');
+                    def.resolve(data);
+                })
+                .error(function() {
+                    deauthenticate();
+                    def.reject();
+                });
+            return def.promise;
         };
 
         return {

@@ -8,20 +8,23 @@
  * Factory in the MatchCalendar.
  */
 angular.module('MatchCalendarApp')
-    .factory('User', function ($rootScope, $localForage, $window, $state) {
+    .factory('User', function ($rootScope, $localForage, $window, $state, $q, $http) {
+
+        var profilePage = 'https://oauth.reddit.com/api/v1/me';
 
         var $scope = $rootScope.$new(true);
 
         $scope.accessToken = null;
         $scope.refreshToken = null;
         $scope.tokenExpires = null;
+        $scope.profile = null;
 
         $localForage.bind($scope, 'accessToken');
         $localForage.bind($scope, 'refreshToken');
         $localForage.bind($scope, 'tokenExpires');
 
         var isAuthenticated = function() {
-            return this.accessToken !== null;
+            return $scope.accessToken !== null;
         };
 
         var deauthenticate = function() {
@@ -31,7 +34,7 @@ angular.module('MatchCalendarApp')
             $scope.refreshToken = null;
             $scope.tokenExpires = null;
 
-            $rootScope.$broadcast('auth.loggedOut');
+            $rootScope.$broadcast('auth.statusChanged');
         };
 
         var authenticate = function() {
@@ -43,13 +46,11 @@ angular.module('MatchCalendarApp')
             $scope.refreshToken = refreshToken;
             $scope.tokenExpires = tokenExpires;
 
-            updateUserInfo().then(function() {
-                $rootScope.$broadcast('auth.loggedIn');
-            });
+            updateUserInfo();
         };
 
         var getUserInfo = function() {
-            //TODO
+            return $scope.profile;
         };
 
         var updateUserInfo = function() {

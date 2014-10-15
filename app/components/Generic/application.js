@@ -8,6 +8,6 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('ApplicationCtrl', function ($scope) {
+    .controller('ApplicationCtrl', function () {
 
     });

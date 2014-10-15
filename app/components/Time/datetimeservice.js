@@ -27,13 +27,13 @@ angular.module('MatchCalendarApp')
 
         var formats = {
             TITLE: function() {
-                return $rootScope.settings.timeFormat == '24h' ? 'HH:mm' : 'hh:mm a';
+                return $rootScope.settings.timeFormat === '24h' ? 'HH:mm' : 'hh:mm a';
             },
             HEADER: function() {
-                return $rootScope.settings.timeFormat == '24h' ? 'HH:mm:ss' : 'hh:mm:ss a';
+                return $rootScope.settings.timeFormat === '24h' ? 'HH:mm:ss' : 'hh:mm:ss a';
             },
             POST_HEADER: function() {
-                return $rootScope.settings.timeFormat == '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a';
+                return $rootScope.settings.timeFormat === '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a';
             },
             GENERATOR_SIMPLE: function() {
                 return 'YYYY-MM-DD HH:mm Z';

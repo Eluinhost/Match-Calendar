@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    <div class="row" bindonce bo-switch="currentPermission()" refresh-on="'Notifications:PermissionsAsked'">
+    <div bindonce bo-switch="currentPermission()" refresh-on="'Notifications:PermissionsAsked'">
         <div bo-switch-when="default">
             <alert class="notify-permission" type="warning" ng-click="requestPermissions()">
                 Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>

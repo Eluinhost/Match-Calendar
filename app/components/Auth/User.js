@@ -19,7 +19,11 @@ angular.module('MatchCalendarApp')
         $scope.tokenExpires = null;
         $scope.profile = null;
 
-        $localForage.bind($scope, 'accessToken');
+        $localForage.bind($scope, 'accessToken').then(function() {
+            if(isAuthenticated()) {
+                updateUserInfo();
+            }
+        });
         $localForage.bind($scope, 'refreshToken');
         $localForage.bind($scope, 'tokenExpires');
 

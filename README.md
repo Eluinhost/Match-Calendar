@@ -18,6 +18,11 @@ Build requirements:
 - Grunt CLI (install with npm install -g grunt-cli)
 - Composer
 
+### OAuth Key
+
+Requires OAuth client/secret from Reddit
+
+
 Build
 -----
 
@@ -46,7 +51,7 @@ Point the webserver to the `web` folder.
 
 The site is tested and ran live on nginx.
 
-###Nginx
+###nginx
     
     server {
         # other settings, server name/directory e.t.c.
@@ -93,7 +98,55 @@ If the line is left out then some client may not cache the application and reloa
 
 There may be issues with caching like nginx, google will help you with disabling it if that is the case
 
+### OAuth Settings
+
+Copy `config/config.yml.dist` to `config/config_dev.yml` and `config/config_prod.yml` and fill out the OAuth application
+details from Reddit
+
 Updating
 --------
 
 To update just do `git pull` and follow the build instructions again
+
+Reddit rate limit
+-----------------
+
+Reddit runs a rate limit of 30 requests per minute or 60 requests per minute via OAuth. The application does NOT add any
+rate limiting to the API. You can add rate limiting to the API in nginx with configuration like the following: (adds 
+rate limiting of 30 requests per minute to all URLs in the API).
+
+###nginx
+
+    http {
+        #must be in the http block
+        limit_req_zone x zone=redditanon:10m rate=30r/m;  # Anon allows for 30 requests per minute
+        
+        ...
+        
+        server {
+            ...
+            
+            location /api {
+                limit_req zone=redditanon burst=5; # can be in http / server / location block
+                
+                ...
+            }
+        }
+    }
+    
+**NOTE**
+
+This limits the time sync API endpoint too, should split endpoints:
+
+Non-reddit:
+
+`/sync` - None    
+`/auth` - None  
+
+Reddit:
+
+`/callback` - 30r/m
+`/userinfo` - 60r/m  
+`/self` - 60r/m
+  
+TODO: rewrite URLs to allow location based zones e.g. `/reddit/callback` and `/reddit/userinfo`

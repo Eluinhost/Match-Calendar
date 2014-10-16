@@ -64,25 +64,31 @@ angular.module('MatchCalendarApp')
                 '* Vanilla+ - Vanilla with a few minor changes'
         };
 
-        $scope.sendToReddit = function() {
-            $window.location.href = '/api/auth?callback=' + encodeURIComponent($state.href('auth', {}, {absolute: true}));
-        };
-
-        $scope.filteredTitle = function() {
-            return $scope.settings.generator.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
-        };
-
-        $scope.openLinkModal = function() {
+        $scope.updateGenerated = function() {
             var generatedVersion = {
                 opens: $scope.opens.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
                 starts: $scope.starts.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
                 address: $scope.settings.generator.address.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
-                title: $scope.filteredTitle(),
+                title:  $scope.settings.generator.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
                 region: $scope.settings.generator.region
             };
 
             $scope.generatedLink = '[' + JSON.stringify(generatedVersion) + '](/matchpost)';
+        };
 
+        $scope.openReddit = function() {
+            $scope.updateGenerated();
+            window.open(
+                    'https://reddit.com/r/ultrahardcore/submit?title='
+                  + encodeURIComponent($scope.settings.generator.postTitle)
+                  + '&text=' + encodeURIComponent($scope.templating.parsed)
+                  + '\n'
+                  + encodeURIComponent($scope.generatedLink)
+                , '_blank');
+        };
+
+        $scope.openLinkModal = function() {
+            $scope.updateGenerated();
             $modal.open({
                 templateUrl: 'components/Generator/matchPostLink.html',
                 scope: $scope

@@ -68,12 +68,16 @@ angular.module('MatchCalendarApp')
             $window.location.href = '/api/auth?callback=' + encodeURIComponent($state.href('auth', {}, {absolute: true}));
         };
 
+        $scope.filteredTitle = function() {
+            return $scope.settings.generator.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;');
+        };
+
         $scope.openLinkModal = function() {
             var generatedVersion = {
                 opens: $scope.opens.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
                 starts: $scope.starts.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
                 address: $scope.settings.generator.address.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
-                title: $scope.settings.generator.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
+                title: $scope.filteredTitle(),
                 region: $scope.settings.generator.region
             };
 

@@ -1,0 +1,15 @@
+<div class="modal-header">
+    Post Preview/Editor
+</div>
+<div class="modal-body">
+    <textarea msd-elastic class="generator-template" ng-model="templates.rawTemplate" ng-change="updateTemplate()"></textarea>
+</div>
+<div class="modal-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 well">
+                <markdown class="md" content="templates.generated"></markdown>
+            </div>
+        </div>
+    </div>
+</div>

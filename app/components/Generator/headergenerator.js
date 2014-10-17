@@ -69,10 +69,10 @@ angular.module('MatchCalendarApp')
 
         //add utility functions
         $scope.opensUTC = function() {
-            return $scope.T.format($scope.T.formats.GENERATOR_SIMPLE, $scope.opens, true);
+            return $scope.T.format($scope.T.formats.REDDIT_POST, $scope.opens, true);
         };
         $scope.startsUTC = function() {
-            return $scope.T.format($scope.T.formats.GENERATOR_SIMPLE, $scope.starts, true);
+            return $scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts, true);
         };
 
         //add the non-settings
@@ -105,7 +105,7 @@ angular.module('MatchCalendarApp')
             $scope.updateTemplate();
             window.open(
                     'https://reddit.com/r/ultrahardcore/submit?title='
-                  + encodeURIComponent($scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts) + ' [' + $scope.generator.region + '] - ' + $scope.generator.postTitle)
+                  + encodeURIComponent($scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts.utc(), true) + ' [' + $scope.generator.region + '] - ' + $scope.generator.postTitle)
                   + '&text=' + encodeURIComponent($scope.generatedTemplate)
                   + '\n'
                   + encodeURIComponent($scope.generatedLink)

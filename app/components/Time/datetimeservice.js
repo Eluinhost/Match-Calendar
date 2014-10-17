@@ -35,9 +35,6 @@ angular.module('MatchCalendarApp')
             POST_HEADER: function() {
                 return $rootScope.settings.timeFormat === '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a';
             },
-            GENERATOR_SIMPLE: function() {
-                return 'YYYY-MM-DD HH:mm Z';
-            },
             REDDIT_POST: function() {
                 return 'MMM DD HH:mm z';
             }

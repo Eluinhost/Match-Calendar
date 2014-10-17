@@ -2,6 +2,23 @@
     Post Preview/Editor
 </div>
 <div class="modal-body">
+    <accordion close-others="false">
+        <accordion-group>
+            <accordion-heading>
+                Help - Template Variables
+            </accordion-heading>
+            <div class="text-left">
+                <p ng-non-bindable>Variables are in the format {{ variableName }}</p>
+                <ul>
+                    <li>generator.address</li>
+                    <li>generator.postTitle</li>
+                    <li>generator.region</li>
+                    <li>opensUTC()</li>
+                    <li>startsUTC()</li>
+                </ul>
+            </div>
+        </accordion-group>
+    </accordion>
     <textarea msd-elastic class="generator-template" ng-model="templates.rawTemplate" ng-change="updateTemplate()"></textarea>
 </div>
 <div class="modal-footer">

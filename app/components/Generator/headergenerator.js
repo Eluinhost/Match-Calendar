@@ -22,40 +22,45 @@ angular.module('MatchCalendarApp')
         $scope.templates = $scope.$new(true);
 
         $scope.templates.rawTemplate =
-                '**If you are new, be sure to read the [rules](RULES POST) and [Player FAQ](http://www.reddit.com/r/ultrahardcore/wiki/playerfaq)!**\n' +
-                '\n' +
-                '---\n' +
-                '\n' +
-                '***General Info***\n' +
-                '\n' +
-                'IP Address    | Opens            | Starts           |\n' +
-                '--------------|------------------|------------------|\n' +
-                '{{ generator.address }} | {{ opensUTC() }} | {{ startsUTC() }}\n' +
-                '\n' +
-                '---\n' +
-                '\n' +
-                '***Match Info***\n' +
-                '\n' +
-                '* **Golden Heads** - Enabled\n' +
-                '* **Absorption** - Disabled\n' +
-                '* **Towering** - Allowed\n' +
-                '* **Stealing** - Allowed\n' +
-                '* **Stalking** - Not Allowed\n' +
-                '* **PvP/iPvP** - 15 minutes in\n' +
-                '* **Map Size** - 2500x2500\n' +
-                '* **Game Length** - 90 minutes\n' +
-                '* **Nether** - Enabled\n' +
-                '* **Slots** - 60\n' +
-                '\n' +
-                '---\n' +
-                '\n' +
-                'Winner: |\n' +
-                '--------|\n' +
-                'TBA     |\n' +
-                '\n' +
-                '***Scenario(s)***\n' +
-                '\n' +
-                '* Vanilla+ - Vanilla with a few minor changes';
+            '\n**Game Information**' +
+            '\n---' +
+            '\n\n**Opens:** {{ opensUTC() }}' +
+            '\n\n**Starts:** {{ startsUTC() }}' +
+            '\n\n**Gametype:** Random Teams of 3' +
+            '\n\n**Scenario:** Vanilla+' +
+            '\n\n**Map Size:** 2000x2000' +
+            '\n\n**Nether:** Enabled' +
+            '\n\n**Duration:** 90 Minutes + Meetup' +
+            '\n\n**PvP:** 15 minutes in' +
+            '\n\n**Perma Day:** 30 minutes prior to Meetup' +
+            '\n\n**TeamSpeak 3 + Working Mic:** Required' +
+            '\n\n**Winner(s):** TBD' +
+            '\n___' +
+            '\n\n**Server Information**' +
+            '\n---' +
+            '\n\n**Slots:** 40' +
+            '\n\n___' +
+            '\n\n**Features**' +
+            '\n---' +
+            '\n\n**Golden Heads:** Enabled (Heal: 4 hearts)' +
+            '\n\n**Absorption:** Disabled' +
+            '\n\n**Enderpearl Damage:** Disabled' +
+            '\n\n**Death Lightning:** Enabled' +
+            '\n\n**Strength II:** Enabled but nerfed' +
+            '\n\n**Flint Rates:** Default' +
+            '\n\n**Apple Rates:** Default' +
+            '\n\n*To know more, /feature list in-game!*' +
+            '\n\n___' +
+            '\n\n**General Server Information**' +
+            '\n---' +
+            '\n\n**Location:** ' +
+            '\n\n**Server Provider / RAM:** ' +
+            '\n\n**IP:** {{ generator.address }}' +
+            '\n\n**Version:** 1.7.x' +
+            '\n\n___' +
+            '\n\n\n**Scenarios**' +
+            '\n---' +
+            '\n\n* **Vanilla+:** Vanilla with minor tweaks';
 
         $scope.templates.generated = '';
 

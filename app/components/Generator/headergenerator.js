@@ -106,9 +106,10 @@ angular.module('MatchCalendarApp')
             window.open(
                     'https://reddit.com/r/ultrahardcore/submit?title='
                   + encodeURIComponent($scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts.utc(), true) + ' [' + $scope.generator.region + '] - ' + $scope.generator.postTitle)
-                  + '&text=' + encodeURIComponent($scope.generatedTemplate)
-                  + '\n'
-                  + encodeURIComponent($scope.generatedLink)
+                  + '&text='
+                  + encodeURIComponent($scope.generatedTemplate)
+                  + encodeURIComponent('\n\n' + $scope.generatedLink)
+                  + encodeURIComponent('\n\n*^created ^using ^the [^Match ^Calendar](' + $window.location.protocol + '//' + $window.location.host + ')*')
                 , '_blank');
         };
 

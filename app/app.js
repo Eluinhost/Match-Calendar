@@ -28,12 +28,6 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
         $rootScope.settings.schemaVersion = -1;
         $rootScope.settings.notificationTimes = [{value: 600}];
 
-        $rootScope.settings.generator = {
-            address: '192.168.0.1',
-            postTitle: 'Game Title',
-            region: 'NA'
-        };
-
         $q.all([
             $localForage.bind($rootScope.settings, 'timeZone'),
             $localForage.bind($rootScope.settings, 'timeFormat'),
@@ -41,7 +35,6 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'ngSani
             $localForage.bind($rootScope.settings, 'favoriteHosts'),
             $localForage.bind($rootScope.settings, 'notificationTimes'),
             $localForage.bind($rootScope.settings, 'schemaVersion'),
-            $localForage.bind($rootScope.settings, 'generator')
         ]).then(function() {
             var toRun = [];
             for(var i = $rootScope.settings.schemaVersion; i < $rootScope.appSchemaVersion; i++) {

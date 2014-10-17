@@ -8,7 +8,7 @@
                     </div>
                     <div class="panel-body">
                         <span class="help-block">The title to show on the list</span>
-                        <input class="form-control" type="text" ng-model="settings.generator.postTitle"/>
+                        <input class="form-control" type="text" ng-model="generator.postTitle"/>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="panel-body">
                     <span class="help-block">The server region</span>
-                    <select class="form-control" ng-model="settings.generator.region" ng-options="o as k for (o,k) in regions"></select>
+                    <select class="form-control" ng-model="generator.region" ng-options="o as k for (o,k) in regions"></select>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="panel-body">
                     <span class="help-block">The server address/IP to connect to</span>
-                    <input class="form-control" type="text" ng-model="settings.generator.address"/>
+                    <input class="form-control" type="text" ng-model="generator.address"/>
                 </div>
             </div>
         </div>

@@ -1,3 +1,0 @@
-# Prod only overrides/settings
-imports:
-    - { resource: config.yml }

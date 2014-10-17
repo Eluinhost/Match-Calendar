@@ -46,7 +46,7 @@ Point the webserver to the `web` folder.
 
 The site is tested and ran live on nginx.
 
-###Nginx
+###nginx
     
     server {
         # other settings, server name/directory e.t.c.

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" manifest="manifest.appcache" ng-app="MatchCalendarApp" ng-controller="ApplicationCtrl">
 <head>
-    <title bindonce refresh-on="'clockTick'" bo-text="T.format(T.formats.TITLE) + &apos; - Calendar&apos;">Calendar</title>
+    <title bindonce="" refresh-on="&apos;clockTick&apos;" bo-text="T.format(T.formats.TITLE) + &apos; - Calendar&apos;">Calendar</title>
 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
@@ -64,7 +64,7 @@
     <div class="col-sm-6 clock-bar-center">
         <div class="row">
             <div class="col-xs-12 clock-bar-time">
-                <strong ng-class="{unsynced: !T.synced}" bindonce bo-text="T.format(T.formats.HEADER)" refresh-on="'clockTick'"></strong>
+                <strong ng-class="{unsynced: !T.synced}" bindonce="" bo-text="T.format(T.formats.HEADER)" refresh-on="&apos;clockTick&apos;"></strong>
                 <i class="fa fa-info-circle" ng-show="!T.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </div>
         </div>
@@ -122,6 +122,7 @@
 <script src="bower_components/localforage/dist/localforage.min.js"></script>
 <script src="bower_components/angular-localforage/dist/angular-localForage.js"></script>
 <script src="bower_components/angular-bindonce/bindonce.js"></script>
+<script src="bower_components/angular-elastic/elastic.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -149,6 +150,7 @@
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="app.js"></script>
+<script src="components/Generic/encodeURIComponent.js"></script>
 <script src="components/PostList/PostNotifications.js"></script>
 <script src="components/PostList/PostList.js"></script>
 <script src="components/PostList/Posts.js"></script>

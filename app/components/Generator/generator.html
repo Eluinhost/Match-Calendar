@@ -1,9 +1,22 @@
 <div class="container text-center generator-page">
     <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Title
+                </div>
+                <div class="panel-body">
+                    <span class="help-block">The title to show on the list</span>
+                    <input class="form-control" type="text" ng-model="generator.postTitle"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Opens: </h3><span ng-bind="T.format(T.formats.GENERATOR_SIMPLE, opens.utc(), true)"></span>
+                    <h3 class="panel-title">Opens: </h3><span ng-bind="T.format(T.formats.REDDIT_POST, opens.utc(), true)"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will open (in your selected timezone)</p>
@@ -14,7 +27,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Starts: </h3><span ng-bind="T.format(T.formats.GENERATOR_SIMPLE, starts.utc(), true)"></span>
+                    <h3 class="panel-title">Starts: </h3><span ng-bind="T.format(T.formats.REDDIT_POST, starts.utc(), true)"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will start (in your selected timezone)</p>
@@ -27,11 +40,11 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Title
+                    Region
                 </div>
                 <div class="panel-body">
-                    <span class="help-block">The title to show on the list</span>
-                    <input class="form-control" type="text" ng-model="settings.generator.postTitle"/>
+                    <span class="help-block">The server region</span>
+                    <select class="form-control" ng-model="generator.region" ng-options="o as k for (o,k) in regions"></select>
                 </div>
             </div>
         </div>
@@ -42,30 +55,22 @@
                 </div>
                 <div class="panel-body">
                     <span class="help-block">The server address/IP to connect to</span>
-                    <input class="form-control" type="text" ng-model="settings.generator.address"/>
+                    <input class="form-control" type="text" ng-model="generator.address"/>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Region
-                </div>
-                <div class="panel-body">
-                    <span class="help-block">The server region</span>
-                    <select class="form-control" ng-model="settings.generator.region" ng-options="o as k for (o,k) in regions"></select>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    Paste the text below and add it to your reddit post &nbsp; <a href="" clip-copy="generatedLink"><i class="fa fa-clipboard"></i>Copy to clipboard</a>
-                </div>
-                <div class="panel-body" ng-bind="generatedLink"></div>
-            </div>
+        <div class="btn-group dropup col-sm-6 col-sm-offset-3 col-xs-12" dropdown is-open="postButtonOpen">
+            <button type="button" class="btn btn-primary dropdown-toggle btn-lg btn-block">
+                Submit <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a ng-click="openReddit()">Post to Reddit</a></li>
+                <li><a ng-click="openLinkModal()">Raw link to add to post</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="editTemplate()">Preview / Edit Template</a></li>
+            </ul>
         </div>
     </div>
 </div>

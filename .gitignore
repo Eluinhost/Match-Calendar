@@ -3,6 +3,7 @@ web
 .tmp
 .sass-cache
 bower_components
-config/parameters.yml
+config/config_dev.yml
+config/config_prod.yml
 vendor
 composer.lock

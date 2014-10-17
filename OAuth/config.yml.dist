@@ -1,0 +1,4 @@
+# Copy this file to config_dev.yml and config_prod.yml and fill out details
+oauth:
+    id: CLIENT_ID
+    secret: CLIENT_SECRET

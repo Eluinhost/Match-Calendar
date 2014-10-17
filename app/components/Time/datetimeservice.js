@@ -37,6 +37,9 @@ angular.module('MatchCalendarApp')
             },
             GENERATOR_SIMPLE: function() {
                 return 'YYYY-MM-DD HH:mm Z';
+            },
+            REDDIT_POST: function() {
+                return 'MMM DD HH:mm z';
             }
         };
 

@@ -105,7 +105,7 @@ angular.module('MatchCalendarApp')
             $scope.updateTemplate();
             window.open(
                     'https://reddit.com/r/ultrahardcore/submit?title='
-                  + encodeURIComponent($scope.generator.postTitle)
+                  + encodeURIComponent($scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts) + ' [' + $scope.generator.region + '] - ' + $scope.generator.postTitle)
                   + '&text=' + encodeURIComponent($scope.generatedTemplate)
                   + '\n'
                   + encodeURIComponent($scope.generatedLink)

@@ -112,7 +112,7 @@ angular.module('MatchCalendarApp')
         $scope.openReddit = function() {
             $scope.updateGenerated();
             $scope.updateTemplate();
-            window.open(
+            $window.open(
                     'https://reddit.com/r/ultrahardcore/submit?title='
                   + encodeURIComponent($scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts.utc(), true) + ' [' + $scope.generator.region + '] - ' + $scope.generator.postTitle)
                   + '&text='

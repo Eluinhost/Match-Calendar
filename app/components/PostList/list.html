@@ -88,7 +88,7 @@
                         <span bo-show="post.address !== null">
                             <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">
                                 <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">
-                                    <small bo-text="post.address"></small> <i class="fa fa-cubes"></i>
+                                    <small bindonce refresh-on="'regionCopyChange'" bo-text="post.address"></small> <i class="fa fa-cubes"></i>
                                 </span>
                             </span>
                         </span>

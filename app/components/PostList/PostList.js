@@ -40,8 +40,10 @@ angular.module('MatchCalendarApp')
             }
             var saved = post.address;
             post.address = 'Copied!';
+            $scope.$broadcast('regionCopyChange');
             $timeout(function () {
                 post.address = saved;
+                $scope.$broadcast('regionCopyChange');
             }, 2000);
         };
 

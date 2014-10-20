@@ -18,6 +18,11 @@ Build requirements:
 - Grunt CLI (install with npm install -g grunt-cli)
 - Composer
 
+Setup a changelog
+-----------------
+
+Make the file `app/changelog.md` for and fill out with details for the site changelog
+
 Build
 -----
 

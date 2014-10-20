@@ -34,7 +34,7 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'monosp
             $localForage.bind($rootScope.settings, 'subreddits'),
             $localForage.bind($rootScope.settings, 'favoriteHosts'),
             $localForage.bind($rootScope.settings, 'notificationTimes'),
-            $localForage.bind($rootScope.settings, 'schemaVersion'),
+            $localForage.bind($rootScope.settings, 'schemaVersion')
         ]).then(function() {
             var toRun = [];
             for(var i = $rootScope.settings.schemaVersion; i < $rootScope.appSchemaVersion; i++) {
@@ -52,12 +52,27 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'monosp
             }
         });
 
+        $rootScope.showChangelog = function() {
+            $modal.open({
+                template: '<div class="modal-header"><h3 class="modal-title">Changelog</h3></div><div class="modal-body"><markdown class="md" content="markdown"></markdown></div>',
+                controller: function($scope, $http) {
+                    $scope.markdown = '';
+
+                    $http.get('/changelog.md').success(function(data) {
+                        $scope.markdown = data;
+                    }).error(function() {
+                        $scope.markdown = 'Error loading changelog data';
+                    });
+                }
+            });
+        };
+
         //check appcache status
         if(angular.isDefined($window.applicationCache)) {
 
             var onUpdateReady = function() {
                 $modal.open({
-                    template: '<div class="modal-header"><h3 class="modal-title">An update is ready, reload?</h3></div><div class="modal-body"><button class="btn btn-warning" type="button" ng-click="reload()">Reload Now</button></div>',
+                    template: '<div class="modal-header"><h3 class="modal-title">An update is ready, reload?</h3></div><div class="modal-body"><button class="btn btn-warning" type="button" ng-click="reload()">Reload Now</button><button class="btn btn-info" type="button" ng-click="showChangelog()">Changelog</button></div>',
                     controller: function($scope, $window) {
                         $scope.reload = function() {
                             $window.location.reload();

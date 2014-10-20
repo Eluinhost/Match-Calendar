@@ -322,7 +322,8 @@ module.exports = function (grunt) {
                             '**/*.html',
                             '**/*.{webp}',
                             'fonts/*',
-                            '**/*.php'
+                            '**/*.php',
+                            '**/*.md'
                         ]
                     },
                     {
@@ -386,7 +387,8 @@ module.exports = function (grunt) {
                 cache: {
                     patterns: [
                         'web/**/*',
-                        '!web/api/**/*'
+                        '!web/api/**/*',
+                        '!web/changelog.md'
                     ]
                 },
                 network: '*'

@@ -7,3 +7,4 @@ config/config_dev.yml
 config/config_prod.yml
 vendor
 composer.lock
+app/changelog.md

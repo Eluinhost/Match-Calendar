@@ -18,7 +18,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-lg-3 col-xs-12 refresh-button text-center">
+                <div class="col-lg-2 col-xs-12 refresh-button text-center">
                     <b class="refresh-icon" ng-click="posts.update()">
                         <i class="fa fa-refresh" ng-class="{'fa-spin': posts.updating}"></i> Refresh
                         <small class="center-block">
@@ -26,10 +26,9 @@
                         </small>
                     </b>
                 </div>
-                <div class="col-lg-1 col-xs-12 text-right">
-                    <button type="button" class="btn btn-primary" ui-sref="listhelp">
-                    Help
-                    </button>
+                <div class="col-lg-2 col-xs-12 text-right">
+                    <button type="button" class="btn btn-primary btn-block" ui-sref="listhelp">Help</button>
+                    <button type="button" class="btn btn-primary btn-block" ng-click="showChangelog()">Changelog</button>
                 </div>
             </div>
         </div>

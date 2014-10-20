@@ -34,3 +34,7 @@ default. For nginx add the following to the mime.types config file:
 `text/cache-manifest			appcache;`
 
 This makes all .appcache files serve with the text/cache-manifest mime type.
+
+## Step 5
+
+Make the file `app/changelog.md` for and fill out with details for the site changelog

@@ -9,7 +9,6 @@ angular.module('MatchCalendarApp', ['ui.bootstrap', 'LocalForageModule', 'monosp
         ){
         editableOptions.theme = 'bs3';
         $rootScope.T = DateTimeService;
-        DateTimeService.resync();
 
         $rootScope.appSchemaVersion = 1;
 

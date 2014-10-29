@@ -64,8 +64,8 @@
     <div class="col-sm-6 clock-bar-center">
         <div class="row">
             <div class="col-xs-12 clock-bar-time">
-                <strong ng-class="{unsynced: !T.synced}" bindonce="" bo-text="T.format(T.formats.HEADER)" refresh-on="&apos;clockTick&apos;"></strong>
-                <i class="fa fa-info-circle" ng-show="!T.synced" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
+                <strong ng-class="{unsynced: !T.isSynced()}" bindonce="" bo-text="T.format(T.formats.HEADER)" refresh-on="&apos;clockTick&apos;"></strong>
+                <i class="fa fa-info-circle" ng-show="!T.isSynced()" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </div>
         </div>
         <div class="row">

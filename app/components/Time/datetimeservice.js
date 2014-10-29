@@ -16,11 +16,12 @@ angular.module('MatchCalendarApp')
         }, 1000);
 
         var synced = false;
+        var offset = 0;
 
         var currentTime = function() {
             var current = moment();
             if (synced) {
-                current.add('ms', this.offset);
+                current.add('ms', offset);
             }
             return current;
         };
@@ -40,19 +41,23 @@ angular.module('MatchCalendarApp')
             }
         };
 
+        var resync = function () {
+            $http.get(resyncURL).then(function (data) {
+                synced = true;
+                //this isn't really that accurate but within ping time so close enough
+                offset = data.data.time - moment().valueOf();
+            });
+        };
+        resync();
+
         return {
-            synced: synced,
-            offset: null,
-            resync: function () {
-                var service = this;
-                $http.get(resyncURL).then(
-                    function (data) {
-                        service.synced = true;
-                        //this isn't really that accurate but within ping time so close enough
-                        service.offset = data.data.time - moment().valueOf();
-                    }
-                );
+            isSynced: function() {
+                return synced;
             },
+            getOffset: function() {
+                return offset;
+            },
+            resync: resync,
             currentTime: currentTime,
             /**
              * Format the time
@@ -63,7 +68,7 @@ angular.module('MatchCalendarApp')
              * @returns {*}
              */
             format: function(format, time, keeptz) {
-                time = time || this.currentTime();
+                time = time || currentTime();
                 if(!keeptz) {
                     time.tz($rootScope.settings.timeZone);
                 }

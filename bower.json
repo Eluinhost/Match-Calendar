@@ -21,7 +21,8 @@
     "outdated-browser": "~1.1.0",
     "angular-localforage": "~0.2.10",
     "angular-bindonce": "git://github.com/Pasvaz/bindonce.git#rebind-debug",
-    "angular-elastic": "~2.4.0"
+    "angular-elastic": "~2.4.0",
+    "angular-truncate": "*"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

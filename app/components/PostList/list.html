@@ -69,7 +69,7 @@
                     <div class="col-lg-6 text-left-lg text-center col-xs-12">
                         <div>
                             <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
-                            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title"></a>
+                            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
                         </div>
                         <div class="visible-lg-block">
                             <small class="time-posted" tooltip="Time posted">

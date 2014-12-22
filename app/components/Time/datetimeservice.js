@@ -21,7 +21,7 @@ angular.module('MatchCalendarApp')
         var currentTime = function() {
             var current = moment();
             if (synced) {
-                current.add('ms', offset);
+                current.add(offset, 'ms');
             }
             return current;
         };

@@ -88,7 +88,11 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
     })
 
     //configuration
-    .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$localForageProvider', function($stateProvider, $urlRouterProvider, $localForageProvider) {
+        $localForageProvider.config({
+            oldPrefix: true
+        });
+
         $stateProvider
             .state('list', {
                 url: '/list?post',

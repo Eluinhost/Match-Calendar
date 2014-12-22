@@ -103,21 +103,29 @@ angular.module('MatchCalendarApp')
                 }
             }
 
+            var current = $rootScope.T.currentTime();
+
             //if it's invalid (no parsable date) read as unparsed
-            if (post.starts !== null) {
-                if (!post.starts.isValid()) {
-                    post.starts = null;
-                } else if (post.starts.diff($rootScope.T.currentTime()) < 0) {
+            if (post.starts !== null && post.starts.isValid()) {
+                // if it's more than 6 months old, assume it's in the next year
+                if (post.starts.diff(current, 'months') < -6) {
+                    post.starts.add(1, 'years');
+                }
+
+                if (post.starts.diff(current) < 0) {
                     //if it's in the past don't show it at all
                     return null;
                 }
+            } else {
+                post.starts = null;
             }
 
-            if (post.opens !== null) {
-                //if it's invalid (no parsable date) read as unparsed
-                if (!post.opens.isValid()) {
-                    post.opens = null;
+            if (post.opens !== null && post.opens.isValid()) {
+                if (post.opens.diff(current, 'months') < -6) {
+                    post.opens.add(1, 'years');
                 }
+            } else {
+                post.opens = null;
             }
 
             //fix &amp;

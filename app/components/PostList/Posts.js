@@ -22,7 +22,7 @@ angular.module('MatchCalendarApp')
         $scope.update = function() {
             var def = $q.defer();
             $scope.updating = true;
-            RedditPostsService.query($rootScope.settings.subreddits).then(function (data) {
+            RedditPostsService.query($rootScope.settings.subreddits, 200).then(function (data) {
                 $scope.posts = data;
                 $scope.updating = false;
                 $scope.currentRegions = [];

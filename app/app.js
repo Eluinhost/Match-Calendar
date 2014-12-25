@@ -10,7 +10,7 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
         editableOptions.theme = 'bs3';
         $rootScope.T = DateTimeService;
 
-        $rootScope.appSchemaVersion = 1;
+        $rootScope.appSchemaVersion = 2;
 
         //set up a new scope for the global settings to use
         $rootScope.settings = $rootScope.$new(true);

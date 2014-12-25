@@ -41,6 +41,7 @@
   },
   "appPath": "app",
   "resolutions": {
-    "angular": "~1.2.19"
+    "angular": "~1.2.19",
+    "localforage": "1.2.0"
   }
 }

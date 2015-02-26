@@ -23,6 +23,7 @@
         "moment": false,
         "Notification": false,
         "SnuOwnd": false,
-        "document": false
+        "document": false,
+        "he": false
     }
 }

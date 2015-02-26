@@ -128,8 +128,10 @@ angular.module('MatchCalendarApp')
                 post.opens = null;
             }
 
-            //fix &amp;
-            post.title = post.title.replace(/&amp;/g, '&');
+            //fix html encoded entities breaking in post titles
+            post.title = he.decode(post.title, {
+                'isAttributeValue': true
+            });
 
             return post;
         };

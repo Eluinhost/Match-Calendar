@@ -8,7 +8,7 @@
  * Factory in the MatchCalendarApp.
  */
 angular.module('MatchCalendarApp')
-    .factory('RedditPostsService', ['$http', '$q', '$filter', 'MatchPost', function ($http, $q, $filter, MatchPost) {
+    .factory('RedditPostsService', ['$http', '$q', '$filter', 'MatchPostParser', 'DateTimeService', function ($http, $q, $filter, MatchPostParser, DateTimeService) {
         return {
             //fetch all
             query: function (subreddits, limit, sort) {
@@ -27,18 +27,14 @@ angular.module('MatchCalendarApp')
                         function (data) {
                             angular.forEach(data.data.data.children, function (element) {
                                 //parse the post
-                                var matchPost = MatchPost.parseData(element.data);
+                                var matchPost = MatchPostParser.parse(element.data);
 
                                 if (null === matchPost) {
                                     return;
                                 }
 
-                                //if time was invalid push to the invalid stack
-                                if (matchPost.starts === null) {
-                                    unparsed.push(matchPost);
-                                } else {
-                                    parsed.push(matchPost);
-                                }
+                                // if time was invalid push to the invalid stack
+                                (matchPost.opens ? parsed : unparsed).push(matchPost);
                             });
                             deferred.resolve({
                                 parsed: parsed,
@@ -64,12 +60,16 @@ angular.module('MatchCalendarApp')
                         unparsed.push.apply(unparsed, element.unparsed);
                     });
 
-                    //filter the parsed ones in time order
+                    var halfHourAgo = DateTimeService.currentTime().subtract(30, 'minutes');
+
+                    // sort the parsed ones in time order and filter out any older than 30 mins
                     var filtered = $filter('orderBy')(parsed, function (element) {
-                        return element.starts.format('X');
+                        return element.opens.format('X');
+                    }).filter(function(post) {
+                        return halfHourAgo.diff(post.opens) < 0;
                     });
 
-                    //add the unparsed matches to the end
+                    // add the unparsed matches to the end of the results
                     filtered.push.apply(filtered, unparsed);
                     deferred.resolve(filtered);
                 });

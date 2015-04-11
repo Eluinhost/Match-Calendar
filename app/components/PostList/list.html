@@ -55,14 +55,12 @@
             <accordion-heading>
                 <div class="row text-center" bindonce="post" refresh-on="'postsUpdated'" bo-attr bo-attr-foo="'post-' + post.id">
                     <div class="col-lg-2 col-xs-12 text-center text-right-lg">
-                        <span class="abs-game-starts" tooltip="Time starts">
-                            <b bo-text="T.format(T.formats.POST_HEADER, post.starts)"></b>
+                        <span class="abs-game-starts" tooltip="Time Opens">
+                            <b bo-text="T.format(T.formats.POST_HEADER, post.opens)"></b>
                             &nbsp;<i class="fa fa-calendar" ng-click="notifications.toggleNotifications(post.id); $event.stopPropagation()" ng-class="{notifications: notifications.isNotifyingFor(post.id)}"></i>
                         </span>
-                        <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
-                            &nbsp;
-                            <small bo-text="post.region || 'Unknown'"></small>
-                            <i class="fa fa-globe"></i>
+                        <span tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+                            <small bindonce="post" refresh-on="'clockTick'" bo-text="post.opens.from(T.currentTime()) || 'Unknown'"></small> <i class="fa fa-clock-o"></i>
                         </span>
                         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
                     </div>
@@ -71,10 +69,9 @@
                             <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
                             <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
                         </div>
-                        <div class="visible-lg-block">
-                            <small class="time-posted" tooltip="Time posted">
-                                <i class="fa fa-reply fa-rotate-180"></i> <span bindonce="post" refresh-on="'clockTick'" bo-text="post.posted.from(T.currentTime())"></span>
-                                - <span bo-text="post.posted.from(post.starts, true)"></span> in advance.
+                        <div>
+                            <small class="gamemodes" tooltip="Gamemodes">
+                                <i class="fa fa-joypad"></i> <span bo-text="post.gamemodes.join(' | ')"></span>
                             </small>
                         </div>
                         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
@@ -94,11 +91,11 @@
                         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
                     </div>
                     <div class="col-lg-2 text-left-lg text-center col-xs-12">
-                        <span tooltip="Opens" class="game-opens">
-                            <i class="fa fa-clock-o"></i> <small bindonce="post" refresh-on="'clockTick'" bo-text="post.opens.from(T.currentTime()) || 'Unknown'"></small>
+                        <span class="server-region" tooltip="Server Region">
+                            <i class="fa fa-globe"></i> <small bo-text="post.region || 'Unknown'"></small>
                         </span>
-                        <span tooltip="Starts" class="game-starts visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-                            <i class="fa fa-caret-square-o-right"></i> <small bindonce="post" refresh-on="'clockTick'" bo-text="post.starts.from(T.currentTime()) || 'Unknown'"></small>
+                        <span tooltip="Time posted" class="time-posted visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+                            <i class="fa fa-reply fa-rotate-180"></i> <small bo-text="post.posted.from(post.opens, true) + ' in advance'"></small>
                         </span>
                     </div>
                 </div>

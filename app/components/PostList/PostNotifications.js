@@ -34,20 +34,20 @@ angular.module('MatchCalendarApp')
                     return true;
                 }
             });
-            //if the post no longer exists
+            // if the post no longer exists
             if (post.length === 0) {
                 delete $scope.notifyFor[postid];
                 return;
             }
             angular.forEach($rootScope.settings.notificationTimes, function (notifcationTime) {
-                var startsUnix = post[0].starts.unix();
-                var timeToNotify = startsUnix - notifcationTime.value;
+                var unix = post[0].opens.unix();
+                var timeToNotify = unix - notifcationTime.value;
                 var currentTimeUnix = $rootScope.T.currentTime().unix();
 
-                //if it's passed the notify time and we havn't already done a notification later than this
+                // if it's passed the notify time and we havn't already done a notification later than this
                 if (currentTimeUnix >= timeToNotify && $scope.notifyFor[postid].value < timeToNotify) {
-                    var difference = startsUnix - currentTimeUnix;
-                    HtmlNotifications.notify('Game starts in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference)), post[0].title);
+                    var difference = unix - currentTimeUnix;
+                    HtmlNotifications.notify('Game opens in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference)), post[0].title);
                     $scope.notifyFor[postid].value = currentTimeUnix;
                 }
             });

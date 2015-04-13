@@ -43,7 +43,7 @@ angular.module('MatchCalendarApp')
 
                 // attempt to parse the date from the post title
                 post.opens = moment.utc(parts[0], 'MMM DD HH:mm', 'en');
-                post.region = parts[1];
+                post.region = parts[1].toUpperCase();
                 post.title = parts[2];
                 post.gamemodes = parts[3].split(',').map(function (gamemode) {
                     return gamemode.trim();

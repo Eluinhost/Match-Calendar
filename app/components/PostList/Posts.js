@@ -14,9 +14,11 @@ angular.module('MatchCalendarApp')
         $scope.posts = [];
         $scope.lastUpdated = 0;
         $scope.regions = {};
+        $scope.gamemodes = {};
         $scope.currentRegions = [];
         $localForage.bind($scope, 'lastUpdated');
         $localForage.bind($scope, 'regions');
+        $localForage.bind($scope, 'gamemodes');
 
         $scope.updating = false;
         $scope.update = function() {
@@ -26,6 +28,8 @@ angular.module('MatchCalendarApp')
                 $scope.posts = data;
                 $scope.updating = false;
                 $scope.currentRegions = [];
+                $scope.currentGamemodes = [];
+                var trackedLowercaseGamemodes = [];
                 angular.forEach($scope.posts, function (element) {
                     element.region = element.region || 'Unknown';
                     if($scope.currentRegions.indexOf(element.region) === -1) {
@@ -34,6 +38,16 @@ angular.module('MatchCalendarApp')
                     if (!angular.isDefined($scope.regions[element.region])) {
                         $scope.regions[element.region] = true;
                     }
+                    element.gamemodes.forEach(function(gamemode) {
+                        var lower = gamemode.toLowerCase();
+                        if (trackedLowercaseGamemodes.indexOf(lower) === -1) {
+                            trackedLowercaseGamemodes.push(lower);
+                            $scope.currentGamemodes.push(gamemode);
+                        }
+                        if (!angular.isDefined($scope.gamemodes[lower])) {
+                            $scope.gamemodes[lower] = true;
+                        }
+                    });
                 });
 
                 $scope.lastUpdated = $rootScope.T.currentTime().unix();

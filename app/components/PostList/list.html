@@ -17,6 +17,15 @@
                             </label>
                         </span>
                     </div>
+                    <div class="center-block text-left-lg">
+                        <b>Gamemodes:</b>
+                        <span bindonce refresh-on="'postsUpdated'" ng-repeat="gamemode in posts.currentGamemodes">
+                            <label>
+                                <small bo-text="gamemode"></small>
+                                <input type="checkbox" ng-model="posts.gamemodes[gamemode.toLowerCase()]">
+                            </label>
+                        </span>
+                    </div>
                 </div>
                 <div class="col-lg-2 col-xs-12 refresh-button text-center">
                     <b class="refresh-icon" ng-click="posts.update()">
@@ -51,7 +60,7 @@
         </div>
     </div>
     <accordion close-others="false">
-        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.regionFilter | filter:filtered.filter) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
+        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <div class="row text-center" bindonce="post" refresh-on="'postsUpdated'" bo-attr bo-attr-foo="'post-' + post.id">
                     <div class="col-lg-2 col-xs-12 text-center text-right-lg">

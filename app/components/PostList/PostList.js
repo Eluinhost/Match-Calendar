@@ -15,9 +15,21 @@ angular.module('MatchCalendarApp')
 
         $scope.filtered = {
             posts: [],
-            filter: '',
-            regionFilter: function (element) {
-                return $scope.posts.regions[element.region || 'Unknown'];
+            filters: {
+                search: '',
+                region: function (post) {
+                    // check if it's region is set to show or not
+                    return $scope.posts.regions[post.region || 'Unknown'];
+                },
+                gamemode: function (post) {
+                    // check if any of it's gamemodes are enabled or not
+                    for (var i = 0; i < post.gamemodes.length; i++) {
+                        if (Posts.gamemodes[post.gamemodes[i].toLowerCase()]) {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
             }
         };
 

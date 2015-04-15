@@ -19,7 +19,7 @@ angular.module('MatchCalendarApp')
                 search: '',
                 region: function (post) {
                     // check if it's region is set to show or not
-                    return $scope.posts.regions[post.region || 'Unknown'];
+                    return Posts.regions[post.region.toLowerCase() || 'Unknown'];
                 },
                 gamemode: function (post) {
                     // check if any of it's gamemodes are enabled or not
@@ -29,6 +29,9 @@ angular.module('MatchCalendarApp')
                         }
                     }
                     return false;
+                },
+                teamType: function(post) {
+                    return Posts.teamTypes[post.teams.toLowerCase()];
                 }
             }
         };

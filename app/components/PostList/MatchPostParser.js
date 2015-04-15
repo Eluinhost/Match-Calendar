@@ -32,7 +32,7 @@ angular.module('MatchCalendarApp')
                 var parts = post.title.split('-');
 
                 // post isnt formatted correctly, don't display it at all
-                if (parts.length !== 4) {
+                if (parts.length !== 5) {
                     return null;
                 }
 
@@ -45,7 +45,8 @@ angular.module('MatchCalendarApp')
                 post.opens = moment.utc(parts[0], 'MMM DD HH:mm', 'en');
                 post.region = parts[1].toUpperCase();
                 post.title = parts[2];
-                post.gamemodes = parts[3].split(',').map(function (gamemode) {
+                post.teams = parts[3];
+                post.gamemodes = parts[4].split(',').map(function (gamemode) {
                     return gamemode.trim();
                 });
 

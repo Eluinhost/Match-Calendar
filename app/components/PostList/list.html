@@ -13,7 +13,7 @@
                         <span bindonce refresh-on="'postsUpdated'" ng-repeat="region in posts.currentRegions">
                             <label>
                                 <small bo-text="region"></small>
-                                <input type="checkbox" ng-model="posts.regions[region]">
+                                <input type="checkbox" ng-model="posts.regions[region.toLowerCase()]">
                             </label>
                         </span>
                     </div>
@@ -23,6 +23,15 @@
                             <label>
                                 <small bo-text="gamemode"></small>
                                 <input type="checkbox" ng-model="posts.gamemodes[gamemode.toLowerCase()]">
+                            </label>
+                        </span>
+                    </div>
+                    <div class="center-block text-left-lg">
+                        <b>Teams:</b>
+                        <span bindonce refresh-on="'postsUpdated'" ng-repeat="teamType in posts.currentTeamTypes">
+                            <label>
+                                <small bo-text="teamType"></small>
+                                <input type="checkbox" ng-model="posts.teamTypes[teamType.toLowerCase()]">
                             </label>
                         </span>
                     </div>
@@ -60,7 +69,7 @@
         </div>
     </div>
     <accordion close-others="false">
-        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
+        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter: filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <div class="row text-center" bindonce="post" refresh-on="'postsUpdated'" bo-attr bo-attr-foo="'post-' + post.id">
                     <div class="col-lg-2 col-xs-12 text-center text-right-lg">
@@ -77,6 +86,7 @@
                         <div>
                             <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
                             <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
+                            <strong class="post-teams" ng-bind="post.teams"></strong>
                         </div>
                         <div>
                             <small class="gamemodes" tooltip="Gamemodes">

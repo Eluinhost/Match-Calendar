@@ -10,13 +10,13 @@
 angular.module('MatchCalendarApp')
     .controller('HeadergeneratorCtrl', function ($scope, $window, $state, $interpolate, $modal, $localForage) {
         $scope.regions = {
-            'AF': 'Africa',
-            'AN': 'Antartica',
-            'AS': 'Asia',
-            'EU': 'Europe',
-            'NA': 'North America',
-            'OC': 'Oceania',
-            'SA': 'South America'
+            AF: 'Africa',
+            AN: 'Antartica',
+            AS: 'Asia',
+            EU: 'Europe',
+            NA: 'North America',
+            OC: 'Oceania',
+            SA: 'South America'
         };
 
         $scope.templates = $scope.$new(true);
@@ -68,7 +68,6 @@ angular.module('MatchCalendarApp')
         $localForage.bind($scope.templates, 'rawTemplate');
 
         $scope.generator = {
-            address: '192.168.0.1',
             postTitle: 'Game Title',
             region: 'NA'
         };
@@ -86,7 +85,6 @@ angular.module('MatchCalendarApp')
 
         //add the non-settings
         $scope.opens = $scope.T.currentTime();
-        $scope.starts = $scope.T.currentTime();
 
         //minimum time for things to show
         $scope.minTime = $scope.T.currentTime();
@@ -95,8 +93,6 @@ angular.module('MatchCalendarApp')
         $scope.updateGenerated = function() {
             var generatedVersion = {
                 opens: $scope.opens.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
-                starts: $scope.starts.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
-                address: $scope.generator.address.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
                 title:  $scope.generator.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
                 region: $scope.generator.region
             };
@@ -113,13 +109,14 @@ angular.module('MatchCalendarApp')
             $scope.updateGenerated();
             $scope.updateTemplate();
             $window.open(
-                    'https://reddit.com/r/ultrahardcore/submit?title='
-                  + encodeURIComponent($scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts.utc(), true) + ' ' + $scope.generator.region + ' - ' + $scope.generator.postTitle)
-                  + '&text='
-                  + encodeURIComponent($scope.templates.generated)
-                  + encodeURIComponent('\n\n' + $scope.generatedLink)
-                  + encodeURIComponent('\n\n*^created ^using ^the [^Match ^Calendar](' + $window.location.protocol + '//' + $window.location.host + ')*')
-                , '_blank');
+                'https://reddit.com/r/ultrahardcore/submit?title=' +
+                    encodeURIComponent($scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts.utc(), true) + ' ' + $scope.generator.region + ' - ' + $scope.generator.postTitle) +
+                    '&text=' +
+                    encodeURIComponent($scope.templates.generated) +
+                    encodeURIComponent('\n\n' +
+                    $scope.generatedLink) +
+                    encodeURIComponent('\n\n*^created ^using ^the [^Match ^Calendar](' + $window.location.protocol + '//' + $window.location.host + ')*'),
+                '_blank');
         };
 
         $scope.editTemplate = function() {

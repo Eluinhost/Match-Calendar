@@ -27,35 +27,11 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Starts: </h3><span ng-bind="T.format(T.formats.REDDIT_POST, starts.utc(), true)"></span>
-                </div>
-                <div class="panel-body">
-                    <p class="help-block">Time game will start (in your selected timezone)</p>
-                    <date-time-picker picked-date="starts" time-zone="settings.timeZone" min-date="minTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
                     Region
                 </div>
                 <div class="panel-body">
                     <span class="help-block">The server region</span>
                     <select class="form-control" ng-model="generator.region" ng-options="o as k for (o,k) in regions"></select>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Server Address
-                </div>
-                <div class="panel-body">
-                    <span class="help-block">The server address/IP to connect to</span>
-                    <input class="form-control" type="text" ng-model="generator.address"/>
                 </div>
             </div>
         </div>

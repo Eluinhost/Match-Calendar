@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name MatchCalendarApp.controller:HeaderGeneratorRegions
+ * @name MatchCalendarApp.controller:PostGeneratorRegions
  * @description
- * # HeaderGeneratorRegions
+ * # PostGeneratorRegions
  * Service of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .factory('HeaderGeneratorRegions', [function () {
+    .factory('PostGeneratorRegions', [function () {
         return {
             AF: 'Africa',
             AN: 'Antartica',

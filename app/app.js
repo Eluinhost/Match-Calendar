@@ -108,7 +108,7 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
             .state('generate', {
                 url: '/generate',
                 templateUrl: 'components/Generator/generator.html',
-                controller: 'HeadergeneratorCtrl'
+                controller: 'PostGeneratorCtrl'
             })
 
             .state('settings', {

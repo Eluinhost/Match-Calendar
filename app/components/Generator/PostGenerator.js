@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc function
- * @name MatchCalendarApp.controller:HeadergeneratorCtrl
+ * @name MatchCalendarApp.controller:PostGeneratorCtrl
  * @description
- * # HeadergeneratorCtrl
+ * # PostGeneratorCtrl
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('HeadergeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'HeaderGeneratorRegions', function ($scope, $window, $state, $interpolate, $modal, $localForage, HeaderGeneratorRegions) {
-        $scope.regions = HeaderGeneratorRegions;
+    .controller('PostGeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', function ($scope, $window, $state, $interpolate, $modal, $localForage, PostGeneratorRegions) {
+        $scope.regions = PostGeneratorRegions;
 
         // set up templating
         $scope.templates = $scope.$new(true);

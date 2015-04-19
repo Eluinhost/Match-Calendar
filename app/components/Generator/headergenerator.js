@@ -100,11 +100,17 @@ angular.module('MatchCalendarApp')
             $scope.updateTemplate();
             $window.open(
                 'https://reddit.com/r/ultrahardcore/submit?title=' +
-                    encodeURIComponent($scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts.utc(), true) + ' ' + $scope.generator.region + ' - ' + $scope.generator.postTitle) +
+                    encodeURIComponent(
+                        $scope.T.format($scope.T.formats.REDDIT_POST, $scope.opens.utc(), true) +
+                        ' - ' +
+                        $scope.generator.region +
+                        ' - ' +
+                        $scope.generator.postTitle +
+                        ' - ' +
+                        'TODO ADD REGIONS' // TODO
+                    ) +
                     '&text=' +
                     encodeURIComponent($scope.templates.generated) +
-                    encodeURIComponent('\n\n' +
-                    $scope.generatedLink) +
                     encodeURIComponent('\n\n*^created ^using ^the [^Match ^Calendar](' + $window.location.protocol + '//' + $window.location.host + ')*'),
                 '_blank');
         };

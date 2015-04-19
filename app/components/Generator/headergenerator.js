@@ -8,19 +8,13 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('HeadergeneratorCtrl', function ($scope, $window, $state, $interpolate, $modal, $localForage) {
-        $scope.regions = {
-            AF: 'Africa',
-            AN: 'Antartica',
-            AS: 'Asia',
-            EU: 'Europe',
-            NA: 'North America',
-            OC: 'Oceania',
-            SA: 'South America'
-        };
+    .controller('HeadergeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'HeaderGeneratorRegions', function ($scope, $window, $state, $interpolate, $modal, $localForage, HeaderGeneratorRegions) {
+        $scope.regions = HeaderGeneratorRegions;
 
+        // set up templating
         $scope.templates = $scope.$new(true);
 
+        // set up the raw pre-processed version
         $scope.templates.rawTemplate =
             '\n**Game Information**' +
             '\n---' +
@@ -62,20 +56,22 @@ angular.module('MatchCalendarApp')
             '\n---' +
             '\n\n* **Vanilla+:** Vanilla with minor tweaks';
 
+        // the compiled version
         $scope.templates.generated = '';
 
-        //save the template
+        // save (and load) the template
         $localForage.bind($scope.templates, 'rawTemplate');
 
+        // generator information
         $scope.generator = {
             postTitle: 'Game Title',
             region: 'NA'
         };
 
-        //save the settings
+        // save and load the generator settings
         $localForage.bind($scope, 'generator');
 
-        //add utility functions
+        // add utility functions for templating
         $scope.opensUTC = function() {
             return $scope.T.format($scope.T.formats.REDDIT_POST, $scope.opens, true);
         };
@@ -83,28 +79,22 @@ angular.module('MatchCalendarApp')
             return $scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts, true);
         };
 
-        //add the non-settings
+        // set the opening time to the current time for easy use
         $scope.opens = $scope.T.currentTime();
 
-        //minimum time for things to show
+        // minimum time for things to show
         $scope.minTime = $scope.T.currentTime();
 
-        //update $scope.generatedLink with the matchpost link
-        $scope.updateGenerated = function() {
-            var generatedVersion = {
-                opens: $scope.opens.utc().format('YYYY-MM-DDTHH:mm:ssZ'),
-                title:  $scope.generator.postTitle.replace(/\[/g, '&#91;').replace(/\]/g, '&#93;'),
-                region: $scope.generator.region
-            };
-
-            $scope.generatedLink = '[' + JSON.stringify(generatedVersion) + '](/matchpost)';
-        };
-
+        /**
+         * Updates $scope.templates.generated with the compiled version of $scope.templates.rawTemplate
+         */
         $scope.updateTemplate = function() {
             $scope.templates.generated = $interpolate($scope.templates.rawTemplate, false, null, true)($scope);
         };
 
-        //open a new window to create a reddit post with the template
+        /**
+         * opens a new window to create a reddit post with the compiled template and info included
+         */
         $scope.openReddit = function() {
             $scope.updateGenerated();
             $scope.updateTemplate();
@@ -127,13 +117,4 @@ angular.module('MatchCalendarApp')
                 size: 'lg'
             });
         };
-
-        //opens a modal to copy/paste the link from
-        $scope.openLinkModal = function() {
-            $scope.updateGenerated();
-            $modal.open({
-                templateUrl: 'components/Generator/matchPostLink.html',
-                scope: $scope
-            });
-        };
-    });
+    }]);

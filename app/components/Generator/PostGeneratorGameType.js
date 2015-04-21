@@ -137,5 +137,21 @@ angular.module('MatchCalendarApp')
             }
         });
 
+        GameType.types.CUSTOM = new GameType({
+            name: 'Custom',
+            description: 'Custom team types',
+            fields: [
+                new PostGeneratorGameTypeField({
+                    question: 'What to show in post title',
+                    defaultValue: 'Custom',
+                    type: 'text',
+                    name: 'custom'
+                })
+            ],
+            format: function(fieldAnswers) {
+                return fieldAnswers.custom;
+            }
+        });
+
         return GameType;
     }]);

@@ -8,8 +8,9 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('PostGeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', function ($scope, $window, $state, $interpolate, $modal, $localForage, PostGeneratorRegions) {
+    .controller('PostGeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', 'PostGeneratorGameType', function ($scope, $window, $state, $interpolate, $modal, $localForage, PostGeneratorRegions, PostGeneratorGameType) {
         $scope.regions = PostGeneratorRegions;
+        $scope.gameTypes = PostGeneratorGameType.types;
 
         // set up templating
         $scope.templates = $scope.$new(true);
@@ -65,7 +66,8 @@ angular.module('MatchCalendarApp')
         // generator information
         $scope.generator = {
             postTitle: 'Game Title',
-            region: 'NA'
+            region: 'NA',
+            gameType: 'FFA'
         };
 
         // save and load the generator settings

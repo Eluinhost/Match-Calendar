@@ -86,9 +86,6 @@ angular.module('MatchCalendarApp')
         $scope.opensUTC = function() {
             return $scope.T.format($scope.T.formats.REDDIT_POST, $scope.opens, true);
         };
-        $scope.startsUTC = function() {
-            return $scope.T.format($scope.T.formats.REDDIT_POST, $scope.starts, true);
-        };
 
         // set the opening time to the current time for easy use
         $scope.opens = $scope.T.currentTime();
@@ -131,7 +128,6 @@ angular.module('MatchCalendarApp')
          * opens a new window to create a reddit post with the compiled template and info included
          */
         $scope.openReddit = function() {
-            $scope.updateGenerated();
             $scope.updateTemplate();
             $window.open(
                 'https://reddit.com/r/ultrahardcore/submit?title=' +

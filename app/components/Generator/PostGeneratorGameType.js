@@ -27,6 +27,14 @@ angular.module('MatchCalendarApp')
             this.format = options.formatter || function() { return 'ERROR CREATING GAME TYPE'; };
         };
 
+        GameType.prototype.defaultValues = function() {
+            return this.fields.reduce(function(acc, cur) {
+                acc[cur.name] = cur.defaultValue;
+
+                return acc;
+            }, {});
+        };
+
         // generic formatter to use with size based game types
         var genericSizeFormatter = function(fieldAnswers) {
             return this.name + ' To' + fieldAnswers.size;

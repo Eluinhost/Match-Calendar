@@ -8,7 +8,7 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('PostGeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', 'PostGeneratorGameType', function ($scope, $window, $state, $interpolate, $modal, $localForage, PostGeneratorRegions, PostGeneratorGameType) {
+    .controller('PostGeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', 'PostGeneratorGameType', 'DateTimeService', function ($scope, $window, $state, $interpolate, $modal, $localForage, PostGeneratorRegions, PostGeneratorGameType, DateTimeService) {
         $scope.regions = PostGeneratorRegions;
         $scope.gameTypes = PostGeneratorGameType.types;
 
@@ -102,6 +102,18 @@ angular.module('MatchCalendarApp')
             $scope.templates.generated = $interpolate($scope.templates.rawTemplate, false, null, true)($scope);
         };
 
+        $scope.buildTitle = function() {
+            return DateTimeService.format(DateTimeService.formats.REDDIT_POST, $scope.opens.utc(), true) +
+                    ' - ' +
+                    $scope.generator.region +
+                    ' - ' +
+                    $scope.generator.postTitle +
+                    ' - ' +
+                    PostGeneratorGameType.types[$scope.generator.gameType].format($scope.generator.gameTypeData) +
+                    ' - ' +
+                    'TODO add scenarios';
+        };
+
         /**
          * opens a new window to create a reddit post with the compiled template and info included
          */
@@ -110,15 +122,7 @@ angular.module('MatchCalendarApp')
             $scope.updateTemplate();
             $window.open(
                 'https://reddit.com/r/ultrahardcore/submit?title=' +
-                    encodeURIComponent(
-                        $scope.T.format($scope.T.formats.REDDIT_POST, $scope.opens.utc(), true) +
-                        ' - ' +
-                        $scope.generator.region +
-                        ' - ' +
-                        $scope.generator.postTitle +
-                        ' - ' +
-                        'TODO ADD REGIONS' // TODO
-                    ) +
+                    encodeURIComponent($scope.buildTitle()) +
                     '&text=' +
                     encodeURIComponent($scope.templates.generated) +
                     encodeURIComponent('\n\n*^created ^using ^the [^Match ^Calendar](' + $window.location.protocol + '//' + $window.location.host + ')*'),

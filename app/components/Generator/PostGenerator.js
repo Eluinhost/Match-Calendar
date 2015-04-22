@@ -68,7 +68,8 @@ angular.module('MatchCalendarApp')
             postTitle: 'Game Title',
             region: 'NA',
             gameType: 'FFA',
-            gameTypeData: []
+            gameTypeData: [],
+            scenarios: []
         };
 
         $scope.$watch('generator.gameType', function(newValue, oldValue) {
@@ -95,6 +96,18 @@ angular.module('MatchCalendarApp')
         // minimum time for things to show
         $scope.minTime = $scope.T.currentTime();
 
+        $scope.addScenario = function (name) {
+            if (name === '' || name === null || name === undefined) return;
+
+            if ($scope.generator.scenarios.indexOf(name) === -1) {
+                $scope.generator.scenarios.push(name);
+            }
+        };
+
+        $scope.removeScenario = function (index) {
+            $scope.generator.scenarios.splice(index, 1);
+        };
+
         /**
          * Updates $scope.templates.generated with the compiled version of $scope.templates.rawTemplate
          */
@@ -111,7 +124,7 @@ angular.module('MatchCalendarApp')
                     ' - ' +
                     PostGeneratorGameType.types[$scope.generator.gameType].format($scope.generator.gameTypeData) +
                     ' - ' +
-                    'TODO add scenarios';
+                    $scope.generator.scenarios.join(', ');
         };
 
         /**

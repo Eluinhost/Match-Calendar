@@ -119,7 +119,7 @@ angular.module('MatchCalendarApp')
                 })
             ],
             format: function(fieldAnswers) {
-                return fieldAnswers.buyers + ' buyers Auction (' + fieldAnswers.currency;
+                return fieldAnswers.buyers + ' buyers Auction (' + fieldAnswers.currency + ')';
             }
         });
 

@@ -117,6 +117,12 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
                 controller: 'SettingsCtrl'
             })
 
+            .state('editor', {
+                url: '/editor',
+                templateUrl: 'components/TemplateEditor/TemplateEditor.html',
+                controller: 'TemplateEditorCtrl'
+            })
+
             .state('about', {
                 url: '/about',
                 templateUrl: 'components/About/about.html',

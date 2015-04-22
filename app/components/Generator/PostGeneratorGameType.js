@@ -17,14 +17,14 @@ angular.module('MatchCalendarApp')
          * @param {String} options.name - the name of the game mode
          * @param {String} options.description - a short description of the game mode
          * @param {PostGeneratorGameTypeField[]} [options.fields] - list of fields needed for the gamemode
-         * @param {Function} [options.formatter] - optional formatter to override the default
+         * @param {Function} [options.format] - optional formatter to override the default
          * @constructor
          */
         var GameType = function(options) {
             this.name = options.name;
             this.description = options.description || 'No description set';
             this.fields = options.fields || [];
-            this.format = options.formatter || function() { return 'ERROR CREATING GAME TYPE'; };
+            this.format = options.format || function() { return 'ERROR CREATING GAME TYPE'; };
         };
 
         GameType.prototype.defaultValues = function() {

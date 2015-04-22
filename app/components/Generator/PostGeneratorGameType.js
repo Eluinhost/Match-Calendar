@@ -128,7 +128,7 @@ angular.module('MatchCalendarApp')
                 new PostGeneratorGameTypeField({
                     question: 'Can alliances win?',
                     defaultValue: true,
-                    type: 'boolean',
+                    type: 'checkbox',
                     name: 'canWin'
                 })
             ],

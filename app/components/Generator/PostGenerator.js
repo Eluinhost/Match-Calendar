@@ -67,8 +67,16 @@ angular.module('MatchCalendarApp')
         $scope.generator = {
             postTitle: 'Game Title',
             region: 'NA',
-            gameType: 'FFA'
+            gameType: 'FFA',
+            gameTypeData: []
         };
+
+        $scope.$watch('generator.gameType', function(newValue, oldValue) {
+            if (oldValue === newValue) return;
+
+            console.log(oldValue, newValue, PostGeneratorGameType.types[newValue].defaultValues());
+            $scope.generator.gameTypeData = PostGeneratorGameType.types[newValue].defaultValues();
+        });
 
         // save and load the generator settings
         $localForage.bind($scope, 'generator');

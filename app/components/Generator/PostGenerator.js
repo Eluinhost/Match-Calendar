@@ -69,7 +69,7 @@ angular.module('MatchCalendarApp')
             region: 'NA',
             gameType: 'FFA',
             gameTypeData: [],
-            scenarios: []
+            scenarios: ['Vanilla']
         };
 
         $scope.$watch('generator.gameType', function(newValue, oldValue) {
@@ -103,6 +103,10 @@ angular.module('MatchCalendarApp')
 
         $scope.removeScenario = function (index) {
             $scope.generator.scenarios.splice(index, 1);
+
+            if ($scope.generator.scenarios.length === 0) {
+                $scope.generator.scenarios.push('Vanilla');
+            }
         };
 
         /**

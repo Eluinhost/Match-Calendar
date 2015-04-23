@@ -1,3 +1,41 @@
 <div class="container text-center editor-page">
-
+    <div class="selector">
+        <ul class="list-group">
+            <li
+                ng-repeat="template in templates.customTemplates"
+                ng-bind="template.name"
+                ng-class="{'list-group-item': true, active: selected.name === template.name}"
+                ng-click="loadNew(template)">
+            </li>
+            <li ng-click="loadNew()" class="list-group-item list-group-item-success">New Template</li>
+        </ul>
+    </div>
+    <div ng-if="tempCopy" class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Edit template</h3></div>
+                <div class="panel-body">
+                    <label for="template-name-change">Change name</label>
+                    <input id="template-name-change" type="text" ng-model="tempCopy.name" class="form-control" placeholder="Template Name" required ngTrim>
+                    <br>
+                    <label for="template-edit-box">Template Contents</label>
+                    <textarea id="template-edit-box" msd-elastic class="generator-template form-control" ng-model="tempCopy.template" ng-change="updatePreview()"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Preview</h3></div>
+                <div class="panel-body">
+                    <markdown class="md" content="generated"></markdown>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-block btn-success" ng-click="saveTemplate()">Save Changes</button>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-block btn-warning" ng-click="deleteTemplate()">Delete Template</button>
+        </div>
+    </div>
 </div>

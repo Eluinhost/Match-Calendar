@@ -53,6 +53,21 @@ angular.module('MatchCalendarApp')
             $scope.reset();
         };
 
+        $scope.isNameValid = function() {
+            // if for some reason it doesnt exist
+            if (!$scope.tempCopy) return false;
+
+            // disallow empty/null names
+            if (!$scope.tempCopy.name) return false;
+
+            // if it's the same name as the currently selected one
+            if ($scope.selected && ($scope.selected.name === $scope.tempCopy.name)) {
+                return true;
+            }
+
+            return !Templates.customTemplateExists($scope.tempCopy.name);
+        };
+
         // deletes a template without warning
         $scope.deleteTemplate = function() {
             var index = -1;

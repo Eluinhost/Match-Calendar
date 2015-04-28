@@ -13,6 +13,16 @@ angular.module('MatchCalendarApp')
 
         $scope.customTemplates = [];
 
+        $scope.customTemplateExists = function(name) {
+            for (var i = 0; i < $scope.customTemplates.length; i++) {
+                if ($scope.customTemplates[i].name === name) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
+
         $localForage.bind($scope, 'customTemplates');
 
         return $scope;

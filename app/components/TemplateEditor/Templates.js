@@ -20,7 +20,7 @@ angular.module('MatchCalendarApp')
         $scope.getTemplate = function(name) {
             for (var i = 0; i < $scope.customTemplates.length; i++) {
                 if ($scope.customTemplates[i].name === name) {
-                    return name;
+                    return $scope.customTemplates[i];
                 }
             }
         };

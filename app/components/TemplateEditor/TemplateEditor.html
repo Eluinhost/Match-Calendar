@@ -43,4 +43,45 @@
             <button type="button" class="btn btn-block btn-warning" ng-disabled="!selected" ng-click="deleteTemplate()">Delete Template</button>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <accordion close-others="false">
+                <accordion-group>
+                    <accordion-heading>
+                        Help - Available Template Variables
+                    </accordion-heading>
+                    <div class="text-left">
+                        <h3>Available Variables:</h3>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">opensUTC</h4>
+                                <p class="list-group-item-text">When the match opens in the format MMM DD HH:mm Z</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">title</h4>
+                                <p class="list-group-item-text">The title of the post</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">region</h4>
+                                <p class="list-group-item-text">The short code of the region</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">teams</h4>
+                                <p class="list-group-item-text">The generated team type. e.g. Mystery To4</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">scenarios</h4>
+                                <p class="list-group-item-text">Comma separated list of scenarios</p>
+                            </a>
+                        </div>
+                        <h3>How to use:</h3>
+                        <p>Surround the variable with curly brackets</p>
+                        <code ng-non-bindable>**Match opens at** {{ opensUTC }}</code>
+                        =>
+                        <span><b>Match opens at</b> Apr 12 10:20 UTC</span>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
 </div>

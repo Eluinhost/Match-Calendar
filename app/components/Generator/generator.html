@@ -109,6 +109,6 @@
     </div>
     <div class="row">
         <button type="button" class="btn btn-info btn-lg col-md-6" ui-sref="editor">Template Editor</button>
-        <button type="button" class="btn btn-success btn-lg col-md-6" ng-click="openReddit()">Post to Reddit</button>
+        <button ng-disabled="!validTemplate() || !validSubreddit()" type="button" class="btn btn-success btn-lg col-md-6" ng-click="openReddit()">Post to Reddit</button>
     </div>
 </div>

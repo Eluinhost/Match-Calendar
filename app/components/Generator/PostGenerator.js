@@ -109,7 +109,7 @@ angular.module('MatchCalendarApp')
             var generated = Templates.compileTemplate($scope.generator.template, templateVariables);
 
             $window.open(
-                'https://reddit.com/r/ultrahardcore/submit?title=' +
+                'https://reddit.com/r/' + $scope.generator.subreddit + '/submit?title=' +
                     encodeURIComponent($scope.buildTitle()) +
                     '&text=' +
                     encodeURIComponent(generated) +

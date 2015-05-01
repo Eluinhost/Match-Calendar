@@ -8,10 +8,13 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('PostGeneratorCtrl', ['$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', 'PostGeneratorGameType', 'DateTimeService', 'Templates', function ($scope, $window, $state, $interpolate, $modal, $localForage, PostGeneratorRegions, PostGeneratorGameType, DateTimeService, Templates) {
+    .controller('PostGeneratorCtrl', [
+           '$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', 'PostGeneratorGameType', 'DateTimeService', 'Templates', 'Subreddits', function (
+            $scope,   $window,   $state,   $interpolate,   $modal,   $localForage,   PostGeneratorRegions,   PostGeneratorGameType,   DateTimeService,   Templates,   Subreddits) {
         $scope.regions = PostGeneratorRegions;
         $scope.gameTypes = PostGeneratorGameType.types;
         $scope.templates = Templates;
+        $scope.subreddits = Subreddits;
 
         // generator information
         $scope.generator = {
@@ -19,8 +22,7 @@ angular.module('MatchCalendarApp')
             region: 'NA',
             gameType: 'FFA',
             gameTypeData: [],
-            scenarios: ['Vanilla'],
-            template: null
+            scenarios: ['Vanilla']
         };
 
         if (Templates.customTemplates[0]) {
@@ -56,6 +58,14 @@ angular.module('MatchCalendarApp')
             if ($scope.generator.scenarios.length === 0) {
                 $scope.generator.scenarios.push('Vanilla');
             }
+        };
+
+        $scope.validTemplate = function() {
+            return $scope.generator.template && Templates.customTemplateExists($scope.generator.template);
+        };
+
+        $scope.validSubreddit = function() {
+            return $scope.generator.subreddit && Subreddits.subreddits.indexOf($scope.generator.subreddit) !== -1;
         };
 
         $scope.buildTitle = function() {

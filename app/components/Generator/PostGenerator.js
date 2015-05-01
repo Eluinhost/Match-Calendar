@@ -13,6 +13,7 @@ angular.module('MatchCalendarApp')
             $scope,   $window,   $state,   $interpolate,   $modal,   $localForage,   PostGeneratorRegions,   PostGeneratorGameType,   DateTimeService,   Templates,   Subreddits) {
         $scope.regions = PostGeneratorRegions;
         $scope.gameTypes = PostGeneratorGameType.types;
+        $scope.DateTime = DateTimeService;
         $scope.templates = Templates;
         $scope.subreddits = Subreddits;
 
@@ -39,10 +40,10 @@ angular.module('MatchCalendarApp')
         $localForage.bind($scope, 'generator');
 
         // set the opening time to the current time for easy use
-        $scope.opens = $scope.T.currentTime();
+        $scope.opens = DateTimeService.currentTime();
 
         // minimum time for things to show
-        $scope.minTime = $scope.T.currentTime();
+        $scope.minTime = DateTimeService.currentTime();
 
         $scope.addScenario = function (name) {
             if (name === '' || name === null || name === undefined) return;
@@ -82,7 +83,7 @@ angular.module('MatchCalendarApp')
 
         var templateVariables = {
             get opensUTC() {
-                return $scope.T.format(DateTimeService.formats.REDDIT_POST, $scope.opens, true);
+                return DateTimeService.format(DateTimeService.formats.REDDIT_POST, $scope.opens, true);
             },
             get title() {
                 return $scope.generator.postTitle;

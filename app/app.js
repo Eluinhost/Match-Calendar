@@ -22,7 +22,6 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
         //user settings
         $rootScope.settings.timeZone = 'Etc/UTC';
         $rootScope.settings.timeFormat = '24h';
-        $rootScope.settings.subreddits = ['ultrahardcore', 'uhcmatches'];
         $rootScope.settings.favoriteHosts = [];
         $rootScope.settings.schemaVersion = -1;
         $rootScope.settings.notificationTimes = [{value: 600}];
@@ -30,7 +29,6 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
         $q.all([
             $localForage.bind($rootScope.settings, 'timeZone'),
             $localForage.bind($rootScope.settings, 'timeFormat'),
-            $localForage.bind($rootScope.settings, 'subreddits'),
             $localForage.bind($rootScope.settings, 'favoriteHosts'),
             $localForage.bind($rootScope.settings, 'notificationTimes'),
             $localForage.bind($rootScope.settings, 'schemaVersion')

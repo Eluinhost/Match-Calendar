@@ -8,7 +8,7 @@
  * Factory in the MatchCalendar.
  */
 angular.module('MatchCalendarApp')
-    .factory('Posts', function ($localForage, $rootScope, RedditPostsService, $q, $interval) {
+    .factory('Posts', ['$localForage', '$rootScope', 'RedditPostsService', '$q', '$interval', 'Subreddits', function ($localForage, $rootScope, RedditPostsService, $q, $interval, Subreddits) {
 
         var $scope = $rootScope.$new(true);
         $scope.posts = [];
@@ -28,7 +28,7 @@ angular.module('MatchCalendarApp')
         $scope.update = function() {
             var def = $q.defer();
             $scope.updating = true;
-            RedditPostsService.query($rootScope.settings.subreddits, 200).then(function (data) {
+            RedditPostsService.query(Subreddits.saved, 200).then(function (data) {
                 $scope.posts = data;
                 $scope.updating = false;
                 $scope.currentRegions = readRegions(data);
@@ -138,4 +138,4 @@ angular.module('MatchCalendarApp')
 
         // Public return value
         return $scope;
-    });
+    }]);

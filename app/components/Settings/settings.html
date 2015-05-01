@@ -31,7 +31,7 @@
                 </div>
                 <div class="panel-body">
                     <p class="help-block">List of subreddits to pull matches from:</p>
-                    <div class="row" ng-repeat="subreddit in settings.subreddits">
+                    <div class="row" ng-repeat="subreddit in subreddits.subreddits">
                         <button type="button" ng-click="removeSubreddit($index)" class="btn btn-default btn-lg col-xs-10 col-xs-offset-1"><i class="fa fa-reddit"></i> <span ng-bind="'/r/' + subreddit"></span></button>
                     </div>
                     <hr>

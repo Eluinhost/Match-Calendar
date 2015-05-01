@@ -8,24 +8,29 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('SettingsCtrl', function ($scope, NotifcationTimeFormat, $localForage, $modal, $window) {
+    .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', '$localForage', '$modal', '$window', 'Subreddits', function ($scope, NotifcationTimeFormat, $localForage, $modal, $window, Subreddits) {
+        $scope.subreddits = Subreddits;
+
         $scope.addSubreddit = function (name) {
             if (name === '' || name === null || name === undefined) {
                 return;
             }
-            if ($scope.settings.subreddits.indexOf(name) === -1) {
-                $scope.settings.subreddits.push(name);
+            if ($scope.subreddits.subreddits.indexOf(name) === -1) {
+                $scope.subreddits.subreddits.push(name);
             }
         };
+
         $scope.removeSubreddit = function (index) {
-            $scope.settings.subreddits.splice(index, 1);
+            $scope.subreddits.subreddits.splice(index, 1);
         };
+
         $scope.removeNotificationTime = function (index) {
             $scope.settings.notificationTimes.splice(index, 1);
         };
         $scope.newNotificationTime = function () {
             $scope.settings.notificationTimes.push({value: 600});
         };
+
         $scope.translateSeconds = function (duration) {
             return NotifcationTimeFormat.translateSeconds(duration);
         };
@@ -42,4 +47,4 @@ angular.module('MatchCalendarApp')
                 }
             );
         };
-    });
+    }]);

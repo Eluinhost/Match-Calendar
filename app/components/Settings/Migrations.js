@@ -21,11 +21,6 @@ angular.module('MatchCalendarApp')
                         var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
                         document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
                     }
-                },
-                1: function() {
-                    if($rootScope.settings.subreddits.indexOf('uhcmatches') === -1) {
-                        $rootScope.settings.subreddits.push('uhcmatches');
-                    }
                 }
             };
         };

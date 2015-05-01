@@ -23,7 +23,9 @@ angular.module('MatchCalendarApp')
             region: 'NA',
             gameType: 'FFA',
             gameTypeData: [],
-            scenarios: ['Vanilla']
+            scenarios: ['Vanilla'],
+            subreddit: Subreddits.subreddits[0] || null,
+            template: Templates.customTemplates[0] ? Templates.customTemplates[0].name : null
         };
 
         if (Templates.customTemplates[0]) {

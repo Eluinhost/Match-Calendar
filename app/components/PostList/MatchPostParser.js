@@ -9,7 +9,7 @@
  */
 angular.module('MatchCalendarApp')
     //a match post model
-    .factory('MatchPostParser', ['$rootScope', 'DateTimeService', function (MarkdownLinkDataService, DateTimeService) {
+    .factory('MatchPostParser', ['$rootScope', 'DateTimeService', '$location', function (MarkdownLinkDataService, DateTimeService, $location) {
 
         var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
 
@@ -26,7 +26,8 @@ angular.module('MatchCalendarApp')
                     author: element.author,
                     permalink: 'https://reddit.com' + element.permalink,
                     /*jshint camelcase: false */
-                    posted: moment(element.created_utc, 'X')
+                    posted: moment(element.created_utc, 'X'),
+                    anchorlink: '#' + $location.path() + '?post=' + element.id
                 };
 
                 var parts = post.title.split('-');

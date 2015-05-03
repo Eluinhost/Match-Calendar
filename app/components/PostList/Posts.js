@@ -28,7 +28,7 @@ angular.module('MatchCalendarApp')
         $scope.update = function() {
             var def = $q.defer();
             $scope.updating = true;
-            RedditPostsService.query(Subreddits.saved, 200).then(function (data) {
+            RedditPostsService.query(Subreddits.subreddits, 200).then(function (data) {
                 $scope.posts = data;
                 $scope.updating = false;
                 $scope.currentRegions = readRegions(data);
@@ -48,7 +48,7 @@ angular.module('MatchCalendarApp')
         }, 1000 * 60);
 
         //watch for subreddit changes
-        $rootScope.$watchCollection('settings.subreddits', $scope.update);
+        Subreddits.$watchCollection('subreddits', $scope.update);
 
         function defineFieldTrueIfNotExist(object, field) {
             if (!angular.isDefined(object[field])) {

@@ -100,7 +100,8 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
 
             .state('listhelp', {
                 url: '/list/help',
-                templateUrl: 'components/PostList/listhelp.html'
+                templateUrl: 'components/PostList/listhelp.html',
+                controller: 'PostListHelpCtrl'
             })
 
             .state('generate', {

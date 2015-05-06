@@ -3,163 +3,58 @@
 <accordion close-others="false">
     <accordion-group class="match-post">
         <accordion-heading>
-            <div class="row text-center">
-                <div class="col-lg-2 col-xs-12 text-center text-right-lg">
-                    <span class="abs-game-starts" tooltip="Time starts">
-                        <b>Oct 06 - 16:00</b>
-                        &nbsp;<i class="fa fa-calendar"></i>
-                    </span>
-                    <span tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-                        <small>in 2 hours</small> <i class="fa fa-clock-o"></i>
-                    </span>
-                    <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
-                </div>
-                <div class="col-lg-6 text-left-lg text-center col-xs-12">
-                    <div>
-                        <a class="anchor-link" href="#"><i class="fa fa-link"></i></a>
-                        <a class="post-title" href="#">Naeco's #187 - FFA</a>
-                    </div>
-                    <div>
-                        <small class="gamemodes" tooltip="Gamemodes">
-                            <i class="fa fa-joypad"></i> <span>CutClean | FlowerPower</span>
-                        </small>
-                    </div>
-                    <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
-                </div>
-                <div class="col-lg-2 text-left-lg text-center col-xs-12 text-center text-right-lg">
-                    <small>
-                        <a class="post-author" target="_blank" href="http://reddit.com/u/naecomc">naecomc</a>
-                    </small>
-                    &nbsp;<i class="fa fa-reddit" tooltip="Toggle Favorite"></i>
-                        <span>
-                            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address">
-                                <span>
-                                    <small>46.105.121.183:19969</small> <i class="fa fa-cubes"></i>
-                                </span>
-                            </span>
-                        </span>
-                    <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
-                </div>
-                <div class="col-lg-2 text-left-lg text-center col-xs-12">
-                    <span class="server-region" tooltip="Server Region">
-                        <i class="fa fa-globe"></i> <small>EU</small>
-                    </span>
-                    <span tooltip="Time posted" class="time-posted visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-                        <i class="fa fa-reply fa-rotate-180"></i> <small>2 days in advance</small>
-                    </span>
-                </div>
-            </div>
+            <post-details post="example"></post-details>
         </accordion-heading>
         <div class="container text-left">
-            <markdown class="md">
-                <h3>Naeco's #187</h3>
-
-                <hr>
-
-                <h3>Server Info</h3>
-
-                <ul>
-                    <li>IP: <strong>46.105.121.183:19969</strong> ###[NEW IP]</li>
-                    <li>Server Host <a href="http://www.ovh.co.uk/" target="_blank"><strong>OVH</strong></a></li>
-                    <li>Location: <strong>France</strong></li>
-                    <li>RAM: 5GB</li>
-                    <li>Slots: <strong>60</strong></li>
-                    <li>Version: 1.7.5</li>
-                    <li><strong><a href="http://www.reddit.com/r/ultrahardcore/comments/260ntf/orion_uhc_rules_info/" target="_blank">RULES</a></strong></li>
-                </ul>
-
-                <hr>
-
-                <h3>Match Info</h3>
-
-                <ul>
-                    <li>Host: <strong>NaecoMC</strong></li>
-                    <li>Date: <strong>Oct 06<sup>th</sup></strong> 2014</li>
-                    <li>Whitelist off: <strong>15:50 UTC</strong></li>
-                    <li>Start time: 16:00 UTC</li>
-                    <li>Duration: 90 minutes, then meetup at 0,0</li>
-                    <li>Grace period: 20 minutes</li>
-                    <li>PermaDay: At 20 minutes until meetup</li>
-                    <li>Map size: 2000x2000</li>
-                </ul>
-
-                <hr>
-
-                <h3>Basic Match Rules</h3>
-
-                <ul>
-                    <li>Horses: <strong>DISABLED</strong></li>
-                    <li>Absorption: <strong>off</strong></li>
-                    <li>Nether: on</li>
-                    <li>Potion Nerfs: on (tier II nerfed to 1.5/no splash potions)</li>
-                    <li>Portal Trapping/Camping: Not allowed</li>
-                    <li>Towering: allowed until meetup</li>
-                    <li>Forting: allowed until meetup</li>
-                    <li>Staircases: must start above y-32</li>
-                    <li>Stripmining: only above y-40</li>
-                    <li>Pokeholes: not allowed </li>
-                </ul>
-
-                <p><strong>These are just the basic rules, see further rules &amp; server information <a href="http://www.reddit.com/r/ultrahardcore/comments/260ntf/orion_uhc_rules_info/" target="_blank">HERE</a></strong></p>
-
-                <p><strong>These are just the basic rules, see further rules &amp; server information <a href="http://www.reddit.com/r/ultrahardcore/comments/260ntf/orion_uhc_rules_info/" target="_blank">HERE</a></strong></p>
-
-                <hr>
-
-                <h3>Scenario(s)</h3>
-
-                <ul>
-                    <li>None</li>
-                </ul>
-
-                <hr>
-            </markdown>
+            <markdown class="md" content="example.selftext"></markdown>
         </div>
     </accordion-group>
 </accordion>
 
-<div class="container">
+<div class="container" bindonce="'example'" refresh-on="'postsUpdated'">
     Most parts of a post can also be hovered over for an explanation. Clicking on the bar itself will show the contents of the post.
 
-    <h2>Start Time</h2>
+    <h2>Opening Time</h2>
     <p>
-        This is the time (in the selected timezone) that the match starts.
+        This is the time (in the selected timezone) that the match opens.
     </p>
     <p>
         Clicking on the calendar will make it turn red and
-    (if notifications are enabled) you will get notifications when the match start time hits the levels chosen in the settings.
+    (if notifications are enabled) you will get notifications when the match opening time hits the levels chosen in the settings.
     Default notification time is 10 minutes only.
     </p>
     <div class="well">
-        <span class="abs-game-starts" tooltip="Time starts">
-            <b>Oct 06 - 16:00</b>
-            &nbsp;<i class="fa fa-calendar"></i>
+        <span class="abs-game-starts" tooltip="Time Opens">
+            <b bo-text="DateTime.format(DateTime.formats.POST_HEADER, example.opens)"></b>
+            <i class="fa fa-calendar" ng-click="toggleNotification(); $event.stopPropagation()" ng-class="{notifications: isNotifying()}"></i>
         </span>
+        <span tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+            <small bindonce="example" refresh-on="'clockTick'" bo-text="example.opens.from(DateTime.currentTime()) || 'Unknown'"></small> <i class="fa fa-clock-o"></i>
+        </span>
+    </div>
+
+    <h2>Post title, team types and gamemodes</h2>
+    This is the title of the post. Clicking it will open the match post in a new window. The bolded text on the right is
+    the team type of the game. The text underneath the title is the scenarios/gamemodes to be played with
+    <div class="well">
+        <div>
+            <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="example.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
+            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="example.permalink" bo-text="example.title | characters:100: false"></a>
+            <strong class="post-teams" ng-bind="example.teams"></strong>
+        </div>
+        <div>
+            <small class="gamemodes" tooltip="Gamemodes">
+                <i class="fa fa-joypad"></i> <span bo-text="example.gamemodes.join(' | ')"></span>
+            </small>
+        </div>
     </div>
 
     <h2>Server Region</h2>
     This is the region the server is hosted in
     <div class="well">
-        <span class="server-region visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline" tooltip="Server Region">
-            &nbsp;
-            <small>EU</small>
-            <i class="fa fa-globe"></i>
+        <span class="server-region" tooltip="Server Region">
+            <i class="fa fa-globe"></i> <small bo-text="example.region || 'Unknown'"></small>
         </span>
-    </div>
-
-    <h2>Post Title</h2>
-    This is the title of the post. Clicking it will open the match post in a new window.
-    <div class="well">
-        <div>
-            <a class="anchor-link" href="#"><i class="fa fa-link"></i></a>
-            <a class="post-title" href="#">Naeco's #187 - FFA</a>
-        </div>
-        <div class="visible-lg-block">
-            <small class="time-posted" tooltip="Time posted">
-                <i class="fa fa-reply fa-rotate-180"></i> <span>16 hours ago</span>
-                - <span>a day</span> in advance.
-            </small>
-        </div>
     </div>
 
     <h2>Match Host</h2>
@@ -172,29 +67,21 @@
     </p>
     <div class="well">
         <small>
-            <a class="post-author" target="_blank" href="http://reddit.com/u/naecomc">naecomc</a>
+            <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" bo-href="'http://reddit.com/u/' + example.author" bo-text="example.author"></a>
         </small>
-        &nbsp;<i class="fa fa-reddit" tooltip="Toggle Favorite"></i>
+        <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(example.author); $event.stopPropagation()"></i>
     </div>
 
     <h2>Server Address</h2>
     This is the address to connect to to play the game. Clicking it will cause the IP to be copied to the clipboard (not
     on this example)
     <div class="well">
-        <span>
-            <small>46.105.121.183:19969</small> <i class="fa fa-cubes"></i>
-        </span>
-    </div>
-
-    <h2>Start and Open Times</h2>
-    These show how long until start/open time. Only post made with the <a ui-sref="generate">Post Generator</a> will have
-    an opens time.
-    <div class="well">
-        <span tooltip="Opens" class="game-opens">
-            <i class="fa fa-clock-o"></i> <small>in 10 minutes</small>
-        </span>
-        <span tooltip="Starts" class="game-starts visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-            <i class="fa fa-caret-square-o-right"></i> <small>in 30 minutes</small>
+        <span bo-show="example.address">
+            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">
+                <span clip-copy="example.address" clip-click="triggerCopiedMessage(post)">
+                    <small bindonce refresh-on="'regionCopyChange'" bo-text="example.address"></small> <i class="fa fa-cubes"></i>
+                </span>
+            </span>
         </span>
     </div>
 </div>

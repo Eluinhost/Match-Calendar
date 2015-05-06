@@ -14,17 +14,20 @@ angular.module('MatchCalendarApp')
                 post: '='
             },
             templateUrl: 'components/PostList/PostDetails.html',
-            link: function ($scope) {
-                console.log($scope);
-                $scope.DateTime = DateTimeService;
-                $scope.Notifications = PostNotifications;
+            compile: function() {
+                return {
+                    pre: function ($scope) {
+                        $scope.DateTime = DateTimeService;
+                        $scope.Notifications = PostNotifications;
 
-                $scope.toggleNotification = function() {
-                    PostNotifications.toggleNotifications($scope.post.id);
-                };
+                        $scope.toggleNotification = function () {
+                            PostNotifications.toggleNotifications($scope.post.id);
+                        };
 
-                $scope.isNotifying = function() {
-                    return PostNotifications.isNotifyingFor($scope.post.id);
+                        $scope.isNotifying = function () {
+                            return PostNotifications.isNotifyingFor($scope.post.id);
+                        };
+                    }
                 };
             }
         };

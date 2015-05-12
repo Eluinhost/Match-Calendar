@@ -8,11 +8,12 @@
  * Controller in MatchCalendar
  */
 angular.module('MatchCalendarApp')
-    .controller('PostListCtrl', function ($scope, Posts, $stateParams, HtmlNotifications, $timeout, PostNotifications, DateTimeService) {
+    .controller('PostListCtrl', ['$scope', 'Posts', '$stateParams', 'HtmlNotifications', '$timeout', 'PostNotifications', 'DateTimeService', 'Hosts', function ($scope, Posts, $stateParams, HtmlNotifications, $timeout, PostNotifications, DateTimeService, Hosts) {
 
         $scope.posts = Posts;
         $scope.DateTime = DateTimeService;
         $scope.notifications = PostNotifications;
+        $scope.Hosts = Hosts;
 
         $scope.filtered = {
             posts: [],
@@ -38,11 +39,11 @@ angular.module('MatchCalendarApp')
         };
 
         $scope.toggleFavorite = function (name) {
-            var index = $scope.settings.favoriteHosts.indexOf(name);
+            var index = Hosts.favoriteHosts.indexOf(name);
             if (index === -1) {
-                $scope.settings.favoriteHosts.push(name);
+                Hosts.favoriteHosts.push(name);
             } else {
-                $scope.settings.favoriteHosts.splice(index, 1);
+                Hosts.favoriteHosts.splice(index, 1);
             }
         };
 
@@ -88,4 +89,4 @@ angular.module('MatchCalendarApp')
                 }
             });
         });
-    });
+    }]);

@@ -69,7 +69,7 @@
         </div>
     </div>
     <accordion close-others="false">
-        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter: filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': settings.favoriteHosts.indexOf(post.author) !== -1}">
+        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter: filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': Hosts.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <post-details post="post"></post-details>
             </accordion-heading>

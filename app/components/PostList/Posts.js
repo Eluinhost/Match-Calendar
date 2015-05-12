@@ -8,7 +8,7 @@
  * Factory in the MatchCalendar.
  */
 angular.module('MatchCalendarApp')
-    .factory('Posts', ['$localForage', '$rootScope', 'RedditPostsService', '$q', '$interval', 'Subreddits', function ($localForage, $rootScope, RedditPostsService, $q, $interval, Subreddits) {
+    .factory('Posts', ['$localForage', '$rootScope', 'RedditPostsService', '$q', '$interval', 'Subreddits', 'DateTimeService', function ($localForage, $rootScope, RedditPostsService, $q, $interval, Subreddits, DateTimeService) {
 
         var $scope = $rootScope.$new(true);
         $scope.posts = [];
@@ -35,7 +35,7 @@ angular.module('MatchCalendarApp')
                 $scope.currentGamemodes = readGamemodes(data);
                 $scope.currentTeamTypes = readTeamTypes(data);
 
-                $scope.lastUpdated = $rootScope.T.currentTime().unix();
+                $scope.lastUpdated = DateTimeService.currentTime().unix();
                 $rootScope.$broadcast('postsUpdated', $scope.posts);
                 def.resolve();
             });

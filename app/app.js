@@ -3,12 +3,11 @@
 // Main application
 angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModule', 'monospaced.elastic', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable', 'pasvaz.bindonce'])
 
-    .run(function($rootScope, $localForage, DateTimeService, editableOptions, $q, Migrations, $window, $modal,
-        //eager load some services that we want to run
-        Posts, PostNotifications // jshint ignore:line
+    .run(function($rootScope, $localForage, editableOptions, $q, Migrations, $window, $modal,
+        // eager load some services that we want to run
+        Posts, PostNotifications, DateTimeService // jshint ignore:line
         ){
         editableOptions.theme = 'bs3';
-        $rootScope.T = DateTimeService;
 
         $rootScope.appSchemaVersion = 2;
 

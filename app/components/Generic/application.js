@@ -8,6 +8,6 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('ApplicationCtrl', function () {
-
-    });
+    .controller('ApplicationCtrl', ['$scope', 'DateTimeService', function ($scope, DateTimeService) {
+        $scope.DateTime = DateTimeService;
+    }]);

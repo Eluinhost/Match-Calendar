@@ -8,7 +8,7 @@
  * Factory in the MatchCalendar.
  */
 angular.module('MatchCalendarApp')
-    .factory('PostNotifications', function ($localForage, $rootScope, HtmlNotifications, Posts, NotifcationTimeFormat) {
+    .factory('PostNotifications', function ($localForage, $rootScope, HtmlNotifications, Posts, NotifcationTimeFormat, DateTimeService) {
 
         var $scope = $rootScope.$new(true);
 
@@ -42,7 +42,7 @@ angular.module('MatchCalendarApp')
             angular.forEach($rootScope.settings.notificationTimes, function (notifcationTime) {
                 var unix = post[0].opens.unix();
                 var timeToNotify = unix - notifcationTime.value;
-                var currentTimeUnix = $rootScope.T.currentTime().unix();
+                var currentTimeUnix = DateTimeService.currentTime().unix();
 
                 // if it's passed the notify time and we havn't already done a notification later than this
                 if (currentTimeUnix >= timeToNotify && $scope.notifyFor[postid].value < timeToNotify) {

@@ -8,9 +8,10 @@
  * Controller in MatchCalendar
  */
 angular.module('MatchCalendarApp')
-    .controller('PostListCtrl', function ($scope, Posts, $stateParams, HtmlNotifications, $timeout, PostNotifications) {
+    .controller('PostListCtrl', function ($scope, Posts, $stateParams, HtmlNotifications, $timeout, PostNotifications, DateTimeService) {
 
         $scope.posts = Posts;
+        $scope.DateTime = DateTimeService;
         $scope.notifications = PostNotifications;
 
         $scope.filtered = {

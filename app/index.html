@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" manifest="manifest.appcache" ng-app="MatchCalendarApp" ng-controller="ApplicationCtrl">
 <head>
-    <title bindonce="" refresh-on="&apos;clockTick&apos;" bo-text="T.format(T.formats.TITLE) + &apos; - Calendar&apos;">Calendar</title>
+    <title bindonce="" refresh-on="&apos;clockTick&apos;" bo-text="DateTime.format(DateTime.formats.TITLE) + &apos; - Calendar&apos;">Calendar</title>
 
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
@@ -64,8 +64,8 @@
     <div class="col-sm-6 clock-bar-center">
         <div class="row">
             <div class="col-xs-12 clock-bar-time">
-                <strong ng-class="{unsynced: !T.isSynced()}" bindonce="" bo-text="T.format(T.formats.HEADER)" refresh-on="&apos;clockTick&apos;"></strong>
-                <i class="fa fa-info-circle" ng-show="!T.isSynced()" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
+                <strong ng-class="{unsynced: !DateTime.isSynced()}" bindonce="" bo-text="DateTime.format(DateTime.formats.HEADER)" refresh-on="&apos;clockTick&apos;"></strong>
+                <i class="fa fa-info-circle" ng-show="!DateTime.isSynced()" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
             </div>
         </div>
         <div class="row">

@@ -7,7 +7,7 @@
  * # PostDetails
  */
 angular.module('MatchCalendarApp')
-    .directive('postDetails', ['DateTimeService', 'PostNotifications', 'Hosts', function (DateTimeService, PostNotifications, Hosts) {
+    .directive('postDetails', ['DateTimeService', 'PostNotifications', 'Hosts', '$timeout', function (DateTimeService, PostNotifications, Hosts, $timeout) {
         return {
             restrict: 'E',
             scope: {
@@ -35,6 +35,29 @@ angular.module('MatchCalendarApp')
                             } else {
                                 Hosts.favoriteHosts.splice(index, 1);
                             }
+                        };
+
+                        $scope.addressOverride = false;
+
+                        /**
+                         * Changes the address of the post to 'Copied!' for a couple of seconds
+                         * @param post {MatchPost}
+                         */
+                        $scope.triggerCopiedMessage = function (post) {
+                            // skip if there is no address
+                            if (null === post.address) {
+                                return;
+                            }
+
+                            // toggle copied message on
+                            $scope.addressOverride = 'Copied!';
+                            $scope.$broadcast('regionCopyChange');
+
+                            // after a couple of seconds toggle it back
+                            $timeout(function () {
+                                $scope.addressOverride = false;
+                                $scope.$broadcast('regionCopyChange');
+                            }, 2000);
                         };
                     }
                 };

@@ -38,23 +38,6 @@ angular.module('MatchCalendarApp')
             }
         };
 
-        /**
-         * Changes the address of the post to 'Copied!' for a couple of seconds
-         * @param post {MatchPost}
-         */
-        $scope.triggerCopiedMessage = function (post) {
-            if (null === post.address) {
-                return;
-            }
-            var saved = post.address;
-            post.address = 'Copied!';
-            $scope.$broadcast('regionCopyChange');
-            $timeout(function () {
-                post.address = saved;
-                $scope.$broadcast('regionCopyChange');
-            }, 2000);
-        };
-
         $scope.requestPermissions = function () {
             HtmlNotifications.requestPermission().then(function () {
                 HtmlNotifications.notify('Notifications Enabled!');

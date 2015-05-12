@@ -8,7 +8,7 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', '$localForage', '$modal', '$window', 'Subreddits', 'DateTimeService', function ($scope, NotifcationTimeFormat, $localForage, $modal, $window, Subreddits, DateTimeService) {
+    .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', '$localForage', '$modal', '$window', 'Subreddits', 'DateTimeService', 'PostNotifications', function ($scope, NotifcationTimeFormat, $localForage, $modal, $window, Subreddits, DateTimeService, PostNotifications) {
         $scope.subreddits = Subreddits;
         $scope.DateTime = DateTimeService;
 
@@ -26,10 +26,10 @@ angular.module('MatchCalendarApp')
         };
 
         $scope.removeNotificationTime = function (index) {
-            $scope.settings.notificationTimes.splice(index, 1);
+            PostNotifications.notificationTimes.splice(index, 1);
         };
         $scope.newNotificationTime = function () {
-            $scope.settings.notificationTimes.push({value: 600});
+            PostNotifications.notificationTimes.push({value: 600});
         };
 
         $scope.translateSeconds = function (duration) {

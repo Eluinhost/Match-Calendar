@@ -16,7 +16,7 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
 
         // user settings
         $rootScope.settings.schemaVersion = -1;
-        $rootScope.settings.notificationTimes = [{value: 600}];
+        $rootScope.settings.notificationTimes =
 
         $q.all([
             $localForage.bind($rootScope.settings, 'notificationTimes'),

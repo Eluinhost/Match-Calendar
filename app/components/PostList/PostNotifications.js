@@ -8,12 +8,21 @@
  * Factory in the MatchCalendar.
  */
 angular.module('MatchCalendarApp')
-    .factory('PostNotifications', function ($localForage, $rootScope, HtmlNotifications, Posts, NotifcationTimeFormat, DateTimeService) {
+    .factory('PostNotifications', ['$localForage', '$rootScope', 'HtmlNotifications', 'Posts', 'NotifcationTimeFormat', 'DateTimeService', function ($localForage, $rootScope, HtmlNotifications, Posts, NotifcationTimeFormat, DateTimeService) {
 
         var $scope = $rootScope.$new(true);
 
         $scope.notifyFor = {};
-        $localForage.bind($scope, 'notifyFor');
+        $localForage.bind($scope, {
+            key: 'notifyFor',
+            defaultValue: {}
+        });
+
+        $scope.notificationTimes = [];
+        $localForage.bind($scope, {
+            key: 'notificationTimes',
+            defaultValue: [{value: 600}]
+        });
 
         $scope.$on('clockTick', function(){
             if (HtmlNotifications.currentPermission() === 'granted') {
@@ -39,7 +48,7 @@ angular.module('MatchCalendarApp')
                 delete $scope.notifyFor[postid];
                 return;
             }
-            angular.forEach($rootScope.settings.notificationTimes, function (notifcationTime) {
+            angular.forEach($scope.notificationTimes, function (notifcationTime) {
                 var unix = post[0].opens.unix();
                 var timeToNotify = unix - notifcationTime.value;
                 var currentTimeUnix = DateTimeService.currentTime().unix();
@@ -72,6 +81,7 @@ angular.module('MatchCalendarApp')
         return {
             notifyingFor: $scope.notifyFor,
             toggleNotifications: toggleNotifications,
-            isNotifyingFor: isNotifyingFor
+            isNotifyingFor: isNotifyingFor,
+            notificationTimes: $scope.notificationTimes
         };
-    });
+    }]);

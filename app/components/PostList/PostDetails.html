@@ -26,7 +26,7 @@
         <small>
             <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" bo-href="'http://reddit.com/u/' + post.author" bo-text="post.author"></a>
         </small>
-        <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(post.author); $event.stopPropagation()"></i>
+        <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(); $event.stopPropagation()"></i>
         <span bo-show="post.address">
             <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">
                 <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">

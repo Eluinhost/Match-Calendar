@@ -38,15 +38,6 @@ angular.module('MatchCalendarApp')
             }
         };
 
-        $scope.toggleFavorite = function (name) {
-            var index = Hosts.favoriteHosts.indexOf(name);
-            if (index === -1) {
-                Hosts.favoriteHosts.push(name);
-            } else {
-                Hosts.favoriteHosts.splice(index, 1);
-            }
-        };
-
         /**
          * Changes the address of the post to 'Copied!' for a couple of seconds
          * @param post {MatchPost}

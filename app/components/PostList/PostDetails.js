@@ -7,7 +7,7 @@
  * # PostDetails
  */
 angular.module('MatchCalendarApp')
-    .directive('postDetails', ['DateTimeService', 'PostNotifications', function (DateTimeService, PostNotifications) {
+    .directive('postDetails', ['DateTimeService', 'PostNotifications', 'Hosts', function (DateTimeService, PostNotifications, Hosts) {
         return {
             restrict: 'E',
             scope: {
@@ -26,6 +26,15 @@ angular.module('MatchCalendarApp')
 
                         $scope.isNotifying = function () {
                             return PostNotifications.isNotifyingFor($scope.post.id);
+                        };
+
+                        $scope.toggleFavorite = function () {
+                            var index = Hosts.favoriteHosts.indexOf($scope.post.author);
+                            if (index === -1) {
+                                Hosts.favoriteHosts.push($scope.post.author);
+                            } else {
+                                Hosts.favoriteHosts.splice(index, 1);
+                            }
                         };
                     }
                 };

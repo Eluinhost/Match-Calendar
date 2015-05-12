@@ -8,9 +8,27 @@
  * Factory in the MatchCalendarApp.
  */
 angular.module('MatchCalendarApp')
-    .factory('DateTimeService', function ($http, $rootScope, $interval) {
-        var resyncURL = 'api/sync';
+    .factory('DateTimeService', ['$http', '$rootScope', '$interval', '$localForage', function ($http, $rootScope, $interval, $localForage) {
+        const resyncURL = 'api/sync';
+        const timeFormats = ['12h', '24h'];
+        var timeZones = moment.tz.names();
 
+        // setup settings
+        var $scope = $rootScope.$new(true);
+
+        $scope.timeFormat = null;
+        $scope.timeZone = null;
+
+        $localForage.bind($scope, {
+            key: 'timeFormat',
+            defaultValue: timeFormats[0]
+        });
+        $localForage.bind($scope, {
+            key: 'timeZone',
+            defaultValue: 'Etc/UTC'
+        });
+
+        // run a clock tick every second to update relavant bindonce bindings
         $interval(function() {
             $rootScope.$broadcast('clockTick');
         }, 1000);
@@ -28,13 +46,13 @@ angular.module('MatchCalendarApp')
 
         var formats = {
             TITLE: function() {
-                return $rootScope.settings.timeFormat === '24h' ? 'HH:mm' : 'hh:mm a';
+                return $scope.timeFormat === '24h' ? 'HH:mm' : 'hh:mm a';
             },
             HEADER: function() {
-                return $rootScope.settings.timeFormat === '24h' ? 'HH:mm:ss' : 'hh:mm:ss a';
+                return $scope.timeFormat === '24h' ? 'HH:mm:ss' : 'hh:mm:ss a';
             },
             POST_HEADER: function() {
-                return $rootScope.settings.timeFormat === '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a';
+                return $scope.timeFormat === '24h' ? 'MMM DD - HH:mm' : 'MMM DD - hh:mm a';
             },
             REDDIT_POST: function() {
                 return 'MMM DD HH:mm z';
@@ -70,11 +88,14 @@ angular.module('MatchCalendarApp')
             format: function(format, time, keeptz) {
                 time = time || currentTime();
                 if(!keeptz) {
-                    time.tz($rootScope.settings.timeZone);
+                    time.tz($scope.timeZone);
                 }
                 return time.format(format());
             },
+            settings: $scope,
             formats: formats,
+            timeFormats: timeFormats,
+            timeZones: timeZones,
             moment: moment
         };
-    });
+    }]);

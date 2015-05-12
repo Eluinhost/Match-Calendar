@@ -70,7 +70,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 clock-bar-timezone">
-                <b editable-select="settings.timeZone" e-ng-options="o as o group by o.indexOf(&apos;/&apos;) == -1 ? &apos;Other&apos; : o.substring(0, o.indexOf(&apos;/&apos;)) for o in settings.timeZones" e-form="inlineTimeZoneForm" ng-bind="settings.timeZone">
+                <b editable-select="DateTime.settings.timeZone" e-ng-options="o as o group by o.indexOf(&apos;/&apos;) == -1 ? &apos;Other&apos; : o.substring(0, o.indexOf(&apos;/&apos;)) for o in DateTime.timeZones" e-form="inlineTimeZoneForm" ng-bind="DateTime.settings.timeZone">
                 </b>&#xA0;&#xA0;<i ng-click="inlineTimeZoneForm.$show()" class="fa fa-edit"></i>
             </div>
         </div>

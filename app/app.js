@@ -14,20 +14,12 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
         //set up a new scope for the global settings to use
         $rootScope.settings = $rootScope.$new(true);
 
-        //constants
-        $rootScope.settings.timeFormats = ['12h', '24h'];
-        $rootScope.settings.timeZones = moment.tz.names();
-
         //user settings
-        $rootScope.settings.timeZone = 'Etc/UTC';
-        $rootScope.settings.timeFormat = '24h';
         $rootScope.settings.favoriteHosts = [];
         $rootScope.settings.schemaVersion = -1;
         $rootScope.settings.notificationTimes = [{value: 600}];
 
         $q.all([
-            $localForage.bind($rootScope.settings, 'timeZone'),
-            $localForage.bind($rootScope.settings, 'timeFormat'),
             $localForage.bind($rootScope.settings, 'favoriteHosts'),
             $localForage.bind($rootScope.settings, 'notificationTimes'),
             $localForage.bind($rootScope.settings, 'schemaVersion')

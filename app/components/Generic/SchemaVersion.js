@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name MatchCalendarApp.service:Subreddits
+ * @name MatchCalendarApp.service:SchemaVersion
  * @description
- * # Subreddits
+ * # SchemaVersion
  * Service of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')

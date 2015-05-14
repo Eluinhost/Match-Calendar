@@ -35,5 +35,26 @@ angular.module('MatchCalendarApp')
 
         $localForage.bind($scope, 'customTemplates');
 
+        $localForage.bind($scope, {
+            key: 'customTemplates',
+            defaultValue: [{
+                name: 'default',
+                template: '**Game date and time:** {{ opensUTC }}  \n'
+                    + '**Teams:** {{ teams }}  \n'
+                    + '**Scenario:** {{ scenarios }}  \n'
+                    + '**IP:** <SERVER ADDRESS HERE>  \n'
+                    + '**Region:** {{ region }}  \n'
+                    + '**Map size:** 2500x2500 (nether is also limited)  \n'
+                    + '**Slots:** 60  \n'
+                    + '**Time limit:** 1.5 hours, then meetup  \n'
+                    + '**Version:** 1.7.2/1.7.4/1.7.5  \n'
+                    + '**PvP/iPvP:** after 15 minutes  \n'
+                    + '**Permaday:** 20 minutes before MU  \n'
+                    + '**No signups - first come/first serve.**  \n\n'
+                    + 'Enderpearl damage is off, golden heads are off, absorption is off, nether is on.\n\n'
+                    + 'WINNER: <TBD>'
+            }]
+        });
+
         return $scope;
     }]);

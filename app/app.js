@@ -9,9 +9,6 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
         ){
         editableOptions.theme = 'bs3';
 
-        //set up a new scope for the global settings to use
-        $rootScope.settings = $rootScope.$new(true);
-
         $rootScope.showChangelog = function() {
             $modal.open({
                 template: '<div class="modal-header"><h3 class="modal-title">Changelog</h3></div><div class="modal-body"><markdown class="md" content="markdown"></markdown></div>',

@@ -3,40 +3,14 @@
 // Main application
 angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModule', 'monospaced.elastic', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable', 'pasvaz.bindonce'])
 
-    .run(function($rootScope, $localForage, editableOptions, $q, Migrations, $window, $modal,
+    .run(function($rootScope, $localForage, editableOptions, $q, $window, $modal,
         // eager load some services that we want to run
         Posts, PostNotifications, DateTimeService // jshint ignore:line
         ){
         editableOptions.theme = 'bs3';
 
-        $rootScope.appSchemaVersion = 2;
-
         //set up a new scope for the global settings to use
         $rootScope.settings = $rootScope.$new(true);
-
-        // user settings
-        $rootScope.settings.schemaVersion = -1;
-        $rootScope.settings.notificationTimes =
-
-        $q.all([
-            $localForage.bind($rootScope.settings, 'notificationTimes'),
-            $localForage.bind($rootScope.settings, 'schemaVersion')
-        ]).then(function() {
-            var toRun = [];
-            for(var i = $rootScope.settings.schemaVersion; i < $rootScope.appSchemaVersion; i++) {
-                if( i in Migrations ) {
-                    toRun.push(Migrations[i]);
-                }
-            }
-            if(toRun.length > 0) {
-                toRun.reduce(function (prev, next) {
-                    return prev.then(next);
-                }, $q.when()).then(function () {
-                    //update the version after updating the schema
-                    $rootScope.settings.schemaVersion = $rootScope.appSchemaVersion;
-                });
-            }
-        });
 
         $rootScope.showChangelog = function() {
             $modal.open({
@@ -77,7 +51,7 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
     //configuration
     .config(['$stateProvider', '$urlRouterProvider', '$localForageProvider', function($stateProvider, $urlRouterProvider, $localForageProvider) {
         $localForageProvider.config({
-            oldPrefix: true
+            name: 'MatchCalendar'
         });
 
         $stateProvider

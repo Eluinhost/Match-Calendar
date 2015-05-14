@@ -8,12 +8,13 @@
  * Controller in MatchCalendar
  */
 angular.module('MatchCalendarApp')
-    .controller('PostListCtrl', ['$scope', 'Posts', '$stateParams', 'HtmlNotifications', '$timeout', 'PostNotifications', 'DateTimeService', 'Hosts', function ($scope, Posts, $stateParams, HtmlNotifications, $timeout, PostNotifications, DateTimeService, Hosts) {
+    .controller('PostListCtrl', ['$scope', 'Posts', '$stateParams', 'HtmlNotifications', '$timeout', 'PostNotifications', 'DateTimeService', 'Hosts', 'Changelog', function ($scope, Posts, $stateParams, HtmlNotifications, $timeout, PostNotifications, DateTimeService, Hosts, Changelog) {
 
         $scope.posts = Posts;
         $scope.DateTime = DateTimeService;
         $scope.notifications = PostNotifications;
         $scope.Hosts = Hosts;
+        $scope.Changelog = Changelog;
 
         $scope.filtered = {
             posts: [],

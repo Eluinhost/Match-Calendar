@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Timezone: </h3><span ng-bind="settings.timeZone"></span>
+                    <h3 class="panel-title">Timezone: </h3><span ng-bind="DateTime.settings.timeZone"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Timezone for all times/dates on the website:</p>
@@ -14,7 +14,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Time Format: </h3><span ng-bind="settings.timeFormat"></span>
+                    <h3 class="panel-title">Time Format: </h3><span ng-bind="DateTime.settings.timeFormat"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time format to for the website:</p>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="panel-body">
                     <p class="help-block">When to send notifications before a game starts:</p>
-                        <div class="row" ng-repeat="notificationTime in settings.notificationTimes">
+                        <div class="row" ng-repeat="notificationTime in PostNotifications.settings.notificationTimes">
                             <div class="col-xs-10">
                                 <slider ng-model="notificationTime.value" floor="1" ceiling="7200" step-width="1" stretch="1" translate-fn="translateSeconds"></slider>
                             </div>

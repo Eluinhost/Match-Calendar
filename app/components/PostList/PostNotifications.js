@@ -82,6 +82,6 @@ angular.module('MatchCalendarApp')
             notifyingFor: $scope.notifyFor,
             toggleNotifications: toggleNotifications,
             isNotifyingFor: isNotifyingFor,
-            notificationTimes: $scope.notificationTimes
+            settings: $scope
         };
     }]);

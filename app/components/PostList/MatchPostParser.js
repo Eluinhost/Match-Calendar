@@ -53,6 +53,8 @@ angular.module('MatchCalendarApp')
 
                 // basic IP checking for parsed links, this will only work for IP addresses
                 // TODO check for 'address: X' type string
+                // reset regex in case of exact copy of previous post
+                ipRegex.exec('');
                 var ipcheck = ipRegex.exec(element.selftext);
 
                 if (null !== ipcheck) {

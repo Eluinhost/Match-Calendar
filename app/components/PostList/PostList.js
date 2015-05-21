@@ -15,6 +15,7 @@ angular.module('MatchCalendarApp')
         $scope.notifications = PostNotifications;
         $scope.Hosts = Hosts;
         $scope.Changelog = Changelog;
+        $scope.showFilters = false;
 
         $scope.filtered = {
             posts: [],

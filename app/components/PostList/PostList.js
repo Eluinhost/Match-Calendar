@@ -16,6 +16,7 @@ angular.module('MatchCalendarApp')
         $scope.Hosts = Hosts;
         $scope.Changelog = Changelog;
         $scope.showFilters = false;
+        $scope.HtmlNotifications = HtmlNotifications;
 
         $scope.filtered = {
             posts: [],
@@ -38,16 +39,6 @@ angular.module('MatchCalendarApp')
                     return Posts.teamTypes[post.teams.toLowerCase()];
                 }
             }
-        };
-
-        $scope.requestPermissions = function () {
-            HtmlNotifications.requestPermission().then(function () {
-                HtmlNotifications.notify('Notifications Enabled!');
-            });
-        };
-
-        $scope.currentPermission = function () {
-            return HtmlNotifications.currentPermission();
         };
 
         //handle 'anchor' links to specific posts

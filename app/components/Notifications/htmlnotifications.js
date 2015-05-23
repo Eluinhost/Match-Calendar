@@ -9,22 +9,31 @@
  */
 angular.module('MatchCalendarApp')
     .factory('HtmlNotifications', function ($q, $window, $rootScope) {
+        var supports = function() {
+            return 'Notification' in $window;
+        };
+
         return {
             /**
              * @returns boolean true if notification available, false otherwise
              */
-            supports: function () {
-                return 'Notification' in $window;
-            },
-            currentPermission: function () {
-                if(!this.supports()) {
+            supports: supports,
+            /**
+             * Small changes to the window based version
+             *
+             * 'unsupported', 'default', 'denied' and 'granted'
+             */
+            get permission() {
+                if(!supports()) {
                     return 'unsupported';
                 }
 
+                // assumed default if none supplied (some browsers don't set the variable)
                 if ('permission' in $window.Notification === false) {
                     $window.Notification.permission = 'default';
                 }
 
+                // return the window based one
                 return $window.Notification.permission;
             },
             /**

@@ -25,7 +25,7 @@ angular.module('MatchCalendarApp')
         });
 
         $scope.$on('clockTick', function(){
-            if (HtmlNotifications.currentPermission() === 'granted') {
+            if (HtmlNotifications.permission === 'granted') {
                 if (Posts.posts.length !== 0) {
                     for (var pid in $scope.notifyFor) {
                         if (!$scope.notifyFor.hasOwnProperty(pid)) {

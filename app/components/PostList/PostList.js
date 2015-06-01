@@ -26,13 +26,14 @@ angular.module('MatchCalendarApp')
                     return Posts.regions[post.region.toLowerCase() || 'Unknown'];
                 },
                 gamemode: function (post) {
-                    // check if any of it's gamemodes are enabled or not
+                    // check if all of its gamemodes are enabled or not
+                    var all = true;
                     for (var i = 0; i < post.gamemodes.length; i++) {
-                        if (Posts.gamemodes[post.gamemodes[i].toLowerCase()]) {
-                            return true;
+                        if (!Posts.gamemodes[post.gamemodes[i].toLowerCase()]) {
+                            all = false;
                         }
                     }
-                    return false;
+                    return all;
                 },
                 teamType: function(post) {
                     return Posts.teamTypes[post.teams.toLowerCase()];

@@ -8,7 +8,6 @@
  */
 angular.module('MatchCalendarApp')
     .directive('desktopNotificationEnabler', ['HtmlNotifications', function (HtmlNotifications) {
-        console.log(HtmlNotifications.permission);
         return {
             restrict: 'E',
             templateUrl: 'components/Notifications/desktopNotificationEnabler.html',

@@ -17,42 +17,36 @@
                     </b>
                 </div>
                 <div class="col-lg-2 col-xs-12 text-right">
-                    <button type="button" class="btn btn-primary btn-block" ui-sref="listhelp">Help</button>
-                    <button type="button" class="btn btn-primary btn-block" ng-click="showChangelog()">Changelog</button>
+                    <button type="button" class="btn btn-primary btn-block btn-xs" ui-sref="listhelp">Help</button>
+                    <button type="button" class="btn btn-primary btn-block btn-xs" ng-click="showChangelog()">Changelog</button>
                 </div>
             </div>
         </div>
-        <div class="panel-body post-filters" collapse="!showFilters" class="well">
-            <div class="center-block text-left-lg">
-                <b>Regions:</b>
-            <span bindonce refresh-on="'postsUpdated'" ng-repeat="region in posts.currentRegions">
-                <label>
-                    <small bo-text="region"></small>
-                    <input type="checkbox" ng-model="posts.regions[region.toLowerCase()]">
-                </label>
-            </span>
+        <div class="panel-body post-filters" collapse="!showFilters">
+            <div class="row filter">
+                <div class="col-lg-2 text-right-lg text-center filter-title">Regions:</div>
+                <div class="col-lg-10 text-left-lg text-center">
+                    <checkbox-button bindonce refresh-on="'postsUpdated'" ng-repeat="region in posts.currentRegions" enabled="posts.regions[region.toLowerCase()]"><span bo-text="region"></span></checkbox-button>
+                </div>
             </div>
-            <div class="center-block text-left-lg">
-                <b>Gamemodes:</b>
-            <span bindonce refresh-on="'postsUpdated'" ng-repeat="gamemode in posts.currentGamemodes">
-                <label>
-                    <small bo-text="gamemode"></small>
-                    <input type="checkbox" ng-model="posts.gamemodes[gamemode.toLowerCase()]">
-                </label>
-            </span>
+            <div class="row filter">
+                <div class="col-lg-2 text-right-lg text-center filter-title">Team Types:</div>
+                <div class="col-lg-10 text-left-lg text-center">
+                    <checkbox-button bindonce refresh-on="'postsUpdated'" ng-repeat="teamType in posts.currentTeamTypes" enabled="posts.teamTypes[teamType.toLowerCase()]"><span bo-text="teamType"></span></checkbox-button>
+                </div>
             </div>
-            <div class="center-block text-left-lg">
-                <b>Teams:</b>
-            <span bindonce refresh-on="'postsUpdated'" ng-repeat="teamType in posts.currentTeamTypes">
-                <label>
-                    <small bo-text="teamType"></small>
-                    <input type="checkbox" ng-model="posts.teamTypes[teamType.toLowerCase()]">
-                </label>
-            </span>
+            <div class="row filter">
+                <div class="col-lg-2 text-right-lg text-center filter-title">Gamemodes:</div>
+                <div class="col-lg-10 text-left-lg text-center">
+                    <checkbox-button bindonce refresh-on="'postsUpdated'" ng-repeat="gamemode in posts.currentGamemodes" enabled="posts.gamemodes[gamemode.toLowerCase()]"><span bo-text="gamemode"></span></checkbox-button>
+
+                </div>
             </div>
         </div>
     </div>
-    <button class="show-filters-button btn btn-info" ng-click="showFilters = !showFilters">Filter Posts - Showing <span ng-bind="filtered.posts.length + '/' + posts.posts.length"></span> posts.</button>
+    <button class="show-filters-button btn btn-info" ng-click="showFilters = !showFilters">
+        <i class="fa" ng-class="{'fa-arrow-up': showFilters, 'fa-arrow-down': !showFilters}"></i> Filter Posts - Showing <span ng-bind="filtered.posts.length + '/' + posts.posts.length"></span> posts.
+    </button>
     <desktop-notification-enabler></desktop-notification-enabler>
     <accordion close-others="false">
         <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter: filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': Hosts.favoriteHosts.indexOf(post.author) !== -1}">

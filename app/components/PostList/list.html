@@ -44,7 +44,7 @@
         </div>
     </div>
     <button class="show-filters-button btn btn-info" ng-click="showFilters = !showFilters">
-        <i class="fa" ng-class="{'fa-arrow-up': showFilters, 'fa-arrow-down': !showFilters}"></i> Filter Posts - Showing <span ng-bind="filtered.posts.length + '/' + posts.posts.length"></span> posts.
+        <i class="fa" ng-class="{'fa-arrow-up': showFilters, 'fa-arrow-down': !showFilters}"></i> Filter Posts - Showing <b ng-bind="filtered.posts.length"></b> of <b ng-bind="posts.posts.length"></b>
     </button>
     <desktop-notification-enabler></desktop-notification-enabler>
     <accordion close-others="false">

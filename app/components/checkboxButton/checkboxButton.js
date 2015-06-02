@@ -10,7 +10,7 @@ angular.module('MatchCalendarApp')
     .directive('checkboxButton', [function () {
         return {
             restrict: 'E',
-            templateUrl: 'components/CheckboxButton/checkboxButton.html',
+            templateUrl: 'components/checkboxButton/checkboxButton.html',
             scope: {
                 enabled: '='
             },

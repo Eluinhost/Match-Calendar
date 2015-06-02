@@ -10,7 +10,7 @@ angular.module('MatchCalendarApp')
     .directive('checkboxButton', [function () {
         return {
             restrict: 'E',
-            templateUrl: 'components/checkboxButton/checkboxButton.html',
+            template: '<button type="button" class="btn btn-xs" ng-class="{\'btn-success\': buttonEnabled, \'btn-danger\': !buttonEnabled}" ng-click="buttonEnabled = !buttonEnabled" ng-transclude></button>',
             scope: {
                 buttonEnabled: '='
             },

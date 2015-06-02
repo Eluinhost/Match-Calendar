@@ -12,7 +12,7 @@ angular.module('MatchCalendarApp')
             restrict: 'E',
             templateUrl: 'components/checkboxButton/checkboxButton.html',
             scope: {
-                enabled: '='
+                buttonEnabled: '='
             },
             transclude: true
         };

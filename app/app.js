@@ -3,32 +3,11 @@
 // Main application
 angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModule', 'monospaced.elastic', 'ngSanitize', 'ui.router', 'ngClipboard', 'vr.directives.slider', 'ngAnimate', 'xeditable', 'pasvaz.bindonce'])
 
-    .run(function(editableOptions, $window, $modal,
+    .run(function(editableOptions,
         // eager load some services that we want to run
         Posts, PostNotifications, DateTimeService // jshint ignore:line
         ){
         editableOptions.theme = 'bs3';
-
-        // check appcache status
-        if(angular.isDefined($window.applicationCache)) {
-
-            var onUpdateReady = function() {
-                $modal.open({
-                    template: '<div class="modal-header"><h3 class="modal-title">An update is ready, reload?</h3></div><div class="modal-body"><button class="btn btn-warning" type="button" ng-click="reload()">Reload Now</button><button class="btn btn-info" type="button" ng-click="showChangelog()">Changelog</button></div>',
-                    controller: function($scope, $window, Changelog) {
-                        $scope.reload = function() {
-                            $window.location.reload();
-                        };
-                        $scope.showChangelog = Changelog.showChangelog;
-                    }
-                });
-            };
-
-            $window.applicationCache.addEventListener('updateready', onUpdateReady);
-            if ($window.applicationCache.status === $window.applicationCache.UPDATEREADY) {
-                onUpdateReady();
-            }
-        }
     })
 
     //configuration

@@ -52,7 +52,7 @@
                     <h3 class="panel-title">Notifications: </h3>
                 </div>
                 <div class="panel-body">
-                    <p class="help-block">When to send notifications before a game starts:</p>
+                    <p class="help-block">When to send notifications before a game opens:</p>
                         <div class="row" ng-repeat="notificationTime in PostNotifications.settings.notificationTimes">
                             <div class="col-xs-10">
                                 <slider ng-model="notificationTime.value" floor="1" ceiling="7200" step-width="1" stretch="1" translate-fn="translateSeconds"></slider>

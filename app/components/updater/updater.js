@@ -17,7 +17,7 @@ angular.module('MatchCalendarApp')
             transclude: true,
             link: function($scope) {
                 // set up unsupported staus
-                $scope.status = 'progress';
+                $scope.status = 'unsupported';
 
                 if(!angular.isDefined($window.applicationCache)) return;
 

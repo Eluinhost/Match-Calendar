@@ -1,4 +1,4 @@
-<div class="updater-bar" ng-class="{hidden: status === 'idle'}">
+<div class="updater-bar" ng-class="{hidden: status === 'idle' || status === 'unsupported'}">
     <div class="update-progress" ng-style="{width: progress + '%', display: status == 'progress' ? 'initial' : 'none'}"></div>
     <div class="update-text" ng-switch="status">
         <div ng-switch-when="checking">

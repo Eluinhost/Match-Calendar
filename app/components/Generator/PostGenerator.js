@@ -9,10 +9,10 @@
  */
 angular.module('MatchCalendarApp')
     .controller('PostGeneratorCtrl', [
-           '$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', 'PostGeneratorGameType', 'DateTimeService', 'Templates', 'Subreddits', function (
-            $scope,   $window,   $state,   $interpolate,   $modal,   $localForage,   PostGeneratorRegions,   PostGeneratorGameType,   DateTimeService,   Templates,   Subreddits) {
+           '$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', 'GameType', 'DateTimeService', 'Templates', 'Subreddits', function (
+            $scope,   $window,   $state,   $interpolate,   $modal,   $localForage,   PostGeneratorRegions,   GameType,   DateTimeService,   Templates,   Subreddits) {
         $scope.regions = PostGeneratorRegions;
-        $scope.gameTypes = PostGeneratorGameType.types;
+        $scope.gameTypes = GameType.types;
         $scope.DateTime = DateTimeService;
         $scope.templates = Templates;
         $scope.subreddits = Subreddits;
@@ -35,7 +35,7 @@ angular.module('MatchCalendarApp')
         $scope.$watch('generator.gameType', function(newValue, oldValue) {
             if (oldValue === newValue) return;
 
-            $scope.generator.gameTypeData = PostGeneratorGameType.types[newValue].defaultValues();
+            $scope.generator.gameTypeData = GameType.types[newValue].defaultValues();
         });
 
         // save and load the generator settings
@@ -78,7 +78,7 @@ angular.module('MatchCalendarApp')
                     ' - ' +
                     $scope.generator.postTitle +
                     ' - ' +
-                    PostGeneratorGameType.types[$scope.generator.gameType].format($scope.generator.gameTypeData) +
+                    GameType.types[$scope.generator.gameType].format($scope.generator.gameTypeData) +
                     ' - ' +
                     $scope.generator.scenarios.join(', ');
         };
@@ -94,7 +94,7 @@ angular.module('MatchCalendarApp')
                 return $scope.generator.region;
             },
             get teams() {
-                return PostGeneratorGameType.types[$scope.generator.gameType].format($scope.generator.gameTypeData);
+                return GameType.types[$scope.generator.gameType].format($scope.generator.gameTypeData);
             },
             get scenarios() {
                 return $scope.generator.scenarios.join(', ');

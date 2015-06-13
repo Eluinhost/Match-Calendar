@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name MatchCalendarApp.controller:PostGeneratorGameTypeField
+ * @name MatchCalendarApp.controller:GameTypeField
  * @description
- * # PostGeneratorGameTypeField
+ * # GameTypeField
  * Service of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .factory('PostGeneratorGameTypeField', [function () {
+    .factory('GameTypeField', [function () {
 
         /**
          * Creates a new field for the game type

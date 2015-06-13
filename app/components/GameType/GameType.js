@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name MatchCalendarApp.controller:PostGeneratorGameType
+ * @name MatchCalendarApp.controller:GameType
  * @description
  * # PostGeneratorGameType
  * Service of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .factory('PostGeneratorGameType', ['PostGeneratorGameTypeField', function (PostGeneratorGameTypeField) {
+    .factory('GameType', ['GameTypeField', function (GameTypeField) {
 
         /**
          * Create a new game type
@@ -16,7 +16,7 @@ angular.module('MatchCalendarApp')
          * @param {Object} options
          * @param {String} options.name - the name of the game mode
          * @param {String} options.shortCode - the code to put in the shortened version
-         * @param {PostGeneratorGameTypeField[]} [options.fields] - list of fields needed for the gamemode, default to
+         * @param {GameTypeField[]} [options.fields] - list of fields needed for the gamemode, default to
          *                                                          just team size field
          * @param {String} options.description - a short description of the game mode
          * @param {Function} [options.format] - optional formatter to override the default of shortCode + 'To' + size
@@ -26,7 +26,7 @@ angular.module('MatchCalendarApp')
             this.name = options.name;
             this.shortCode = options.shortCode;
             this.description = options.description || 'No description set';
-            this.fields = options.fields || [PostGeneratorGameTypeField.TEAM_SIZE];
+            this.fields = options.fields || [GameTypeField.TEAM_SIZE];
             this.format = options.format || genericSizeFormatter;
         };
 
@@ -89,7 +89,7 @@ angular.module('MatchCalendarApp')
             name: 'Custom',
             description: 'Custom team types',
             fields: [
-                new PostGeneratorGameTypeField({
+                new GameTypeField({
                     question: 'What to show in post title',
                     defaultValue: 'Custom',
                     type: 'text',

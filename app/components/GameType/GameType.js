@@ -20,6 +20,7 @@ angular.module('MatchCalendarApp')
          *                                                          just team size field
          * @param {String} options.description - a short description of the game mode
          * @param {Function} [options.format] - optional formatter to override the default of shortCode + 'To' + size
+         * @param {Function} [options.parse] - optional parser to parse fields from a formatted string the default of shortCode + 'To' + size
          * @constructor
          */
         var GameType = function(options) {
@@ -28,6 +29,7 @@ angular.module('MatchCalendarApp')
             this.description = options.description || 'No description set';
             this.fields = options.fields || [GameTypeField.TEAM_SIZE];
             this.format = options.format || genericSizeFormatter;
+            this.parse = options.parse || genericSizeParser;
         };
 
         GameType.prototype.defaultValues = function() {
@@ -41,6 +43,37 @@ angular.module('MatchCalendarApp')
         // generic formatter to use with size based game types
         var genericSizeFormatter = function(fieldAnswers) {
             return this.shortCode + 'To' + fieldAnswers.size;
+        };
+
+        /**
+         * Parser for a game type for sizes only, counterpart of genericSizeFormatter.
+         * Returns just object for just a size field parsed from the game type string
+         *
+         * @param typeString
+         * @returns {Object|null} null if not a match
+         */
+        var genericSizeParser = function(typeString) {
+            // check size first
+            // + 3 for 'ToX'
+            if (typeString.length < this.shortCode + 3) {
+                return false;
+            }
+
+            // check correct starting string
+            if (typeString.substring(0, this.shortCode.length) !== this.shortCode + 'To') {
+                return false;
+            }
+
+            // check number
+            var teamSize = parseInt(typeString.substring(this.shortCode.length));
+
+            if (isNaN(teamSize)) {
+                return false;
+            }
+
+            return {
+                size: teamSize
+            };
         };
 
         GameType.types = {};
@@ -100,6 +133,30 @@ angular.module('MatchCalendarApp')
                 return fieldAnswers.custom;
             }
         });
+
+        GameType.parseGameType = function(typeString) {
+            for (var current in GameType.types) {
+                // skip custom if we come across it, it is used as a fallback
+                if (current === GameType.types.CUSTOM) continue;
+
+                var parsed = current.parse(typeString);
+
+                if (parsed) {
+                    return {
+                        type: current,
+                        data: parsed,
+                        render: typeString
+                    };
+                }
+            }
+
+            // fallback to custom gamemode if no others parsed
+            return {
+                type: GameType.types.CUSTOM,
+                data: {},
+                render: typeString
+            };
+        };
 
         return GameType;
     }]);

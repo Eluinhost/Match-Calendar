@@ -36,7 +36,7 @@ angular.module('MatchCalendarApp')
                     return all;
                 },
                 teamType: function(post) {
-                    return Posts.teamTypes[post.teams.toLowerCase()];
+                    return Posts.teamTypes[post.teams.type.name.toLowerCase()];
                 }
             }
         };

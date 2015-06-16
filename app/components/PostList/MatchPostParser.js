@@ -9,7 +9,7 @@
  */
 angular.module('MatchCalendarApp')
     //a match post model
-    .factory('MatchPostParser', ['$rootScope', 'DateTimeService', '$location', function (MarkdownLinkDataService, DateTimeService, $location) {
+    .factory('MatchPostParser', ['$rootScope', 'DateTimeService', '$location', 'GameType', function (MarkdownLinkDataService, DateTimeService, $location, GameType) {
 
         var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
 
@@ -46,10 +46,12 @@ angular.module('MatchCalendarApp')
                 post.opens = moment.utc(parts[0], 'MMM DD HH:mm', 'en');
                 post.region = parts[1].toUpperCase();
                 post.title = parts[2];
-                post.teams = parts[3];
                 post.gamemodes = parts[4].split(',').map(function (gamemode) {
                     return gamemode.trim();
                 });
+
+                // teams parsing
+                post.teams = GameType.parseGameType(parts[3]);
 
                 // basic IP checking for parsed links, this will only work for IP addresses
                 // TODO check for 'address: X' type string

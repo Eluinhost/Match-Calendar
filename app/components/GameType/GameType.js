@@ -28,8 +28,8 @@ angular.module('MatchCalendarApp')
             this.shortCode = options.shortCode;
             this.description = options.description || 'No description set';
             this.fields = options.fields || [GameTypeField.TEAM_SIZE];
-            this.format = options.format || genericSizeFormatter;
-            this.parse = options.parse || genericSizeParser;
+            this.format = (options.format || genericSizeFormatter).bind(this);
+            this.parse = (options.parse || genericSizeParser).bind(this);
         };
 
         GameType.prototype.defaultValues = function() {
@@ -50,30 +50,22 @@ angular.module('MatchCalendarApp')
          * Returns just object for just a size field parsed from the game type string
          *
          * @param typeString
-         * @returns {Object|null} null if not a match
+         * @returns {Object|false} false if not a match
          */
         var genericSizeParser = function(typeString) {
             // check size first
             // + 3 for 'ToX'
-            if (typeString.length < this.shortCode + 3) {
-                return false;
-            }
+            if (typeString.length < this.shortCode.length + 3) return false;
 
             // check correct starting string
-            if (typeString.substring(0, this.shortCode.length) !== this.shortCode + 'To') {
-                return false;
-            }
+            if (typeString.substring(0, this.shortCode.length) + 'To' !== this.shortCode + 'To') return false;
 
-            // check number
-            var teamSize = parseInt(typeString.substring(this.shortCode.length));
+            // check number, +2 for To
+            var teamSize = parseInt(typeString.substring(this.shortCode.length + 2));
 
-            if (isNaN(teamSize)) {
-                return false;
-            }
+            if (isNaN(teamSize)) return false;
 
-            return {
-                size: teamSize
-            };
+            return { size: teamSize };
         };
 
         GameType.types = {};
@@ -85,6 +77,13 @@ angular.module('MatchCalendarApp')
             fields: [],
             format: function() {
                 return 'FFA';
+            },
+            parse: function(typeString) {
+                if(typeString.trim().toLowerCase() === 'ffa') {
+                    return { size: 1 };
+                }
+
+                return false;
             }
         });
 
@@ -135,7 +134,12 @@ angular.module('MatchCalendarApp')
         });
 
         GameType.parseGameType = function(typeString) {
-            for (var current in GameType.types) {
+            for (var type in GameType.types) {
+                var current = GameType.types[type];
+
+                // skip invalid types
+                if (!(current instanceof GameType)) continue;
+
                 // skip custom if we come across it, it is used as a fallback
                 if (current === GameType.types.CUSTOM) continue;
 

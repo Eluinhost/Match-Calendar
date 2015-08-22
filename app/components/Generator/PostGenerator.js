@@ -53,6 +53,10 @@ angular.module('MatchCalendarApp')
             if ($scope.generator.scenarios.indexOf(name) === -1) {
                 $scope.generator.scenarios.push(name);
             }
+
+            $scope.generator.scenarios = $scope.generator.scenarios.map(function(scenario) {
+                return scenario.toLowerCase() === 'vanilla' ? 'Vanilla+' : scenario;
+            });
         };
 
         $scope.removeScenario = function (index) {

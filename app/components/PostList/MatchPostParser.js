@@ -33,7 +33,7 @@ angular.module('MatchCalendarApp')
                 var parts = post.title.split('-');
 
                 // post isnt formatted correctly, don't display it at all
-                if (parts.length !== 5) {
+                if (parts.length < 4) {
                     return null;
                 }
 
@@ -46,9 +46,14 @@ angular.module('MatchCalendarApp')
                 post.opens = moment.utc(parts[0], 'MMM DD HH:mm', 'en');
                 post.region = parts[1].toUpperCase();
                 post.title = parts[2];
-                post.gamemodes = parts[4].split(',').map(function (gamemode) {
-                    return gamemode.trim();
-                });
+
+                // assume vanilla if no gamemodes
+                if (parts.length === 4) {
+                    post.gamemodes = ['Vanilla'];
+                } else {
+                    // add gamemodes
+                    post.gamemodes = parts.slice(4).map(function(mode) { return mode.trim(); });
+                }
 
                 // teams parsing
                 post.teams = GameType.parseGameType(parts[3]);

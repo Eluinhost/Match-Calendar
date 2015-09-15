@@ -13,7 +13,7 @@ angular.module('MatchCalendarApp')
 
         //regex to match <date> <UTC|UCT> - <match post>
         // the dash can have any spacing/dashes combo
-        var matchPostRegex = /^(\w+ \d+ \d+:\d+)\s*(?:UTC|UCT)?\s*\[?(\w*)\]?[ -]+(.*)$/i;
+        var matchPostRegex = /^(\w+ \d+ \d+:\d+)\s*(?:UTC|UCT)?[\s-]*\[?(\w*)\]?[ -]+(.*)$/i;
 
         var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(\:\d{1,5})?/g;
 

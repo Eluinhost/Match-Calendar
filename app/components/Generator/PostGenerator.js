@@ -24,11 +24,10 @@ angular.module('MatchCalendarApp')
             gameType: 'FFA',
             teamSize: 4,
             scenarios: ['Vanilla'],
-            subreddit: Subreddits.subreddits[0] || null,
-            template: Templates.customTemplates[0] ? Templates.customTemplates[0].name : null
+            subreddit: Subreddits.subreddits[0] || null
         };
 
-        if (Templates.customTemplates[0]) {
+        if (!$scope.generator.template && Templates.customTemplates[0]) {
             $scope.generator.template = Templates.customTemplates[0].name;
         }
 

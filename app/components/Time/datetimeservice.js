@@ -21,7 +21,7 @@ angular.module('MatchCalendarApp')
 
         $localForage.bind($scope, {
             key: 'timeFormat',
-            defaultValue: timeFormats[0]
+            defaultValue: timeFormats[1]
         });
         $localForage.bind($scope, {
             key: 'timeZone',

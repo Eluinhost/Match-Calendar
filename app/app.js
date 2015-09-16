@@ -5,7 +5,7 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
 
     .run(function(editableOptions,
         // eager load some services that we want to run
-        Posts, PostNotifications, DateTimeService // jshint ignore:line
+        Posts, PostNotifications, DateTimeService, Templates, Subreddits // jshint ignore:line
         ){
         editableOptions.theme = 'bs3';
     })

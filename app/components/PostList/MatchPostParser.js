@@ -33,7 +33,7 @@ angular.module('MatchCalendarApp')
                 var parts = post.title.split('-');
 
                 // post isnt formatted correctly, don't display it at all
-                if (parts.length < 4) {
+                if (parts.length < 3) {
                     return null;
                 }
 
@@ -42,21 +42,27 @@ angular.module('MatchCalendarApp')
                     return part.trim();
                 });
 
+                // definately not formatted correctly, don't show
+                if (parts[0].length < 3) {
+                    return null;
+                }
+
+                // parse the region as the last 2 characters
+                post.region = parts[0].slice(-2).toUpperCase();
                 // attempt to parse the date from the post title
-                post.opens = moment.utc(parts[0], 'MMM DD HH:mm', 'en');
-                post.region = parts[1].toUpperCase();
-                post.title = parts[2];
+                post.opens = moment.utc(parts[0].slice(0, -2), 'MMM DD HH:mm', 'en');
+                post.title = parts[1];
 
                 // assume vanilla if no gamemodes
-                if (parts.length === 4) {
+                if (parts.length === 3) {
                     post.gamemodes = ['Vanilla'];
                 } else {
                     // add gamemodes
-                    post.gamemodes = parts[4].split(',').map(function(mode) { return mode.trim(); });
+                    post.gamemodes = parts[3].split(',').map(function(mode) { return mode.trim(); });
                 }
 
                 // teams parsing
-                post.teams = GameType.parseGameType(parts[3]);
+                post.teams = GameType.parseGameType(parts[2]);
 
                 // basic IP checking for parsed links, this will only work for IP addresses
                 // TODO check for 'address: X' type string

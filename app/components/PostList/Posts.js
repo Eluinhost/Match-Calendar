@@ -125,7 +125,7 @@ angular.module('MatchCalendarApp')
          * @returns {Array}
          */
         function readTeamTypes(posts) {
-            var teamTypes = posts.map(function(post) { return post.teams.type.name; });
+            var teamTypes = posts.map(function(post) { return post.teams; });
             var teamTypeSet = createSetCaseInsensitive(teamTypes);
 
             // make sure they're saved

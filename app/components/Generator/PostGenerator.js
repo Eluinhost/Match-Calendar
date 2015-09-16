@@ -22,7 +22,7 @@ angular.module('MatchCalendarApp')
             postTitle: 'Game Title',
             region: 'NA',
             gameType: 'FFA',
-            gameTypeData: [],
+            teamSize: 4,
             scenarios: ['Vanilla'],
             subreddit: Subreddits.subreddits[0] || null,
             template: Templates.customTemplates[0] ? Templates.customTemplates[0].name : null
@@ -32,12 +32,6 @@ angular.module('MatchCalendarApp')
             $scope.generator.template = Templates.customTemplates[0].name;
         }
 
-        $scope.$watch('generator.gameType', function(newValue, oldValue) {
-            if (oldValue === newValue) return;
-
-            $scope.generator.gameTypeData = GameType.types[newValue].defaultValues();
-        });
-
         // save and load the generator settings
         $localForage.bind($scope, 'generator');
 
@@ -46,6 +40,10 @@ angular.module('MatchCalendarApp')
 
         // minimum time for things to show
         $scope.minTime = DateTimeService.currentTime();
+
+        $scope.requiresTeamSizes = function() {
+            return GameType.types[$scope.generator.gameType].requiresTeamSizes;
+        };
 
         $scope.addScenario = function (name) {
             if (name === '' || name === null || name === undefined) return;
@@ -82,7 +80,7 @@ angular.module('MatchCalendarApp')
                     ' - ' +
                     $scope.generator.postTitle +
                     ' - ' +
-                    GameType.types[$scope.generator.gameType].format($scope.generator.gameTypeData) +
+                    GameType.types[$scope.generator.gameType].format($scope.generator.teamSize) +
                     ' - ' +
                     $scope.generator.scenarios.join(', ');
         };
@@ -98,7 +96,7 @@ angular.module('MatchCalendarApp')
                 return $scope.generator.region;
             },
             get teams() {
-                return GameType.types[$scope.generator.gameType].format($scope.generator.gameTypeData);
+                return GameType.types[$scope.generator.gameType].format($scope.generator.teamSize);
             },
             get scenarios() {
                 return $scope.generator.scenarios.join(', ');

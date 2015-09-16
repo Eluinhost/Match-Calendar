@@ -14,7 +14,7 @@
         <div>
             <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
             <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
-            <strong class="post-teams" ng-bind="post.teams.render"></strong>
+            <strong class="post-teams" bo-text="post.teams + (post.teamSize ? ' To' + post.teamSize : '')"></strong>
         </div>
         <div>
             <small class="gamemodes" tooltip="Gamemodes">

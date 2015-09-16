@@ -52,7 +52,7 @@ angular.module('MatchCalendarApp')
                     post.gamemodes = ['Vanilla'];
                 } else {
                     // add gamemodes
-                    post.gamemodes = parts.slice(4).map(function(mode) { return mode.trim(); });
+                    post.gamemodes = parts[4].split(',').map(function(mode) { return mode.trim(); });
                 }
 
                 // teams parsing

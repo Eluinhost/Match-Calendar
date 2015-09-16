@@ -49,13 +49,13 @@
                         <select class="form-control" ng-model="generator.gameType" ng-options="o as k.name for (o, k) in gameTypes"></select>
                         <div class="form-group" ng-show="requiresTeamSizes() === 'CUSTOM'">
                             <label for="generator-custom-style" class="help-block">Enter custom scenario title here:</label>
-                            <div class=>
+                            <div>
                                 <input id="generator-custom-style" type="text" ng-model="generator.teamSize"/>
                             </div>
                         </div>
                         <div class="form-group" ng-show="requiresTeamSizes() === true">
                             <label for="generator-team-size" class="help-block">Enter team size here:</label>
-                            <div class=>
+                            <div>
                                 <input id="generator-team-size" type="number" ng-model="generator.teamSize"/>
                             </div>
                         </div>

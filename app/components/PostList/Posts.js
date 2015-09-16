@@ -13,16 +13,16 @@ angular.module('MatchCalendarApp')
         var $scope = $rootScope.$new(true);
         $scope.posts = [];
         $scope.lastUpdated = 0;
-        $scope.regions = {};
-        $scope.gamemodes = {};
-        $scope.teamTypes = {};
+        $scope.disabledRegions = [];
+        $scope.disabledGamemodes = [];
+        $scope.disabledTeamTypes = [];
         $scope.currentRegions = [];
         $scope.currentTeamTypes = [];
         $scope.currentGamemodes = [];
         $localForage.bind($scope, 'lastUpdated');
-        $localForage.bind($scope, 'regions');
-        $localForage.bind($scope, 'gamemodes');
-        $localForage.bind($scope, 'teamTypes');
+        $localForage.bind($scope, 'disabledRegions');
+        $localForage.bind($scope, 'disabledGamemodes');
+        $localForage.bind($scope, 'disabledTeamTypes');
 
         $scope.updating = false;
         $scope.update = function() {
@@ -50,12 +50,6 @@ angular.module('MatchCalendarApp')
         //watch for subreddit changes
         Subreddits.$watchCollection('subreddits', $scope.update);
 
-        function defineFieldTrueIfNotExist(object, field) {
-            if (!angular.isDefined(object[field])) {
-                object[field] = true;
-            }
-        }
-
         /**
          * Removes duplicates from the array case insensitive
          *
@@ -75,27 +69,18 @@ angular.module('MatchCalendarApp')
         }
 
         /**
-         * Fetches a list of all the regions in the post list. If a region is found we havn't seen before it's default
-         * saved setting will be initialized to true.
+         * Fetches a list of all the regions in the post list (lowercased)
          *
          * @param {Array} posts
          * @returns {Array}
          */
         function readRegions(posts) {
             var regions = posts.map(function(post) { return post.region; });
-            var regionSet = createSetCaseInsensitive(regions);
-
-            // make sure they're saved
-            regionSet.forEach(function(region) {
-                defineFieldTrueIfNotExist($scope.regions, region.toLowerCase());
-            });
-
-            return regionSet;
+            return createSetCaseInsensitive(regions);
         }
 
         /**
-         * Reads a list of all the gamemodes from the post list. If a gamemode is found we havn't seen before it's
-         * default save setting will be initialized to true
+         * Reads a list of all the gamemodes from the post list (lowercased)
          *
          * @param {Array} posts
          * @returns {Array}
@@ -110,31 +95,61 @@ angular.module('MatchCalendarApp')
                 return acc;
             }, []);
 
-            var gamemodeSet = createSetCaseInsensitive(gamemodes);
-            gamemodeSet.forEach(function(gamemode) {
-                defineFieldTrueIfNotExist($scope.gamemodes, gamemode.toLowerCase());
-            });
-            return gamemodeSet;
+            return createSetCaseInsensitive(gamemodes);
         }
 
         /**
-         * Reads a list of all the team types from the post list. If a team type is found we havn't seen before it's
-         * default save setting will be initialized to true
+         * Reads a list of all the team types from the post list (lowercased)
          *
          * @param {Array} posts
          * @returns {Array}
          */
         function readTeamTypes(posts) {
             var teamTypes = posts.map(function(post) { return post.teams; });
-            var teamTypeSet = createSetCaseInsensitive(teamTypes);
-
-            // make sure they're saved
-            teamTypeSet.forEach(function(teamType) {
-                defineFieldTrueIfNotExist($scope.teamTypes, teamType.toLowerCase());
-            });
-
-            return teamTypeSet;
+            return createSetCaseInsensitive(teamTypes);
         }
+
+        $scope.isGamemodeDisabled = function(gamemeode) {
+            return $scope.disabledGamemodes.indexOf(gamemeode.toLowerCase()) > -1;
+        };
+
+        $scope.isTeamTypeDisabled = function(type) {
+            return $scope.disabledTeamTypes.indexOf(type.toLowerCase()) > -1;
+        };
+
+        $scope.isRegionDisabled = function(region) {
+            return $scope.disabledRegions.indexOf(region.toLowerCase()) > -1;
+        };
+
+        $scope.toggleGamemode = function(gamemode) {
+            gamemode = gamemode.toLowerCase();
+            var index = $scope.disabledGamemodes.indexOf(gamemode);
+            if (index < 0) {
+                $scope.disabledGamemodes.push(gamemode);
+            } else {
+                $scope.disabledGamemodes.splice(index, 1);
+            }
+        };
+
+        $scope.toggleTeamType = function(type) {
+            type = type.toLowerCase();
+            var index = $scope.disabledTeamTypes.indexOf(type);
+            if (index < 0) {
+                $scope.disabledTeamTypes.push(type);
+            } else {
+                $scope.disabledTeamTypes.splice(index, 1);
+            }
+        };
+
+        $scope.toggleRegion = function(region) {
+            region = region.toLowerCase();
+            var index = $scope.disabledRegions.indexOf(region);
+            if (index < 0) {
+                $scope.disabledRegions.push(region);
+            } else {
+                $scope.disabledRegions.splice(index, 1);
+            }
+        };
 
         // Public return value
         return $scope;

@@ -26,19 +26,19 @@
             <div class="row filter">
                 <div class="col-lg-2 text-right-lg text-center filter-title">Regions:</div>
                 <div class="col-lg-10 text-left-lg text-center">
-                    <checkbox-button bindonce refresh-on="'postsUpdated'" ng-repeat="region in posts.currentRegions" button-enabled="posts.regions[region.toLowerCase()]"><span bo-text="region"></span></checkbox-button>
+                    <button type="button" class="btn btn-xs" ng-class="buttonEnabledClass(!posts.isRegionDisabled(region))" bindonce refresh-on="'postsUpdated'" ng-repeat="region in posts.currentRegions" ng-click="posts.toggleRegion(region)"><span bo-text="region"></span></button>
                 </div>
             </div>
             <div class="row filter">
                 <div class="col-lg-2 text-right-lg text-center filter-title">Team Types:</div>
                 <div class="col-lg-10 text-left-lg text-center">
-                    <checkbox-button bindonce refresh-on="'postsUpdated'" ng-repeat="teamType in posts.currentTeamTypes" button-enabled="posts.teamTypes[teamType.toLowerCase()]"><span bo-text="teamType"></span></checkbox-button>
+                    <button type="button" class="btn btn-xs" ng-class="buttonEnabledClass(!posts.isTeamTypeDisabled(teamType))" bindonce refresh-on="'postsUpdated'" ng-repeat="teamType in posts.currentTeamTypes" ng-click="posts.toggleTeamType(teamType)"><span bo-text="teamType"></span></button>
                 </div>
             </div>
             <div class="row filter">
                 <div class="col-lg-2 text-right-lg text-center filter-title">Gamemodes:</div>
                 <div class="col-lg-10 text-left-lg text-center">
-                    <checkbox-button bindonce refresh-on="'postsUpdated'" ng-repeat="gamemode in posts.currentGamemodes" button-enabled="posts.gamemodes[gamemode.toLowerCase()]"><span bo-text="gamemode"></span></checkbox-button>
+                    <button type="button" class="btn btn-xs" ng-class="buttonEnabledClass(!posts.isGamemodeDisabled(gamemode))" bindonce refresh-on="'postsUpdated'" ng-repeat="gamemode in posts.currentGamemodes" ng-click="posts.toggleGamemode(gamemode)"><span bo-text="gamemode"></span></button>
                 </div>
             </div>
         </div>

@@ -17,26 +17,30 @@ angular.module('MatchCalendarApp')
         $scope.Changelog = Changelog;
         $scope.showFilters = false;
 
+        $scope.buttonEnabledClass = function(enabled) {
+            return enabled ? 'btn-success' : 'btn-danger';
+        };
+
         $scope.filtered = {
             posts: [],
             filters: {
                 search: '',
                 region: function (post) {
                     // check if it's region is set to show or not
-                    return Posts.regions[post.region.toLowerCase() || 'Unknown'];
+                    return Posts.disabledRegions.indexOf(post.region.toLowerCase()) < 0;
                 },
                 gamemode: function (post) {
                     // check if all of its gamemodes are enabled or not
                     var all = true;
                     for (var i = 0; i < post.gamemodes.length; i++) {
-                        if (!Posts.gamemodes[post.gamemodes[i].toLowerCase()]) {
+                        if (Posts.disabledGamemodes.indexOf(post.gamemodes[i].toLowerCase()) >= 0) {
                             all = false;
                         }
                     }
                     return all;
                 },
                 teamType: function(post) {
-                    return Posts.teamTypes[post.teams.toLowerCase()];
+                    return Posts.disabledTeamTypes.indexOf(post.teams.toLowerCase()) < 0;
                 }
             }
         };

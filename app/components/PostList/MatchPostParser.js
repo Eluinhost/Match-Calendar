@@ -27,8 +27,15 @@ angular.module('MatchCalendarApp')
                     permalink: 'https://reddit.com' + element.permalink,
                     /*jshint camelcase: false */
                     posted: moment(element.created_utc, 'X'),
-                    anchorlink: '#' + $location.path() + '?post=' + element.id
+                    anchorlink: '#' + $location.path() + '?post=' + element.id,
+                    isStartTime: false
                 };
+
+                // replace | with a dash and set a flag for start time
+                post.title = post.title.replace('|', function() {
+                    post.isStartTime = true;
+                    return '-';
+                });
 
                 var parts = post.title.split('-');
 

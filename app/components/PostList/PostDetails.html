@@ -1,7 +1,8 @@
 <div class="row text-center" bindonce="post" refresh-on="'postsUpdated'" bo-attr bo-attr-id="'post-' + post.id">
     <div class="col-lg-2 col-xs-12 text-center text-right-lg">
-        <span class="abs-game-starts" tooltip="Time Opens">
-            <b bo-text="DateTime.format(DateTime.formats.POST_HEADER, post.opens)"></b>
+        <span class="abs-game-starts">
+            <i bo-show="post.isStartTime" class="fa fa-warning" tooltip="This is a start time, not a whitelist off time"></i>
+            <b bo-text="DateTime.format(DateTime.formats.POST_HEADER, post.opens)" tooltip="Time Opens"></b>
             <i class="fa fa-calendar" ng-click="toggleNotification(); $event.stopPropagation()" ng-class="{notifications: isNotifying()}"></i>
         </span>
         <span tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">

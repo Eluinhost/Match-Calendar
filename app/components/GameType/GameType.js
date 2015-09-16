@@ -92,6 +92,13 @@ angular.module('MatchCalendarApp')
             requiresTeamSizes: false
         });
 
+        GameType.types.MYSTERY = new GameType({
+            name: 'Mystery',
+            shortCode: 'm',
+            description: 'Mystery teams',
+            requiresTeamSizes: true
+        });
+
         GameType.types.CUSTOM = new GameType({
             name: 'Custom',
             shortCode: 'Not required',

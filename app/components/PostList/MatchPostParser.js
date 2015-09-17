@@ -9,7 +9,7 @@
  */
 angular.module('MatchCalendarApp')
     //a match post model
-    .factory('MatchPostParser', ['$rootScope', 'DateTimeService', '$location', 'GameType', function (MarkdownLinkDataService, DateTimeService, $location, GameType) {
+    .factory('MatchPostParser', ['DateTimeService', '$location', 'GameType', function (DateTimeService, $location, GameType) {
 
         var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
         var sizeRegex = /To(\d*)/;

@@ -44,75 +44,6 @@ angular.module('MatchCalendarApp')
             return typeString === this.shortCode || typeString === this.name;
         };
 
-        GameType.types = {};
-
-        GameType.types.FFA = new GameType({
-            name: 'FFA',
-            shortCode: 'FFA',
-            description: 'Every man for himself.',
-            requiresTeamSizes: false
-        });
-
-        GameType.types.CHOSEN = new GameType({
-            name: 'Chosen',
-            shortCode: 'c',
-            description: 'Players form teams before the match',
-            requiresTeamSizes: true,
-            isType: function(typeString) {
-                // call default but also add the extra check if there is no type string to assume its a chosen teams
-                return defaultChecker.call(this, typeString) || typeString === '';
-            }
-        });
-
-        GameType.types.RANDOM = new GameType({
-            name: 'Random',
-            shortCode: 'r',
-            description: 'Players are assigned random teammates',
-            requiresTeamSizes: true
-        });
-
-        GameType.types.PICKED = new GameType({
-            name: 'Picked',
-            shortCode: 'p',
-            description: 'Players take turns joining a team.',
-            requiresTeamSizes: true
-        });
-
-        GameType.types.CAPTAINS = new GameType({
-            name: 'Captains',
-            shortCode: 'Cpt',
-            description: 'Selected team leaders pick their teammates.',
-            requiresTeamSizes: true
-        });
-
-        GameType.types.AUCTION = new GameType({
-            name: 'SlaveMarket',
-            shortCode: 'SlaveMarket',
-            description: 'Selected team leaders buy their teammates.',
-            requiresTeamSizes: false
-        });
-
-        GameType.types.MYSTERY = new GameType({
-            name: 'Mystery',
-            shortCode: 'm',
-            description: 'Mystery teams',
-            requiresTeamSizes: true
-        });
-
-        GameType.types.CUSTOM = new GameType({
-            name: 'Custom',
-            shortCode: 'Not required',
-            description: 'Add a custom game style',
-            requiresTeamSizes: 'CUSTOM',
-            isType: function() {
-                // never use this type when parsing, it is for the generator only
-                return false;
-            },
-            format: function(size) {
-                return size;
-            }
-        });
-
         GameType.parseGameType = function(typeString) {
             for (var type in GameType.types) {
                 var current = GameType.types[type];
@@ -127,6 +58,68 @@ angular.module('MatchCalendarApp')
 
             // fallback to custom gamemode if no others parsed
             return null;
+        };
+
+        GameType.types = {
+            FFA: new GameType({
+                name: 'FFA',
+                shortCode: 'FFA',
+                description: 'Every man for himself.',
+                requiresTeamSizes: false
+            }),
+            CHOSEN: new GameType({
+                name: 'Chosen',
+                shortCode: 'c',
+                description: 'Players form teams before the match',
+                requiresTeamSizes: true,
+                isType: function(typeString) {
+                    // call default but also add the extra check if there is no type string to assume its a chosen teams
+                    return defaultChecker.call(this, typeString) || typeString === '';
+                }
+            }),
+            RANDOM: new GameType({
+                name: 'Random',
+                shortCode: 'r',
+                description: 'Players are assigned random teammates',
+                requiresTeamSizes: true
+            }),
+            CAPTAINS: new GameType({
+                name: 'Captains',
+                shortCode: 'Cpt',
+                description: 'Selected team leaders pick their teammates.',
+                requiresTeamSizes: true
+            }),
+            PICKED: new GameType({
+                name: 'Picked',
+                shortCode: 'p',
+                description: 'Players take turns joining a team.',
+                requiresTeamSizes: true
+            }),
+            AUCTION: new GameType({
+                name: 'SlaveMarket',
+                shortCode: 'SlaveMarket',
+                description: 'Selected team leaders buy their teammates.',
+                requiresTeamSizes: false
+            }),
+            MYSTERY: new GameType({
+                name: 'Mystery',
+                shortCode: 'm',
+                description: 'Mystery teams',
+                requiresTeamSizes: true
+            }),
+            CUSTOM: new GameType({
+                name: 'Custom',
+                shortCode: 'Not required',
+                description: 'Add a custom game style',
+                requiresTeamSizes: 'CUSTOM',
+                isType: function() {
+                    // never use this type when parsing, it is for the generator only
+                    return false;
+                },
+                format: function(size) {
+                    return size;
+                }
+            })
         };
 
         return GameType;

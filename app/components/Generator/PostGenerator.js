@@ -74,7 +74,7 @@ angular.module('MatchCalendarApp')
 
         $scope.buildTitle = function() {
             return DateTimeService.format(DateTimeService.formats.REDDIT_POST, $scope.opens.utc(), true) +
-                    ' - ' +
+                    ' ' +
                     $scope.generator.region +
                     ' - ' +
                     $scope.generator.postTitle +

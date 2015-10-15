@@ -1,6 +1,6 @@
 {
     "name": "match-calendar",
-    "version": "0.2.0",
+    "version": "1.0.0",
     "dependencies": {},
     "devDependencies": {
         "gateway-rewrite": "0.0.2",

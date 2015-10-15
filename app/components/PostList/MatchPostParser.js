@@ -13,6 +13,7 @@ angular.module('MatchCalendarApp')
 
         var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
         var sizeRegex = /To(\d*)/;
+        var extrasRegex = /(\[.*?])/g;
 
         return {
             /**
@@ -69,6 +70,15 @@ angular.module('MatchCalendarApp')
                 } else {
                     // add gamemodes
                     post.gamemodes = parts[3].split(',').map(function(mode) { return mode.trim(); });
+
+                    if (post.gamemodes.length > 0) {
+                        var finalGamemode = post.gamemodes[post.gamemodes.length - 1];
+
+                        post.gamemodes[post.gamemodes.length - 1] = finalGamemode.replace(extrasRegex, function(part) {
+                            post.title += ' ' + part;
+                            return '';
+                        }).trim();
+                    }
                 }
 
                 // teams parsing

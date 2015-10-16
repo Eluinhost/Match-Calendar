@@ -67,14 +67,19 @@ angular.module('MatchCalendarApp')
                 // assume vanilla if no gamemodes
                 if (parts.length === 3) {
                     post.gamemodes = ['Vanilla'];
+
+                    // cut extras out of the team type
+                    parts[2] = parts[2].replace(extrasRegex, function(part) {
+                        post.title += ' ' + part;
+                        return '';
+                    }).trim();
                 } else {
                     // add gamemodes
                     post.gamemodes = parts[3].split(',').map(function(mode) { return mode.trim(); });
 
                     if (post.gamemodes.length > 0) {
-                        var finalGamemode = post.gamemodes[post.gamemodes.length - 1];
-
-                        post.gamemodes[post.gamemodes.length - 1] = finalGamemode.replace(extrasRegex, function(part) {
+                        // cut the extras out of the final gamemode
+                        post.gamemodes[post.gamemodes.length - 1] = post.gamemodes[post.gamemodes.length - 1].replace(extrasRegex, function(part) {
                             post.title += ' ' + part;
                             return '';
                         }).trim();

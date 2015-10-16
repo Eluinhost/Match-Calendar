@@ -16,27 +16,14 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Opens: </h3><span ng-bind="T.format(T.formats.REDDIT_POST, opens.utc(), true)"></span>
+                    <h3 class="panel-title">Opens: </h3><span ng-bind="DateTime.format(DateTime.formats.REDDIT_POST, opens.utc(), true)"></span>
                 </div>
                 <div class="panel-body">
                     <p class="help-block">Time game will open (in your selected timezone)</p>
-                    <date-time-picker picked-date="opens" time-zone="settings.timeZone" min-date="minTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
+                    <date-time-picker picked-date="opens" time-zone="DateTime.settings.timeZone" min-date="minTime" meridian="DateTime.settings.timeFormat == '12h'"></date-time-picker>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Starts: </h3><span ng-bind="T.format(T.formats.REDDIT_POST, starts.utc(), true)"></span>
-                </div>
-                <div class="panel-body">
-                    <p class="help-block">Time game will start (in your selected timezone)</p>
-                    <date-time-picker picked-date="starts" time-zone="settings.timeZone" min-date="minTime" meridian="settings.timeFormat == '12h'"></date-time-picker>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -48,29 +35,86 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Server Address
+                    <h3 class="panel-title">Team Types</h3>
                 </div>
                 <div class="panel-body">
-                    <span class="help-block">The server address/IP to connect to</span>
-                    <input class="form-control" type="text" ng-model="generator.address"/>
+                    <p class="help-block">Chose the type of teams the game will be using</p>
+                    <form class="form-horizontal">
+                        <small class="help-block"><i class="fa fa-info"></i> <span ng-bind="gameTypes[generator.gameType].description"></span></small>
+                        <select class="form-control" ng-model="generator.gameType" ng-options="o as k.name for (o, k) in gameTypes"></select>
+                        <div class="form-group" ng-show="requiresTeamSizes() === 'CUSTOM'">
+                            <label for="generator-custom-style" class="help-block">Enter custom scenario title here:</label>
+                            <div>
+                                <input id="generator-custom-style" type="text" ng-model="generator.teamSize"/>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="requiresTeamSizes() === true">
+                            <label for="generator-team-size" class="help-block">Enter team size here:</label>
+                            <div>
+                                <input id="generator-team-size" type="number" ng-model="generator.teamSize"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">Gamemodes/Scenarios</h3></div>
+                <div class="panel-body">
+                    <div class="row" ng-repeat="scenario in generator.scenarios">
+                        <button type="button" ng-click="removeScenario($index)" class="btn btn-default btn-lg col-xs-10 col-xs-offset-1">
+                            <i class="fa fa-cubes"></i> <span ng-bind="scenario"></span>
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-8 col-xs-offset-1">
+                            <input class="form-control" type="text" placeholder="Scenario" ng-model="newScenario" keybind="addScenario(newScenario)" key="13">
+                        </div>
+                        <div class="col-xs-2">
+                            <button ng-click="addScenario(newScenario)" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> New</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="btn-group dropup col-sm-6 col-sm-offset-3 col-xs-12" dropdown is-open="postButtonOpen">
-            <button type="button" class="btn btn-primary dropdown-toggle btn-lg btn-block">
-                Submit <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a ng-click="openReddit()">Post to Reddit</a></li>
-                <li><a ng-click="openLinkModal()">Raw link to add to post</a></li>
-                <li class="divider"></li>
-                <li><a ng-click="editTemplate()">Preview / Edit Template</a></li>
-            </ul>
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h3 class="panel-title">Post Title Preview</h3></div>
+                <div class="panel-body">
+                    <code ng-bind="buildTitle()"></code>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h3 class="panel-title">Selected Template</h3></div>
+                <div class="panel-body form-group" ng-class="{'has-error': !validTemplate()}">
+                    <select ng-required class="form-control" ng-model="generator.template" ng-options="o.name as o.name for o in templates.customTemplates"></select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading"><h3 class="panel-title">Selected Subreddit</h3></div>
+                <div class="panel-body form-group" ng-class="{'has-error': !validSubreddit()}">
+                    <select ng-required class="form-control" ng-model="generator.subreddit" ng-options="o for o in subreddits.subreddits"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-info btn-lg col-md-6" ui-sref="editor">Template Editor</button>
+        <button ng-disabled="!validTemplate() || !validSubreddit()" type="button" class="btn btn-success btn-lg col-md-6" ng-click="openReddit()">Post to Reddit</button>
     </div>
 </div>

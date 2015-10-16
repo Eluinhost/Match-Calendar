@@ -1,0 +1,20 @@
+<div class="updater-bar" ng-class="{hidden: status === 'idle' || status === 'unsupported'}">
+    <div class="update-progress" ng-style="{width: progress + '%', display: status == 'progress' ? 'initial' : 'none'}"></div>
+    <div class="update-text" ng-switch="status">
+        <div ng-switch-when="checking">
+            Checking for updates...
+        </div>
+        <div ng-switch-when="downloading">
+            Downloading new update...
+        </div>
+        <div ng-switch-when="progress">
+            Downloading new update - {{ progress | number:0 }}%
+        </div>
+        <div ng-switch-when="updateready">
+            <a ng-click="reload()">Reload</a> to apply new update
+        </div>
+        <div ng-switch-when="error">
+            Error saving application locally
+        </div>
+    </div>
+</div>

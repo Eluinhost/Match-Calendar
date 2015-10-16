@@ -8,15 +8,24 @@
  * Factory in the MatchCalendar.
  */
 angular.module('MatchCalendarApp')
-    .factory('PostNotifications', function ($localForage, $rootScope, HtmlNotifications, Posts, NotifcationTimeFormat) {
+    .factory('PostNotifications', ['$localForage', '$rootScope', 'HtmlNotifications', 'Posts', 'NotifcationTimeFormat', 'DateTimeService', function ($localForage, $rootScope, HtmlNotifications, Posts, NotifcationTimeFormat, DateTimeService) {
 
         var $scope = $rootScope.$new(true);
 
         $scope.notifyFor = {};
-        $localForage.bind($scope, 'notifyFor');
+        $localForage.bind($scope, {
+            key: 'notifyFor',
+            defaultValue: {}
+        });
+
+        $scope.notificationTimes = [];
+        $localForage.bind($scope, {
+            key: 'notificationTimes',
+            defaultValue: [{value: 600}]
+        });
 
         $scope.$on('clockTick', function(){
-            if (HtmlNotifications.currentPermission() === 'granted') {
+            if (HtmlNotifications.permission === 'granted') {
                 if (Posts.posts.length !== 0) {
                     for (var pid in $scope.notifyFor) {
                         if (!$scope.notifyFor.hasOwnProperty(pid)) {
@@ -34,20 +43,20 @@ angular.module('MatchCalendarApp')
                     return true;
                 }
             });
-            //if the post no longer exists
+            // if the post no longer exists
             if (post.length === 0) {
                 delete $scope.notifyFor[postid];
                 return;
             }
-            angular.forEach($rootScope.settings.notificationTimes, function (notifcationTime) {
-                var startsUnix = post[0].starts.unix();
-                var timeToNotify = startsUnix - notifcationTime.value;
-                var currentTimeUnix = $rootScope.T.currentTime().unix();
+            angular.forEach($scope.notificationTimes, function (notifcationTime) {
+                var unix = post[0].opens.unix();
+                var timeToNotify = unix - notifcationTime.value;
+                var currentTimeUnix = DateTimeService.currentTime().unix();
 
-                //if it's passed the notify time and we havn't already done a notification later than this
+                // if it's passed the notify time and we havn't already done a notification later than this
                 if (currentTimeUnix >= timeToNotify && $scope.notifyFor[postid].value < timeToNotify) {
-                    var difference = startsUnix - currentTimeUnix;
-                    HtmlNotifications.notify('Game starts in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference)), post[0].title);
+                    var difference = unix - currentTimeUnix;
+                    HtmlNotifications.notify('Game opens in ' + NotifcationTimeFormat.translateSeconds(Math.round(difference)), post[0].title);
                     $scope.notifyFor[postid].value = currentTimeUnix;
                 }
             });
@@ -72,6 +81,7 @@ angular.module('MatchCalendarApp')
         return {
             notifyingFor: $scope.notifyFor,
             toggleNotifications: toggleNotifications,
-            isNotifyingFor: isNotifyingFor
+            isNotifyingFor: isNotifyingFor,
+            settings: $scope
         };
-    });
+    }]);

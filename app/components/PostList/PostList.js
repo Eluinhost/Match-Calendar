@@ -8,53 +8,41 @@
  * Controller in MatchCalendar
  */
 angular.module('MatchCalendarApp')
-    .controller('PostListCtrl', function ($scope, Posts, $stateParams, HtmlNotifications, $timeout, PostNotifications) {
+    .controller('PostListCtrl', ['$scope', 'Posts', '$stateParams', 'HtmlNotifications', '$timeout', 'PostNotifications', 'DateTimeService', 'Hosts', 'Changelog', function ($scope, Posts, $stateParams, HtmlNotifications, $timeout, PostNotifications, DateTimeService, Hosts, Changelog) {
 
         $scope.posts = Posts;
+        $scope.DateTime = DateTimeService;
         $scope.notifications = PostNotifications;
+        $scope.Hosts = Hosts;
+        $scope.Changelog = Changelog;
+        $scope.showFilters = false;
+
+        $scope.buttonEnabledClass = function(enabled) {
+            return enabled ? 'btn-success' : 'btn-danger';
+        };
 
         $scope.filtered = {
             posts: [],
-            filter: '',
-            regionFilter: function (element) {
-                return $scope.posts.regions[element.region || 'Unknown'];
+            filters: {
+                search: '',
+                region: function (post) {
+                    // check if it's region is set to show or not
+                    return Posts.disabledRegions.indexOf(post.region.toLowerCase()) < 0;
+                },
+                gamemode: function (post) {
+                    // check if all of its gamemodes are enabled or not
+                    var all = true;
+                    for (var i = 0; i < post.gamemodes.length; i++) {
+                        if (Posts.disabledGamemodes.indexOf(post.gamemodes[i].toLowerCase()) >= 0) {
+                            all = false;
+                        }
+                    }
+                    return all;
+                },
+                teamType: function(post) {
+                    return Posts.disabledTeamTypes.indexOf(post.teams.toLowerCase()) < 0;
+                }
             }
-        };
-
-        $scope.toggleFavorite = function (name) {
-            var index = $scope.settings.favoriteHosts.indexOf(name);
-            if (index === -1) {
-                $scope.settings.favoriteHosts.push(name);
-            } else {
-                $scope.settings.favoriteHosts.splice(index, 1);
-            }
-        };
-
-        /**
-         * Changes the address of the post to 'Copied!' for a couple of seconds
-         * @param post {MatchPost}
-         */
-        $scope.triggerCopiedMessage = function (post) {
-            if (null === post.address) {
-                return;
-            }
-            var saved = post.address;
-            post.address = 'Copied!';
-            $scope.$broadcast('regionCopyChange');
-            $timeout(function () {
-                post.address = saved;
-                $scope.$broadcast('regionCopyChange');
-            }, 2000);
-        };
-
-        $scope.requestPermissions = function () {
-            HtmlNotifications.requestPermission().then(function () {
-                HtmlNotifications.notify('Notifications Enabled!');
-            });
-        };
-
-        $scope.currentPermission = function () {
-            return HtmlNotifications.currentPermission();
         };
 
         //handle 'anchor' links to specific posts
@@ -72,4 +60,4 @@ angular.module('MatchCalendarApp')
                 }
             });
         });
-    });
+    }]);

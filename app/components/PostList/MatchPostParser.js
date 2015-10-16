@@ -43,7 +43,7 @@ angular.module('MatchCalendarApp')
 
                 // post isnt formatted correctly, don't display it at all
                 if (parts.length < 3) {
-                    console.log('invalid match post formatting for post', post.id);
+                    console.log('invalid match post formatting for post', post.id, post.title);
                     return null;
                 }
 
@@ -54,7 +54,7 @@ angular.module('MatchCalendarApp')
 
                 // definately not formatted correctly, don't show
                 if (parts[0].length < 3) {
-                    console.log('invalid match post formatting for post', post.id);
+                    console.log('invalid match post formatting for post', post.id, post.title);
                     return null;
                 }
 

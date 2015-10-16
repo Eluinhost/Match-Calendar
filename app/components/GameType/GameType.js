@@ -24,7 +24,9 @@ angular.module('MatchCalendarApp')
          */
         var GameType = function(options) {
             this.name = options.name;
+            this.nameLower = options.name.toLowerCase();
             this.shortCode = options.shortCode;
+            this.shortCodeLower = options.shortCode.toLowerCase();
             this.description = options.description || 'No description set';
             this.requiresTeamSizes = options.requiresTeamSizes;
 
@@ -41,7 +43,8 @@ angular.module('MatchCalendarApp')
         };
 
         var defaultChecker = function(typeString) {
-            return typeString === this.shortCode || typeString === this.name;
+            typeString = typeString.toLowerCase();
+            return typeString === this.shortCodeLower || typeString === this.nameLower;
         };
 
         GameType.parseGameType = function(typeString) {

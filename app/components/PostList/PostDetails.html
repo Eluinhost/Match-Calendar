@@ -11,15 +11,17 @@
         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
     </div>
     <div class="col-lg-6 text-left-lg text-center col-xs-12">
-        <div>
-            <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
-            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
-            <strong class="post-teams" bo-text="post.teams + (post.teamSize ? ' To' + post.teamSize : '')"></strong>
-        </div>
-        <div>
-            <small class="gamemodes" tooltip="Gamemodes">
+        <div class="title-right">
+            <div class="post-teams visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block">
+                <strong bo-text="post.teams + (post.teamSize ? ' To' + post.teamSize : '')"></strong>
+            </div>
+            <div class="gamemodes visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Gamemodes">
                 <i class="fa fa-joypad"></i> <span bo-text="post.gamemodes.join(' | ')"></span>
-            </small>
+            </div>
+        </div>
+        <div class="post-title">
+            <a target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
+            <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
         </div>
         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
     </div>

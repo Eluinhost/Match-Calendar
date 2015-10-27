@@ -12,8 +12,12 @@
     color: #FF0000
 
 .title-right
-    float: right
-    text-align: right
+    @media (min-width: $screen-lg-min)
+        float: right
+        text-align: right
+
+    @media (max-width: $screen-md-max)
+        margin-bottom: 5px
 
 .search-panel
     margin-bottom: 0

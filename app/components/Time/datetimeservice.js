@@ -9,8 +9,8 @@
  */
 angular.module('MatchCalendarApp')
     .factory('DateTimeService', ['$http', '$rootScope', '$interval', '$localForage', function ($http, $rootScope, $interval, $localForage) {
-        const resyncURL = 'api/sync';
-        const timeFormats = ['12h', '24h'];
+        var resyncURL = 'api/sync';
+        var timeFormats = ['12h', '24h'];
         var timeZones = moment.tz.names();
 
         // setup settings

@@ -9,7 +9,7 @@
  */
 angular.module('MatchCalendarApp')
     .factory('SchemaVersion', ['$rootScope', '$localForage', function ($rootScope, $localForage) {
-        const current = 3;
+        var current = 3;
 
         var $scope = $rootScope.$new(true);
 

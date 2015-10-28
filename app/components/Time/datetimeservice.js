@@ -35,6 +35,7 @@ angular.module('MatchCalendarApp')
 
         var synced = false;
         var offset = 0;
+        var syncing = false;
 
         var currentTime = function() {
             var current = moment();
@@ -60,10 +61,15 @@ angular.module('MatchCalendarApp')
         };
 
         var resync = function () {
+            syncing = true;
             $http.get(resyncURL).then(function (data) {
                 synced = true;
+                syncing = false;
                 //this isn't really that accurate but within ping time so close enough
                 offset = data.data.time - moment().valueOf();
+            }).catch(function() {
+                synced = false;
+                syncing = false;
             });
         };
         resync();
@@ -71,6 +77,9 @@ angular.module('MatchCalendarApp')
         return {
             isSynced: function() {
                 return synced;
+            },
+            isSyncing: function() {
+                return syncing;
             },
             getOffset: function() {
                 return offset;

@@ -66,7 +66,11 @@
         <div class="row">
             <div class="col-xs-12 clock-bar-time">
                 <strong ng-class="{unsynced: !DateTime.isSynced()}" bindonce="" bo-text="DateTime.format(DateTime.formats.HEADER)" refresh-on="&apos;clockTick&apos;"></strong>
-                <i class="fa fa-info-circle" ng-show="!DateTime.isSynced()" tooltip="The time has not been synced with the server yet. If this persists try reloading the page"></i>
+
+                <span class="time-info-icons">
+                    <i class="fa fa-warning unsynced" ng-show="!DateTime.isSynced()" tooltip-append-to-body="true" tooltip="The time failed to sync with the server, time may be wrong"></i>
+                    <i class="fa fa-refresh" ng-class="{'fa-spin': DateTime.isSyncing()}" ng-click="DateTime.resync()" tooltip-append-to-body="true" tooltip="Click this to re-sync time with the server"></i>
+                </span>
             </div>
         </div>
         <div class="row">

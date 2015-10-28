@@ -12,6 +12,7 @@ angular.module('MatchCalendarApp')
     .factory('MatchPostParser', ['DateTimeService', '$location', 'GameType', function (DateTimeService, $location, GameType) {
 
         var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
+        var domainRegex = /(IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi;
         var sizeRegex = /To(\d*)/i;
         var extrasRegex = /(\[.*?])/g;
 
@@ -118,6 +119,13 @@ angular.module('MatchCalendarApp')
                     // if it's default port, dont show the port number
                     if (typeof ipcheck[2] !== 'undefined' && ipcheck[2] !== '' && ipcheck[2] !== ':25565') {
                         post.address += ipcheck[2];
+                    }
+                } else {
+                    domainRegex.exec('');
+                    var domainCheck = domainRegex.exec(element.selftext);
+
+                    if (null !== domainCheck) {
+                        post.address = domainCheck[2];
                     }
                 }
 

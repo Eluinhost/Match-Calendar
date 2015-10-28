@@ -54,6 +54,7 @@ angular.module('MatchCalendarApp')
                         var element = document.getElementById('post-' + $stateParams.post);
                         if (element !== null) {
                             element.scrollIntoView();
+                            element.click();
                         }
                     }
                     $scope.scrolled = true;

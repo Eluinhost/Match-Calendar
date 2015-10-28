@@ -11,9 +11,14 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
     })
 
     //configuration
-    .config(['$stateProvider', '$urlRouterProvider', '$localForageProvider', function($stateProvider, $urlRouterProvider, $localForageProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$localForageProvider', '$tooltipProvider', function($stateProvider, $urlRouterProvider, $localForageProvider, $tooltipProvider) {
         $localForageProvider.config({
             name: 'MatchCalendar'
+        });
+
+        $tooltipProvider.options({
+            animation: false,
+            popupDelay: 400
         });
 
         $stateProvider

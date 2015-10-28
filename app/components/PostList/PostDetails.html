@@ -12,7 +12,7 @@
     </div>
     <div class="col-lg-6 text-left-lg text-center col-xs-12">
         <div class="title-right">
-            <div class="post-teams visible-block">
+            <div class="post-teams visible-block" tooltip="Team Style">
                 <strong bo-text="post.teams + (post.teamSize ? ' To' + post.teamSize : '')"></strong>
             </div>
             <div class="gamemodes visible-block" tooltip="Gamemodes">
@@ -21,7 +21,7 @@
         </div>
         <div class="post-title">
             <a target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
-            <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
+            <a class="anchor-link" tooltip="Click to open open calendar to this post" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
         </div>
         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
     </div>

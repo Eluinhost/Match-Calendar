@@ -11,17 +11,15 @@
         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
     </div>
     <div class="col-lg-6 text-left-lg text-center col-xs-12">
-        <div class="title-right">
-            <div class="post-teams visible-block" tooltip="Team Style">
-                <strong bo-text="post.teams + (post.teamSize ? ' To' + post.teamSize : '')"></strong>
-            </div>
-            <div class="gamemodes visible-block" tooltip="Gamemodes">
-                <i class="fa fa-joypad"></i> <span bo-text="post.gamemodes.join(' | ')"></span>
-            </div>
-        </div>
         <div class="post-title">
             <a target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
             <a class="anchor-link" tooltip="Click to open open calendar to this post" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
+        </div>
+        <div class="title-left">
+            <div class="post-teams" tooltip="Team Style">
+                <strong bo-text="post.teams + (post.teamSize ? ' To' + post.teamSize : '')"></strong>
+            </div>
+            <div class="gamemodes" tooltip="Gamemodes" bo-text="post.gamemodes.join(' | ')"></div>
         </div>
         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
     </div>

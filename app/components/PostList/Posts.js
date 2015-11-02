@@ -19,10 +19,12 @@ angular.module('MatchCalendarApp')
         $scope.currentRegions = [];
         $scope.currentTeamTypes = [];
         $scope.currentGamemodes = [];
+        $scope.showFavouritedHostsOnly = false;
         $localForage.bind($scope, 'lastUpdated');
         $localForage.bind($scope, 'disabledRegions');
         $localForage.bind($scope, 'disabledGamemodes');
         $localForage.bind($scope, 'disabledTeamTypes');
+        $localForage.bind($scope, 'showFavouritedHostsOnly');
 
         $scope.updating = false;
         $scope.update = function() {

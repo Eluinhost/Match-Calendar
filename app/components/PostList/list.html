@@ -24,6 +24,12 @@
         </div>
         <div class="panel-body post-filters" collapse="!showFilters">
             <div class="row filter">
+                <div class="col-lg-2 text-right-lg text-center filter-title">Show favourited only:</div>
+                <div class="col-lg-10 text-left-lg text-center">
+                    <input type="checkbox" ng-model="posts.showFavouritedHostsOnly">
+                </div>
+            </div>
+            <div class="row filter">
                 <div class="col-lg-2 text-right-lg text-center filter-title">Regions:</div>
                 <div class="col-lg-10 text-left-lg text-center">
                     <button type="button" class="btn btn-xs" ng-class="buttonEnabledClass(!posts.isRegionDisabled(region))" bindonce refresh-on="'postsUpdated'" ng-repeat="region in posts.currentRegions" ng-click="posts.toggleRegion(region)"><span bo-text="region"></span></button>
@@ -48,7 +54,7 @@
     </button>
     <desktop-notification-enabler></desktop-notification-enabler>
     <accordion close-others="false">
-        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter: filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': Hosts.favoriteHosts.indexOf(post.author) !== -1}">
+        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.filters.favourited | filter:filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': Hosts.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>
                 <post-details post="post"></post-details>
             </accordion-heading>

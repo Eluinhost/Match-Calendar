@@ -41,6 +41,13 @@ angular.module('MatchCalendarApp')
                 },
                 teamType: function(post) {
                     return Posts.disabledTeamTypes.indexOf(post.teams.toLowerCase()) < 0;
+                },
+                favourited: function(post) {
+                    if (!Posts.showFavouritedHostsOnly) {
+                        return true;
+                    }
+
+                    return Hosts.favoriteHosts.indexOf(post.author.toLowerCase()) >= 0;
                 }
             }
         };

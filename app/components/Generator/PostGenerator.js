@@ -64,6 +64,26 @@ angular.module('MatchCalendarApp')
             }
         };
 
+        $scope.getExtras = function() {
+            return $scope.generator.extras || [];
+        };
+
+        $scope.addExtra = function (name) {
+            if (name === '' || name === null || name === undefined) return;
+
+            if (!$scope.generator.extras) {
+                $scope.generator.extras = [];
+            }
+
+            if ($scope.generator.extras.indexOf(name) === -1) {
+                $scope.generator.extras.push(name);
+            }
+        };
+
+        $scope.removeExtra = function (index) {
+            $scope.generator.extras.splice(index, 1);
+        };
+
         $scope.validTemplate = function() {
             return $scope.generator.template && Templates.customTemplateExists($scope.generator.template);
         };
@@ -73,7 +93,7 @@ angular.module('MatchCalendarApp')
         };
 
         $scope.buildTitle = function() {
-            return DateTimeService.format(DateTimeService.formats.REDDIT_POST, $scope.opens.utc(), true) +
+            return (DateTimeService.format(DateTimeService.formats.REDDIT_POST, $scope.opens.utc(), true) +
                     ' ' +
                     $scope.generator.region +
                     ' - ' +
@@ -81,7 +101,10 @@ angular.module('MatchCalendarApp')
                     ' - ' +
                     GameType.types[$scope.generator.gameType].format($scope.generator.teamSize) +
                     ' - ' +
-                    $scope.generator.scenarios.join(', ');
+                    $scope.generator.scenarios.join(', ') +
+                    ' ' +
+                    $scope.getExtras().map(function(extra) { return '[' + extra + ']'; }).join(' '))
+                .trim();
         };
 
         var templateVariables = {

@@ -13,7 +13,7 @@ angular.module('MatchCalendarApp')
 
         var ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
         var domainRegex = /(IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi;
-        var sizeRegex = /To(\d*)/i;
+        var sizeRegex = /To([\dX]+)/i;
         var extrasRegex = /(\[.*?])/g;
 
         return {

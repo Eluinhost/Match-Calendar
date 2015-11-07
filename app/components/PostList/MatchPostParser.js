@@ -31,7 +31,9 @@ angular.module('MatchCalendarApp')
                     /*jshint camelcase: false */
                     posted: moment(element.created_utc, 'X'),
                     anchorlink: '#' + $location.path() + '?post=' + element.id,
-                    isStartTime: false
+                    isStartTime: false,
+                    isCommunityGame: element.link_flair_text && element.link_flair_text === 'Community Game',
+                    subreddit: element.subreddit
                 };
 
                 // replace | with a dash and set a flag for start time

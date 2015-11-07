@@ -1,6 +1,7 @@
 <div class="row text-center" bindonce="post" refresh-on="'postsUpdated'" bo-attr bo-attr-id="'post-' + post.id">
     <div class="col-lg-2 col-xs-12 text-center text-right-lg">
         <span class="abs-game-starts">
+            <i bo-show="post.isCommunityGame" class="fa fa-users" tooltip="This is a community game"></i>
             <i bo-show="post.isStartTime" class="fa fa-warning" tooltip="This is a start time, not a whitelist off time"></i>
             <b bo-text="DateTime.format(DateTime.formats.POST_HEADER, post.opens)" tooltip="Time Opens"></b>
             <i class="fa fa-calendar" ng-click="toggleNotification(); $event.stopPropagation()" ng-class="{notifications: isNotifying()}"></i>
@@ -14,6 +15,9 @@
         <div class="post-title">
             <a target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
             <a class="anchor-link" tooltip="Click to open open calendar to this post" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
+            <div bo-show="Subreddits.subreddits.length > 1">
+                <a bo-href="'https://reddit.com/r/' + post.subreddit"><small bo-text="post.subreddit"></small></a>
+            </div>
         </div>
         <div class="title-left">
             <div class="post-teams" tooltip="Team Style">

@@ -7,7 +7,7 @@
  * # PostDetails
  */
 angular.module('MatchCalendarApp')
-    .directive('postDetails', ['DateTimeService', 'PostNotifications', 'Hosts', '$timeout', function (DateTimeService, PostNotifications, Hosts, $timeout) {
+    .directive('postDetails', ['DateTimeService', 'PostNotifications', 'Hosts', 'Subreddits', '$timeout', function (DateTimeService, PostNotifications, Hosts, Subreddits, $timeout) {
         return {
             restrict: 'E',
             scope: {
@@ -19,6 +19,7 @@ angular.module('MatchCalendarApp')
                     pre: function ($scope) {
                         $scope.DateTime = DateTimeService;
                         $scope.Notifications = PostNotifications;
+                        $scope.Subreddits = Subreddits;
 
                         $scope.toggleNotification = function () {
                             PostNotifications.toggleNotifications($scope.post.id);

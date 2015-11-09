@@ -1,5 +1,5 @@
 .clock-bar
-    +crayon-border-red()
+    +crayon-border()
     +watercolour-black()
     border-width: 0 0 5px 0
     margin-bottom: 10px
@@ -12,12 +12,6 @@
 .clock-bar-timezone
     font-style: italic
     padding-bottom: 18px
-
-.clock-bar-center
-    +watercolour-red()
-    @media (min-width: $screen-sm)
-        +crayon-border-black()
-        border-width: 0 3px 0 3px
 
 .unsynced
     color: #ff5050

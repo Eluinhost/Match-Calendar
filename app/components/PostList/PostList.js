@@ -47,7 +47,7 @@ angular.module('MatchCalendarApp')
                         return true;
                     }
 
-                    return Hosts.favoriteHosts.indexOf(post.author.toLowerCase()) >= 0;
+                    return Hosts.favoriteHosts.indexOf(post.author) >= 0;
                 }
             }
         };

@@ -7,10 +7,10 @@
  * # markdown
  */
 angular.module('MatchCalendarApp')
-    .factory('markdownConverter', function() {
+    .factory('markdownConverter', [function() {
         return SnuOwnd.getParser();
-    })
-    .directive('markdown', function (markdownConverter, $sanitize) {
+    }])
+    .directive('markdown', ['markdownConverter', '$sanitize', function (markdownConverter, $sanitize) {
         return {
             scope: {
                 content: '='
@@ -23,4 +23,4 @@ angular.module('MatchCalendarApp')
                 }, true);
             }
         };
-    });
+    }]);

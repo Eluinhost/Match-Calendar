@@ -12,7 +12,7 @@ angular.module('MatchCalendarApp')
         var showChangelog = function() {
             $uibModal.open({
                 template: '<div class="modal-header"><h3 class="modal-title">Changelog</h3></div><div class="modal-body"><markdown class="md" content="markdown"></markdown></div>',
-                controller: function($scope, $http) {
+                controller: ['$scope', '$http', function($scope, $http) {
                     $scope.markdown = '';
 
                     $http.get('/changelog.md').success(function(data) {
@@ -20,7 +20,7 @@ angular.module('MatchCalendarApp')
                     }).error(function() {
                         $scope.markdown = 'Error loading changelog data';
                     });
-                }
+                }]
             });
         };
 

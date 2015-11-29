@@ -8,7 +8,7 @@
  * Factory in the MatchCalendarApp.
  */
 angular.module('MatchCalendarApp')
-    .factory('HtmlNotifications', function ($q, $window, $rootScope) {
+    .factory('HtmlNotifications', ['$q', '$window', '$rootScope', function ($q, $window, $rootScope) {
         var supports = function() {
             return 'Notification' in $window;
         };
@@ -76,4 +76,4 @@ angular.module('MatchCalendarApp')
                 });
             }
         };
-    });
+    }]);

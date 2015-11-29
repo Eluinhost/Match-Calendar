@@ -4,6 +4,7 @@
         "php": ">=5.3.3",
         "silex/silex": "~1.2"
     },
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "UltraSoftcore\\MatchCalendar\\": "src/"

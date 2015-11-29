@@ -16,65 +16,64 @@ angular.module('MatchCalendarApp')
                 limit = limit || 100;
                 sort = sort || 'new';
 
-                var deferreds = [];
-                angular.forEach(subreddits, function (subreddit) {
-                    var deferred = $q.defer();
+                var deferreds = _.map(subreddits, function(subreddit) {
+                    // get the posts
+                    return $http
+                        .get('https://www.reddit.com/r/' + subreddit + '/search.json?q=flair:\'Upcoming Match\' OR flair:\'Community Game\'&restrict_sr=on&limit=' + limit + '&sort=' + sort)
+                        .then(function (data) {
+                            // parse each element and filter out null posts
+                            return _(data.data.data.children)
+                                .map(function(element) {
+                                    return MatchPostParser.parse(element.data);
+                                })
+                                .filter(function(element) {
+                                    return element !== null;
+                                })
+                                .value();
+                        })
+                        .catch(function() {
+                            // if failed return the name of the subreddit
+                            return subreddit;
+                        });
+                });
 
-                    var parsed = [];
-                    var unparsed = [];
-                    //get the posts
-                    $http.get('https://www.reddit.com/r/' + subreddit + '/search.json?q=flair:\'Upcoming Match\' OR flair:\'Community Game\'&restrict_sr=on&limit=' + limit + '&sort=' + sort).then(
-                        function (data) {
-                            angular.forEach(data.data.data.children, function (element) {
-                                //parse the post
-                                var matchPost = MatchPostParser.parse(element.data);
+                // when all are completed
+                return $q.all(deferreds)
+                    .then(function (data) {
+                        // split into separated arrays
+                        var errorSubs = _.filter(data, _.isString);
 
-                                if (null === matchPost) {
-                                    return;
+                        var posts = _(data)
+                            .filter(_.isArray)
+                            .flatten()
+                            .reduce(
+                                function(acc, element) {
+                                    (element.opens ? acc.parsed : acc.unparsed).push(element);
+                                    return acc;
+                                },
+                                {
+                                    parsed: [],
+                                    unparsed: []
                                 }
+                            );
 
-                                // if time was invalid push to the invalid stack
-                                (matchPost.opens ? parsed : unparsed).push(matchPost);
-                            });
-                            deferred.resolve({
-                                parsed: parsed,
-                                unparsed: unparsed
-                            });
-                        },
-                        function () {
-                            deferred.resolve({
-                                parsed: parsed,
-                                unparsed: unparsed
-                            });
-                        }
-                    );
-                    deferreds.push(deferred.promise);
-                });
+                        var halfHourAgo = DateTimeService.currentTime().subtract(30, 'minutes');
 
-                var deferred = $q.defer();
-                $q.all(deferreds).then(function (data) {
-                    var parsed = [];
-                    var unparsed = [];
-                    angular.forEach(data, function (element) {
-                        parsed.push.apply(parsed, element.parsed);
-                        unparsed.push.apply(unparsed, element.unparsed);
+                        // sort the parsed ones in time order and filter out any older than 30 mins
+                        var filtered = $filter('orderBy')(posts.parsed, function (element) {
+                            return element.opens.format('X');
+                        }).filter(function(post) {
+                            return halfHourAgo.diff(post.opens) < 0;
+                        });
+
+                        // add the unparsed matches to the end of the results
+                        filtered.push.apply(filtered, posts.unparsed);
+
+                        return {
+                            posts: filtered,
+                            errors: errorSubs
+                        };
                     });
-
-                    var halfHourAgo = DateTimeService.currentTime().subtract(30, 'minutes');
-
-                    // sort the parsed ones in time order and filter out any older than 30 mins
-                    var filtered = $filter('orderBy')(parsed, function (element) {
-                        return element.opens.format('X');
-                    }).filter(function(post) {
-                        return halfHourAgo.diff(post.opens) < 0;
-                    });
-
-                    // add the unparsed matches to the end of the results
-                    filtered.push.apply(filtered, unparsed);
-                    deferred.resolve(filtered);
-                });
-
-                return deferred.promise;
             }
         };
     }]);

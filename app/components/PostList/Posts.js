@@ -28,20 +28,18 @@ angular.module('MatchCalendarApp')
 
         $scope.updating = false;
         $scope.update = function() {
-            var def = $q.defer();
             $scope.updating = true;
-            RedditPostsService.query(Subreddits.subreddits, 200).then(function (data) {
-                $scope.posts = data;
+            return RedditPostsService.query(Subreddits.subreddits, 200).then(function (data) {
+                $scope.posts = data.posts;
+                $scope.errorSubs = data.errors;
                 $scope.updating = false;
-                $scope.currentRegions = readRegions(data);
-                $scope.currentGamemodes = readGamemodes(data);
-                $scope.currentTeamTypes = readTeamTypes(data);
+                $scope.currentRegions = readRegions(data.posts);
+                $scope.currentGamemodes = readGamemodes(data.posts);
+                $scope.currentTeamTypes = readTeamTypes(data.posts);
 
                 $scope.lastUpdated = DateTimeService.currentTime().unix();
                 $rootScope.$broadcast('postsUpdated', $scope.posts);
-                def.resolve();
             });
-            return def.promise;
         };
 
         //update every minute

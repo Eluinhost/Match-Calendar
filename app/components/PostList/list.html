@@ -53,6 +53,9 @@
         <i class="fa" ng-class="{'fa-arrow-up': showFilters, 'fa-arrow-down': !showFilters}"></i> Filter Posts - Showing <b ng-bind="filtered.posts.length"></b> of <b ng-bind="posts.posts.length"></b>
     </button>
     <desktop-notification-enabler></desktop-notification-enabler>
+    <alert class="errored-subreddit" type="danger" bindonce bo-show="posts.errorSubs.length" refresh-on="'postsUpdated'">
+        Failed to load matches from the chosen subreddit/s: <span class="errored-subreddit-list" bo-text="posts.errorSubs.join(', ')"></span>
+    </alert>
     <accordion close-others="false">
         <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.filters.favourited | filter:filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': Hosts.favoriteHosts.indexOf(post.author) !== -1}">
             <accordion-heading>

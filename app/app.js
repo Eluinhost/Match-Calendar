@@ -11,7 +11,10 @@ angular.module('MatchCalendarApp', ['truncate', 'ui.bootstrap', 'LocalForageModu
     })
 
     //configuration
-    .config(['$stateProvider', '$urlRouterProvider', '$localForageProvider', '$tooltipProvider', function($stateProvider, $urlRouterProvider, $localForageProvider, $tooltipProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$localForageProvider', '$tooltipProvider', '$compileProvider', function($stateProvider, $urlRouterProvider, $localForageProvider, $tooltipProvider, $compileProvider) {
+        // simple hack. The comment is stripped out when minified in production
+        $compileProvider.debugInfoEnabled(/comment/.test(function() { /** comment */}));
+
         $localForageProvider.config({
             name: 'MatchCalendar'
         });

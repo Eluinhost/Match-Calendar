@@ -8,7 +8,7 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('TemplateEditorCtrl', ['$scope', '$interpolate', 'Templates', function ($scope, $interpolate, Templates) {
+    .controller('TemplateEditorCtrl', ['$scope', '$interpolate', 'Templates', 'DateTimeService', function ($scope, $interpolate, Templates, DateTimeService) {
         $scope.templates = Templates;
 
         $scope.loadNew = function(template) {
@@ -37,7 +37,11 @@ angular.module('MatchCalendarApp')
             }
 
             $scope.generated = $interpolate($scope.tempCopy.template, false, null, false)({
-
+                opensUTC: DateTimeService.format(DateTimeService.formats.REDDIT_POST, moment(), true),
+                title: 'Example Title #20',
+                region: 'AN',
+                teams: 'rTo10',
+                scenarios: 'Vanilla+, Longshots'
             });
         };
 

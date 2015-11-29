@@ -9,8 +9,8 @@
  */
 angular.module('MatchCalendarApp')
     .controller('PostGeneratorCtrl', [
-           '$scope', '$window', '$state', '$interpolate', '$modal', '$localForage', 'PostGeneratorRegions', 'GameType', 'DateTimeService', 'Templates', 'Subreddits', function (
-            $scope,   $window,   $state,   $interpolate,   $modal,   $localForage,   PostGeneratorRegions,   GameType,   DateTimeService,   Templates,   Subreddits) {
+           '$scope', '$window', '$state', '$interpolate', '$localForage', 'PostGeneratorRegions', 'GameType', 'DateTimeService', 'Templates', 'Subreddits', function (
+            $scope,   $window,   $state,   $interpolate,   $localForage,   PostGeneratorRegions,   GameType,   DateTimeService,   Templates,   Subreddits) {
         $scope.regions = PostGeneratorRegions;
         $scope.gameTypes = GameType.types;
         $scope.DateTime = DateTimeService;

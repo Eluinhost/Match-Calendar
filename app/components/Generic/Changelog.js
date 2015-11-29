@@ -8,9 +8,9 @@
  * Service of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .factory('Changelog', ['$modal', function ($modal) {
+    .factory('Changelog', ['$uibModal', function ($uibModal) {
         var showChangelog = function() {
-            $modal.open({
+            $uibModal.open({
                 template: '<div class="modal-header"><h3 class="modal-title">Changelog</h3></div><div class="modal-body"><markdown class="md" content="markdown"></markdown></div>',
                 controller: function($scope, $http) {
                     $scope.markdown = '';

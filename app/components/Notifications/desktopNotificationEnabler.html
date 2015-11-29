@@ -1,17 +1,17 @@
 <div bindonce="HtmlNotifications.permission" bo-switch="HtmlNotifications.permission" refresh-on="'Notifications:PermissionsAsked'">
     <div bo-switch-when="default">
-        <alert class="notify-permission" type="warning" ng-click="requestPermission()">
-            Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" tooltip="Enable to get notifications when games are starting soon"></i>
-        </alert>
+        <uib-alert class="notify-permission" type="warning" ng-click="requestPermission()">
+            Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" uib-tooltip="Enable to get notifications when games are starting soon"></i>
+        </uib-alert>
     </div>
     <div bo-switch-when="denied">
-        <alert class="notify-permission" type="danger">
-            Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
-        </alert>
+        <uib-alert class="notify-permission" type="danger">
+            Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" uib-tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+        </uib-alert>
     </div>
     <div bo-switch-when="unsupported">
-        <alert class="notify-permission" type="danger">
+        <uib-alert class="notify-permission" type="danger">
             Desktop alerts are not supported by your browser, no notifications will be made.
-        </alert>
+        </uib-alert>
     </div>
 </div>

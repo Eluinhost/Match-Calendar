@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel-body post-filters" collapse="!showFilters">
+        <div class="panel-body post-filters" uib-collapse="!showFilters">
             <div class="row filter">
                 <div class="col-lg-2 text-right-lg text-center filter-title">Show favourited only:</div>
                 <div class="col-lg-10 text-left-lg text-center">
@@ -53,17 +53,17 @@
         <i class="fa" ng-class="{'fa-arrow-up': showFilters, 'fa-arrow-down': !showFilters}"></i> Filter Posts - Showing <b ng-bind="filtered.posts.length"></b> of <b ng-bind="posts.posts.length"></b>
     </button>
     <desktop-notification-enabler></desktop-notification-enabler>
-    <alert class="errored-subreddit" type="danger" bindonce bo-show="posts.errorSubs.length" refresh-on="'postsUpdated'">
+    <uib-alert class="errored-subreddit" type="danger" bindonce bo-show="posts.errorSubs.length" refresh-on="'postsUpdated'">
         Failed to load matches from the chosen subreddit/s: <span class="errored-subreddit-list" bo-text="posts.errorSubs.join(', ')"></span>
-    </alert>
-    <accordion close-others="false">
-        <accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.filters.favourited | filter:filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': Hosts.favoriteHosts.indexOf(post.author) !== -1}">
-            <accordion-heading>
+    </uib-alert>
+    <uib-accordion close-others="false">
+        <uib-accordion-group bindonce="post" refresh-on="'postsUpdated'" class="match-post" ng-repeat="post in filtered.posts=(posts.posts | filter:filtered.filters.favourited | filter:filtered.filters.teamType | filter:filtered.filters.gamemode | filter:filtered.filters.region | filter:filtered.filters.search) track by post.id" ng-class="{'favorite-host': Hosts.favoriteHosts.indexOf(post.author) !== -1}">
+            <uib-accordion-heading>
                 <post-details post="post"></post-details>
-            </accordion-heading>
+            </uib-accordion-heading>
             <div class="container text-left">
                 <markdown class="md" content="post.selftext"></markdown>
             </div>
-        </accordion-group>
-    </accordion>
+        </uib-accordion-group>
+    </uib-accordion>
 </div>

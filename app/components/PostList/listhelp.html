@@ -1,15 +1,15 @@
 <h2>Example Post:</h2>
 
-<accordion close-others="false">
-    <accordion-group class="match-post">
-        <accordion-heading>
+<uib-accordion close-others="false">
+    <uib-accordion-group class="match-post">
+        <uib-accordion-heading>
             <post-details post="example"></post-details>
-        </accordion-heading>
+        </uib-accordion-heading>
         <div class="container text-left">
             <markdown class="md" content="example.selftext"></markdown>
         </div>
-    </accordion-group>
-</accordion>
+    </uib-accordion-group>
+</uib-accordion>
 
 <div class="container" bindonce="'example'" refresh-on="'postsUpdated'">
     Most parts of a post can also be hovered over for an explanation. Clicking on the bar itself will show the contents of the post.
@@ -24,11 +24,11 @@
     Default notification time is 10 minutes only.
     </p>
     <div class="well">
-        <span class="abs-game-starts" tooltip="Time Opens">
+        <span class="abs-game-starts" uib-uib-tooltip="Time Opens">
             <b bo-text="DateTime.format(DateTime.formats.POST_HEADER, example.opens)"></b>
-            <i class="fa fa-calendar" ng-click="toggleNotification(); $event.stopPropagation()" ng-class="{notifications: isNotifying()}"></i>
+            <a href ng-click="toggleNotification()"><i class="fa fa-calendar" ng-class="{notifications: isNotifying()}"></i></a>
         </span>
-        <span tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+        <span uib-tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
             <small bindonce="example" refresh-on="'clockTick'" bo-text="example.opens.from(DateTime.currentTime()) || 'Unknown'"></small> <i class="fa fa-clock-o"></i>
         </span>
     </div>
@@ -38,12 +38,12 @@
     the team type of the game. The text underneath the title is the scenarios/gamemodes to be played with
     <div class="well">
         <div>
-            <a class="anchor-link" ng-click="$event.stopPropagation()" bo-href="example.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
-            <a class="post-title" target="_blank" ng-click="$event.stopPropagation()" bo-href="example.permalink" bo-text="example.title | characters:100: false"></a>
+            <a class="anchor-link" ng-click="$event.preventDefault(); $event.stopPropagation()" bo-href="example.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
+            <a class="post-title" target="_blank" ng-click="$event.preventDefault(); $event.stopPropagation()" bo-href="example.permalink" bo-text="example.title | characters:100: false"></a>
             <strong class="post-teams" ng-bind="example.teams"></strong>
         </div>
         <div>
-            <small class="gamemodes" tooltip="Gamemodes">
+            <small class="gamemodes" uib-tooltip="Gamemodes">
                 <i class="fa fa-joypad"></i> <span bo-text="example.gamemodes.join(' | ')"></span>
             </small>
         </div>
@@ -52,7 +52,7 @@
     <h2>Server Region</h2>
     This is the region the server is hosted in
     <div class="well">
-        <span class="server-region" tooltip="Server Region">
+        <span class="server-region" uib-tooltip="Server Region">
             <i class="fa fa-globe"></i> <small bo-text="example.region || 'Unknown'"></small>
         </span>
     </div>
@@ -67,9 +67,9 @@
     </p>
     <div class="well">
         <small>
-            <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" bo-href="'http://reddit.com/u/' + example.author" bo-text="example.author"></a>
+            <a class="post-author" target="_blank" ng-click="$event.preventDefault(); $event.stopPropagation()" bo-href="'http://reddit.com/u/' + example.author" bo-text="example.author"></a>
         </small>
-        <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(example.author); $event.stopPropagation()"></i>
+        <i class="fa fa-reddit" uib-tooltip="Toggle Favorite" ng-click="toggleFavorite(example.author); $event.preventDefault(); $event.stopPropagation()"></i>
     </div>
 
     <h2>Server Address</h2>
@@ -77,7 +77,7 @@
     on this example)
     <div class="well">
         <span bo-show="example.address">
-            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">
+            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" uib-tooltip="Server address" stop-propagation>
                 <span clip-copy="example.address" clip-click="triggerCopiedMessage(post)">
                     <small bindonce refresh-on="'regionCopyChange'" bo-text="example.address"></small> <i class="fa fa-cubes"></i>
                 </span>

@@ -149,6 +149,7 @@ module.exports = function (grunt) {
                         dot: true,
                         src: [
                             '.tmp',
+                            '.sass-cache',
                             '<%= yeoman.dist %>'
                         ]
                     }
@@ -341,7 +342,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: '.',
-                        src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+                        src: 'bower_components/bootstrap-sass/assets/fonts/bootstrap/*',
                         dest: '<%= yeoman.dist %>'
                     }
                 ]

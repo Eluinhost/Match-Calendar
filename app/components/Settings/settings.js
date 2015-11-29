@@ -8,7 +8,8 @@
  * Controller of the MatchCalendarApp
  */
 angular.module('MatchCalendarApp')
-    .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', '$localForage', '$modal', '$window', 'Subreddits', 'DateTimeService', 'PostNotifications', function ($scope, NotifcationTimeFormat, $localForage, $modal, $window, Subreddits, DateTimeService, PostNotifications) {
+    .controller('SettingsCtrl', ['$scope', 'NotifcationTimeFormat', '$localForage', '$uibModal', '$window', 'Subreddits', 'DateTimeService', 'PostNotifications',
+        function ($scope, NotifcationTimeFormat, $localForage, $uibModal, $window, Subreddits, DateTimeService, PostNotifications) {
         $scope.subreddits = Subreddits;
         $scope.DateTime = DateTimeService;
         $scope.PostNotifications = PostNotifications;
@@ -43,7 +44,7 @@ angular.module('MatchCalendarApp')
                     $window.location.reload();
                 },
                 function() {
-                    $modal.open({
+                    $uibModal.open({
                         template: 'Failed to clear storage. You may need to clear it manually'
                     });
                 }

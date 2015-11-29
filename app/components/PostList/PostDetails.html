@@ -1,12 +1,12 @@
 <div class="row text-center" bindonce="post" refresh-on="'postsUpdated'" bo-attr bo-attr-id="'post-' + post.id">
     <div class="col-lg-2 col-xs-12 text-center text-right-lg">
         <span class="abs-game-starts">
-            <i bo-show="post.isCommunityGame" class="fa fa-users" tooltip="This is a community game"></i>
-            <i bo-show="post.isStartTime" class="fa fa-warning" tooltip="This is a start time, not a whitelist off time"></i>
-            <b bo-text="DateTime.format(DateTime.formats.POST_HEADER, post.opens)" tooltip="Time Opens"></b>
-            <i class="fa fa-calendar" ng-click="toggleNotification(); $event.stopPropagation()" ng-class="{notifications: isNotifying()}"></i>
+            <i bo-show="post.isCommunityGame" class="fa fa-users" uib-tooltip="This is a community game"></i>
+            <i bo-show="post.isStartTime" class="fa fa-warning" uib-tooltip="This is a start time, not a whitelist off time"></i>
+            <b bo-text="DateTime.format(DateTime.formats.POST_HEADER, post.opens)" uib-tooltip="Time Opens"></b>
+            <i class="fa fa-calendar" ng-click="toggleNotification(); $event.preventDefault(); $event.stopPropagation()" ng-class="{notifications: isNotifying()}"></i>
         </span>
-        <span tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+        <span uib-tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
             <small bindonce="post" refresh-on="'clockTick'" bo-text="post.opens.from(DateTime.currentTime()) || 'Unknown'"></small> <i class="fa fa-clock-o"></i>
         </span>
         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
@@ -14,16 +14,16 @@
     <div class="col-lg-6 text-left-lg text-center col-xs-12">
         <div class="post-title">
             <a target="_blank" ng-click="$event.stopPropagation()" bo-href="post.permalink" bo-text="post.title | characters:100: false"></a>
-            <a class="anchor-link" tooltip="Click to open open calendar to this post" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
+            <a class="anchor-link" uib-tooltip="Click to open open calendar to this post" ng-click="$event.stopPropagation()" bo-href="post.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
             <div bo-show="Subreddits.subreddits.length > 1">
                 <a bo-href="'https://reddit.com/r/' + post.subreddit"><small bo-text="post.subreddit"></small></a>
             </div>
         </div>
         <div class="title-left">
-            <div class="post-teams" tooltip="Team Style">
+            <div class="post-teams" uib-tooltip="Team Style">
                 <strong bo-text="post.teams + (post.teamSize ? ' To' + post.teamSize : '')"></strong>
             </div>
-            <div class="gamemodes" tooltip="Gamemodes" bo-text="post.gamemodes.join(' | ')"></div>
+            <div class="gamemodes" uib-tooltip="Gamemodes" bo-text="post.gamemodes.join(' | ')"></div>
         </div>
         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
     </div>
@@ -31,9 +31,9 @@
         <small>
             <a class="post-author" target="_blank" ng-click="$event.stopPropagation()" bo-href="'http://reddit.com/u/' + post.author" bo-text="post.author"></a>
         </small>
-        <i class="fa fa-reddit" tooltip="Toggle Favorite" ng-click="toggleFavorite(); $event.stopPropagation()"></i>
+        <i class="fa fa-reddit" uib-tooltip="Toggle Favorite" tooltip-placement="right" ng-click="toggleFavorite(); $event.preventDefault(); $event.stopPropagation()"></i>
         <span bo-show="post.address">
-            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" tooltip="Server address" ng-click="$event.stopPropagation()">
+            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" uib-tooltip="Server address" ng-click="$event.preventDefault(); $event.stopPropagation()">
                 <span clip-copy="post.address" clip-click="triggerCopiedMessage(post)">
                     <small bindonce refresh-on="'regionCopyChange'" bo-text="addressOverride || post.address"></small> <i class="fa fa-cubes"></i>
                 </span>
@@ -42,10 +42,10 @@
         <div class="divider visible-xs visible-md visible-sm hidden-lg"></div>
     </div>
     <div class="col-lg-2 text-left-lg text-center col-xs-12">
-        <span class="server-region" tooltip="Server Region">
+        <span class="server-region" uib-tooltip="Server Region">
             <i class="fa fa-globe"></i> <small bo-text="post.region || 'Unknown'"></small>
         </span>
-        <span tooltip="Time posted" class="time-posted visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+        <span uib-tooltip="Time posted" class="time-posted visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
             <i class="fa fa-reply fa-rotate-180"></i> <small bo-text="post.posted.from(post.opens, true) + ' in advance'"></small>
         </span>
     </div>

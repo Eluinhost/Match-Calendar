@@ -36,7 +36,9 @@ angular.module('MatchCalendarApp')
                 return;
             }
 
-            $scope.generated = $interpolate($scope.tempCopy.template, false, null, true)($scope);
+            $scope.generated = $interpolate($scope.tempCopy.template, false, null, false)({
+
+            });
         };
 
         // TODO check name conflicts

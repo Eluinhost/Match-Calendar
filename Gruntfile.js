@@ -54,9 +54,9 @@ module.exports = function (grunt) {
                 files: ['test/spec/**/*.js'],
                 tasks: ['newer:jshint:test', 'karma']
             },
-            compass: {
+            sass: {
                 files: ['<%= yeoman.app %>/**/*.{scss,sass}'],
-                tasks: ['compass:server', 'autoprefixer']
+                tasks: ['sass:server', 'autoprefixer']
             },
             gruntfile: {
                 files: ['Gruntfile.js']
@@ -149,7 +149,6 @@ module.exports = function (grunt) {
                         dot: true,
                         src: [
                             '.tmp',
-                            '.sass-cache',
                             '<%= yeoman.dist %>'
                         ]
                     }
@@ -189,16 +188,23 @@ module.exports = function (grunt) {
                 ignorePath: /(\.\.\/){1,2}bower_components\//
             }
         },
-
-        // Compiles Sass to CSS and generates necessary files if requested
-        compass: {
+        sass: {
             options: {
-                config: 'sassConfig.rb'
+                indentedSyntax: true,
+                includePaths: ['<%= yeoman.app %>/', 'bower_components/']
             },
-            dist: { },
+            dist: {
+                files: {
+                    '.tmp/styles/main.css': ['<%= yeoman.app %>/main.sass']
+                }
+            },
             server: {
                 options: {
-                    debugInfo: true
+                    sourceMap: true,
+                    sourceComments: true
+                },
+                files: {
+                    '.tmp/styles/main.css': ['<%= yeoman.app %>/main.sass']
                 }
             }
         },
@@ -354,13 +360,13 @@ module.exports = function (grunt) {
         // Run some tasks in parallel to speed up the build process
         concurrent: {
             server: [
-                'compass:server'
+                'sass:server'
             ],
             test: [
-                'compass'
+                'sass'
             ],
             dist: [
-                'compass:dist',
+                'sass:dist',
                 'imagemin',
                 'svgmin'
             ]

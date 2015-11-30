@@ -6,14 +6,12 @@ A website for checking out upcoming UltraHardcore matches from Reddit.
 Requirements
 ------------
 
-- PHP
-- NodeJS
-- Apache/nginx
+- PHP (for time syncing)
 
-Build requirements:
+Requirements to build
+---------------------
 
-- Git
-- NPM
+- NodeJS/NPM
 - Bower (install with npm install -g bower)
 - Grunt CLI (install with npm install -g grunt-cli)
 - Composer
@@ -51,7 +49,7 @@ Point the webserver to the `web` folder.
 
 The site is tested and ran live on nginx.
 
-###nginx
+### nginx
     
     server {
         # other settings, server name/directory e.t.c.
@@ -86,7 +84,7 @@ The site is tested and ran live on nginx.
     }
 
 
-###Apache
+### Apache
 
 There is a .htaccess in the `api` folder already so no extra configuration should be needed.
 

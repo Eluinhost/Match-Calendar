@@ -124,9 +124,9 @@
                 <div class="panel-heading"><h3 class="panel-title">Selected Template</h3></div>
                 <div class="panel-body form-group" ng-class="{'has-error': !validTemplate()}">
                     <select ng-required class="form-control" ng-model="generator.template" ng-options="o.name as o.name for o in templates.customTemplates"></select>
-                    <alert ng-show="generator.template == 'default'" type="warning">
+                    <uib-alert ng-show="generator.template == 'default'" type="warning">
                         You have the default template selected. You probably want to replace it with something more personal/usable via the Template Editor button below
-                    </alert>
+                    </uib-alert>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ class PostListCtrl {
             region: post => !_.contains(Posts.disabledRegions, post.region.toLowerCase()),
             // Check if all of its gamemodes are enabled or not
             gamemode: post => !_.any(post.gamemodes, gamemode => {
-                _.contains(Posts.disabledGamemodes, gamemode.toLowerCase());
+                return _.contains(Posts.disabledGamemodes, gamemode.toLowerCase());
             }),
             teamType: post => !_.contains(Posts.disabledTeamTypes, post.teams.toLowerCase()),
             favourited: post => Posts.showFavouritedHostsOnly ? Hosts.isFavouriteHost(post.author) : true

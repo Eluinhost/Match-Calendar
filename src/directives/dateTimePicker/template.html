@@ -1,0 +1,20 @@
+<uib-timepicker
+    class="settings-timepicker"
+    ng-model="picker.internalJSDate"
+    hour-step="1"
+    minute-step="1"
+    show-meridian="meridian">
+</uib-timepicker>
+<p class="input-group">
+    <input type="text"
+           class="form-control"
+           uib-datepicker-popup="dd-MMMM-yyyy"
+           min-date="picker.internalMinDate"
+           ng-model="picker.internalJSDate"
+           is-open="picker.opened"
+           ng-required="true"
+           close-text="Close" />
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="picker.toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+</p>

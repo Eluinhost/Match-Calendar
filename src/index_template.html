@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html class="no-js" ng-app="MatchCalendarApp" ng-strict-di manifest="manifest.appcache">
+<head>
+    <title ng-controller="TitleCtrl as title" bindonce refresh-on="'clockTick'" bo-text="title.DateTime.format('TITLE') + ' - Calendar'">Calendar</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="http://fonts.googleapis.com/css?family=Hammersmith+One" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container-fluid page-container">
+    <app-cache-updater></app-cache-updater>
+    <header-bar></header-bar>
+    <navbar></navbar>
+    <clockbar></clockbar>
+    <div class="row page-view" ui-view></div>
+    <footer-bar></footer-bar>
+</div>
+
+<div id="outdated" style="display: none">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+
+</body>
+</html>

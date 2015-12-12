@@ -1,9 +1,0 @@
-{
-  "generator-angularjs-silex": {
-    "appname": "MatchCalendar",
-    "namespace": "UltraSoftcore\\MatchCalendar",
-    "author": "Eluinhost",
-    "srcfolder": "app",
-    "distfolder": "web"
-  }
-}

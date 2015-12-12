@@ -1,9 +1,0 @@
-=crayon-border-full($color, $defaultColor, $width: $default-crayon-border-width)
-    border-image: url($path-crayon-base + '-' + $color + $path-crayon-ext) $width $width $width $width repeat
-
-    //fallback for <IE-11
-    border-style: double
-    border-color: $defaultColor
-
-=crayon-border($width: $default-crayon-border-width)
-    +crayon-border-full('blue', $brand-primary, $width)

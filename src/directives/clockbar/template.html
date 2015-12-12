@@ -5,7 +5,13 @@
     <div class="col-sm-6 clock-bar-center">
         <div class="row">
             <div class="col-xs-12 clock-bar-time">
-                <strong ng-class="{unsynced: !DateTime.synced}" bindonce bo-text="DateTime.format('HEADER')" refresh-on="'clockTick'"></strong>
+                <strong
+                    ng-class="{unsynced: !DateTime.synced}"
+                    bindonce
+                    bo-text="DateTime.format('HEADER')"
+                    uib-tooltip="{{ tooltip() }}"
+                    refresh-on="'clockTick'">
+                </strong>
 
                 <span class="time-info-icons">
                     <i class="fa fa-warning unsynced" ng-show="!DateTime.synced" tooltip-append-to-body="true" uib-tooltip="The time failed to sync with the server, time may be wrong"></i>

@@ -5,7 +5,7 @@ const TIME_FORMAT_KEY = 'timeFormat';
 const TIME_ZONE_KEY = 'timeZone';
 
 class DateTime {
-    constructor($rootScope, $interval, $http, $localForage) {
+    constructor($rootScope, $interval, $http, $localForage, $timeout) {
         this.$rootScope = $rootScope;
         this.$http = $http;
 
@@ -63,6 +63,9 @@ class DateTime {
 
         // Start initial sync
         this.resync();
+
+        // Start another after 10 seconds once the page has settled down a little bit
+        $timeout(() => this.resync(), 10000);
     }
 
     /**
@@ -127,6 +130,6 @@ class DateTime {
         return time.format(_.isFunction(formatting) ? formatting() : this.formats[formatting]);
     }
 }
-DateTime.$inject = ['$rootScope', '$interval', '$http', '$localForage'];
+DateTime.$inject = ['$rootScope', '$interval', '$http', '$localForage', '$timeout'];
 
 export default DateTime;

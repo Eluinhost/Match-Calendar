@@ -17,8 +17,8 @@ class Posts {
         this.lastUpdated = 0;
 
         this.disabledRegions = [];
-        this.disabledGamemodes = [];
         this.disabledTeamTypes = [];
+        this.disabledGamemodes = [];
         this.showFavouritedHostsOnly = false;
 
         this.initialised = $localForage
@@ -27,8 +27,8 @@ class Posts {
                 // Merge saved settings into ourselves
                 _.merge(this, {
                     disabledRegions: regions,
-                    disabledGamemodes: types,
-                    disabledTeamtypes: gamemodes,
+                    disabledTeamTypes: types,
+                    disabledGamemodes: gamemodes,
                     showFavouritedHostsOnly: favourites
                 });
 

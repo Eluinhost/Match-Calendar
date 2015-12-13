@@ -55,8 +55,8 @@ class SettingsCtrl {
     }
 
 }
-SettingsCtrl.$inject =
-    ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'DateTime', 'PostNotifications', '$localForage', '$scope'];
+SettingsCtrl.$inject = ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'DateTime', 'PostNotifications',
+    '$localForage', '$scope'];
 
 let controllerName = 'SettingsCtrl';
 

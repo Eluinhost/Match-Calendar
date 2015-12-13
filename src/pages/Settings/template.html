@@ -34,15 +34,29 @@
                     <div class="row" ng-repeat="subreddit in settings.Subreddits.subreddits">
                         <button type="button" ng-click="settings.Subreddits.deleteSubreddit(subreddit)" class="btn btn-default btn-lg col-xs-10 col-xs-offset-1"><i class="fa fa-reddit"></i> <span ng-bind="'/r/' + subreddit"></span></button>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-xs-8 col-xs-offset-1">
-                            <input class="form-control" type="text" placeholder="Subreddit name" ng-model="newSubreddit" keybind="settings.Subreddits.addSubreddit(newSubreddit)" key="13">
+                    <hr ng-show="settings.Subreddits.subreddits.length" />
+                    <form name="subreddits" class="form-group" novalidate ng-class="{ 'has-error': subreddits.$invalid, 'has-success': subreddits.$valid}">
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="uhcmatches"
+                                ng-model="settings.tempSubreddit"
+                                keybind="settings.addSubreddit(subreddits.$valid)"
+                                key="13"
+                                required
+                                name="subreddit"
+                                not-in-array="settings.Subreddits.subreddits"
+                            />
+                            <span class="input-group-btn" ng-click="settings.addSubreddit(subreddits.$valid)">
+                                <button class="btn" ng-disabled="subreddits.subreddit.$invalid" ng-class="{ 'btn-danger': subreddits.$invalid, 'btn-success': subreddits.$valid}">Add</button>
+                            </span>
                         </div>
-                        <div class="col-xs-2">
-                            <button ng-click="settings.Subreddits.addSubreddit(newSubreddit)" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> New</button>
+                        <div ng-messages="subreddits.subreddit.$error" role="alert">
+                            <div ng-message="required" class="help-block">Please enter a subreddit name</div>
+                            <div ng-message="notInArray" class="help-block">This subreddit is already in the list</div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

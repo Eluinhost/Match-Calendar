@@ -14,6 +14,7 @@ class SettingsCtrl {
             step: 60,
             translate: DurationFormatter.format
         };
+        this.tempSubreddit = '';
     }
 
     clearStorage() {
@@ -25,6 +26,15 @@ class SettingsCtrl {
             .catch(() => this.$uibModal.open({
                 template: 'Failed to clear storage. You may need to clear it manually' }
             ));
+    }
+
+    addSubreddit(valid) {
+        if (!valid) {
+            return;
+        }
+
+        this.Subreddits.addSubreddit(this.tempSubreddit);
+        this.tempSubreddit = '';
     }
 
 }

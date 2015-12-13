@@ -59,11 +59,13 @@ class Posts {
         this.updating = false;
 
         // Watch for subreddit changes
-        $rootScope.$watchCollection(() => Subreddits.subreddits, () => this.update());
+        Subreddits.initialised.then(() => {
+            $rootScope.$watchCollection(() => Subreddits.subreddits, () => this.update());
 
-        // Update every minute
-        $interval(() => this.update(), 1000 * 60);
-        this.update();
+            // Update every minute
+            $interval(() => this.update(), 1000 * 60);
+            this.update();
+        });
     }
 
     isGamemodeDisabled(gamemeode) {

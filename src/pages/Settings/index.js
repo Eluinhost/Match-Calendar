@@ -17,6 +17,10 @@ class SettingsCtrl {
         this.tempSubreddit = '';
 
         $scope.$watch(() => this.tempSubreddit, () => {
+            if (!this.tempSubreddit) {
+                return;
+            }
+
             // Only cut beginning off if they typed past it
 
             if (this.tempSubreddit.startsWith('/r/') && this.tempSubreddit.length > 3) {

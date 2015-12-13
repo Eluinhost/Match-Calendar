@@ -1,5 +1,5 @@
 class SettingsCtrl {
-    constructor(DurationFormatter, $uibModal, $window, Subreddits, DateTime, PostNotifications, $localForage) {
+    constructor(DurationFormatter, $uibModal, $window, Subreddits, DateTime, PostNotifications, $localForage, $scope) {
         this.Subreddits = Subreddits;
         this.DateTime = DateTime;
         this.PostNotifications = PostNotifications;
@@ -15,6 +15,19 @@ class SettingsCtrl {
             translate: DurationFormatter.format
         };
         this.tempSubreddit = '';
+
+        $scope.$watch(() => this.tempSubreddit, () => {
+            // Only cut beginning off if they typed past it
+
+            if (this.tempSubreddit.startsWith('/r/') && this.tempSubreddit.length > 3) {
+                this.tempSubreddit = this.tempSubreddit.slice(3);
+                return;
+            }
+
+            if (this.tempSubreddit.startsWith('r/') && this.tempSubreddit.length > 2) {
+                this.tempSubreddit = this.tempSubreddit.slice(2);
+            }
+        });
     }
 
     clearStorage() {
@@ -39,7 +52,7 @@ class SettingsCtrl {
 
 }
 SettingsCtrl.$inject =
-    ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'DateTime', 'PostNotifications', '$localForage'];
+    ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'DateTime', 'PostNotifications', '$localForage', '$scope'];
 
 let controllerName = 'SettingsCtrl';
 

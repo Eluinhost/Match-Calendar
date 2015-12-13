@@ -74,29 +74,28 @@
                             <i class="fa fa-cubes"></i> <span ng-bind="scenario"></span>
                         </button>
                     </div>
-                    <br />
-                    <form name="scenarios" class="row form-group has-feedback" novalidate ng-class="{ 'has-error': scenarios.$invalid, 'has-success': scenarios.$valid}">
+                    <hr ng-show="generator.scenarios.length" />
+                    <form name="scenarios" class="form-group" novalidate ng-class="{ 'has-error': scenarios.$invalid, 'has-success': scenarios.$valid}">
                         <div class="input-group">
-                            <span class="input-group-addon" ng-click="generator.addScenario(scenarios.$valid)">Add New</span>
                             <input
                                 type="text"
                                 class="form-control"
                                 placeholder="Scenario"
                                 ng-model="generator.tempSubreddit"
-                                keybind="generator.addScenario(generator.tempSubreddit)"
+                                keybind="generator.addScenario(scenarios.$valid)"
                                 key="13"
                                 required
                                 name="scenario"
+                                not-in-array="generator.scenarios"
                             />
+                            <span class="input-group-btn" ng-click="generator.addScenario(scenarios.$valid)">
+                                <button class="btn" ng-disabled="scenarios.scenario.$invalid" ng-class="{ 'btn-danger': scenarios.$invalid, 'btn-success': scenarios.$valid}">Add</button>
+                            </span>
                         </div>
-                        <span
-                            class="glyphicon form-control-feedback"
-                            ng-class="{'glyphicon-remove': scenarios.scenario.$invalid, 'glyphicon-ok': scenarios.scenario.$valid}"
-                            aria-hidden="true">
-                        </span>
-                        <span class="help-block" ng-show="scenarios.scenario.$error.required">
-                            Please enter a subreddit name (without the <code>/r/</code> prefix)
-                        </span>
+                        <div ng-messages="scenarios.scenario.$error" role="alert">
+                            <div ng-message="required" class="help-block">Please enter a scenario name</div>
+                            <div ng-message="notInArray" class="help-block">This scenario is already in the list</div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -110,15 +109,29 @@
                             <i class="fa fa-cubes"></i> <span ng-bind="extra"></span>
                         </button>
                     </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-xs-8 col-xs-offset-1">
-                            <input class="form-control" type="text" placeholder="Extra" ng-model="generator.tempExtra" keybind="generator.addExtra(newExtra)" key="13">
+                    <hr ng-show="generator.extras.length" />
+                    <form name="extras" class="form-group" novalidate ng-class="{ 'has-error': extras.$invalid, 'has-success': extras.$valid}">
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Extra"
+                                ng-model="generator.tempExtra"
+                                keybind="generator.addExtra(extras.$valid)"
+                                key="13"
+                                required
+                                name="extra"
+                                not-in-array="generator.extras"
+                            />
+                            <span class="input-group-btn" ng-click="generator.addExtra(extras.$valid)">
+                                <button class="btn" ng-disabled="extras.extra.$invalid" ng-class="{ 'btn-danger': extras.$invalid, 'btn-success': extras.$valid}">Add</button>
+                            </span>
                         </div>
-                        <div class="col-xs-2">
-                            <button ng-click="generator.addExtra(generator.tempExtra)" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> New</button>
+                        <div ng-messages="extras.extra.$error" role="alert">
+                            <div ng-message="required" class="help-block">Please enter an extra name</div>
+                            <div ng-message="notInArray" class="help-block">This extras is already in the list</div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

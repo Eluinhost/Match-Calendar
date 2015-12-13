@@ -18,6 +18,7 @@ import elastic   from 'angular-elastic';
 import sanitize  from 'angular-sanitize';
 import router    from 'angular-ui-router';
 import animate   from 'angular-animate';
+import messages  from 'angular-messages';
 import {name as slider} from 'angularjs-slider';
 
 // 3rd party, don't expose names
@@ -60,6 +61,7 @@ import headerBar                  from 'app/directives/headerBar';
 import footerBar                  from 'app/directives/footerBar';
 import navbar                     from 'app/directives/navbar';
 import clockbar                   from 'app/directives/clockbar';
+import notInArray                 from 'app/directives/notInArray';
 
 // Pages/Controllers
 import * as About          from 'app/pages/About';
@@ -96,7 +98,7 @@ setupStates.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 let app = angular.module(
     'MatchCalendarApp',
-    [angularLocalForage, elastic, sanitize, router, clipboard, animate, bindonce, bootstrap, truncate, slider]
+    [angularLocalForage, elastic, sanitize, router, clipboard, animate, bindonce, bootstrap, truncate, slider, messages]
 )
     .config(q)
     .config(bs3)
@@ -114,6 +116,7 @@ let app = angular.module(
     .directive('footerBar', footerBar)
     .directive('navbar', navbar)
     .directive('clockbar', clockbar)
+    .directive('notInArray', notInArray)
     .service('Changelog', Changelog)
     .service('DateTime', DateTime)
     .service('DurationFormatter', DurationFormatter)

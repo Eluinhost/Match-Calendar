@@ -11,6 +11,7 @@
         "angular-bindonce": "git://github.com/Pasvaz/bindonce.git#rebind-debug",
         "angular-elastic": "2.5.x",
         "angular-localforage": "1.2.x",
+        "angular-messages": "1.4.x",
         "angular-sanitize": "1.4.x",
         "angular-truncate-2": "0.4.x",
         "angular-ui-bootstrap": "0.14.x",

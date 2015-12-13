@@ -93,12 +93,6 @@ class GeneratorCtrl {
             return;
         }
 
-        // Skip duplicates
-        // TODO add to validator
-        if (_.contains(this.scenarios, this.tempSubreddit)) {
-            return;
-        }
-
         this.scenarios.push(this.tempSubreddit);
 
         // Reset the temp variable
@@ -118,21 +112,16 @@ class GeneratorCtrl {
     }
 
     // TODO add messages on invalid
-    addExtra(name) {
+    addExtra(valid) {
         // Skip invalid
-        if (_.isEmpty(name)) {
+        if (!valid) {
             return;
         }
 
-        // Skip duplicates
-        if (!_.contains(this.extras, name)) {
-            this.extras.push(name);
-        }
+        this.extras.push(this.tempExtra);
 
         // Reset the temp var
-        if (name === this.tempExtra) {
-            this.tempExtra = '';
-        }
+        this.tempExtra = '';
     }
 
     removeExtra(index) {

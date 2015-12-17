@@ -1,5 +1,6 @@
-<div class="row" ng-repeat="item in removal.items track by $index">
-    <button type="button" ng-click="removal.removeItem($index)" class="btn btn-default btn-lg col-xs-10 col-xs-offset-1">
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="item in removal.items track by $index">
         <i class="fa" ng-class="::'fa-' + removal.buttonIcon"></i> <span ng-bind="::removal.buttonPrefix"></span><span ng-bind="item"></span>
-    </button>
-</div>
+        <span class="badge fa fa-trash" ng-click="removal.removeItem($index)"> </span>
+    </li>
+</ul>

@@ -30,6 +30,12 @@
                 </div>
             </div>
             <div class="row filter">
+                <div class="col-lg-2 text-right-lg text-center filter-title">Show blocked hosts:</div>
+                <div class="col-lg-10 text-left-lg text-center">
+                    <input type="checkbox" ng-model="postList.Posts.showBlockedHosts">
+                </div>
+            </div>
+            <div class="row filter">
                 <div class="col-lg-2 text-right-lg text-center filter-title">Regions:</div>
                 <div class="col-lg-10 text-left-lg text-center">
                     <button type="button"
@@ -81,7 +87,7 @@
         Failed to load matches from the chosen subreddit/s: <span class="errored-subreddit-list" bo-text="postList.Posts.errorSubs.join(', ')"></span> <a ui-sref="app.settings">Configure</a>
     </uib-alert>
     <uib-accordion close-others="false">
-        <uib-accordion-group class="{{ postList.postClasses(post).join(' ') }}" ng-repeat="post in postList.filteredPosts=(postList.Posts.posts | filter:postList.filters.favourited | filter:postList.filters.teamType | filter:postList.filters.gamemode | filter:postList.filters.region | filter:postList.filters.search) track by post.id">
+        <uib-accordion-group class="{{ postList.postClasses(post).join(' ') }}" ng-repeat="post in postList.filteredPosts=(postList.Posts.posts | filter:postList.filters.favourited | filter:postList.filters.blocked | filter:postList.filters.teamType | filter:postList.filters.gamemode | filter:postList.filters.region | filter:postList.filters.search) track by post.id">
             <uib-accordion-heading>
                 <post-details post="post"></post-details>
             </uib-accordion-heading>

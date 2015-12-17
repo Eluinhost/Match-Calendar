@@ -4,6 +4,7 @@ let DISABLED_REGIONS_KEY = 'disabledRegions';
 let DISABLED_TEAM_TYPES_KEY = 'disabledTeamTypes';
 let DISABLED_GAMEMODES_KEY = 'disabledGamemodes';
 let FAVOURITES_ONLY_KEY = 'showFavouritedHostsOnly';
+let SHOW_BLOCKED_KEY = 'showBlockedHosts';
 
 class Posts {
     constructor($rootScope, $interval, Subreddits, DateTime, RedditPostsService, $localForage) {
@@ -20,16 +21,21 @@ class Posts {
         this.disabledTeamTypes = [];
         this.disabledGamemodes = [];
         this.showFavouritedHostsOnly = false;
+        this.showBlockedHosts = false;
 
         this.initialised = $localForage
-            .getItem([DISABLED_REGIONS_KEY, DISABLED_TEAM_TYPES_KEY, DISABLED_GAMEMODES_KEY, FAVOURITES_ONLY_KEY])
-            .spread((regions, types, gamemodes, favourites) => {
+            .getItem([
+                DISABLED_REGIONS_KEY, DISABLED_TEAM_TYPES_KEY, DISABLED_GAMEMODES_KEY,
+                FAVOURITES_ONLY_KEY, SHOW_BLOCKED_KEY
+            ])
+            .spread((regions, types, gamemodes, favourites, showBlocked) => {
                 // Merge saved settings into ourselves
                 _.merge(this, {
                     disabledRegions: regions,
                     disabledTeamTypes: types,
                     disabledGamemodes: gamemodes,
-                    showFavouritedHostsOnly: favourites
+                    showFavouritedHostsOnly: favourites,
+                    showBlockedHosts: showBlocked
                 });
 
                 $rootScope.$watchCollection(

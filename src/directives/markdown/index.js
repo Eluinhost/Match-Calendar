@@ -6,15 +6,16 @@ import MarkdownParser from 'app/services/MarkdownParser';
  */
 function markdown($sanitize) {
     return {
-        scope: {
-            content: '='
-        },
+        require: 'ngModel',
+        scope: {},
         restrict: 'EA',
-        link: function(scope, element) {
-            scope.$watch('content', function() {
-                element.html($sanitize(MarkdownParser.render(scope.content)));
+        link: function(scope, element, attributes, ngModelCtrl) {
+            ngModelCtrl.$render = function() {
+                // Render the markdown to the DOM
+                element.html($sanitize(MarkdownParser.render(ngModelCtrl.$viewValue || '')));
+                // Replace all links to open in a new tab
                 element.find('a').attr('target', '_blank');
-            }, true);
+            };
         }
     };
 }

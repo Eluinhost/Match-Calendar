@@ -67,7 +67,19 @@ class GeneratorCtrl {
 
                 $rootScope.$watchCollection(
                     () => this.scenarios,
-                    () => $localForage.setItem(SCENARIOS_KEY, this.scenarios)
+                    () => {
+                        if (this.scenarios.length === 0) {
+                            this.scenarios = ['Vanilla'];
+                        }
+
+                        // Replace any 'vanilla' entries with vanilla+ when adding a new scenario
+                        if (this.scenarios.length > 1) {
+                            this.scenarios = this.scenarios.map(scenario => {
+                                return scenario.toLowerCase() === 'vanilla' ? 'Vanilla+' : scenario;
+                            });
+                        }
+                        $localForage.setItem(SCENARIOS_KEY, this.scenarios);
+                    }
                 );
                 $rootScope.$watchCollection(() => this.extras, () => $localForage.setItem(EXTRAS_KEY, this.extras));
 
@@ -84,48 +96,6 @@ class GeneratorCtrl {
 
     requiresTeamSizes() {
         return GameTypes[this.gameType].requiresTeamSizes;
-    }
-
-    // TODO add error messages
-    addScenario(valid) {
-        // Skip invalid
-        if (!valid) {
-            return;
-        }
-
-        this.scenarios.push(this.tempSubreddit);
-
-        // Reset the temp variable
-        this.tempSubreddit = '';
-
-        // Replace any 'vanilla' entries with vanilla+ when adding a new scenario
-        this.scenarios = this.scenarios.map(scenario => scenario.toLowerCase() === 'vanilla' ? 'Vanilla+' : scenario);
-    }
-
-    removeScenario(index) {
-        this.scenarios.splice(index, 1);
-
-        // If no scenarios left make sure just 'vanilla' shows at least
-        if (this.scenarios.length === 0) {
-            this.scenarios.push('Vanilla');
-        }
-    }
-
-    // TODO add messages on invalid
-    addExtra(valid) {
-        // Skip invalid
-        if (!valid) {
-            return;
-        }
-
-        this.extras.push(this.tempExtra);
-
-        // Reset the temp var
-        this.tempExtra = '';
-    }
-
-    removeExtra(index) {
-        this.extras.splice(index, 1);
     }
 
     hasValidTemplate() {

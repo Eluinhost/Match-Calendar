@@ -16,7 +16,7 @@ class PostNotifications {
         this.initialised = $localForage
             .getItem([TIMES_KEY, NOTIFY_KEY])
             .spread((times, notify) => {
-                if (!_.isUndefined(times)) {
+                if (!_.isNull(times)) {
                     // Check for old { value: <int> } style and convert
                     if (_.isObject(times[0])) {
                         times = times.map(time => time.value);
@@ -25,7 +25,7 @@ class PostNotifications {
                     this.notificationTimes = times;
                 }
 
-                if (!_.isUndefined(notify)) {
+                if (!_.isNull(notify)) {
                     this.notifyFor = notify;
                 }
 

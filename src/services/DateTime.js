@@ -37,13 +37,10 @@ class DateTime {
         this.initialised = $localForage
             .getItem([TIME_FORMAT_KEY, TIME_ZONE_KEY])
             .spread((format, zone) => {
-                if (!_.isUndefined(format)) {
-                    this.timeFormat = format;
-                }
-
-                if (!_.isUndefined(zone)) {
-                    this.timeZone = zone;
-                }
+                _.mergeNotNull(this, {
+                    timeFormat: format,
+                    timeZone: zone
+                });
 
                 $rootScope.$watch(() => this.timeFormat, () => {
                     $localForage.setItem(TIME_FORMAT_KEY, this.timeFormat);

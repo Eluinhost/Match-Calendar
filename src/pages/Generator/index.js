@@ -55,7 +55,7 @@ class GeneratorCtrl {
                 }
 
                 // Merge in and overwrite defaults where needed
-                _.merge(this, toMerge);
+                _.mergeNotNull(this, toMerge);
 
                 // Setup watchers to save back
                 $rootScope.$watch(() => this.postTitle, () => $localForage.setItem(TITLE_KEY, this.postTitle));

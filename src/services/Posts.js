@@ -30,7 +30,7 @@ class Posts {
             ])
             .spread((regions, types, gamemodes, favourites, showBlocked) => {
                 // Merge saved settings into ourselves
-                _.merge(this, {
+                _.mergeNotNull(this, {
                     disabledRegions: regions,
                     disabledTeamTypes: types,
                     disabledGamemodes: gamemodes,

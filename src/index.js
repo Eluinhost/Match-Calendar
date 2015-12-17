@@ -1,6 +1,16 @@
 import 'app/main.sass';
 import _ from 'lodash';
 
+// Add mixin for lodash
+_.mixin({
+    mergeNotNull: function(object, ...sources) {
+        // Convert all nulls to undefined
+        sources.forEach(source => _.mapValues(source, value => _.isNull(value) ? undefined : value));
+        // Run a regular merge
+        _.merge(object, ...sources);
+    }
+});
+
 // Registered as a global, capture export
 import outdatedBrowser  from 'imports?outdatedBrowser=>{}!exports?outdatedBrowser!outdated-browser';
 
@@ -62,6 +72,8 @@ import footerBar                  from 'app/directives/footerBar';
 import navbar                     from 'app/directives/navbar';
 import clockbar                   from 'app/directives/clockbar';
 import notInArray                 from 'app/directives/notInArray';
+import buttonRemovalList          from 'app/directives/buttonRemovalList';
+import uniqueItemsEditor          from 'app/directives/uniqueItemsEditor';
 
 // Pages/Controllers
 import * as About          from 'app/pages/About';
@@ -117,6 +129,8 @@ let app = angular.module(
     .directive('navbar', navbar)
     .directive('clockbar', clockbar)
     .directive('notInArray', notInArray)
+    .directive('buttonRemovalList', buttonRemovalList)
+    .directive('uniqueItemsEditor', uniqueItemsEditor)
     .service('Changelog', Changelog)
     .service('DateTime', DateTime)
     .service('DurationFormatter', DurationFormatter)

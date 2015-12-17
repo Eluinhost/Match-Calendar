@@ -20,7 +20,8 @@ class PostListCtrl {
                 return _.contains(Posts.disabledGamemodes, gamemode.toLowerCase());
             }),
             teamType: post => !_.contains(Posts.disabledTeamTypes, post.teams.toLowerCase()),
-            favourited: post => Posts.showFavouritedHostsOnly ? Hosts.isFavouriteHost(post.author) : true
+            favourited: post => Posts.showFavouritedHostsOnly ? Hosts.isFavouriteHost(post.author) : true,
+            blocked: post => Posts.showBlockedHosts ? true : !Hosts.isBlockedHost(post.author)
         };
 
         this.filteredPosts = [];

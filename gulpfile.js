@@ -69,16 +69,8 @@ var config = {
             },
             // libraries
             {
-                test: /angular-truncate-2.js$/,
-                loader: 'imports?angular'
-            },
-            {
                 test: /angular-localForage.js$/,
                 loader: 'imports?this=>{angular: angular}'
-            },
-            {
-                test: /angular-sanitize.js$/,
-                loader: 'imports?window=>{angular: angular}'
             },
             {
                 test: /ngClip.js$/,

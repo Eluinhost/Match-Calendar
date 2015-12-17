@@ -1,10 +1,12 @@
 class SettingsCtrl {
-    constructor(DurationFormatter, $uibModal, $window, Subreddits, DateTime, PostNotifications, $localForage, $scope) {
+    constructor(DurationFormatter, $uibModal, $window, Subreddits,
+                Hosts, DateTime, PostNotifications, $localForage, $scope) {
         this.Subreddits = Subreddits;
         this.DateTime = DateTime;
         this.PostNotifications = PostNotifications;
         this.$uibModal = $uibModal;
         this.$window = $window;
+        this.Hosts = Hosts;
         this.DurationFormatter = DurationFormatter;
         this.$localForage = $localForage;
 
@@ -15,6 +17,8 @@ class SettingsCtrl {
             translate: DurationFormatter.format
         };
         this.tempSubreddit = '';
+        this.tempFavouriteHost = '';
+        this.tempBlockedHost = '';
 
         $scope.$watch(() => this.tempSubreddit, () => {
             if (!this.tempSubreddit) {
@@ -32,6 +36,52 @@ class SettingsCtrl {
                 this.tempSubreddit = this.tempSubreddit.slice(2);
             }
         });
+
+        $scope.$watch(() => this.tempFavouriteHost, () => {
+            if (!this.tempFavouriteHost) {
+                return;
+            }
+
+            // Only cut beginning off if they typed past it
+
+            if (this.tempFavouriteHost.startsWith('/u/') && this.tempFavouriteHost.length > 3) {
+                this.tempFavouriteHost = this.tempFavouriteHost.slice(3);
+                return;
+            }
+
+            if (this.tempFavouriteHost.startsWith('u/') && this.tempFavouriteHost.length > 2) {
+                this.tempFavouriteHost = this.tempFavouriteHost.slice(2);
+            }
+        });
+
+        // TODO replace these watchers with something generic
+
+        $scope.$watch(() => this.tempBlockedHost, () => {
+            if (!this.tempBlockedHost) {
+                return;
+            }
+
+            // Only cut beginning off if they typed past it
+
+            if (this.tempBlockedHost.startsWith('/u/') && this.tempBlockedHost.length > 3) {
+                this.tempBlockedHost = this.tempBlockedHost.slice(3);
+                return;
+            }
+
+            if (this.tempBlockedHost.startsWith('u/') && this.tempBlockedHost.length > 2) {
+                this.tempBlockedHost = this.tempBlockedHost.slice(2);
+            }
+        });
+    }
+
+    timeZoneGroup(zone) {
+        let index = zone.indexOf('/');
+
+        if (index === -1) {
+            return 'Other';
+        }
+
+        return zone.substring(0, zone.indexOf('/'));
     }
 
     clearStorage() {
@@ -44,19 +94,9 @@ class SettingsCtrl {
                 template: 'Failed to clear storage. You may need to clear it manually' }
             ));
     }
-
-    addSubreddit(valid) {
-        if (!valid) {
-            return;
-        }
-
-        this.Subreddits.addSubreddit(this.tempSubreddit);
-        this.tempSubreddit = '';
-    }
-
 }
-SettingsCtrl.$inject = ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'DateTime', 'PostNotifications',
-    '$localForage', '$scope'];
+SettingsCtrl.$inject = ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'Hosts', 'DateTime',
+    'PostNotifications', '$localForage', '$scope'];
 
 let controllerName = 'SettingsCtrl';
 
@@ -66,7 +106,7 @@ let state = {
     template: require('./template.html'),
     controller: `${controllerName} as settings`,
     resolve: {
-        savedData: ['$q', 'Subreddits', 'PostNotifications', function($q, ...others) {
+        savedData: ['$q', 'Subreddits', 'PostNotifications', 'Hosts', function($q, ...others) {
             return $q.all(others.map(o => o.initialised));
         }]
     }

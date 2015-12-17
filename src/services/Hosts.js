@@ -1,21 +1,29 @@
 import _ from 'lodash';
 
-const KEY = 'favoriteHosts';
+const FAV_KEY = 'favoriteHosts';
+const BLOCK_KEY = 'blockedHosts';
 
 class Hosts {
     constructor($localForage, $rootScope) {
         this.favouriteHosts = [];
+        this.blockedHosts = [];
 
         // Set a promise to resolve on in routes
-        this.initialised = $localForage.getItem(KEY)
-            .then(value => {
-                if (!_.isNull(value)) {
-                    this.favouriteHosts = value;
-                }
+        this.initialised = $localForage.getItem([FAV_KEY, BLOCK_KEY])
+            .spread((favouriteHosts, blockedHosts) => {
+                _.mergeNotNull(this, {
+                    favouriteHosts,
+                    blockedHosts
+                });
 
                 $rootScope.$watchCollection(
                     () => this.favouriteHosts,
-                    () => $localForage.setItem(KEY, this.favouriteHosts)
+                    () => $localForage.setItem(FAV_KEY, this.favouriteHosts)
+                );
+
+                $rootScope.$watchCollection(
+                    () => this.blockedHosts,
+                    () => $localForage.setItem(BLOCK_KEY, this.blockedHosts)
                 );
             });
     }
@@ -40,6 +48,28 @@ class Hosts {
 
     isFavouriteHost(name) {
         return _.contains(this.favouriteHosts, name);
+    }
+
+    addBlockedHost(name, checkExists = true) {
+        if (!checkExists || !this.isBlockedHost(name)) {
+            this.blockedHosts.push(name);
+        }
+    }
+
+    removeBlockedHost(name) {
+        _.remove(this.blockedHosts, host => host === name);
+    }
+
+    toggleBlockedHost(name) {
+        if (this.isBlockedHost(name)) {
+            this.removeBlockedHost(name);
+        } else {
+            this.addBlockedHost(name, false);
+        }
+    }
+
+    isBlockedHost(name) {
+        return _.contains(this.blockedHosts, name);
     }
 }
 Hosts.$inject = ['$localForage', '$rootScope'];

@@ -1,0 +1,41 @@
+<form
+    name="unique.list"
+    class="form-group"
+    novalidate
+    ng-class="{ 'has-error': unique.list.$dirty && unique.list.$invalid, 'has-success': unique.list.$dirty && unique.list.$valid}"
+>
+    <button-removal-list
+        ng-model="unique.uniqueItems"
+        button-prefix="{{ ::unique.buttonPrefix }}"
+        button-icon="{{ ::unique.buttonIcon }}"
+    ></button-removal-list>
+    <hr ng-show="unique.uniqueItems.length" />
+    <div class="input-group">
+        <input
+            type="text"
+            class="form-control"
+            placeholder="{{ ::unique.placeholder }}"
+            ng-model="unique.tempValue"
+            keybind="unique.addNew(unique.list.$valid)"
+            key="13"
+            required
+            name="item"
+            not-in-array="unique.uniqueItems"
+        />
+        <span class="input-group-btn" ng-click="unique.addNew(unique.list.$valid)">
+            <button
+                class="btn"
+                ng-disabled="unique.list.$invalid"
+                ng-class="{ 'btn-danger':unique.list.$dirty && unique.list.$invalid, 'btn-success': unique.list.$dirty && unique.list.$valid}"
+            >Add</button>
+        </span>
+    </div>
+    <div ng-messages="unique.list.item.$error" ng-if="unique.list.$dirty" role="alert">
+        <div ng-message="required" class="help-block" ng-transclude="requiredError">
+            Please enter a value
+        </div>
+        <div ng-message="notInArray" class="help-block" ng-transclude="inArrayError">
+            This item is already in the list
+        </div>
+    </div>
+</form>

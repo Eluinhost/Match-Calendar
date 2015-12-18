@@ -21,6 +21,9 @@ function buttonRemovalList() {
             buttonIcon: '@',
             buttonPrefix: '@?'
         },
+        transclude: {
+            noItems: '?noItems'
+        },
         template: require('./template.html'),
         link: function(scope, elem, attr, ngModelCtrl) {
             scope.removal.ngModelCtrl = ngModelCtrl;

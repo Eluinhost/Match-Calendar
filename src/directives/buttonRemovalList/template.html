@@ -1,4 +1,7 @@
 <ul class="list-group">
+    <div ng-transclude="noItems" ng-if="!removal.items.length">
+        Nothing here!
+    </div>
     <li class="list-group-item" ng-repeat="item in removal.items track by $index">
         <i class="fa" ng-class="::'fa-' + removal.buttonIcon"></i> <span ng-bind="::removal.buttonPrefix"></span><span ng-bind="item"></span>
         <span class="badge fa fa-trash" ng-click="removal.removeItem($index)"> </span>

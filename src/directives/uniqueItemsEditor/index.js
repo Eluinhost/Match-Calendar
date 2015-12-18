@@ -26,7 +26,8 @@ function unqiueItemsEditor() {
         },
         transclude: {
             requiredError: '?requiredError',
-            inArrayError: '?'
+            inArrayError: '?inArrayError',
+            noItems: '?noItems'
         },
         template: require('./template.html'),
         controller: UniqueItemsEditorCtrl,

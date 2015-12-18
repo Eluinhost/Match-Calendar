@@ -79,12 +79,13 @@ import uniqueItemsEditor          from 'app/directives/uniqueItemsEditor';
 import * as About          from 'app/pages/About';
 import * as Generator      from 'app/pages/Generator';
 import * as TemplateEditor from 'app/pages/TemplateEditor';
+import * as Post           from 'app/pages/Post';
 import * as PostList       from 'app/pages/PostList';
 import * as Help           from 'app/pages/PostList/Help';
 import * as Settings       from 'app/pages/Settings';
 import * as Title          from 'app/pages/global/TitleCtrl';
 
-let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Title];
+let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Title, Post];
 
 function setupStates($stateProvider, $urlRouterProvider) {
     $stateProvider.state('app', {

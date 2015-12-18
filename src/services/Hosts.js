@@ -18,23 +18,32 @@ class Hosts {
 
                 $rootScope.$watchCollection(
                     () => this.favouriteHosts,
-                    () => $localForage.setItem(FAV_KEY, this.favouriteHosts)
+                    () => {
+                        // Always make sure to store as lowercase
+                        this.favouriteHosts = this.favouriteHosts.map(item => item.toLowerCase());
+                        $localForage.setItem(FAV_KEY, this.favouriteHosts);
+                    }
                 );
 
                 $rootScope.$watchCollection(
                     () => this.blockedHosts,
-                    () => $localForage.setItem(BLOCK_KEY, this.blockedHosts)
+                    () => {
+                        // Always make sure to store as lowercase
+                        this.favouriteHosts = this.favouriteHosts.map(item => item.toLowerCase());
+                        $localForage.setItem(BLOCK_KEY, this.blockedHosts);
+                    }
                 );
             });
     }
 
     addFavouriteHost(name, checkExists = true) {
         if (!checkExists || !this.isFavouriteHost(name)) {
-            this.favouriteHosts.push(name);
+            this.favouriteHosts.push(name.toLowerCase());
         }
     }
 
     removeFavouriteHost(name) {
+        name = name.toLowerCase();
         _.remove(this.favouriteHosts, host => host === name);
     }
 
@@ -47,16 +56,17 @@ class Hosts {
     }
 
     isFavouriteHost(name) {
-        return _.contains(this.favouriteHosts, name);
+        return _.contains(this.favouriteHosts, name.toLowerCase());
     }
 
     addBlockedHost(name, checkExists = true) {
         if (!checkExists || !this.isBlockedHost(name)) {
-            this.blockedHosts.push(name);
+            this.blockedHosts.push(name.toLowerCase());
         }
     }
 
     removeBlockedHost(name) {
+        name = name.toLowerCase();
         _.remove(this.blockedHosts, host => host === name);
     }
 
@@ -69,7 +79,7 @@ class Hosts {
     }
 
     isBlockedHost(name) {
-        return _.contains(this.blockedHosts, name);
+        return _.contains(this.blockedHosts, name.toLowerCase());
     }
 }
 Hosts.$inject = ['$localForage', '$rootScope'];

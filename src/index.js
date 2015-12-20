@@ -84,9 +84,8 @@ import * as Post           from 'app/pages/Post';
 import * as PostList       from 'app/pages/PostList';
 import * as Help           from 'app/pages/PostList/Help';
 import * as Settings       from 'app/pages/Settings';
-import * as Title          from 'app/pages/global/TitleCtrl';
 
-let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Title, Post];
+let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post];
 
 function setupStates($stateProvider, $urlRouterProvider) {
     $stateProvider.state('app', {
@@ -133,7 +132,6 @@ let app = angular.module(
     .directive('notInArray', notInArray)
     .directive('buttonRemovalList', buttonRemovalList)
     .directive('uniqueItemsEditor', uniqueItemsEditor)
-    .directive('titleTime', titleTime)
     .service('Changelog', Changelog)
     .service('DateTime', DateTime)
     .service('DurationFormatter', DurationFormatter)

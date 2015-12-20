@@ -74,6 +74,7 @@ import clockbar                   from 'app/directives/clockbar';
 import notInArray                 from 'app/directives/notInArray';
 import buttonRemovalList          from 'app/directives/buttonRemovalList';
 import uniqueItemsEditor          from 'app/directives/uniqueItemsEditor';
+import titleTime                  from 'app/directives/titleTime';
 
 // Pages/Controllers
 import * as About          from 'app/pages/About';
@@ -132,6 +133,7 @@ let app = angular.module(
     .directive('notInArray', notInArray)
     .directive('buttonRemovalList', buttonRemovalList)
     .directive('uniqueItemsEditor', uniqueItemsEditor)
+    .directive('titleTime', titleTime)
     .service('Changelog', Changelog)
     .service('DateTime', DateTime)
     .service('DurationFormatter', DurationFormatter)

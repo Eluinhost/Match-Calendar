@@ -132,6 +132,7 @@ let app = angular.module(
     .directive('notInArray', notInArray)
     .directive('buttonRemovalList', buttonRemovalList)
     .directive('uniqueItemsEditor', uniqueItemsEditor)
+    .directive('titleTime', titleTime)
     .service('Changelog', Changelog)
     .service('DateTime', DateTime)
     .service('DurationFormatter', DurationFormatter)

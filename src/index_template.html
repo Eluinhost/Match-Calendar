@@ -7,12 +7,16 @@
 </head>
 <body>
 <div class="container-fluid page-container">
-    <app-cache-updater></app-cache-updater>
-    <header-bar></header-bar>
-    <navbar></navbar>
-    <clockbar></clockbar>
+    <div class="pen">
+        <app-cache-updater></app-cache-updater>
+        <header-bar></header-bar>
+        <navbar></navbar>
+        <clockbar></clockbar>
+    </div>
     <div class="page-view" ui-view></div>
-    <footer-bar></footer-bar>
+    <div class="pen">
+        <footer-bar></footer-bar>
+    </div>
 </div>
 
 <div id="outdated" style="display: none">

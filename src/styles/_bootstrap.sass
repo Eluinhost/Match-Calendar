@@ -4,18 +4,22 @@
 .tooltip
     font-family: Tahoma, Verdana, sans-serif
 
-//override the panel stuffs
-.panel-default > .panel-heading
-    background-color: transparent
-    +watercolour-black()
+@font-face
+    font-family: 'Pen'
+    src: url('~app/fonts/pen.ttf')
 
-$border-radius-base: 0px
-$btn-border-radius-base: 0px
-$btn-border-radius-large: 0px
-$btn-border-radius-small: 0px
+$card-border-radius: 0
+$btn-border-radius: 0
+$btn-border-radius-sm: 0
+$btn-border-radius-lg: 0
+$alert-border-radius: 0
 
 $brand-primary: #008cba
 $brand-success: #43ac6a
 $brand-info: #5bc0de
 $brand-warning: #E99002
 $brand-danger: #F04124
+
+$enable-flex: true
+
+$font-family-base: 'Pen', cursive

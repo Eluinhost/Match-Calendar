@@ -30,30 +30,27 @@
         transform: perspective(400px) rotate3d(1, 0, 0, 90deg)
         opacity: 0
 
-.match-post.ng-enter
-    animation: flipInX 0.6s
+.post-item
+    &.ng-enter
+        animation: flipInX 0.6s
 
-.match-post.ng-leave
-    animation: flipOutX 0.6s
-
-.favourite-host
-    .panel-heading
-        +watercolour-green()
+    &.ng-leave
+        animation: flipOutX 0.6s
 
 .notifications
     color: #FF0000
 
 .title-left
-    @media (min-width: $screen-lg-min)
+    @include media-breakpoint-up(lg)
         float: left
         text-align: left
 
 .post-title
-    @media (min-width: $screen-lg-min)
+    @include media-breakpoint-up(lg)
         float: right
         text-align: right
 
-    @media (max-width: $screen-md-max)
+    @include media-breakpoint-down(md)
         margin-bottom: 5px
 
 .search-panel

@@ -5,13 +5,13 @@
     font-weight: bold
     +crayon-border()
     +watercolour-black()
-    @media (min-width: $screen-sm)
+    @include media-breakpoint-up(sm)
         border-width: 0
         &:nth-child(3)
             border-width: 0 3px 0 0
         &:nth-child(2)
             border-width: 0 3px 0 3px
-    @media (max-width: $screen-xs-max)
+    @include media-breakpoint-down(xs)
         border-width: 0 0 3px 0
         &:last-child
             border-bottom: 0

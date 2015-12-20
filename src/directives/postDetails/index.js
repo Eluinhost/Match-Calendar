@@ -1,15 +1,20 @@
 import _ from 'lodash';
 
 class PostDetailsCtrl {
-    constructor($scope, DateTime, PostNotifications, Hosts, Subreddits, $timeout) {
+    constructor($scope, DateTime, PostNotifications, Hosts, Subreddits, $timeout, $state) {
         this.DateTime = DateTime;
         this.PostNotifications = PostNotifications;
         this.Subreddits = Subreddits;
         this.Hosts = Hosts;
         this.$timeout = $timeout;
         this.$scope = $scope;
+        this.$state = $state;
 
         this.addressOverride = false;
+    }
+
+    goToPost() {
+        this.$state.go('app.post', { id: this.post.id });
     }
 
     timePostedInAdvance() {
@@ -53,6 +58,10 @@ class PostDetailsCtrl {
         this.$scope.$broadcast('regionCopyChange');
     }
 
+    isFavouriteHost() {
+        return this.Hosts.isFavouriteHost(this.post.author);
+    }
+
     triggerCopiedMessage() {
         if (_.isEmpty(this.post.address)) {
             return;
@@ -65,7 +74,7 @@ class PostDetailsCtrl {
         this.$timeout(() => this.setAddressOverride(false), 2000);
     }
 }
-PostDetailsCtrl.$inject = ['$scope', 'DateTime', 'PostNotifications', 'Hosts', 'Subreddits', '$timeout'];
+PostDetailsCtrl.$inject = ['$scope', 'DateTime', 'PostNotifications', 'Hosts', 'Subreddits', '$timeout', '$state'];
 
 function postDetails() {
     return {

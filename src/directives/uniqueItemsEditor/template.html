@@ -11,6 +11,7 @@
     >
         <no-items ng-transclude="noItems">No items</no-items>
     </button-removal-list>
+    <br />
     <div class="input-group">
         <input
             type="text"
@@ -31,12 +32,12 @@
             >Add</button>
         </span>
     </div>
-    <div ng-messages="unique.list.item.$error" ng-if="unique.list.$dirty" role="alert">
-        <div ng-message="required" class="help-block" ng-transclude="requiredError">
+    <div class="text-danger" ng-messages="unique.list.item.$error" ng-if="unique.list.$dirty" role="alert">
+        <small ng-message="required" ng-transclude="requiredError">
             Please enter a value
-        </div>
-        <div ng-message="notInArray" class="help-block" ng-transclude="inArrayError">
+        </small>
+        <small ng-message="notInArray" ng-transclude="inArrayError">
             This item is already in the list
-        </div>
+        </small>
     </div>
 </form>

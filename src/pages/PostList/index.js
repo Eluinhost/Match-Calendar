@@ -47,16 +47,6 @@ class PostListCtrl {
         });
     }
 
-    postClasses(post) {
-        let classes = ['match-post'];
-
-        if (this.Hosts.isFavouriteHost(post.author)) {
-            classes.push('favourite-host');
-        }
-
-        return classes;
-    }
-
     buttonEnabledClass(enabled) {
         return enabled ? 'btn-success' : 'btn-danger';
     }

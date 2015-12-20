@@ -1,6 +1,6 @@
-<div class="container text-center editor-page">
-    <div class="selector">
-        <ul class="list-group">
+<div class="container">
+    <div class="selector row">
+        <ul class="list-group col-xs-12">
             <li
                 ng-repeat="template in editor.Templates.templates"
                 ng-bind="template.name"
@@ -10,14 +10,20 @@
             <li ng-click="editor.loadNew()" class="list-group-item list-group-item-success">New Template</li>
         </ul>
     </div>
-    <h3 ng-show="editor.selected.name === 'default'">
-        You cannot edit the default template, <a ng-click="editor.cloneDefault()">click here to copy it</a>
-    </h3>
-    <div ng-if="editor.tempCopy" class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">Edit template</h3></div>
-                <div class="panel-body">
+    <div class="row p-t-1" ng-show="editor.selected.name === 'default'">
+        <div class="col-xs-12">
+            <h3>
+                You cannot edit the default template, <a ng-click="editor.cloneDefault()">click here to copy it</a>
+            </h3>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div ng-if="editor.tempCopy" class="row p-t-1">
+        <div class="card-group col-xs-12">
+            <div class="card card-primary-outline card-inverse">
+                <h4 class="card-header card-primary">Edit template</h4>
+                <div class="card-block">
                     <div ng-class="{'form-group has-feedback': true, 'has-error': !editor.isNameValid() }">
                         <label for="template-name-change">Change name</label>
                         <input id="template-name-change" type="text" ng-model="editor.tempCopy.name" class="form-control" placeholder="Template Name" required ngTrim ng-disabled="editor.selected.name === 'default'">
@@ -30,30 +36,30 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">Preview</h3></div>
-                <div class="panel-body">
+            <div class="card card-primary-outline card-inverse">
+                <h4 class="card-header card-primary">Preview</h4>
+                <div class="card-block">
                     <markdown class="md" ng-model="editor.generated"></markdown>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-xs-12">
             <button type="button" class="btn btn-block btn-success" ng-disabled="!editor.isNameValid()" ng-click="editor.saveTemplate()">Save Changes</button>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-xs-12">
             <button type="button" class="btn btn-block btn-warning" ng-disabled="!editor.canDelete()" ng-click="editor.deleteTemplate()">Delete Template</button>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
+</div>
+<div class="container">
+    <div class="row p-t-1">
+        <div class="col-xs-12">
             <uib-accordion close-others="false">
                 <uib-accordion-group>
                     <uib-accordion-heading>
                         Help - Available Template Variables
                     </uib-accordion-heading>
-                    <div class="text-left">
+                    <div class="text-xs-left p-t-1">
                         <h3>Available Variables:</h3>
                         <div class="list-group">
                             <a href="#" class="list-group-item">
@@ -77,7 +83,7 @@
                                 <p class="list-group-item-text">Comma separated list of scenarios</p>
                             </a>
                         </div>
-                        <h3>How to use:</h3>
+                        <h3 class="p-t-1">How to use:</h3>
                         <p>Surround the variable with curly brackets</p>
                         <code ng-non-bindable>**Match opens at** {{ opensUTC }}</code>
                         =>

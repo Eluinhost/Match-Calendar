@@ -88,6 +88,5 @@ function postDetails() {
         bindToController: true
     };
 }
-postDetails.$inject = ['DateTime', 'PostNotifications', 'Hosts', 'Subreddits', '$timeout'];
 
 export default postDetails;

@@ -55,6 +55,10 @@ class Posts {
                     () => this.showFavouritedHostsOnly,
                     () => $localForage.setItem(FAVOURITES_ONLY_KEY, this.showFavouritedHostsOnly)
                 );
+                $rootScope.$watch(
+                    () => this.showBlockedHosts,
+                    () => $localForage.setItem(SHOW_BLOCKED_KEY, this.showBlockedHosts)
+                );
             });
 
         this.currentRegions = [];

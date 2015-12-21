@@ -62,6 +62,10 @@ class PostDetailsCtrl {
         return this.Hosts.isFavouriteHost(this.post.author);
     }
 
+    isBlockedHost() {
+        return this.Hosts.isBlockedHost(this.post.author);
+    }
+
     triggerCopiedMessage() {
         if (_.isEmpty(this.post.address)) {
             return;

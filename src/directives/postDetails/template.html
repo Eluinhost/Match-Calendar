@@ -1,15 +1,30 @@
-<div class="card match-post card-info-outline container-fluid" ng-class="{'favourite-host': details.isFavouriteHost()}">
+<div class="card match-post card-info-outline container-fluid" bindonce="details.post" refresh-on="'postsUpdated'">
+    <div class="match-post-labels">
+        <div class="label label-primary text-xs-left" bo-if="details.post.isCommunityGame">
+            <i class="fa fa-users"></i> Community Game
+        </div>
+        <div
+            class="label label-warning text-xs-left"
+            bo-if="details.post.isStartTime"
+            uib-tooltip="Time display is game start time, not whitelist off"
+            tooltip-placement="right"
+        >
+            <i class="fa fa-warning"></i> Start Time
+        </div>
+        <div class="label label-success text-xs-left" ng-if="details.isFavouriteHost()">
+            <i class="fa fa-heart"></i> Favourite
+        </div>
+        <div class="label label-danger text-xs-left" ng-if="details.isBlockedHost()">
+            <i class="fa fa-minus-circle"></i> Blocked
+        </div>
+    </div>
     <div
         class="row text-xs-center card-block"
-        bindonce="details.post"
-        refresh-on="'postsUpdated'"
         bo-attr
         bo-attr-id="'post-' + details.post.id"
     >
         <div class="col-lg-2 col-xs-12 text-xs-center text-lg-right">
             <div class="abs-game-starts">
-                <i bo-show="details.post.isCommunityGame" class="fa fa-users" uib-tooltip="This is a community game"></i>
-                <i bo-show="details.post.isStartTime" class="fa fa-warning" uib-tooltip="This is a start time, not a whitelist off time"></i>
                 <b bo-text="details.openingTime()" uib-tooltip="Time Opens"></b>
                 <i class="fa fa-calendar show-pointer" ng-click="details.toggleNotification($event)" ng-class="{notifications: details.isNotifying()}"></i>
             </div>
@@ -18,11 +33,20 @@
             </div>
             <div class="divider hidden-lg-up"></div>
         </div>
-        <div class="col-lg-6 text-lg-left text-xs-center col-xs-12">
+        <div class="col-lg-8 text-lg-left text-xs-center col-xs-12">
             <div class="post-title">
                 <a class="show-pointer" ng-click="details.goToPost()" bo-text="details.post.title | characters:100: false"></a>
-                <div bo-show="details.showSubreddit()" >
-                    <small bo-text="details.post.subreddit"></small>
+                <div>
+                    <small>
+                        <a
+                            class="post-author"
+                            target="_blank"
+                            ng-click="$event.stopPropagation()"
+                            bo-href="'http://reddit.com/u/' + details.post.author"
+                            bo-text="details.post.author"
+                        ></a>
+                    </small>
+                    <i class="fa fa-reddit show-pointer" uib-tooltip="Toggle Favorite" tooltip-placement="right" ng-click="details.toggleFavourite($event)"></i>
                 </div>
             </div>
             <div class="title-left">
@@ -30,28 +54,6 @@
                     <strong bo-text="details.teamStyle()"></strong>
                 </div>
                 <div class="gamemodes" uib-tooltip="Gamemodes" bo-text="details.post.gamemodes.join(' | ')"></div>
-            </div>
-            <div class="divider hidden-lg-up"></div>
-        </div>
-        <div class="col-lg-2 col-xs-12 text-xs-center text-lg-right">
-            <div>
-                <small>
-                    <a
-                        class="post-author"
-                        target="_blank"
-                        ng-click="$event.stopPropagation()"
-                        bo-href="'http://reddit.com/u/' + details.post.author"
-                        bo-text="details.post.author"
-                    ></a>
-                </small>
-                <i class="fa fa-reddit show-pointer" uib-tooltip="Toggle Favorite" tooltip-placement="right" ng-click="details.toggleFavourite($event)"></i>
-            </div>
-            <div bo-show="details.post.address">
-                <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" uib-tooltip="Server address" ng-click="$event.preventDefault(); $event.stopPropagation()">
-                    <span clip-copy="details.post.address" clip-click="details.triggerCopiedMessage()">
-                        <small bindonce refresh-on="'regionCopyChange'" bo-text="details.addressOverride || details.post.address"></small> <i class="fa fa-cubes"></i>
-                    </span>
-                </span>
             </div>
             <div class="divider hidden-lg-up"></div>
         </div>

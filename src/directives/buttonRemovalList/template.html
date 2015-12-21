@@ -3,11 +3,11 @@
         Nothing here!
     </div>
     <li class="list-group-item" ng-repeat="item in removal.items track by $index">
-        <span class="label label-default pull-xs-left">
+        <span class="label label-primary label-pill pull-xs-left">
             <i class="fa" ng-class="::'fa-' + removal.buttonIcon"></i>
         </span>
         <span ng-bind="::removal.buttonPrefix"></span><span ng-bind="item"></span>
-        <span class="label label-danger label-pill pull-xs-right" ng-click="removal.removeItem($index)">
+        <span class="label label-danger pull-xs-right label-pill" ng-click="removal.removeItem($index)">
             <i class="fa fa-trash"></i>
         </span>
     </li>

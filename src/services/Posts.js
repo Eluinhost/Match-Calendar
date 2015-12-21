@@ -14,6 +14,7 @@ class Posts {
         this.$rootScope = $rootScope;
 
         this.posts = [];
+        this.unparsed = [];
 
         this.lastUpdated = 0;
 
@@ -129,6 +130,7 @@ class Posts {
             .query(this.Subreddits.subreddits, 100)
             .then(data => {
                 this.posts = data.posts;
+                this.unparsed = data.unparsed;
                 this.errorSubs = data.errors;
 
                 this.updateRegions();

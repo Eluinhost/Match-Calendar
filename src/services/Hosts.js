@@ -29,7 +29,7 @@ class Hosts {
                     () => this.blockedHosts,
                     () => {
                         // Always make sure to store as lowercase
-                        this.favouriteHosts = this.favouriteHosts.map(item => item.toLowerCase());
+                        this.blockedHosts = this.blockedHosts.map(item => item.toLowerCase());
                         $localForage.setItem(BLOCK_KEY, this.blockedHosts);
                     }
                 );

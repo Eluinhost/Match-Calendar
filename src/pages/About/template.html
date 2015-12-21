@@ -1,14 +1,26 @@
-<h1>About</h1>
+<div class="container about-page">
+    <h1>About</h1>
 
-This website is a collection of upcoming UltraHardcore games hosted by users on
-<a href="https://reddit.com/r/ultrahardcore">/r/ultrahardcore</a>.
+    This website is a collection of upcoming UltraHardcore games hosted by users on
+    <a href="https://reddit.com/r/ultrahardcore">/r/ultrahardcore</a>.
 
-<hr />
+    <hr />
 
-<h3>Contributors</h3>
+    <h3>Contributors</h3>
 
-<div ng-repeat="author in about.authors">
-    <a class="show" target="_blank" ng-href="{{author.url}}" ng-click="about.click($event, author.url)">
-        <i class="fa fa-user"></i> <span ng-bind="author.name"></span>
-    </a>
+    <div class="card-deck-wrapper">
+        <div class="card-deck">
+            <div class="card card-inverse card-primary-outline" ng-repeat="author in about.authors">
+                <h4 class="card-header card-primary">
+                    <a
+                        target="_blank"
+                        ng-href="{{::author.url}}"
+                        ng-click="about.click($event, author.url)"
+                        ng-bind="::author.name"
+                    ></a>
+                </h4>
+                <div class="card-block" ng-bind="::author.role"></div>
+            </div>
+        </div>
+    </div>
 </div>

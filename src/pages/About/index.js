@@ -8,7 +8,7 @@ class AboutCtrl {
             },
             {
                 name: 'Methii',
-                role: 'Site icon',
+                role: 'Art',
                 url: '#'
             }
         ];

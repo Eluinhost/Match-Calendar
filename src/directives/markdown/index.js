@@ -10,6 +10,8 @@ function markdown($sanitize) {
         scope: {},
         restrict: 'EA',
         link: function(scope, element, attributes, ngModelCtrl) {
+            element.addClass('md');
+
             ngModelCtrl.$render = function() {
                 // Render the markdown to the DOM
                 element.html($sanitize(MarkdownParser.render(ngModelCtrl.$viewValue || '')));

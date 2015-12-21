@@ -69,6 +69,10 @@ var config = {
             },
             // libraries
             {
+                test: /ngclipboard.js$/,
+                loader: 'imports?Clipboard=clipboard'
+            },
+            {
                 test: /angular-localForage.js$/,
                 loader: 'imports?this=>{angular: angular}'
             },

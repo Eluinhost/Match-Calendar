@@ -3,7 +3,7 @@ import template from './template.html';
 
 class AppCacheUpdaterCtrl {
     constructor($window) {
-        this.reload = $window.reload;
+        this.$window = $window;
 
         this.status = 'unsupported';
         this.progress = 0;
@@ -23,6 +23,10 @@ class AppCacheUpdaterCtrl {
             // Listen to progress events to update the percentage
             cache.addEventListener('progress', progress => this.progress = progress.loaded / progress.total * 100);
         }
+    }
+
+    reload() {
+        this.$window.location.reload();
     }
 }
 AppCacheUpdaterCtrl.$inject = ['$window'];

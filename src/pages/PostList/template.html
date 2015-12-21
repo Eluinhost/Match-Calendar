@@ -82,7 +82,7 @@
     <button class="show-filters-button btn btn-info" ng-click="postList.showFilters = !postList.showFilters">
         <i class="fa" ng-class="{'fa-arrow-up': postList.showFilters, 'fa-arrow-down': !postList.showFilters}"></i> Filter Posts - Showing <b ng-bind="postList.filteredPosts.length"></b> of <b ng-bind="postList.Posts.posts.length"></b>
     </button>
-    <desktop-notification-enabler></desktop-notification-enabler>
+    <desktop-notification-enabler show-hide-button="true"></desktop-notification-enabler>
     <uib-alert class="errored-subreddit" type="danger" bindonce bo-show="postList.Posts.errorSubs.length" refresh-on="'postsUpdated'">
         Failed to load matches from the chosen subreddit/s: <span class="errored-subreddit-list" bo-text="postList.Posts.errorSubs.join(', ')"></span> <a ui-sref="app.settings" class="alert-link">Configure</a>
     </uib-alert>

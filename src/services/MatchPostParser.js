@@ -164,13 +164,15 @@ class MatchPostParser {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
         let post = {
             id: element.id,
+            title: element.title,
             selftext: element.selftext,
             author: element.author,
             permalink: `https://reddit.com${element.permalink}`,
             posted: moment(element.created_utc, 'X'),
             anchorlink: `#${this.$location.path()}?post=${element.id}`,
             isCommunityGame: element.link_flair_text && element.link_flair_text === 'Community Game',
-            subreddit: element.subreddit
+            subreddit: element.subreddit,
+            valid: false
         };
         // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
@@ -192,28 +194,28 @@ class MatchPostParser {
             _.merge(post, parsed);
         } catch (err) {
             this.$log.warn('Unable to parse post', element.title, post.permalink, err);
-            return null;
+            return post;
         }
 
         post.address = this._getAddress(element.selftext);
 
-        // If it's invalid (no parsable date) read as unparsed date
-        if (!_.isNull(post.opens) && post.opens.isValid()) {
-            let current = this.DateTime.getTime();
-            let monthsAgo = post.opens.diff(current, 'months');
-
-            // If it's more than 6 months old, assume it's in the next year
-            if (monthsAgo < -6) {
-                post.opens.add(1, 'years');
-            }
-            // If it's more than 6 months in the future assume it's in the last year
-            else if (monthsAgo > 6) {
-                post.opens.subtract(1, 'years');
-            }
-        } else {
-            post.opens = null;
+        if (_.isNull(post.opens) || !post.opens.isValid()) {
+            return post;
         }
 
+        let current = this.DateTime.getTime();
+        let monthsAgo = post.opens.diff(current, 'months');
+
+        // If it's more than 6 months old, assume it's in the next year
+        if (monthsAgo < -6) {
+            post.opens.add(1, 'years');
+        }
+        // If it's more than 6 months in the future assume it's in the last year
+        else if (monthsAgo > 6) {
+            post.opens.subtract(1, 'years');
+        }
+
+        post.valid = true;
         return post;
     }
 }

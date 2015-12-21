@@ -16,7 +16,7 @@ Get the git respository: `git clone https://github.com/Eluinhost/Match-Calendar`
 
 Change into the directory: `cd Match-Calendar`
 
-Install dependencies: `npm install`
+Install/update dependencies: `npm update`
 
 ## Frontend
 
@@ -90,7 +90,7 @@ Updating
 
 Run `git pull` to get the latest version.
 
-Run `npm install` to install the latest dependencies.
+Run `npm update` to install the latest dependencies.
 
 Run `npm prune` to cleanup dependencies.
 

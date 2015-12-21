@@ -110,6 +110,11 @@ function setupStates($stateProvider, $urlRouterProvider) {
 }
 setupStates.$inject = ['$stateProvider', '$urlRouterProvider'];
 
+function scrollToTop($rootScope, $window) {
+    $rootScope.$on('$stateChangeSuccess', () => $window.scrollTo(0, 0));
+}
+scrollToTop.$inject = ['$rootScope', '$window'];
+
 let app = angular.module(
     'MatchCalendarApp',
     [angularLocalForage, elastic, sanitize, router, clipboard, animate, bindonce, bootstrap, truncate, slider, messages]
@@ -120,6 +125,7 @@ let app = angular.module(
     .config(debugInfo)
     .config(setupStates)
     .run(watcherLog)
+    .run(scrollToTop)
     .directive('appCacheUpdater', appCacheUpdater)
     .directive('dateTimePicker', dateTimePicker)
     .directive('desktopNotificationEnabler', desktopNotificationEnabler)

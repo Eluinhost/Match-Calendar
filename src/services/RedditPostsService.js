@@ -19,13 +19,8 @@ class RedditPostsService {
     _querySingle(subreddit, limit = 100, sort = 'new') {
         return this.$http
             .get(this._createURL(subreddit, limit, sort))
-            .then(data => {
-                // Parse each element and filter out null posts
-                return _(data.data.data.children)
-                    .map(element => this.MatchPostParser.parse(element.data))
-                    .filter(element => element !== null)
-                    .value();
-            })
+            // Parse each element and filter out null posts
+            .then(data => data.data.data.children.map(element => this.MatchPostParser.parse(element.data)))
             .catch(() => subreddit);
     }
 
@@ -45,29 +40,22 @@ class RedditPostsService {
 
                 let posts = _(data)
                     .filter(_.isArray)
-                    .flatten()
-                    .reduce(
-                        function(acc, element) {
-                            (element.opens ? acc.parsed : acc.unparsed).push(element);
-                            return acc;
-                        },
-                        {
-                            parsed: [],
-                            unparsed: []
-                        }
-                    );
+                    .flatten();
 
                 let halfHourAgo = this.DateTime.getTime().subtract(30, 'minutes');
+                let parsed = posts
+                    .filter(item => item.valid)
+                    .filter(post => halfHourAgo.diff(post.opens) < 0)
+                    .sortBy(item => item.opens.format('X'))
+                    .value();
 
-                // Sort the parsed ones in time order and filter out any older than 30 mins
-                let filtered = _.sortBy(posts.parsed, post => post.opens.format('X'))
-                                .filter(post => halfHourAgo.diff(post.opens) < 0);
-
-                // Add the unparsed matches to the end of the results
-                filtered.push.apply(filtered, posts.unparsed);
+                let unparsed = posts
+                    .filter(item => !item.valid)
+                    .value();
 
                 return {
-                    posts: filtered,
+                    posts: parsed,
+                    unparsed,
                     errors: errorSubs
                 };
             });

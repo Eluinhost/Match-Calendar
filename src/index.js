@@ -5,9 +5,9 @@ import _ from 'lodash';
 _.mixin({
     mergeNotNull: function(object, ...sources) {
         // Convert all nulls to undefined
-        sources.forEach(source => _.mapValues(source, value => _.isNull(value) ? undefined : value));
+        let newSources = sources.map(source => _.mapValues(source, value => _.isNull(value) ? undefined : value));
         // Run a regular merge
-        _.merge(object, ...sources);
+        _.merge(object, ...newSources);
     }
 });
 

@@ -1,17 +1,44 @@
-<div ng-switch="enabler.HtmlNotifications.permission()">
+<div ng-if="enabler.show()" ng-switch="enabler.HtmlNotifications.permission()" class="show-pointer">
     <div ng-switch-when="default">
-        <uib-alert class="notify-permission" type="warning" ng-click="enabler.requestPermission()">
-            Click me to enable Desktop notifications <i class="has-tip fa fa-info-circle" uib-tooltip="Enable to get notifications when games are starting soon"></i>
+        <uib-alert
+            class="notify-permission"
+            type="warning"
+            ng-click="enabler.requestPermission()"
+        >
+            <i class="has-tip fa fa-info-circle" uib-tooltip="Enable to get notifications when games are starting soon"></i>
+            Click me to enable Desktop notifications
+            <span
+                class="alert-link show-pointer"
+                ng-show="enabler.showHideButton"
+                ng-click="$event.stopPropogation(); enabler.hide = true;"
+            >
+                Dismiss
+            </span>
         </uib-alert>
     </div>
     <div ng-switch-when="denied">
         <uib-alert class="notify-permission" type="danger">
-            Desktop alerts are blocked, no notifications can be made. <i class="has-tip fa fa-info-circle" uib-tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+            <i class="has-tip fa fa-info-circle" uib-tooltip="To renable notifications in Chrome click on the page icon to the left of the URL and change the value for 'Notifications'. Other browsers require google-fu"></i>
+            Desktop alerts are blocked, no notifications can be made.
+            <span
+                class="alert-link show-pointer"
+                ng-show="enabler.showHideButton"
+                ng-click="$event.stopPropogation(); enabler.hide = true;"
+            >
+                Dismiss
+            </span>
         </uib-alert>
     </div>
     <div ng-switch-when="unsupported">
         <uib-alert class="notify-permission" type="danger">
             Desktop alerts are not supported by your browser, no notifications will be made.
+            <span
+                class="alert-link show-pointer"
+                ng-show="enabler.showHideButton"
+                ng-click="$event.stopPropogation(); enabler.hide = true;"
+            >
+                Dismiss
+            </span>
         </uib-alert>
     </div>
 </div>

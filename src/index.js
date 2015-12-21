@@ -32,7 +32,7 @@ import messages  from 'angular-messages';
 import {name as slider} from 'angularjs-slider';
 
 // 3rd party, don't expose names
-import 'angular-localForage'; const angularLocalForage = 'LocalForageModule';
+import 'angular-localforage'; const angularLocalForage = 'LocalForageModule';
 import 'ngclipboard';         const clipboard = 'ngclipboard';
 import 'angular-bindonce';    const bindonce = 'pasvaz.bindonce';
 import 'angular-truncate-2';  const truncate = 'truncate';

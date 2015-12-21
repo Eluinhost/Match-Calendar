@@ -40,7 +40,8 @@ import 'angular-truncate-2';  const truncate = 'truncate';
 
 // Configs
 import q           from 'app/setup/q';
-import bs3         from 'app/setup/bs3';
+import bsTooltips  from 'app/setup/bootstrap/bsTooltips';
+import bsTemplates from 'app/setup/bootstrap/bsTemplates';
 import localForage from 'app/setup/localForage';
 import debugInfo   from 'app/setup/debugInfo';
 
@@ -114,7 +115,7 @@ let app = angular.module(
     [angularLocalForage, elastic, sanitize, router, clipboard, animate, bindonce, bootstrap, truncate, slider, messages]
 )
     .config(q)
-    .config(bs3)
+    .config(bsTooltips)
     .config(localForage)
     .config(debugInfo)
     .config(setupStates)
@@ -148,3 +149,5 @@ let app = angular.module(
 pages
     .filter(page => !_.isUndefined(page.controller) && !_.isUndefined(page.controllerName))
     .forEach(page => app.controller(page.controllerName, page.controller));
+
+_.forEach(bsTemplates, (decorator, name) => app.decorator(name, decorator));

@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 class AboutCtrl {
     constructor() {
         this.authors = [
@@ -20,6 +22,15 @@ class AboutCtrl {
         };
 
         this.libraries = _.sortBy([
+            {
+                name: 'Finger Paint',
+                type: this.types.FONT,
+                url: '',
+                license: {
+                    name: 'SIL Open Font License, 1.1',
+                    url: 'http://scripts.sil.org/OFL'
+                }
+            },
             {
                 name: 'Hammersmith One',
                 type: this.types.FONT,

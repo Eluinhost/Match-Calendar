@@ -147,8 +147,8 @@ gulp.task('prod-build-config', function() {
         new webpack.optimize.OccurenceOrderPlugin(),
         new AppCachePlugin({
             network: ['*'],
-            // exclude manifest + map files
-            exclude: [/\.appcache$/, /\.map$/],
+            // exclude manifest + map files + changelog md
+            exclude: [/\.appcache$/, /\.map$/, /\.md$/],
             output: 'manifest.appcache'
         })
     );

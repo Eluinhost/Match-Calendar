@@ -83,7 +83,9 @@ server on every load.
 Setup a changelog
 -----------------
 
-//TODO add changelog management stuff
+When building the changelog at `/Changelog.md` will be built into the web folder with a name 
+like `/web/e5f23a3ce3b320e7750157222578e657.md`, it should be the only .md file in there.
+The contents of this file are shown as the changelog to all clients and are not in the appcache manifest.
 
 Updating
 --------

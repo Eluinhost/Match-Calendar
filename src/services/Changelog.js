@@ -1,5 +1,5 @@
 let modalController = function($scope, $http, Changelog) {
-    $scope.markdown = '';
+    $scope.markdown = 'Loading...';
 
     $http.get(Changelog.changelogURL)
         .success(data => $scope.markdown = data)
@@ -24,7 +24,7 @@ class Changelog {
 <div class="modal-body">
     <markdown ng-model="markdown"></markdown>
 </div>`;
-        this.changelogURL = '/changelog.md';
+        this.changelogURL = require('!!file!app/../CHANGELOG.md');
     }
 
     showChangelog() {

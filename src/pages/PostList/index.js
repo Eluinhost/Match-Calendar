@@ -25,26 +25,6 @@ class PostListCtrl {
         };
 
         this.filteredPosts = [];
-
-        // Handle 'anchor' links to specific posts
-        this.scrolled = false;
-        $rootScope.$on('postsUpdated', () => {
-            $timeout(() => {
-                if (this.scrolled) {
-                    return;
-                }
-
-                if ($stateParams.post !== null) {
-                    let element = document.getElementById('post-' + $stateParams.post);
-                    if (element !== null) {
-                        element.scrollIntoView();
-                        element.click();
-                    }
-                }
-
-                this.scrolled = true;
-            });
-        });
     }
 
     buttonEnabledClass(enabled) {
@@ -58,7 +38,7 @@ let controllerName = 'PostListCtrl';
 
 let state = {
     name: 'app.list',
-    url: '/list?post',
+    url: '/list',
     template: require('./template.html'),
     controller: `${controllerName} as postList`,
     resolve: {

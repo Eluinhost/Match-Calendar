@@ -2,7 +2,7 @@ import _ from 'lodash';
 import template from './template.html';
 
 class AppCacheUpdaterCtrl {
-    constructor($window) {
+    constructor($window, $timeout) {
         this.$window = $window;
 
         this.status = 'unsupported';
@@ -17,11 +17,14 @@ class AppCacheUpdaterCtrl {
             cache.addEventListener('cached',   () => this.status = 'idle');
 
             // All other events set their own status
-            ['checking', 'downloading', 'updateready', 'error']
-                .forEach(event => $window.applicationCache.addEventListener(event, () => this.status = event));
+            ['checking', 'downloading', 'updateready', 'error', 'progress']
+                .forEach(event => cache.addEventListener(event, () => this.status = event));
 
             // Listen to progress events to update the percentage
             cache.addEventListener('progress', progress => this.progress = progress.loaded / progress.total * 100);
+
+            // Recheck cache every hour
+            $timeout(() => cache.update(), 1000 * 60 * 60);
         }
     }
 
@@ -29,7 +32,7 @@ class AppCacheUpdaterCtrl {
         this.$window.location.reload();
     }
 }
-AppCacheUpdaterCtrl.$inject = ['$window'];
+AppCacheUpdaterCtrl.$inject = ['$window', '$timeout'];
 
 /**
  * @ngdoc directive

@@ -1,5 +1,5 @@
 <div ng-hide="updater.status === 'idle' || updater.status === 'unsupported'" class="updater-bar">
-    <div class="update-progress" ng-style="{width: updater.progress + '%', display: updater.status == 'progress' ? 'initial' : 'none'}"></div>
+    <div class="update-progress" ng-show="updater.status === 'progress'" ng-style="{width: updater.progress + '%'}"></div>
     <div class="update-text" ng-switch="updater.status">
         <div ng-switch-when="checking">
             Checking for updates...

@@ -71,7 +71,11 @@ class Posts {
 
         // Watch for subreddit changes
         this.firstQuery = Subreddits.initialised.then(() => {
-            $rootScope.$watchCollection(() => Subreddits.subreddits, () => this.update());
+            $rootScope.$watchCollection(() => Subreddits.subreddits, (oldSubs, newSubs) => {
+                if (oldSubs !== newSubs) {
+                    this.update();
+                }
+            });
 
             // Update every minute
             $interval(() => this.update(), 1000 * 60);

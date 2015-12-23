@@ -1,4 +1,9 @@
-<div class="card match-post card-info-outline container-fluid" bindonce="details.post" refresh-on="'postsUpdated'">
+<div
+    class="card match-post card-info-outline container-fluid"
+    bindonce="details.post"
+    refresh-on="'postsUpdated'"
+    ng-class="{'favourite-host': details.isFavouriteHost(), 'blocked-host': details.isBlockedHost()}"
+>
     <div class="match-post-labels">
         <div class="label label-primary text-xs-left" bo-if="details.post.isCommunityGame">
             <i class="fa fa-users"></i> Community Game

@@ -24,7 +24,7 @@ class Changelog {
 <div class="modal-body">
     <markdown ng-model="markdown"></markdown>
 </div>`;
-        this.changelogURL = require('!!file!app/../CHANGELOG.md');
+        this.changelogURL = require('!!file!app/../Changelog.md');
     }
 
     showChangelog() {

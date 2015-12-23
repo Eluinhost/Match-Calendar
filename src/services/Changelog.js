@@ -22,7 +22,7 @@ class Changelog {
     <h3 class="modal-title">Changelog</h3>
 </div>
 <div class="modal-body">
-    <markdown class="md" content="markdown"></markdown>
+    <markdown ng-model="markdown"></markdown>
 </div>`;
         this.changelogURL = '/changelog.md';
     }

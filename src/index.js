@@ -30,13 +30,14 @@ import router    from 'angular-ui-router';
 import animate   from 'angular-animate';
 import messages  from 'angular-messages';
 import {name as slider} from 'angularjs-slider';
+import gAnalytic from 'angulartics-google-analytics';
 
 // 3rd party, don't expose names
 import 'angular-localforage'; const angularLocalForage = 'LocalForageModule';
 import 'ngclipboard';         const clipboard = 'ngclipboard';
 import 'angular-bindonce';    const bindonce = 'pasvaz.bindonce';
 import 'angular-truncate-2';  const truncate = 'truncate';
-
+import 'angulartics'; const angulartics = 'angulartics';
 
 // Configs
 import q           from 'app/setup/q';
@@ -117,7 +118,8 @@ scrollToTop.$inject = ['$rootScope', '$window'];
 
 let app = angular.module(
     'MatchCalendarApp',
-    [angularLocalForage, elastic, sanitize, router, clipboard, animate, bindonce, bootstrap, truncate, slider, messages]
+    [angularLocalForage, elastic, sanitize, router, clipboard, animate,
+        bindonce, bootstrap, truncate, slider, messages, angulartics, gAnalytic]
 )
     .config(q)
     .config(bsTooltips)
@@ -157,3 +159,17 @@ pages
     .forEach(page => app.controller(page.controllerName, page.controller));
 
 _.forEach(bsTemplates, (decorator, name) => app.decorator(name, decorator));
+
+// Setup analytics snippet without initial pageview
+/* jscs:disable */
+/* jshint ignore:start */
+import DebugMode from 'app/services/DebugMode';
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-71696797-1', DebugMode ? 'none' : 'auto');
+/* jshint ignore:end */
+/* jscs:enable */

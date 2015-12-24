@@ -4,7 +4,7 @@ import he from 'he';
 import _ from 'lodash';
 
 const IP_REGEX = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
-const DOMAIN_REGEX = /(IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi; // jscs:ignore maximumLineLength
+const DOMAIN_REGEX = /[^\w](IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi; // jscs:ignore maximumLineLength
 const SIZE_REGEX = /To([\dX]+)/i;
 const EXTRAS_REGEX = /(\[.*?])/g;
 

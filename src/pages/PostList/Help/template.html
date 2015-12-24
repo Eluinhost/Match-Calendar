@@ -1,87 +1,68 @@
 <h2>Example Post:</h2>
 
-<uib-accordion close-others="false">
-    <uib-accordion-group class="match-post">
-        <uib-accordion-heading>
-            <post-details post="help.example"></post-details>
-        </uib-accordion-heading>
-        <div class="container text-xs-left">
-            <markdown class="md" ng-model="help.example.selftext"></markdown>
+<post-details post="help.example"></post-details>
+
+<div class="container">
+    <p>Most parts of a post can also be hovered over for an explanation.</p>
+
+    <div class="card card-inverse card-primary-outline">
+        <h4 class="card-header card-primary">Opening Time</h4>
+        <div class="card-block">
+            <p>This is the time (in your selected timezone) that the match opens/whitelist is turned off.</p>
+            <p>
+                The <span class="label label-warning"><i class="fa fa-warning"></i> Start Time</span> warning
+                will show up if the time is a non-standard starting time (whitelist on).
+            </p>
+            <p>Underneath the opening time is a relative time showing how long til the game opens (auto-updates)</p>
         </div>
-    </uib-accordion-group>
-</uib-accordion>
-
-<div class="container" bindonce="'help.example'" refresh-on="'postsUpdated'">
-    Most parts of a post can also be hovered over for an explanation. Clicking on the bar itself will show the contents of the post.
-
-    <h2>Opening Time</h2>
-    <p>
-        This is the time (in the selected timezone) that the match opens.
-    </p>
-    <p>
-        Clicking on the calendar will make it turn red and
-    (if notifications are enabled) you will get notifications when the match opening time hits the levels chosen in the settings.
-    Default notification time is 10 minutes only.
-    </p>
-    <div class="well">
-        <span class="abs-game-starts" uib-uib-tooltip="Time Opens">
-            <b bo-text="help.DateTime.format('POST_HEADER', help.example.opens)"></b>
-            <a href ng-click="toggleNotification()"><i class="fa fa-calendar" ng-class="{notifications: isNotifying()}"></i></a>
-        </span>
-        <span uib-tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-            <small bindonce="help.example" refresh-on="'clockTick'" bo-text="help.example.opens.from(DateTime.currentTime()) || 'Unknown'"></small> <i class="fa fa-clock-o"></i>
-        </span>
-    </div>
-
-    <h2>Post title, team types and gamemodes</h2>
-    This is the title of the post. Clicking it will open the match post in a new window. The bolded text on the right is
-    the team type of the game. The text underneath the title is the scenarios/gamemodes to be played with
-    <div class="well">
-        <div>
-            <a class="anchor-link" ng-click="$event.preventDefault(); $event.stopPropagation()" bo-href="help.example.anchorlink" target="_blank"><i class="fa fa-link"></i></a>
-            <a class="post-title" target="_blank" ng-click="$event.preventDefault(); $event.stopPropagation()" bo-href="help.example.permalink" bo-text="help.example.title | characters:100: false"></a>
-            <strong class="post-teams" ng-bind="help.example.teams"></strong>
+        <h4 class="card-header card-primary">Post Title</h4>
+        <div class="card-block">
+            Example: <strong ng-bind="::help.example.title"></strong>
+            <p>
+                The title of the game, clicking this will take you to it's 'post page' where you can view the entire
+                match post and find the server IP address
+            </p>
         </div>
-        <div>
-            <small class="gamemodes" uib-tooltip="Gamemodes">
-                <i class="fa fa-joypad"></i> <span bo-text="help.example.gamemodes.join(' | ')"></span>
-            </small>
+        <h4 class="card-header card-primary">Team Style</h4>
+        <div class="card-block">
+            Example: <strong ng-bind="::help.example.teams"></strong>
+            <p>This is the team style of the game. e.g. FFA, Chosen ToX, Random ToX</p>
+            <p>ToX means 'Teams of'. To4 = Teams of 4</p>
         </div>
-    </div>
-
-    <h2>Server Region</h2>
-    This is the region the server is hosted in
-    <div class="well">
-        <span class="server-region" uib-tooltip="Server Region">
-            <i class="fa fa-globe"></i> <small bo-text="help.example.region || 'Unknown'"></small>
-        </span>
-    </div>
-
-    <h2>Match Host</h2>
-    <p>
-        This is the reddit name of the match host. Clicking it will open their user profile.
-    </p>
-    <p>
-        Clicking the Reddit alien will
-        add the host to your 'favourite' list and their matches will show up green in the post list.
-    </p>
-    <div class="well">
-        <small>
-            <a class="post-author" target="_blank" ng-click="$event.preventDefault(); $event.stopPropagation()" bo-href="'http://reddit.com/u/' + help.example.author" bo-text="help.example.author"></a>
-        </small>
-        <i class="fa fa-reddit" uib-tooltip="Toggle Favorite" ng-click="toggleFavorite(help.example.author); $event.preventDefault(); $event.stopPropagation()"></i>
-    </div>
-
-    <h2>Server Address</h2>
-    This is the address to connect to to play the game. Clicking it will cause the IP to be copied to the clipboard (not
-    on this example)
-    <div class="well">
-        <span bo-show="help.example.address">
-            <span class="server-address visible-xs-inline visible-md-inline visible-sm-inline visible-lg-block" uib-tooltip="Server address" stop-propagation>
-                <span clip-copy="help.example.address" clip-click="triggerCopiedMessage(post)">
-                    <small bindonce refresh-on="'regionCopyChange'" bo-text="help.example.address"></small> <i class="fa fa-cubes"></i>
+        <h4 class="card-header card-primary">Gamemodes/Scanrios</h4>
+        <div class="card-block">
+            Example: <span ng-bind="::help.example.gamemodes.join(' | ')"></span>
+            <p>
+                These are the scenarios that are in the game, checking out the post itself will give you a
+                description/instructions for the scenario
+            </p>
+        </div>
+        <h4 class="card-header card-primary">Host + Region</h4>
+        <div class="card-block">
+            Example:
+            <span ng-bind="::help.example.region"></span>
+            +
+            <a ng-href="{{::'https://reddit.com/u/' + help.example.author}}" target="_blank">
+                <i class="fa fa-reddit"></i>
+                <span ng-bind="::help.example.author"></span>
+            </a>
+            <p>Which continent the server is hosted in as well as the Reddit name of the host</p>
+            <p>Clicking on the Reddit logo will add the host to your favourites list</p>
+        </div>
+        <h4 class="card-header card-primary">Favourite/Blocked</h4>
+        <div class="card-block">
+            <p>
+                Favourite hosts will show a
+                <span class="label label-success text-xs-left">
+                    <i class="fa fa-heart"></i> Favourite
                 </span>
-            </span>
-        </span>
+                or
+                <span class="label label-danger text-xs-left">
+                    <i class="fa fa-minus-circle"></i> Blocked
+                </span>
+                label in the top left to signify their status. The post will also be tinted green/red.
+                Blocked hosts do not show up by default and need to be enabled in the post filters
+            </p>
+        </div>
     </div>
 </div>

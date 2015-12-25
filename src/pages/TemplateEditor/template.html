@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="selector row">
+        <ul class="list-group col-xs-12">
+            <li
+                ng-repeat="template in editor.Templates.templates"
+                ng-bind="template.name"
+                ng-class="{'list-group-item': true, active: editor.selected.name === template.name}"
+                ng-click="editor.loadNew(template)">
+            </li>
+            <li ng-click="editor.loadNew()" class="list-group-item list-group-item-success">New Template</li>
+        </ul>
+    </div>
+    <div class="row p-t-1" ng-show="editor.selected.name === 'default'">
+        <div class="col-xs-12">
+            <h3>
+                You cannot edit the default template, <a ng-click="editor.cloneDefault()">click here to copy it</a>
+            </h3>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div ng-if="editor.tempCopy" class="row p-t-1">
+        <div class="card-group col-xs-12">
+            <div class="card card-primary-outline card-inverse">
+                <h4 class="card-header card-primary">Edit template</h4>
+                <div class="card-block">
+                    <div ng-class="{'form-group has-feedback': true, 'has-error': !editor.isNameValid() }">
+                        <label for="template-name-change">Change name</label>
+                        <input id="template-name-change" type="text" ng-model="editor.tempCopy.name" class="form-control" placeholder="Template Name" required ngTrim ng-disabled="editor.selected.name === 'default'">
+                        <span ng-class="{'form-control-feedback': true, 'glyphicon glyphicon-remove': !editor.isNameValid()}" aria-hidden="true"></span>
+                        <span class="sr-only">(success)</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="template-edit-box">Template Contents</label>
+                        <textarea id="template-edit-box" msd-elastic class="generator-template form-control" ng-model="editor.tempCopy.template" ng-change="editor.updatePreview()" ng-disabled="editor.selected.name === 'default'"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary-outline card-inverse">
+                <h4 class="card-header card-primary">Preview</h4>
+                <div class="card-block">
+                    <markdown class="md" ng-model="editor.generated"></markdown>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <button type="button" class="btn btn-block btn-success" ng-disabled="!editor.isNameValid()" ng-click="editor.saveTemplate()">Save Changes</button>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <button type="button" class="btn btn-block btn-warning" ng-disabled="!editor.canDelete()" ng-click="editor.deleteTemplate()">Delete Template</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row p-t-1">
+        <div class="col-xs-12">
+            <uib-accordion close-others="false">
+                <uib-accordion-group>
+                    <uib-accordion-heading>
+                        Help - Available Template Variables
+                    </uib-accordion-heading>
+                    <div class="text-xs-left p-t-1">
+                        <h3>Available Variables:</h3>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">opensUTC</h4>
+                                <p class="list-group-item-text">When the match opens in the format MMM DD HH:mm Z</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">title</h4>
+                                <p class="list-group-item-text">The title of the post</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">region</h4>
+                                <p class="list-group-item-text">The short code of the region</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">teams</h4>
+                                <p class="list-group-item-text">The generated team type. e.g. Mystery To4</p>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">scenarios</h4>
+                                <p class="list-group-item-text">Comma separated list of scenarios</p>
+                            </a>
+                        </div>
+                        <h3 class="p-t-1">How to use:</h3>
+                        <p>Surround the variable with curly brackets</p>
+                        <code ng-non-bindable>**Match opens at** {{ opensUTC }}</code>
+                        =>
+                        <span><b>Match opens at</b> Apr 12 10:20 UTC</span>
+                    </div>
+                </uib-accordion-group>
+            </uib-accordion>
+        </div>
+    </div>
+</div>

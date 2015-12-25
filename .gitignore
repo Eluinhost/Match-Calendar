@@ -1,10 +1,2 @@
 node_modules
 web
-.tmp
-.sass-cache
-bower_components
-config/config_dev.yml
-config/config_prod.yml
-vendor
-composer.lock
-app/changelog.md

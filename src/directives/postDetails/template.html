@@ -1,0 +1,76 @@
+<div
+    class="card match-post card-info-outline container-fluid"
+    bindonce="details.post"
+    refresh-on="'postsUpdated'"
+    ng-class="{'favourite-host': details.isFavouriteHost(), 'blocked-host': details.isBlockedHost()}"
+>
+    <div class="match-post-labels">
+        <div class="label label-primary text-xs-left" bo-if="details.post.isCommunityGame">
+            <i class="fa fa-users"></i> Community Game
+        </div>
+        <div
+            class="label label-warning text-xs-left"
+            bo-if="details.post.isStartTime"
+            uib-tooltip="Time display is game start time, not whitelist off"
+            tooltip-placement="right"
+        >
+            <i class="fa fa-warning"></i> Start Time
+        </div>
+        <div class="label label-success text-xs-left" ng-if="details.isFavouriteHost()">
+            <i class="fa fa-heart"></i> Favourite
+        </div>
+        <div class="label label-danger text-xs-left" ng-if="details.isBlockedHost()">
+            <i class="fa fa-minus-circle"></i> Blocked
+        </div>
+    </div>
+    <div
+        class="row text-xs-center card-block"
+        bo-attr
+        bo-attr-id="'post-' + details.post.id"
+    >
+        <div class="col-lg-2 col-xs-12 text-xs-center text-lg-right">
+            <div class="abs-game-starts">
+                <b bo-text="details.openingTime()" uib-tooltip="Time Opens"></b>
+                <i class="fa fa-calendar show-pointer" ng-click="details.toggleNotification($event)" ng-class="{notifications: details.isNotifying()}"></i>
+            </div>
+            <div uib-tooltip="Opens" class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+                <small bindonce="details.post" refresh-on="'clockTick'" bo-text="details.openingTimeRelative()"></small> <i class="fa fa-clock-o"></i>
+            </div>
+            <div class="divider hidden-lg-up"></div>
+        </div>
+        <div class="col-lg-8 text-lg-left text-xs-center col-xs-12">
+            <div class="post-title">
+                <strong>
+                    <a class="show-pointer" ng-click="details.goToPost()" bo-text="details.post.title | characters:100: false"></a>
+                </strong>
+                <div>
+                    <small>
+                        <a
+                            class="post-author"
+                            target="_blank"
+                            ng-click="$event.stopPropagation()"
+                            bo-href="'http://reddit.com/u/' + details.post.author"
+                            bo-text="details.post.author"
+                        ></a>
+                    </small>
+                    <i class="fa fa-reddit show-pointer" uib-tooltip="Toggle Favorite" tooltip-placement="right" ng-click="details.toggleFavourite($event)"></i>
+                </div>
+            </div>
+            <div class="title-left">
+                <div class="post-teams" uib-tooltip="Team Style">
+                    <strong bo-text="details.teamStyle()"></strong>
+                </div>
+                <div class="gamemodes" uib-tooltip="Gamemodes" bo-text="details.post.gamemodes.join(' | ')"></div>
+            </div>
+            <div class="divider hidden-lg-up"></div>
+        </div>
+        <div class="col-lg-2 text-lg-left text-xs-center col-xs-12">
+            <div class="server-region" uib-tooltip="Server Region">
+                <i class="fa fa-globe"></i> <small bo-text="details.post.region || 'Unknown'"></small>
+            </div>
+            <div uib-tooltip="Time posted" class="time-posted visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
+                <i class="fa fa-reply fa-rotate-180"></i> <small bo-text="details.timePostedInAdvance()"></small>
+            </div>
+        </div>
+    </div>
+</div>

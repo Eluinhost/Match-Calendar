@@ -1,0 +1,111 @@
+<div class="list-page">
+    <div class="card card-default search-panel">
+        <div class="card-header post-list-filter">
+            <div class="row">
+                <div class="col-lg-7 col-lg-offset-1 col-xs-12">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input ng-model="postList.filters.search" class="form-control" type="search" placeholder="Search Filter">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-xs-12 refresh-button text-xs-center">
+                    <b class="refresh-icon show-pointer" ng-click="postList.Posts.update()">
+                        <i class="fa fa-refresh" ng-class="{'fa-spin': postList.Posts.updating}"></i> Refresh
+                        <small class="center-block">
+                            Last Updated: <small class="last-updated" ng-bind="postList.DateTime.format('HEADER', postList.moment.unix(postList.Posts.lastUpdated))"></small>
+                        </small>
+                    </b>
+                </div>
+                <div class="col-lg-2 col-xs-12 text-xs-right">
+                    <button type="button" class="btn btn-success btn-block btn-sm" ui-sref="app.listhelp">Help</button>
+                    <button type="button" class="btn btn-info btn-block btn-sm" ng-click="postList.Changelog.showChangelog()">Changelog</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-block post-filters" uib-collapse="!postList.showFilters">
+            <div class="row filter">
+                <div class="col-lg-2 text-md-right text-xs-center filter-title">Show favourited only:</div>
+                <div class="col-lg-10 text-md-left text-xs-center">
+                    <input type="checkbox" ng-model="postList.Posts.showFavouritedHostsOnly">
+                </div>
+            </div>
+            <div class="row filter">
+                <div class="col-lg-2 text-md-right text-xs-center filter-title">Show blocked hosts:</div>
+                <div class="col-lg-10 text-md-left text-xs-center">
+                    <input type="checkbox" ng-model="postList.Posts.showBlockedHosts">
+                </div>
+            </div>
+            <div class="row filter">
+                <div class="col-lg-2 text-md-right text-xs-center filter-title">Regions:</div>
+                <div class="col-lg-10 text-md-left text-xs-center">
+                    <button type="button"
+                            class="btn btn-sm"
+                            ng-class="postList.buttonEnabledClass(!postList.Posts.isRegionDisabled(region))"
+                            bindonce
+                            refresh-on="'postsUpdated'"
+                            ng-repeat="region in postList.Posts.currentRegions | orderBy:region"
+                            ng-click="postList.Posts.toggleRegion(region)">
+                        <span bo-text="region.toUpperCase()"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="row filter">
+                <div class="col-lg-2 text-md-right text-xs-center filter-title">Team Types:</div>
+                <div class="col-lg-10 text-md-left text-xs-center">
+                    <button type="button"
+                            class="btn btn-sm"
+                            ng-class="postList.buttonEnabledClass(!postList.Posts.isTeamTypeDisabled(teamType))"
+                            bindonce
+                            refresh-on="'postsUpdated'"
+                            ng-repeat="teamType in postList.Posts.currentTeamTypes | orderBy:teamType"
+                            ng-click="postList.Posts.toggleTeamType(teamType)">
+                        <span bo-text="teamType"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="row filter">
+                <div class="col-lg-2 text-md-right text-xs-center filter-title">Gamemodes:</div>
+                <div class="col-lg-10 text-md-left text-xs-center">
+                    <button type="button"
+                            class="btn btn-sm"
+                            ng-class="postList.buttonEnabledClass(!postList.Posts.isGamemodeDisabled(gamemode))"
+                            bindonce
+                            refresh-on="'postsUpdated'"
+                            ng-repeat="gamemode in postList.Posts.currentGamemodes | orderBy:gamemode"
+                            ng-click="postList.Posts.toggleGamemode(gamemode)">
+                        <span bo-text="gamemode"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="show-filters-button btn btn-info" ng-click="postList.showFilters = !postList.showFilters">
+        <i class="fa" ng-class="{'fa-arrow-up': postList.showFilters, 'fa-arrow-down': !postList.showFilters}"></i> Filter Posts - Showing <b ng-bind="postList.filteredPosts.length"></b> of <b ng-bind="postList.Posts.posts.length"></b>
+    </button>
+    <desktop-notification-enabler show-hide-button="true"></desktop-notification-enabler>
+    <uib-alert class="errored-subreddit" type="danger" bindonce bo-show="postList.Posts.errorSubs.length" refresh-on="'postsUpdated'">
+        Failed to load matches from the chosen subreddit/s: <span class="errored-subreddit-list" bo-text="postList.Posts.errorSubs.join(', ')"></span> <a ui-sref="app.settings" class="alert-link">Configure</a>
+    </uib-alert>
+    <ul class="list-group list-group-flush" ng-show="postList.Posts.unparsed.length">
+        <li class="list-group-item-heading list-group-item list-group-item-warning" ng-click="postList.showUnparsed = !postList.showUnparsed">
+            <span ng-bind="postList.showUnparsed ? 'Hide unparsed posts' : 'Show unparsed posts'"></span>
+            <span class="label label-danger" ng-bind="postList.Posts.unparsed.length"></span>
+            <i class="fa" ng-class="{'fa-arrow-right': !postList.showUnparsed, 'fa-arrow-down': postList.showUnparsed}"></i>
+        </li>
+        <li
+            class="list-group-item-warning list-group-item"
+            ng-repeat="post in postList.Posts.unparsed | filter:postList.filters.favourited | filter:postList.filters.blocked | filter:postList.filters.search track by post.id"
+            ng-show="postList.showUnparsed"
+        >
+            <div>
+                <a ng-href="https://reddit.com/u/{{ ::post.author }}" ng-bind="post.author"></a>
+            </div>
+            <div class="alert-link">
+                <a ng-href="{{ ::post.permalink }}" ng-bind="post.title"></a>
+            </div>
+        </li>
+    </ul>
+    <div class="post-item" ng-repeat="post in postList.filteredPosts=(postList.Posts.posts | filter:postList.filters.favourited | filter:postList.filters.blocked | filter:postList.filters.teamType | filter:postList.filters.gamemode | filter:postList.filters.region | filter:postList.filters.search) track by post.id">
+        <post-details class="post-item" post="post" ></post-details>
+    </div>
+</div>

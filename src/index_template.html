@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html class="no-js" ng-app="MatchCalendarApp" ng-strict-di manifest="manifest.appcache">
+<head>
+    <title-time></title-time>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+</head>
+<body>
+<div class="container-fluid page-container">
+    <div class="pen">
+        <app-cache-updater></app-cache-updater>
+        <header-bar></header-bar>
+        <navbar></navbar>
+    </div>
+    <clockbar></clockbar>
+    <div class="page-view" ui-view></div>
+    <div class="pen">
+        <footer-bar></footer-bar>
+    </div>
+</div>
+
+<div id="outdated" style="display: none">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+
+</body>
+</html>

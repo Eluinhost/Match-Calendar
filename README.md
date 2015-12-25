@@ -6,97 +6,105 @@ A website for checking out upcoming UltraHardcore matches from Reddit.
 Requirements
 ------------
 
-- PHP (for time syncing)
+- NodeJS 0.12+ and NPM 3+
+- Apache/nginx (optional)
 
-Requirements to build
----------------------
+Installation
+------------
 
-- NodeJS/NPM
-- Bower (install with npm install -g bower)
-- Grunt CLI (install with npm install -g grunt-cli)
-- Composer
+Get the git respository: `git clone https://github.com/Eluinhost/Match-Calendar`
+
+Change into the directory: `cd Match-Calendar`
+
+Install/update dependencies: `npm update`
+
+## Frontend
+
+To build the site run:
+
+`npm run build`
+
+This will build the site into the `web` directory.
+
+## Backend 
+
+The backend currently is only an API that returns the server time.
+
+To run the backend you can run `node .`. 
+
+You can also install [Forever](https://github.com/foreverjs/forever) and start
+the application by running `forever start .`
+
+By editing the file `config.js` you can modify `server.port` to modify which port 
+the backend will listen on, default port 9001.
+
+## Serving files
+
+By default the backend does not serve the frontend to the web and only provides the
+API. You can modify the `config.js` file to change how it serves files.
+
+#### apiOnly = false
+
+In this mode the backend will also provide the regular assets, you can just access
+the website at `localhost:9001` (or whatever the configured port is) and use it as-is.
+
+#### apiOnly = true
+
+This is a mode for using Apache/nginx e.t.c. to serve the files to allow for load
+balancing of the backend e.t.c You will need to proxy the path `/api` to point at the
+backend API (like `127.0.0.1:9001`).
+
+Here is a simple configuration file for nginx to work with this method:
+
+```
+server {
+    listen        80;
+    server_name   localhost; # your domain
+    root          ...        # point to the folder 'web'of the project
+
+    # disable all caching to leave it to appcache
+    expires            off;
+    add_header         Cache-Control no-cache;
+
+    # proxy the API to the backend
+    location /api {
+        proxy_pass http://127.0.0.1:9001;
+    }
+}
+```
+
+Note that Apache/nginx require you to set the mime type of .appcache files to `text/cache-manifest`.
+
+For nginx this can be done in `mimes.types` by adding `text/cache-manifest appcache`,
+for Apache you can use `AddType text/cache-manifest .appcache` in the mime type settings.
+If this is not done some clients may not cache the application and always pull from the
+server on every load. 
 
 Setup a changelog
 -----------------
 
-Make the file `app/changelog.md` for and fill out with details for the site changelog
-
-Build
------
-
-If not building from scratch skip to install section.
-
-Install NodeJS dependencies
-
-`npm install`
-
-Install Bower dependencies
-
-`bower install`
-
-Install Composer dependencies
-
-`composer update`
-
-Build the application to the web folder
-
-`grunt build`
-
-Install
--------
-
-Point the webserver to the `web` folder.
-
-The site is tested and ran live on nginx.
-
-### nginx
-    
-    server {
-        # other settings, server name/directory e.t.c.
-        
-        # disable all caching and leave it to appcache
-        expires off;
-        add_header        Cache-Control no-cache;
-        
-        # need to turn off to stop appcache keeping old versions (for some crazy reason)
-        if_modified_since  off;
-    
-        # strip index.php/ prefix if it is present
-        rewrite ^/api/index\.php/?(.*)$ /api/$1 permanent;
-    
-        # rewrite api URIs
-        location /api {
-            try_files $uri @rewriteapp;
-        }
-    
-        # redirect everything at /api/some/path to the index.php front controller
-        location @rewriteapp {
-            rewrite ^(.*)$ /api/index.php/$1 last;
-        }
-    
-        # pass to the PHP scripts to FastCGI server from upstream phpfcgi
-        location ~ ^/api/index\.php(/|$) {
-            fastcgi_pass unix:/var/php-nginx/140804921232311.sock/socket;
-            fastcgi_split_path_info ^(.+\.php)(/.*)$;
-            include fastcgi_params;
-            fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        }
-    }
-
-
-### Apache
-
-There is a .htaccess in the `api` folder already so no extra configuration should be needed.
-
-If your Apache doesn't set the mime type for .appcache the following line will be required in mime type settings:
-
-`AddType text/cache-manifest .appcache`
-
-If the line is left out then some client may not cache the application and reload the entire thing on reload.
-
-There may be issues with caching like nginx, google will help you with disabling it if that is the case
+When building the changelog at `/Changelog.md` will be built into the web folder with a name 
+like `/web/e5f23a3ce3b320e7750157222578e657.md`, it should be the only .md file in there.
+The contents of this file are shown as the changelog to all clients and are not in the appcache manifest.
 
 Updating
 --------
 
-To update just do `git pull` and follow the build instructions again
+Run `git pull` to get the latest version.
+
+Run `npm update` to install the latest dependencies.
+
+Run `npm prune` to cleanup dependencies.
+
+Update the changelog if wanted and do `npm run build` to rebuild the site.
+
+Development
+-----------
+
+A development server can be ran by running:
+
+`npm run dev`
+
+This will start the backend server as well as serving the frontend code via port 9000.
+Any changes to the code/css in `/src` will automatically be compiled and the frontend
+will reload.

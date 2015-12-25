@@ -1,0 +1,61 @@
+<div class="container p-t-1 post-page" bindonce="post" refresh-on="'postsUpdated'">
+    <div class="card card-primary-outline card-inverse">
+        <div class="post-header card-header card-primary">
+            <h2 ng-bind="::post.post.title"></h2>
+            <h6 ng-bind="::post.openingTime()"></h6>
+            <h6>
+                <a ng-href="{{::'https://reddit.com/u/' + post.post.author}}" target="_blank">
+                    <i class="fa fa-reddit-alien"></i> <span ng-bind="::post.post.author"></span>
+                </a>
+            </h6>
+            <div class="floating-label">
+                <div class="label label-success" bindonce refresh-on="'clockTick'" bo-class="post.relativeTimeClass()">
+                    <i class="fa fa-clock-o"></i> <span bo-text="post.openingTimeRelative()"></span>
+                </div>
+                <div class="label" ng-bind="::post.post.region" bo-class="post.regionClass()"></div>
+            </div>
+        </div>
+        <div class="card-block post-page-content">
+            <div class="floating-label gamemodes">
+                <div class="label label-primary">
+                    <i class="fa fa-cubes"></i>
+                    <span ng-bind="::post.teamStyle()"></span>
+                </div>
+                <div
+                    class="label label-primary"
+                    ng-repeat="gamemode in post.post.gamemodes track by $index"
+                    ng-bind="gamemode">
+                </div>
+            </div>
+            <div class="row m-t-1" ng-if="post.post.address">
+                <div class="input-group col-md-6 col-md-offset-3 col-xs-12">
+                    <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
+                    <input type="text" class="form-control" id="game-address"readonly ng-model="post.post.address">
+                    <span class="input-group-btn">
+                        <button
+                            class="btn btn-primary-outline"
+                            type="button"
+                            ngclipboard
+                            data-clipboard-target="#game-address"
+                            ngclipboard-success="post.showCopiedMessage()"
+                            ngclipboard-error="post.showCtrlCMessage()"
+                        >
+                            <i class="fa fa-clipboard"></i> <span ng-bind="post.copyMessage"></span>
+                        </button>
+                    </span>
+                </div>
+                <div ng-if="post.showCopyError" class="col-xs-12 text-danger">
+                    Failed to copy to clipboard, please copy manually
+                </div>
+            </div>
+        </div>
+        <h5 class="card-header card-info">
+            <a ng-href="{{::post.post.permalink}}" target="_blank">Match Post <i class="fa fa-external-link"></i></a>
+        </h5>
+        <div class="card-block">
+            <div class="container">
+                <markdown ng-model="post.post.selftext"></markdown>
+            </div>
+        </div>
+    </div>
+</div>

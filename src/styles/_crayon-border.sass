@@ -1,0 +1,11 @@
+$default-crayon-border-width: 3 !default
+
+=crayon-border-full($color, $defaultColor, $width: $default-crayon-border-width)
+    border-image: url('~app/images/outline-' + $color + '.png') $width $width $width $width repeat
+
+    //fallback for <IE-11
+    border-style: double
+    border-color: $defaultColor
+
+=crayon-border($width: $default-crayon-border-width)
+    +crayon-border-full('blue', $brand-primary, $width)

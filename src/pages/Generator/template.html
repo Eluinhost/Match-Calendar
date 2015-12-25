@@ -1,0 +1,105 @@
+<div class="container text-xs-center generator-page">
+    <uib-alert type="danger">
+        Make sure to read the submission rules for the subreddit you are posting to <b>BEFORE</b> using this tool.
+        Rules for the main /r/uhcmatches subreddit can be found <a target="_blank" href="https://www.reddit.com/r/UHCHosts/wiki/guides/scheduling_matches">here.</a>
+    </uib-alert>
+    <div class="card card-primary-outline card-inverse">
+        <h4 class="card-header card-primary">Title</h4>
+        <div class="card-block">
+            <input class="form-control" type="text" ng-model="generator.postTitle"/>
+            <small class="text-muted">The title to show on the list</small>
+        </div>
+    </div>
+    <div class="card-group">
+        <div class="card card-primary-outline card-inverse">
+            <h4 class="card-header card-primary">
+                Opens
+                <div>
+                    <small ng-bind="generator.DateTime.format('REDDIT_POST', generator.opens.utc(), true)"></small>
+                </div>
+            </h4>
+            <div class="card-block">
+                <p class="help-block">Time game will open (in your selected timezone)</p>
+                <date-time-picker picked-date="generator.opens" time-zone="generator.DateTime.timeZone" min-date="generator.minTime" meridian="generator.DateTime.timeFormat == '12h'"></date-time-picker>
+            </div>
+        </div>
+        <div class="card card-primary-outline card-inverse">
+            <h4 class="card-header card-primary">Region</h4>
+            <div class="card-block">
+                <select class="form-control" ng-model="generator.region" ng-options="o as k for (o,k) in generator.regions"></select>
+            </div>
+            <h4 class="card-header card-primary">Team Type</h4>
+            <div class="card-block">
+                <select class="form-control" ng-model="generator.gameType" ng-options="o as k.name for (o, k) in generator.GameTypes"></select>
+                <small class="text-muted"><i class="fa fa-info"></i> <span ng-bind="generator.GameTypes[generator.gameType].description"></span></small>
+                <div ng-show="generator.requiresTeamSizes() === 'CUSTOM'">
+                    <label for="generator-custom-style" class="help-block">Enter custom scenario title here:</label>
+                    <div>
+                        <input class="form-control" id="generator-custom-style" type="text" ng-model="generator.teamSize"/>
+                    </div>
+                </div>
+                <div ng-show="generator.requiresTeamSizes() === true">
+                    <label for="generator-team-size" class="help-block">Enter team size here:</label>
+                    <div>
+                        <input class="form-control" id="generator-team-size" type="number" ng-model="generator.teamSize"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-group">
+        <div class="card card-primary-outline card-inverse">
+            <h4 class="card-header card-primary">Scenarios</h4>
+            <div class="card-block">
+                <unique-items-editor
+                    unique-items="generator.scenarios"
+                    button-icon="cubes"
+                    placeholder="Scenario"
+                >
+                    <required-error>Please enter a scenario name</required-error>
+                    <in-array-error>This scenario is already in your list</in-array-error>
+                </unique-items-editor>
+            </div>
+        </div>
+        <div class="card card-primary-outline card-inverse">
+            <h4 class="card-header card-primary">Extras</h4>
+            <div class="card-block">
+                <unique-items-editor
+                    unique-items="generator.extras"
+                    button-icon="cubes"
+                    placeholder="Extra"
+                >
+                    <required-error>Please enter an extra (without brackets)</required-error>
+                    <in-array-error>This extra is already in your list</in-array-error>
+                </unique-items-editor>
+            </div>
+        </div>
+    </div>
+    <div class="card card-primary-outline card-inverse">
+        <h4 class="card-header card-primary">Post Title Preview</h4>
+        <div class="card-block">
+            <code ng-bind="generator.generateTitle()"></code>
+        </div>
+    </div>
+    <div class="card-group">
+        <div class="card card-primary-outline card-inverse">
+            <h4 class="card-header card-primary">Selected Template</h4>
+            <div class="card-block form-group" ng-class="{'has-error': !generator.hasValidTemplate()}">
+                <select ng-required class="form-control" ng-model="generator.template" ng-options="o.name as o.name for o in generator.Templates.templates"></select>
+                <uib-alert ng-show="generator.template === 'default'" type="danger">
+                    You cannot use the default template to post to Reddit. Use the Template Editor below to create your own/copy the default and use that one instead.
+                </uib-alert>
+            </div>
+        </div>
+        <div class="card card-primary-outline card-inverse">
+            <h4 class="card-header card-primary">Selected Subreddit</h4>
+            <div class="card-block form-group" ng-class="{'has-error': !generator.hasValidSubreddit()}">
+                <select ng-required class="form-control" ng-model="generator.subreddit" ng-options="o for o in generator.Subreddits.subreddits"></select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-primary btn-lg col-md-6 col-xs-12" ui-sref="app.editor">Template Editor</button>
+        <button ng-disabled="!generator.hasValidTemplate() || !generator.hasValidSubreddit()" type="button" class="btn btn-success btn-lg col-md-6 col-xs-12" ng-click="generator.sendToReddit()">Post to Reddit</button>
+    </div>
+</div>

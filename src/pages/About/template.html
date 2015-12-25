@@ -1,0 +1,43 @@
+<div class="container about-page">
+    <h1>About</h1>
+
+    This website is a collection of upcoming UltraHardcore games hosted by users on
+    <a href="https://reddit.com/r/ultrahardcore">/r/ultrahardcore</a>.
+
+    <hr />
+
+    <h3>Contributors</h3>
+
+    <div class="card-deck-wrapper">
+        <div class="card-deck">
+            <div class="card card-inverse card-primary-outline" ng-repeat="author in about.authors">
+                <h4 class="card-header card-primary">
+                    <a
+                        target="_blank"
+                        ng-href="{{::author.url}}"
+                        ng-click="about.click($event, author.url)"
+                        ng-bind="::author.name"
+                    ></a>
+                </h4>
+                <div class="card-block" ng-bind="::author.role"></div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <h2>Bundled Front-end Libraries</h2>
+
+    <div class="card card-primary-outline text-xs-left">
+        <div class="card-block" ng-repeat="lib in ::about.libraries">
+            <h4 class="card-title">
+                <a class="text-danger" ng-href="{{::lib.url}}" ng-bind="::lib.name" target="_blank"></a>
+                -
+                <small>
+                    <a ng-href="{{::lib.license.url}}" ng-bind="::lib.license.name" target="_blank"></a>
+                </small>
+            </h4>
+            <h6 class="text-muted" ng-bind="::lib.type"></h6>
+        </div>
+    </div>
+</div>

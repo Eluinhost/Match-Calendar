@@ -1,0 +1,68 @@
+<h2>Example Post:</h2>
+
+<post-details post="help.example"></post-details>
+
+<div class="container">
+    <p>Most parts of a post can also be hovered over for an explanation.</p>
+
+    <div class="card card-inverse card-primary-outline">
+        <h4 class="card-header card-primary">Opening Time</h4>
+        <div class="card-block">
+            <p>This is the time (in your selected timezone) that the match opens/whitelist is turned off.</p>
+            <p>
+                The <span class="label label-warning"><i class="fa fa-warning"></i> Start Time</span> warning
+                will show up if the time is a non-standard starting time (whitelist on).
+            </p>
+            <p>Underneath the opening time is a relative time showing how long til the game opens (auto-updates)</p>
+        </div>
+        <h4 class="card-header card-primary">Post Title</h4>
+        <div class="card-block">
+            Example: <strong ng-bind="::help.example.title"></strong>
+            <p>
+                The title of the game, clicking this will take you to it's 'post page' where you can view the entire
+                match post and find the server IP address
+            </p>
+        </div>
+        <h4 class="card-header card-primary">Team Style</h4>
+        <div class="card-block">
+            Example: <strong ng-bind="::help.example.teams"></strong>
+            <p>This is the team style of the game. e.g. FFA, Chosen ToX, Random ToX</p>
+            <p>ToX means 'Teams of'. To4 = Teams of 4</p>
+        </div>
+        <h4 class="card-header card-primary">Gamemodes/Scanrios</h4>
+        <div class="card-block">
+            Example: <span ng-bind="::help.example.gamemodes.join(' | ')"></span>
+            <p>
+                These are the scenarios that are in the game, checking out the post itself will give you a
+                description/instructions for the scenario
+            </p>
+        </div>
+        <h4 class="card-header card-primary">Host + Region</h4>
+        <div class="card-block">
+            Example:
+            <span ng-bind="::help.example.region"></span>
+            +
+            <a ng-href="{{::'https://reddit.com/u/' + help.example.author}}" target="_blank">
+                <i class="fa fa-reddit"></i>
+                <span ng-bind="::help.example.author"></span>
+            </a>
+            <p>Which continent the server is hosted in as well as the Reddit name of the host</p>
+            <p>Clicking on the Reddit logo will add the host to your favourites list</p>
+        </div>
+        <h4 class="card-header card-primary">Favourite/Blocked</h4>
+        <div class="card-block">
+            <p>
+                Favourite hosts will show a
+                <span class="label label-success text-xs-left">
+                    <i class="fa fa-heart"></i> Favourite
+                </span>
+                or
+                <span class="label label-danger text-xs-left">
+                    <i class="fa fa-minus-circle"></i> Blocked
+                </span>
+                label in the top left to signify their status. The post will also be tinted green/red.
+                Blocked hosts do not show up by default and need to be enabled in the post filters
+            </p>
+        </div>
+    </div>
+</div>

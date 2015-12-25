@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row clock-bar">
+        <div class="col-sm-6 col-sm-offset-3 col-xs-12 clock-bar-center">
+            <div class="clock-bar-time">
+                <strong
+                    ng-class="{unsynced: !DateTime.synced}"
+                    bindonce
+                    bo-text="DateTime.format('HEADER')"
+                    uib-tooltip="{{ tooltip() }}"
+                    refresh-on="'clockTick'">
+                </strong>
+                <span class="time-info-icons">
+                    <i
+                        class="fa fa-warning unsynced"
+                        ng-show="!DateTime.synced"
+                        tooltip-append-to-body="true"
+                        uib-tooltip="The time failed to sync with the server, time may be wrong"
+                    ></i>
+                    <i
+                        class="fa fa-refresh show-pointer"
+                        ng-class="{'fa-spin': DateTime.syncing}"
+                        ng-click="DateTime.resync()"
+                        tooltip-append-to-body="true"
+                        uib-tooltip="Click this to re-sync time with the server"
+                    ></i>
+                </span>
+            </div>
+            <div class="clock-bar-timezone text-muted p-b-1">
+                <span ui-sref="app.settings" uib-tooltip="Click to go to settings page to edit">
+                    <b ng-bind="DateTime.timeZone"></b>
+                    <!-- TODO replace with inline editor -->
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+body
+    text-align: center
+    background-image: url('~app/images/linedpaper.png')
+
+html,
+body
+    height: 100%
+
+.show-pointer
+    cursor: pointer
+
+[ui-sref]
+    cursor: pointer
+
+.row.no-gutter
+    margin-left: 0
+    margin-right: 0
+
+    > [class*='col-']:not(:first-child),
+    > [class*='col-']:not(:last-child)
+        padding-right: 0
+        padding-left: 0
+
+.page-view
+    padding-bottom: 45px
+
+.page-container
+    min-height: 100%
+    position: relative
+    padding-left: 0
+    padding-right: 0
+
+@font-face
+    font-family: 'Finger Paint'
+    src: url('~app/fonts/fingerpaint.ttf')
+
+.pen
+    font-family: 'Finger Paint', cursive

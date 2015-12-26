@@ -172,5 +172,6 @@ import DebugMode from 'app/services/DebugMode';
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 ga('create', 'UA-71696797-1', DebugMode ? 'none' : 'auto');
+ga('set', 'dimension3', !!window.applicationCache);
 /* jshint ignore:end */
 /* jscs:enable */

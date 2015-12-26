@@ -83,11 +83,12 @@ import * as About          from 'app/pages/About';
 import * as Generator      from 'app/pages/Generator';
 import * as TemplateEditor from 'app/pages/TemplateEditor';
 import * as Post           from 'app/pages/Post';
+import * as Post404        from 'app/pages/Post/404';
 import * as PostList       from 'app/pages/PostList';
 import * as Help           from 'app/pages/PostList/Help';
 import * as Settings       from 'app/pages/Settings';
 
-let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post];
+let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post, Post404];
 
 function setupStates($stateProvider, $urlRouterProvider) {
     $stateProvider.state('app', {

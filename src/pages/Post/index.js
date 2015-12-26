@@ -3,11 +3,11 @@ import _ from 'lodash';
 class PostCtrl {
     constructor($stateParams, $state, Posts, DateTime, $timeout, $scope) {
         this.$scope = $scope;
-        this.$state = $state;
         this.DateTime = DateTime;
         this.$timeout = $timeout;
         this.Posts = Posts;
         this.showCopyError = false;
+        this.copyMessage = 'Copy to clipboard';
 
         if (_.isEmpty($stateParams.id)) {
             this.goBackToList();
@@ -17,10 +17,8 @@ class PostCtrl {
         this.post = _.find(Posts.posts, p => p.id === $stateParams.id);
 
         if (_.isUndefined(this.post)) {
-            this.goBackToList();
+            $state.go('app.post404', {id: $stateParams.id});
         }
-
-        this.copyMessage = 'Copy to clipboard';
     }
 
     regionClass() {
@@ -64,10 +62,6 @@ class PostCtrl {
         }
 
         return 'label-success';
-    }
-
-    goBackToList() {
-        this.$state.go('app.list');
     }
 }
 PostCtrl.$inject = ['$stateParams', '$state', 'Posts', 'DateTime', '$timeout', '$scope'];

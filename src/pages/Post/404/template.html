@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="card card-danger-outline card-inverse">
+        <h4 class="card-header card-danger">404 - Not Found</h4>
+        <div class="card-block">
+            <p class="text-danger">No post with the id '<span ng-bind="::post.postId"></span>' was found.</p>
+            <div class="text-xs-left">
+                <p class="text-muted">
+                    Reasons why this post might not exist:
+                </p>
+                <ul class="text-muted">
+                    <li>The game started > 30 minutes ago</li>
+                    <li>The calendar hasn't loaded this game yet</li>
+                    <li>The link is invalid</li>
+                </ul>
+            </div>
+            <h5>
+                Will automatically attemtpt to load the post details again in
+                <strong  bindonce="post.seconds" refresh-on="'clockTick'" bo-text="post.seconds"></strong>
+                seconds.
+            </h5>
+        </div>
+    </div>
+</div>

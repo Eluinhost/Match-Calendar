@@ -45,10 +45,12 @@ class DateTime {
                 $rootScope.$watch(() => this.timeFormat, () => {
                     $localForage.setItem(TIME_FORMAT_KEY, this.timeFormat);
                     this.refreshTimeFormats();
+                    ga('set', 'dimension2', this.timeFormat);
                 });
                 $rootScope.$watch(() => this.timeZone, () => {
                     $localForage.setItem(TIME_ZONE_KEY, this.timeZone);
                     this.refreshTimeFormats();
+                    ga('set', 'dimension1', this.timeZone);
                 });
             });
 
@@ -105,6 +107,7 @@ class DateTime {
             .then((data) => {
                 this.synced = true;
                 this.offset = data.data.time - moment().valueOf();
+                ga('set', 'metric1', this.offset);
             })
             .catch(() => this.synced = false)
             .finally(() => this.syncing = false);

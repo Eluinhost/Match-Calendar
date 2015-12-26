@@ -81,7 +81,9 @@
         "forin": true,
         "freeze": true,
         "funcscope": false,
-        "globals": {},
+        "globals": {
+            "ga": true
+        },
         "iterator": true,
         "latedef": true,
         "maxcomplexity": 10,

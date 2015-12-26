@@ -22,6 +22,7 @@ class Hosts {
                         // Always make sure to store as lowercase
                         this.favouriteHosts = this.favouriteHosts.map(item => item.toLowerCase());
                         $localForage.setItem(FAV_KEY, this.favouriteHosts);
+                        ga('set', 'metric2', this.favouriteHosts.length);
                     }
                 );
 
@@ -31,6 +32,7 @@ class Hosts {
                         // Always make sure to store as lowercase
                         this.blockedHosts = this.blockedHosts.map(item => item.toLowerCase());
                         $localForage.setItem(BLOCK_KEY, this.blockedHosts);
+                        ga('set', 'metric3', this.blockedHosts.length);
                     }
                 );
             });

@@ -30,7 +30,10 @@ class Templates {
                     def.template = template;
                 }
 
-                $rootScope.$watch(() => this.templates, () => $localForage.setItem(KEY, this.templates), true);
+                $rootScope.$watch(() => this.templates, () => {
+                    $localForage.setItem(KEY, this.templates);
+                    ga('set', 'metric4', this.templates.length);
+                }, true);
             });
     }
 

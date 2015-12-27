@@ -66,6 +66,10 @@ server {
     expires            off;
     add_header         Cache-Control no-cache;
 
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
     # proxy the API to the backend
     location /api {
         proxy_pass http://127.0.0.1:9001;

@@ -14,12 +14,24 @@ app.get('/api/sync', function(req, res) {
 if (!config.server.apiOnly) {
     express.static.mime.define({'text/cache-manifest': ['appcache']});
 
-    app.use(express.static('web', {
+    var assets = express.static('web', {
         etag: false,
         setHeaders: function(res) {
             res.setHeader('Cache-Control', 'no-cache');
         }
-    }));
+    });
+
+    // Grab from assets first
+    app.use(assets);
+
+    // Rewrite to index if not found
+    app.all('*', function(req, res, next) {
+        req.url = '/index.html';
+        next();
+    });
+
+    // Serve index from assets
+    app.use(assets);
 }
 
 var server = app.listen(config.server.port, function() {

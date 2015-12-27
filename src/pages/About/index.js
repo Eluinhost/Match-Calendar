@@ -2,6 +2,8 @@ import _ from 'lodash';
 
 class AboutCtrl {
     constructor() {
+        this.globals = APP_GLOBALS;
+
         this.authors = [
             {
                 name: 'ghowden / Eluinhost',

@@ -34,6 +34,7 @@
         "gulp-util": "3.0.x",
         "run-sequence": "1.1.x",
         "del": "2.2.x",
+        "git-rev-sync": "1.4.x",
 
         "babel-core": "6.3.x",
         "babel-plugin-transform-runtime": "6.3.x",
@@ -44,12 +45,13 @@
         "webpack-dev-server": "1.14.x",
         "appcache-webpack-plugin": "1.2.x",
         "extract-text-webpack-plugin": "0.9.x",
-        "html-webpack-plugin": "2.0.x",
+        "html-webpack-plugin": "2.1.x",
         "autoprefixer": "6.2.x",
         "node-sass": "3.4.x",
         "json-loader": "0.5.x",
         "sass-loader": "3.1.x",
         "css-loader": "0.x.x",
+        "ejs-loader": "0.2.x",
         "file-loader": "0.8.x",
         "url-loader": "0.5.x",
         "style-loader": "0.x.x",
@@ -82,7 +84,8 @@
         "freeze": true,
         "funcscope": false,
         "globals": {
-            "ga": true
+            "ga": true,
+            "APP_GLOBALS": true
         },
         "iterator": true,
         "latedef": true,

@@ -1,10 +1,24 @@
 <div class="container about-page">
     <h1>About</h1>
 
-    This website is a collection of upcoming UltraHardcore games hosted by users on
-    <a href="https://reddit.com/r/ultrahardcore">/r/ultrahardcore</a>.
+    <p>
+        This website is a collection of upcoming UltraHardcore games hosted by users on
+        <a href="https://reddit.com/r/ultrahardcore">/r/ultrahardcore</a>.
+    </p>
 
-    <hr />
+    <p>
+        <div>
+            Running version <strong class="text-success" ng-bind="::about.globals.VERSION"></strong>
+        </div>
+        <div class="text-muted">
+            (
+            <span ng-bind="::about.globals.BRANCH"></span>
+            -
+            <span ng-bind="::about.globals.HASH"></span>
+            )
+        </div>
+
+    </p>
 
     <h3>Contributors</h3>
 
@@ -23,8 +37,6 @@
             </div>
         </div>
     </div>
-
-    <hr />
 
     <h2>Bundled Front-end Libraries</h2>
 

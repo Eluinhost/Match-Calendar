@@ -7,6 +7,7 @@ var gutil = require('gulp-util');
 var path = require('path');
 var del = require('del');
 var runSequence = require('run-sequence');
+var gitRev = require('git-rev-sync');
 
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
@@ -24,6 +25,11 @@ var DIST_BASE = path.resolve(__dirname, 'web');
 var WEBPACK_ENTRY = 'webpack-dev-server/client?http://localhost:' + configFile.devServerPort;
 
 var config = {
+    indexGlobalVars: {
+        HASH: gitRev.long(),
+        BRANCH: gitRev.branch(),
+        VERSION: require('./package').version
+    },
     entry: {
         app: [WEBPACK_ENTRY, path.resolve(APP_BASE, 'index.js')]
     },
@@ -92,8 +98,8 @@ var config = {
         new ExtractTextPlugin(filename + '.css'),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: path.resolve(APP_BASE, 'index_template.html'),
-            inject: 'body',
+            template: '!!ejs!' + path.resolve(APP_BASE, 'index_template.html'),
+            inject: false,
             favicon: path.resolve(APP_BASE, 'images/favicon.png')
         }),
         // only use english locale

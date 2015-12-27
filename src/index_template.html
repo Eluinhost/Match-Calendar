@@ -3,6 +3,13 @@
 <head>
     <title-time></title-time>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon %>">
+    <script type="text/javascript">
+        var APP_GLOBALS = <%= JSON.stringify(webpackConfig.indexGlobalVars) %>;
+    </script>
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+    <% } %>
 </head>
 <body>
 <div id="outdated" style="display: none">
@@ -22,5 +29,8 @@
         <footer-bar></footer-bar>
     </div>
 </div>
+<% for (var js in htmlWebpackPlugin.files.chunks) { %>
+<script src="<%= htmlWebpackPlugin.files.chunks[js].entry %>" type="text/javascript"></script>
+<% } %>
 </body>
 </html>

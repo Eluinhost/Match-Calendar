@@ -173,5 +173,8 @@ import DebugMode from 'app/services/DebugMode';
 
 ga('create', 'UA-71696797-1', DebugMode ? 'none' : 'auto');
 ga('set', 'dimension3', !!window.applicationCache);
+ga('set', 'dimension4', APP_GLOBALS.VERSION);
+ga('set', 'dimension5', APP_GLOBALS.HASH);
+ga('set', 'dimension6', APP_GLOBALS.BRANCH);
 /* jshint ignore:end */
 /* jscs:enable */

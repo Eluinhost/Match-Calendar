@@ -90,7 +90,9 @@ import * as Settings       from 'app/pages/Settings';
 
 let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post, Post404];
 
-function setupStates($stateProvider, $urlRouterProvider) {
+function setupStates($stateProvider, $urlRouterProvider, $locationProvider) {
+    $locationProvider.html5Mode(true).hashPrefix('!');
+
     $stateProvider.state('app', {
         abstract: true,
         url: '',
@@ -110,7 +112,7 @@ function setupStates($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise(PostList.state.url);
 }
-setupStates.$inject = ['$stateProvider', '$urlRouterProvider'];
+setupStates.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
 
 function scrollToTop($rootScope, $window) {
     $rootScope.$on('$stateChangeSuccess', () => $window.scrollTo(0, 0));

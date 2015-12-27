@@ -179,6 +179,7 @@ gulp.task('webpack:prod', ['webpack:init-prod'], function(done) {
 gulp.task('webpack:dev', ['webpack:init'], function(done) {
     new WebpackDevServer(compiler, {
         publicPath: config.output.publicPath,
+        historyApiFallback: true,
         stats: {
             colors: true
         },

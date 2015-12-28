@@ -11,10 +11,13 @@
             Downloading new update - {{ updater.progress | number:0 }}%
         </div>
         <div ng-switch-when="updateready">
-            <a ng-click="updater.reload()">Reload</a> to apply new update
+            <a ng-click="updater.reload()">
+                <button class="btn btn-sm btn-info">RELOAD</button>
+                to apply the new update
+            </a>
         </div>
-        <div ng-switch-when="error">
-            Error saving application locally
+        <div ng-switch-when="error" class="text-danger">
+            Error caching app on device, your browser may not support it.
         </div>
     </div>
 </div>

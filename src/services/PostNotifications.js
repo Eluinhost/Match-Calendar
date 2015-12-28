@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 const TIMES_KEY = 'notificationTimes';
 const NOTIFY_KEY = 'notifyFor';
+const SOUNDS_KEY = 'playSound';
 
 class PostNotifications {
     constructor(HtmlNotifications, Posts, DurationFormatter, DateTime, $rootScope, $localForage) {
@@ -12,10 +13,11 @@ class PostNotifications {
 
         this.notifyFor = {};
         this.notificationTimes = [600];
+        this.playSounds = true;
 
         this.initialised = $localForage
-            .getItem([TIMES_KEY, NOTIFY_KEY])
-            .spread((times, notify) => {
+            .getItem([TIMES_KEY, NOTIFY_KEY, SOUNDS_KEY])
+            .spread((times, notify, sounds) => {
                 if (!_.isNull(times)) {
                     // Check for old { value: <int> } style and convert
                     if (_.isObject(times[0])) {
@@ -29,11 +31,16 @@ class PostNotifications {
                     this.notifyFor = notify;
                 }
 
+                if (!_.isNull(sounds)) {
+                    this.playSounds = sounds;
+                }
+
                 $rootScope.$watchCollection(
                     () => this.notificationTimes,
                     () => $localForage.setItem(TIMES_KEY, this.notificationTimes)
                 );
                 $rootScope.$watch(() => this.notifyFor, () => $localForage.setItem(NOTIFY_KEY, this.notifyFor), true);
+                $rootScope.$watch(() => this.playSounds, () => $localForage.setItem(SOUNDS_KEY, this.playSounds));
             });
 
         $rootScope.$on('clockTick', () => this.recheckPosts());
@@ -75,6 +82,11 @@ class PostNotifications {
                     `Game opens in ${this.DurationFormatter.format(Math.round(difference))}`,
                     post.title
                 );
+
+                if (this.playSounds) {
+                    new Audio(require('file!app/sounds/notification.m4a')).play();
+                }
+
                 this.notifyFor[postid].value = currentTimeUnix;
             }
         });

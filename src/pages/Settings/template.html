@@ -60,7 +60,16 @@
                     </div>
                 </div>
                 <br />
-                <button class="btn btn-primary" type="button" ng-click="settings.PostNotifications.addNewNotificationTime()">New notification</button>
+                <button class="btn btn-primary btn-block" type="button" ng-click="settings.PostNotifications.addNewNotificationTime()">Add new notification</button>
+                <button
+                    class="btn btn-block"
+                    type="button"
+                    ng-click="settings.PostNotifications.playSounds = !settings.PostNotifications.playSounds"
+                    ng-class="settings.PostNotifications.playSounds ? 'btn-success' : 'btn-danger'"
+                >
+                    <span ng-show="settings.PostNotifications.playSounds">Play sounds</span>
+                    <span ng-hide="settings.PostNotifications.playSounds">Do not play sounds</span>
+                </button>
             </div>
         </div>
     </div>

@@ -3,9 +3,10 @@ import _ from 'lodash';
 
 const TIME_FORMAT_KEY = 'timeFormat';
 const TIME_ZONE_KEY = 'timeZone';
+const FIRST_TIME_TIMEZONE_KEY = 'hasInitialTimezoneSet';
 
 class DateTime {
-    constructor($rootScope, $interval, $http, $localForage, $timeout) {
+    constructor($rootScope, $interval, $http, $localForage, $timeout, $uibModal) {
         this.$rootScope = $rootScope;
         this.$http = $http;
 
@@ -37,12 +38,30 @@ class DateTime {
 
         // Set a promise to resolve on
         this.initialised = $localForage
-            .getItem([TIME_FORMAT_KEY, TIME_ZONE_KEY])
-            .spread((format, zone) => {
+            .getItem([TIME_FORMAT_KEY, TIME_ZONE_KEY, FIRST_TIME_TIMEZONE_KEY])
+            .spread((format, zone, firstTime) => {
                 _.mergeNotNull(this, {
                     timeFormat: format,
                     timeZone: zone
                 });
+
+                if (_.isNull(firstTime)) {
+                    $localForage.setItem(FIRST_TIME_TIMEZONE_KEY, true);
+                    this.timeZone = this.guessedTimeZone;
+
+                    $uibModal.open({
+                        size: 'sm',
+                        template: `
+                        <div class="modal-body">
+                            <p>
+                                The calendar has automatically set your timezone to '${this.timeZone}'.
+                                This will only happen once, go to the settings page if you want to change it.
+                            </p>
+                            <button class="btn btn-block btn-success" ng-click="$close()">Close</button>
+                        </div>
+                        `
+                    });
+                }
 
                 $rootScope.$watch(() => this.timeFormat, () => {
                     $localForage.setItem(TIME_FORMAT_KEY, this.timeFormat);
@@ -132,6 +151,6 @@ class DateTime {
         return time.format(_.isFunction(formatting) ? formatting() : this.formats[formatting]);
     }
 }
-DateTime.$inject = ['$rootScope', '$interval', '$http', '$localForage', '$timeout'];
+DateTime.$inject = ['$rootScope', '$interval', '$http', '$localForage', '$timeout', '$uibModal'];
 
 export default DateTime;

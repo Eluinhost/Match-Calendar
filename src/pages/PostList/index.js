@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment-timezone';
 
 class PostListCtrl {
-    constructor($rootScope, Posts, $stateParams, $timeout, PostNotifications, DateTime, Hosts, Changelog) {
+    constructor(Posts, PostNotifications, DateTime, Hosts, Changelog) {
         this.Posts = Posts;
         this.DateTime = DateTime;
         this.PostNotifications = PostNotifications;
@@ -31,8 +31,7 @@ class PostListCtrl {
         return enabled ? 'btn-success' : 'btn-danger';
     }
 }
-PostListCtrl.$inject = ['$rootScope', 'Posts', '$stateParams', '$timeout', 'PostNotifications', 'DateTime', 'Hosts',
-    'Changelog', 'Subreddits', 'Templates'];
+PostListCtrl.$inject = ['Posts', 'PostNotifications', 'DateTime', 'Hosts', 'Changelog', 'Subreddits', 'Templates'];
 
 let controllerName = 'PostListCtrl';
 

@@ -5,11 +5,12 @@ const NOTIFY_KEY = 'notifyFor';
 const SOUNDS_KEY = 'playSound';
 
 class PostNotifications {
-    constructor(HtmlNotifications, Posts, DurationFormatter, DateTime, $rootScope, $localForage) {
+    constructor(HtmlNotifications, Posts, DurationFormatter, DateTime, $rootScope, $localForage, $translate) {
         this.Posts = Posts;
         this.HtmlNotifications = HtmlNotifications;
         this.DurationFormatter = DurationFormatter;
         this.DateTime = DateTime;
+        this.$translate = $translate;
 
         this.notifyFor = {};
         this.notificationTimes = [600];
@@ -78,14 +79,19 @@ class PostNotifications {
             // If it's passed the notify time and we havn't already done a notification later than this
             if (currentTimeUnix >= timeToNotify && this.notifyFor[postid].value < timeToNotify) {
                 let difference = unix - currentTimeUnix;
-                this.HtmlNotifications.notify(
-                    `Game opens in ${this.DurationFormatter.format(Math.round(difference))}`,
-                    post.title
-                );
 
-                if (this.playSounds) {
-                    new Audio(require('file!app/sounds/notification.m4a')).play();
-                }
+                this.$translate(
+                    'notifications.notification',
+                    {
+                        time: this.DurationFormatter.format(Math.round(difference))
+                    }
+                ).then(message => {
+                    this.HtmlNotifications.notify(message, post.title);
+
+                    if (this.playSounds) {
+                        new Audio(require('file!app/sounds/notification.m4a')).play();
+                    }
+                });
 
                 this.notifyFor[postid].value = currentTimeUnix;
             }
@@ -130,6 +136,6 @@ class PostNotifications {
     }
 }
 PostNotifications.$inject =
-    ['HtmlNotifications', 'Posts', 'DurationFormatter', 'DateTime', '$rootScope', '$localForage'];
+    ['HtmlNotifications', 'Posts', 'DurationFormatter', 'DateTime', '$rootScope', '$localForage', '$translate'];
 
 export default PostNotifications;

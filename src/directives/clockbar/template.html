@@ -6,7 +6,8 @@
                     ng-class="{unsynced: !clockbar.DateTime.synced}"
                     bindonce
                     bo-text="clockbar.DateTime.format('HEADER')"
-                    uib-tooltip="{{ clockbar.timeTooltip() }}"
+                    uib-tooltip="{{ clockbar.timeTooltip() | translate:clockbar }}"
+                    tooltip-append-to-body="true"
                     refresh-on="'clockTick'">
                 </strong>
                 <span class="time-info-icons">
@@ -14,25 +15,29 @@
                         class="fa fa-warning unsynced"
                         ng-show="!clockbar.DateTime.synced"
                         tooltip-append-to-body="true"
-                        uib-tooltip="The time failed to sync with the server, time may be wrong"
+                        uib-tooltip="{{ 'clockbar.unsyncedIconTooltip' | translate }}"
                     ></i>
                     <i
                         class="fa fa-refresh show-pointer"
                         ng-class="{'fa-spin': clockbar.DateTime.syncing}"
                         ng-click="clockbar.DateTime.resync()"
                         tooltip-append-to-body="true"
-                        uib-tooltip="Click this to re-sync time with the server"
+                        uib-tooltip="{{ 'clockbar.resyncTooltip' | translate }}"
                     ></i>
                 </span>
             </div>
             <div class="clock-bar-timezone p-b-1" ng-class="clockbar.isUsingGuessedTimezone() ? 'text-muted' : 'text-danger'">
-                <span ui-sref="app.settings" uib-tooltip="Click to go to settings page to edit">
+                <span
+                    ui-sref="app.settings"
+                    uib-tooltip="{{ 'clockbar.timezoneTooltip' | translate }}"
+                    tooltip-append-to-body="true"
+                >
                     <b ng-bind="clockbar.DateTime.timeZone"></b>
                 </span>
                 <i
                     class="fa fa-exclamation-circle"
                     ng-show="!clockbar.isUsingGuessedTimezone()"
-                    uib-tooltip="You are not using the detected timezone '{{ clockbar.DateTime.guessedTimeZone }}' Click this icon to switch to it."
+                    uib-tooltip="{{ 'clockbar.wrongTimezone' | translate:clockbar.DateTime }}"
                     tooltip-append-to-body="true"
                     ng-click="clockbar.DateTime.timeZone = clockbar.DateTime.guessedTimeZone"
                 ></i>

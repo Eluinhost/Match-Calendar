@@ -7,7 +7,7 @@ class PostCtrl {
         this.$timeout = $timeout;
         this.Posts = Posts;
         this.showCopyError = false;
-        this.copyMessage = 'Copy to clipboard';
+        this.copyMessage = 'post.copy.initial';
 
         if (_.isEmpty($stateParams.id)) {
             this.goBackToList();
@@ -26,16 +26,16 @@ class PostCtrl {
     }
 
     showCopiedMessage() {
-        this.$scope.$apply(() => this.copyMessage = 'Copied!');
-        this.$timeout(() => this.copyMessage = 'Copy to clipboard', 3000);
+        this.$scope.$apply(() => this.copyMessage = 'post.copy.copied');
+        this.$timeout(() => this.copyMessage = 'post.copy.initial', 3000);
     }
 
     showCtrlCMessage() {
         this.$scope.$apply(() => {
-            this.copyMessage = 'Press Ctrl + C';
+            this.copyMessage = 'post.copy.fallback';
             this.showCopyError = true;
         });
-        this.$timeout(() => this.copyMessage = 'Copy to clipboard', 5000);
+        this.$timeout(() => this.copyMessage = 'post.copy.initial', 5000);
     }
 
     openingTime() {

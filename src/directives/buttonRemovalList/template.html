@@ -1,6 +1,6 @@
 <ul class="list-group">
     <div ng-transclude="noItems" ng-if="!removal.items.length">
-        Nothing here!
+        <span translate="buttonRemovalList.noItems"></span>
     </div>
     <li class="list-group-item" ng-repeat="item in removal.items track by $index">
         <span class="label label-primary label-pill pull-xs-left">

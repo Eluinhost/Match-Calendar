@@ -28,6 +28,10 @@ class AppCacheUpdaterCtrl {
         }
     }
 
+    shouldShow() {
+        return this.status !== 'idle' && this.status !== 'unsupported';
+    }
+
     reload() {
         this.$window.location.reload();
     }

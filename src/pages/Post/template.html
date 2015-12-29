@@ -30,7 +30,7 @@
             <div class="row m-t-1" ng-if="post.post.address">
                 <div class="input-group col-md-6 col-md-offset-3 col-xs-12">
                     <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                    <input type="text" class="form-control" id="game-address"readonly ng-model="post.post.address">
+                    <input type="text" class="form-control" id="game-address" readonly ng-model="post.post.address">
                     <span class="input-group-btn">
                         <button
                             class="btn btn-primary-outline"
@@ -40,17 +40,19 @@
                             ngclipboard-success="post.showCopiedMessage()"
                             ngclipboard-error="post.showCtrlCMessage()"
                         >
-                            <i class="fa fa-clipboard"></i> <span ng-bind="post.copyMessage"></span>
+                            <i class="fa fa-clipboard"></i>
+                            <span translate="{{ post.copyMessage }}"></span>
                         </button>
                     </span>
                 </div>
-                <div ng-if="post.showCopyError" class="col-xs-12 text-danger">
-                    Failed to copy to clipboard, please copy manually
-                </div>
+                <div ng-if="post.showCopyError" class="col-xs-12 text-danger" translate="post.copy.failed"></div>
             </div>
         </div>
         <h5 class="card-header card-info">
-            <a ng-href="{{::post.post.permalink}}" target="_blank">Match Post <i class="fa fa-external-link"></i></a>
+            <a ng-href="{{::post.post.permalink}}" target="_blank">
+                <span translate="post.matchpost"></span>
+                <i class="fa fa-external-link"></i>
+            </a>
         </h5>
         <div class="card-block">
             <div class="container">

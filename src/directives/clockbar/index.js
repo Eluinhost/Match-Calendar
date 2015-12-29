@@ -4,12 +4,12 @@ class ClockbarCtrl {
         this.DurationFormatter = DurationFormatter;
     }
 
-    timeTooltip() {
-        if (this.DateTime.synced) {
-            return 'Synced with server. Offset: ' + this.DurationFormatter.format(this.DateTime.offset / 1000);
-        }
+    formattedOffset() {
+        return this.DurationFormatter.format(this.DateTime.offset / 1000);
+    }
 
-        return 'Time has not been synced yet';
+    timeTooltip() {
+        return this.DateTime.synced ? 'clockbar.synced' : 'clockbar.unsynced';
     }
 
     isUsingGuessedTimezone() {

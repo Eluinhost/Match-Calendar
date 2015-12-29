@@ -1,30 +1,22 @@
-<div ng-hide="updater.status === 'idle' || updater.status === 'unsupported'" class="updater-bar">
-    <div class="update-progress" ng-show="updater.status === 'progress'" ng-style="{width: updater.progress + '%'}"></div>
+<div ng-show="updater.shouldShow()" class="updater-bar">
     <div class="update-text" ng-switch="updater.status">
-        <div ng-switch-when="checking">
-            Checking for updates...
-        </div>
-        <div ng-switch-when="downloading">
-            Downloading new update...
-        </div>
+        <div ng-switch-when="checking" translate="appcache.checking"></div>
+        <div ng-switch-when="downloading" translate="appcache.downloading"></div>
+        <div ng-switch-when="error" class="text-danger" translate="appcache.error"></div>
         <div ng-switch-when="progress">
-            Downloading new update -
-            <strong ng-bind="updater.progress | number: 0"></strong>%
+            <span translate="appcache.progress" translate-value-progress="{{ updater.progress | number:0 }}"></span>
             <progress
                 class="progress progress-striped progress-animated progress-info"
-                value="{{updater.progress}}"
+                value="{{ updater.progress }}"
                 max="100"
             >
             </progress>
         </div>
         <div ng-switch-when="updateready">
             <a ng-click="updater.reload()">
-                <button class="btn btn-sm btn-info">RELOAD</button>
-                to apply the new update
+                <button class="btn btn-sm btn-info" translate="appcache.reload.button"></button>
+                <span translate="appcache.reload.message"></span>
             </a>
-        </div>
-        <div ng-switch-when="error" class="text-danger">
-            Error caching app on device, your browser may not support it.
         </div>
     </div>
 </div>

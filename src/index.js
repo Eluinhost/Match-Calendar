@@ -37,7 +37,8 @@ import 'angular-localforage'; const angularLocalForage = 'LocalForageModule';
 import 'ngclipboard';         const clipboard = 'ngclipboard';
 import 'angular-bindonce';    const bindonce = 'pasvaz.bindonce';
 import 'angular-truncate-2';  const truncate = 'truncate';
-import 'angulartics'; const angulartics = 'angulartics';
+import 'angulartics';         const angulartics = 'angulartics';
+import 'angular-translate';   const translate = 'pascalprecht.translate';
 
 // Configs
 import q           from 'app/setup/q';
@@ -45,6 +46,7 @@ import bsTooltips  from 'app/setup/bootstrap/bsTooltips';
 import bsTemplates from 'app/setup/bootstrap/bsTemplates';
 import localForage from 'app/setup/localForage';
 import debugInfo   from 'app/setup/debugInfo';
+import transConfig from 'app/setup/translations';
 
 // Runs
 import watcherLog  from 'app/setup/watcherLog';
@@ -119,10 +121,11 @@ scrollToTop.$inject = ['$rootScope', '$window'];
 
 let app = angular.module(
     'MatchCalendarApp',
-    [angularLocalForage, elastic, sanitize, router, clipboard, animate,
-        bindonce, bootstrap, truncate, slider, messages, angulartics, gAnalytic]
+    [angularLocalForage, elastic, sanitize, router, clipboard, animate, bindonce,
+        bootstrap, truncate, slider, messages, angulartics, gAnalytic, translate]
 )
     .config(q)
+    .config(transConfig)
     .config(bsTooltips)
     .config(localForage)
     .config(debugInfo)

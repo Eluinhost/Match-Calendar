@@ -19,7 +19,7 @@ class Changelog {
         this.$uibModal = $uibModal;
         this.template =
 `<div class="modal-header">
-    <h3 class="modal-title">Changelog</h3>
+    <h3 class="modal-title" translate="changelog.header"></h3>
 </div>
 <div class="modal-body">
     <markdown ng-model="markdown"></markdown>

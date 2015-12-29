@@ -25,6 +25,15 @@ class AboutCtrl {
 
         this.libraries = _.sortBy([
             {
+                name: 'angular-translate',
+                type: this.types.JS,
+                url: 'https://github.com/angular-translate/angular-translate',
+                license: {
+                    name: 'MIT',
+                    url: 'https://github.com/angular-translate/angular-translate/blob/master/LICENSE'
+                }
+            },
+            {
                 name: 'Finger Paint',
                 type: this.types.FONT,
                 url: '',

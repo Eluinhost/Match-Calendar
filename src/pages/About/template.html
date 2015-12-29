@@ -1,15 +1,10 @@
 <div class="container about-page">
-    <h1>About</h1>
+    <h1 translate="about.title"></h1>
+
+    <p translate="about.summary" translate-value-link="<a href='https://reddit.com/r/ultrahardcore'>/r/ultrahardcore</a>"></p>
 
     <p>
-        This website is a collection of upcoming UltraHardcore games hosted by users on
-        <a href="https://reddit.com/r/ultrahardcore">/r/ultrahardcore</a>.
-    </p>
-
-    <p>
-        <div>
-            Running version <strong class="text-success" ng-bind="::about.globals.VERSION"></strong>
-        </div>
+        <div translate="about.version" translate-value-version="<strong class='text-success'>{{::about.globals.VERSION}}</strong>"></div>
         <div class="text-muted">
             (
             <span ng-bind="::about.globals.BRANCH"></span>
@@ -20,7 +15,7 @@
 
     </p>
 
-    <h3>Contributors</h3>
+    <h2 translate="about.contributors"></h2>
 
     <div class="card-deck-wrapper">
         <div class="card-deck">
@@ -38,7 +33,7 @@
         </div>
     </div>
 
-    <h2>Bundled Front-end Libraries</h2>
+    <h2 translate="about.libraries"></h2>
 
     <div class="card card-primary-outline text-xs-left">
         <div class="card-block" ng-repeat="lib in ::about.libraries">

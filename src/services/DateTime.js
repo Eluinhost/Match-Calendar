@@ -52,13 +52,10 @@ class DateTime {
                     $uibModal.open({
                         size: 'sm',
                         template: `
-                        <div class="modal-body">
-                            <p>
-                                The calendar has automatically set your timezone to '${this.timeZone}'.
-                                This will only happen once, go to the settings page if you want to change it.
-                            </p>
-                            <button class="btn btn-block btn-success" ng-click="$close()">Close</button>
-                        </div>
+<div class="modal-body">
+    <p translate="DateTime.autoTimezone.message" translate-value-timezone="'${this.timeZone}'"></p>
+    <button class="btn btn-block btn-success" ng-click="$close()" translate="DateTime.autoTimezone.close"></button>
+</div>
                         `
                     });
                 }

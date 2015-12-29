@@ -13,6 +13,7 @@
         "angular-localforage": "1.2.x",
         "angular-messages": ">=1.5.0-rc.0 < 1.6",
         "angular-sanitize": ">=1.5.0-rc.0 < 1.6",
+        "angular-translate": "2.8.x",
         "angular-truncate-2": "0.4.x",
         "angular-ui-bootstrap": "0.14.x",
         "angular-ui-router": "0.2.x",

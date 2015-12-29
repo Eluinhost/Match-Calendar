@@ -3,10 +3,11 @@ import _ from 'lodash';
 const HIDE_KEY = 'hideNotificationsMessage';
 
 class NotificationEnablerCtrl {
-    constructor(HtmlNotifications, $localForage, $rootScope) {
+    constructor(HtmlNotifications, $localForage, $rootScope, $translate) {
         this.HtmlNotifications = HtmlNotifications;
+        this.$translate = $translate;
         this.hide = false;
-        this.intiialised = false;
+        this.initialised = false;
 
         $localForage
             .getItem(HIDE_KEY)
@@ -27,10 +28,11 @@ class NotificationEnablerCtrl {
     requestPermission() {
         return this.HtmlNotifications
             .requestPermission()
-            .then(() => this.HtmlNotifications.notify('Notifications Enabled!'));
+            .then(() => this.$translate('notifications.enable.notice'))
+            .then(t => this.HtmlNotifications.notify(t));
     }
 }
-NotificationEnablerCtrl.$inject = ['HtmlNotifications', '$localForage', '$rootScope'];
+NotificationEnablerCtrl.$inject = ['HtmlNotifications', '$localForage', '$rootScope', '$translate'];
 
 function desktopNotificationEnabler() {
     return {

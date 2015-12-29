@@ -9,7 +9,7 @@
         button-prefix="{{ ::unique.buttonPrefix }}"
         button-icon="{{ ::unique.buttonIcon }}"
     >
-        <no-items ng-transclude="noItems">No items</no-items>
+        <no-items ng-transclude="noItems"><span translate="uniqueItems.noItems"></span></no-items>
     </button-removal-list>
     <br />
     <div class="input-group">
@@ -33,11 +33,7 @@
         </span>
     </div>
     <div class="text-danger" ng-messages="unique.list.item.$error" ng-if="unique.list.$dirty" role="alert">
-        <small ng-message="required" ng-transclude="requiredError">
-            Please enter a value
-        </small>
-        <small ng-message="notInArray" ng-transclude="inArrayError">
-            This item is already in the list
-        </small>
+        <small ng-message="required" ng-transclude="requiredError"><span translate="uniqueItems.required"></span></small>
+        <small ng-message="notInArray" ng-transclude="inArrayError"><span translate="uniqueItems.alreadyInList"></span></small>
     </div>
 </form>

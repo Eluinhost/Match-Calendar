@@ -31,7 +31,9 @@ class DateTime {
 
         // Default values
         this.timeFormat = '24h';
-        this.timeZone = 'Etc/UTC';
+        this.guessedTimeZone = moment.tz.guess();
+        this.timeZone = this.guessedTimeZone;
+        this.refreshTimeFormats();
 
         // Set a promise to resolve on
         this.initialised = $localForage

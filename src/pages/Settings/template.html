@@ -10,6 +10,14 @@
                     ng-model="settings.DateTime.timeZone"
                     ng-options="o as o group by settings.timeZoneGroup(o) for o in settings.DateTime.timeZones"
                 ></select>
+                <div ng-show="settings.DateTime.timeZone !== settings.DateTime.guessedTimeZone">
+                    <br />
+                    <button
+                        class="btn btn-block btn-info show-pointer"
+                        ng-bind="::'Use detected timezone: ' + settings.DateTime.guessedTimeZone"
+                        ng-click="settings.DateTime.timeZone = settings.DateTime.guessedTimeZone"
+                    ></button>
+                </div>
             </div>
         </div>
         <div class="card card-inverse card-primary-outline">

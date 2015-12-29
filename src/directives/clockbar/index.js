@@ -1,23 +1,32 @@
-import template from './template.html';
+class ClockbarCtrl {
+    constructor(DateTime, DurationFormatter) {
+        this.DateTime = DateTime;
+        this.DurationFormatter = DurationFormatter;
+    }
 
-function clockbar(DateTime, DurationFormatter) {
+    timeTooltip() {
+        if (this.DateTime.synced) {
+            return 'Synced with server. Offset: ' + this.DurationFormatter.format(this.DateTime.offset / 1000);
+        }
+
+        return 'Time has not been synced yet';
+    }
+
+    isUsingGuessedTimezone() {
+        return this.DateTime.timeZone === this.DateTime.guessedTimeZone;
+    }
+}
+ClockbarCtrl.$inject = ['DateTime', 'DurationFormatter'];
+
+function clockbar() {
     return {
         restrict: 'E',
         scope: {},
-        template: template,
-        link: function(scope) {
-            scope.DateTime = DateTime;
-
-            scope.tooltip = function() {
-                if (DateTime.synced) {
-                    return 'Time difference to the server: ' + DurationFormatter.format(DateTime.offset / 1000);
-                }
-
-                return 'Time has not been synced yet';
-            };
-        }
+        template: require('./template.html'),
+        controller: ClockbarCtrl,
+        controllerAs: 'clockbar',
+        bindToController: true
     };
 }
-clockbar.$inject = ['DateTime', 'DurationFormatter'];
 
 export default clockbar;

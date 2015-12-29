@@ -8,7 +8,14 @@
             Downloading new update...
         </div>
         <div ng-switch-when="progress">
-            Downloading new update - {{ updater.progress | number:0 }}%
+            Downloading new update -
+            <strong ng-bind="updater.progress | number: 0"></strong>%
+            <progress
+                class="progress progress-striped progress-animated progress-info"
+                value="{{updater.progress}}"
+                max="100"
+            >
+            </progress>
         </div>
         <div ng-switch-when="updateready">
             <a ng-click="updater.reload()">

@@ -30,7 +30,7 @@
     </div>
 </div>
 <% for (var js in htmlWebpackPlugin.files.chunks) { %>
-<script src="<%= htmlWebpackPlugin.files.chunks[js].entry %>" type="text/javascript"></script>
+<script src="<%= htmlWebpackPlugin.files.chunks[js].entry %>" type="text/javascript" charset="utf-8"></script>
 <% } %>
 </body>
 </html>

@@ -27,13 +27,14 @@
                 </span>
             </div>
             <div class="clock-bar-timezone p-b-1 text-muted">
-                <span
+                <a
                     ui-sref="app.settings"
                     uib-tooltip="{{ 'clockbar.timezoneTooltip' | translate }}"
                     tooltip-append-to-body="true"
+                    class="text-muted"
                 >
                     <b ng-bind="clockbar.DateTime.timeZone"></b>
-                </span>
+                </a>
                 <i
                     class="fa fa-exclamation-circle"
                     ng-show="!clockbar.isUsingGuessedTimezone()"

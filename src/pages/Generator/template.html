@@ -119,18 +119,20 @@
         </div>
     </div>
     <div class="row">
-        <button
-            type="button"
-            class="btn btn-primary btn-lg col-md-6 col-xs-12"
-            ui-sref="app.editor"
-            translate="generator.templateEditor"
-        ></button>
-        <button
-            ng-disabled="!generator.hasValidTemplate() || !generator.hasValidSubreddit()"
-            type="button"
-            class="btn btn-success btn-lg col-md-6 col-xs-12"
-            ng-click="generator.sendToReddit()"
-            translate="generator.postToReddit"
-        ></button>
+        <a ui-sref="app.editor" class="col-xs-12 col-md-6">
+            <button
+                type="button"
+                class="btn btn-block btn-primary btn-lg"
+                translate="generator.templateEditor"
+            ></button>
+        </a>
+        <a ng-click="generator.sendToReddit()" class="col-md-6 col-xs-12">
+            <button
+                ng-disabled="!generator.hasValidTemplate() || !generator.hasValidSubreddit()"
+                type="button"
+                class="btn btn-success btn-lg btn-block"
+                translate="generator.postToReddit"
+            ></button>
+        </a>
     </div>
 </div>

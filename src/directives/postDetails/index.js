@@ -13,10 +13,6 @@ class PostDetailsCtrl {
         this.addressOverride = false;
     }
 
-    goToPost() {
-        this.$state.go('app.post', { id: this.post.id });
-    }
-
     timePostedInAdvance() {
         return this.post.posted.from(this.post.opens, true) + ' in advance';
     }

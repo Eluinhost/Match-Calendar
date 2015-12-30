@@ -51,7 +51,7 @@
         <div class="col-lg-8 text-lg-left text-xs-center col-xs-12">
             <div class="post-title">
                 <strong>
-                    <a class="show-pointer" ng-click="details.goToPost()" bo-text="details.post.title | characters:100: false"></a>
+                    <a class="show-pointer" ui-sref="app.post({id: details.post.id})" bo-text="details.post.title | characters:100: false"></a>
                 </strong>
                 <div>
                     <small>

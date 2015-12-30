@@ -41,7 +41,7 @@
                 <div class="card-block">
                     <div>
                         <small>
-                            Using language:
+                            Using language code:
                             '<span class="text-success" ng-bind="settings.Translations.chosen"></span>'
                         </small>
                     </div>
@@ -52,7 +52,7 @@
                             ng-class="settings.Translations.chosen === lang ? 'btn-success' : 'btn-info'"
                             ng-repeat="lang in ::settings.Translations.keys"
                             ng-click="settings.Translations.chosen = lang"
-                            ng-bind="::lang"
+                            ng-bind="::settings.Translations.friendly[lang]"
                         ></button>
                     </div>
                 </div>

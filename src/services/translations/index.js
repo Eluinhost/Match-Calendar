@@ -9,12 +9,17 @@ const MAPPINGS = {
     'en_*': 'en',
     'fr_*': 'fr'
 };
+const FRIENDLY = {
+    en: 'English',
+    fr: 'Français'
+};
 
 class TranslationsService {
     constructor($localForage, $rootScope, $translate) {
         this.chosen = $translate.use();
         this.translations = TRANSLATIONS;
         this.keys = LANGUAGE_IDS;
+        this.friendly = FRIENDLY;
 
         $localForage
             .getItem(STORAGE_KEY)

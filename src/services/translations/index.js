@@ -1,17 +1,17 @@
 import en from './en';
-import fr from './fr';
+import de from './de';
 import _ from 'lodash';
 
 const STORAGE_KEY = 'chosenLanguage';
-const TRANSLATIONS = { en, fr };
+const TRANSLATIONS = { en, de };
 const LANGUAGE_IDS = Object.keys(TRANSLATIONS);
 const MAPPINGS = {
     'en_*': 'en',
-    'fr_*': 'fr'
+    'de_*': 'de'
 };
 const FRIENDLY = {
     en: 'English',
-    fr: 'Français'
+    de: 'Deutsch'
 };
 
 class TranslationsService {

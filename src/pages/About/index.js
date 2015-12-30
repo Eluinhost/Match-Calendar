@@ -14,6 +14,11 @@ class AboutCtrl {
                 name: 'Methii',
                 role: 'Art',
                 url: '#'
+            },
+            {
+                name: 'D4mnX',
+                role: 'German Translation',
+                url: 'https://github.com/D4mnX'
             }
         ];
 

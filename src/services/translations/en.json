@@ -55,7 +55,7 @@
         "favourite": "Favourite",
         "blocked": "Blocked",
         "tooltips": {
-            "opens": "Time Opens",
+            "opens": "Time Match Opens",
             "startTime": "Time display is game start time, not whitelist off",
             "toggleFavourite": "Toggle Favorite",
             "teams": "Team Style",
@@ -179,7 +179,8 @@
             "info": "Time format to for the website:"
         },
         "language": {
-            "header": "Language"
+            "header": "Language",
+            "inUse": "Using language code:"
         },
         "subreddits": {
             "header": "Subreddits",

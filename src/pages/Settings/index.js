@@ -1,6 +1,6 @@
 class SettingsCtrl {
-    constructor(DurationFormatter, $uibModal, $window, Subreddits,
-                Hosts, DateTime, PostNotifications, $localForage, $scope) {
+    constructor(DurationFormatter, $uibModal, $window, Subreddits, Hosts, DateTime,
+                PostNotifications, $localForage, $scope, Translations) {
         this.Subreddits = Subreddits;
         this.DateTime = DateTime;
         this.PostNotifications = PostNotifications;
@@ -9,6 +9,7 @@ class SettingsCtrl {
         this.Hosts = Hosts;
         this.DurationFormatter = DurationFormatter;
         this.$localForage = $localForage;
+        this.Translations = Translations;
 
         this.sliderOptions = {
             floor: 0,
@@ -96,7 +97,7 @@ class SettingsCtrl {
     }
 }
 SettingsCtrl.$inject = ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'Hosts', 'DateTime',
-    'PostNotifications', '$localForage', '$scope'];
+    'PostNotifications', '$localForage', '$scope', 'Translations'];
 
 let controllerName = 'SettingsCtrl';
 

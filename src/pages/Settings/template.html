@@ -36,6 +36,31 @@
     </div>
     <div class="card-group">
         <div class="card card-inverse card-primary-outline">
+            <div class="card card-inverse card-primary-outline">
+                <h4 class="card-header card-primary" translate="settings.language.header"></h4>
+                <div class="card-block">
+                    <div>
+                        <small>
+                            Using language:
+                            '<span class="text-success" ng-bind="settings.Translations.chosen"></span>'
+                        </small>
+                    </div>
+                    <div class="btn-group">
+                        <button
+                            type="button"
+                            class="btn"
+                            ng-class="settings.Translations.chosen === lang ? 'btn-success' : 'btn-info'"
+                            ng-repeat="lang in ::settings.Translations.keys"
+                            ng-click="settings.Translations.chosen = lang"
+                            ng-bind="::lang"
+                        ></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-group">
+        <div class="card card-inverse card-primary-outline">
             <h4 class="card-header card-primary" translate="settings.subreddits.header"></h4>
             <div class="card-block">
                 <unique-items-editor

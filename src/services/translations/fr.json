@@ -1,6 +1,6 @@
 {
     "header": {
-        "subtitle": "A calendar of UHC matches from {{ reddit }}."
+        "subtitle": "A calÉndar of UHC matches from {{ reddit }}."
     },
     "navbar": {
         "matches": "Matches",
@@ -177,6 +177,9 @@
         "timeFormat": {
             "header": "Time Format",
             "info": "Time format to for the website:"
+        },
+        "language": {
+            "header": "Language"
         },
         "subreddits": {
             "header": "Subreddits",

@@ -46,7 +46,6 @@ import bsTooltips  from 'app/setup/bootstrap/bsTooltips';
 import bsTemplates from 'app/setup/bootstrap/bsTemplates';
 import localForage from 'app/setup/localForage';
 import debugInfo   from 'app/setup/debugInfo';
-import transConfig from 'app/setup/translations';
 
 // Runs
 import watcherLog  from 'app/setup/watcherLog';
@@ -63,6 +62,7 @@ import Posts              from 'app/services/Posts';
 import RedditPostsService from 'app/services/RedditPostsService';
 import Subreddits         from 'app/services/Subreddits';
 import Templates          from 'app/services/Templates';
+import Translations       from 'app/services/Translations';
 
 // Directives
 import appCacheUpdater            from 'app/directives/appCacheUpdater';
@@ -125,13 +125,13 @@ let app = angular.module(
         bootstrap, truncate, slider, messages, angulartics, gAnalytic, translate]
 )
     .config(q)
-    .config(transConfig)
     .config(bsTooltips)
     .config(localForage)
     .config(debugInfo)
     .config(setupStates)
     .run(watcherLog)
     .run(scrollToTop)
+    .provider('Translations', Translations)
     .directive('appCacheUpdater', appCacheUpdater)
     .directive('dateTimePicker', dateTimePicker)
     .directive('desktopNotificationEnabler', desktopNotificationEnabler)

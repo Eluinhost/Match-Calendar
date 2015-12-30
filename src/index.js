@@ -62,7 +62,7 @@ import Posts              from 'app/services/Posts';
 import RedditPostsService from 'app/services/RedditPostsService';
 import Subreddits         from 'app/services/Subreddits';
 import Templates          from 'app/services/Templates';
-import Translations       from 'app/services/Translations';
+import Translations       from 'app/services/translations';
 
 // Directives
 import appCacheUpdater            from 'app/directives/appCacheUpdater';

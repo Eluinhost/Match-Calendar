@@ -30,6 +30,15 @@ class AboutCtrl {
 
         this.libraries = _.sortBy([
             {
+                name: 'flag-icons-css',
+                type: this.types.CSS,
+                url: 'https://github.com/lipis/flag-icon-css',
+                license: {
+                    name: 'MIT',
+                    url: 'https://github.com/lipis/flag-icon-css/blob/master/LICENSE'
+                }
+            },
+            {
                 name: 'angular-translate',
                 type: this.types.JS,
                 url: 'https://github.com/angular-translate/angular-translate',

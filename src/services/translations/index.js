@@ -1,17 +1,27 @@
 import en from './en';
 import de from './de';
+import es from './es';
+import nl from './nl';
+import fr from './fr';
+
 import _ from 'lodash';
 
 const STORAGE_KEY = 'chosenLanguage';
-const TRANSLATIONS = { en, de };
+const TRANSLATIONS = { en, fr, es, de, nl };
 const LANGUAGE_IDS = Object.keys(TRANSLATIONS);
 const MAPPINGS = {
     'en_*': 'en',
-    'de_*': 'de'
+    'de_*': 'de',
+    'nl_*': 'nl',
+    'es_*': 'es',
+    'fr_*': 'fr'
 };
 const FRIENDLY = {
     en: 'English',
-    de: 'Deutsch'
+    de: 'Deutsch',
+    nl: 'Nederlands',
+    es: 'Español',
+    fr: 'Français'
 };
 
 class TranslationsService {

@@ -79,6 +79,7 @@ import notInArray                 from 'app/directives/notInArray';
 import buttonRemovalList          from 'app/directives/buttonRemovalList';
 import uniqueItemsEditor          from 'app/directives/uniqueItemsEditor';
 import titleTime                  from 'app/directives/titleTime';
+import countryFlag                from 'app/directives/countryFlag';
 
 // Pages/Controllers
 import * as About          from 'app/pages/About';
@@ -132,6 +133,7 @@ let app = angular.module(
     .run(watcherLog)
     .run(scrollToTop)
     .provider('Translations', Translations)
+    .directive('countryFlag', countryFlag)
     .directive('appCacheUpdater', appCacheUpdater)
     .directive('dateTimePicker', dateTimePicker)
     .directive('desktopNotificationEnabler', desktopNotificationEnabler)

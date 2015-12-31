@@ -1,7 +1,8 @@
 class ClockbarCtrl {
-    constructor(DateTime, DurationFormatter) {
+    constructor(DateTime, DurationFormatter, Translations) {
         this.DateTime = DateTime;
         this.DurationFormatter = DurationFormatter;
+        this.Translations = Translations;
     }
 
     formattedOffset() {
@@ -16,7 +17,7 @@ class ClockbarCtrl {
         return this.DateTime.timeZone === this.DateTime.guessedTimeZone;
     }
 }
-ClockbarCtrl.$inject = ['DateTime', 'DurationFormatter'];
+ClockbarCtrl.$inject = ['DateTime', 'DurationFormatter', 'Translations'];
 
 function clockbar() {
     return {

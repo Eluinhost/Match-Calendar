@@ -1,6 +1,9 @@
 <div class="container-fluid">
     <div class="row clock-bar">
         <div class="col-sm-6 col-sm-offset-3 col-xs-12 clock-bar-center">
+            <a class="language-switcher" ui-sref="app.settings">
+                <country-flag country-code="clockbar.Translations.chosen"></country-flag>
+            </a>
             <div class="clock-bar-time">
                 <strong
                     ng-class="{unsynced: !clockbar.DateTime.synced}"

@@ -128,7 +128,7 @@
         },
         "template": {
             "header": "Ausgewählte Vorlage",
-            "default": "Du kannst mot der Standard-Vorlage nicht posten. Benuzte den Vorlagen-Editor, um deine eigene Vorlage zu erstellen oder die Standard-Vorlage zu kopieren, und benuzte diese."
+            "default": "Du kannst mit der Standard-Vorlage nicht posten. Benuzte den Vorlagen-Editor, um deine eigene Vorlage zu erstellen oder die Standard-Vorlage zu kopieren, und benuzte diese."
         },
         "subreddit": {
             "header": "Ausgewähltes Subreddit"

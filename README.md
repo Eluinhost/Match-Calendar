@@ -64,7 +64,7 @@ server {
 
     # disable all caching to leave it to appcache
     expires            off;
-    add_header         Cache-Control no-cache;
+    add_header         Cache-Control "no-cache, no-store, must-revalidate";
 
     # proxy the API to the backend
     location /api {

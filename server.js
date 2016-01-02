@@ -17,7 +17,7 @@ if (!config.server.apiOnly) {
     app.use(express.static('web', {
         etag: false,
         setHeaders: function(res) {
-            res.setHeader('Cache-Control', 'no-cache');
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
         }
     }));
 }

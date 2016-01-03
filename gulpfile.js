@@ -8,6 +8,7 @@ var path = require('path');
 var del = require('del');
 var runSequence = require('run-sequence');
 var gitRev = require('git-rev-sync');
+var fs = require('fs');
 
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
@@ -23,6 +24,16 @@ var filename = '[name].[hash]';
 var APP_BASE = path.resolve(__dirname, 'src');
 var DIST_BASE = path.resolve(__dirname, 'web');
 var WEBPACK_ENTRY = 'webpack-dev-server/client?http://localhost:' + configFile.devServerPort;
+
+var momentjsLocales = fs
+    .readdirSync(path.resolve(APP_BASE, 'services/translations'))
+    .filter(function(file) {
+        return file.endsWith('.json');
+    })
+    .map(function(file) {
+        return file.slice(0, -5);
+    })
+    .join('|');
 
 var config = {
     indexGlobalVars: {
@@ -103,7 +114,7 @@ var config = {
             favicon: path.resolve(APP_BASE, 'images/favicon.png')
         }),
         // only use english locale
-        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en-gb/)
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, new RegExp(momentjsLocales))
     ],
     node: {
         console: false,

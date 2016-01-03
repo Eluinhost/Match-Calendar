@@ -5,6 +5,7 @@ import nl from './nl';
 import fr from './fr';
 
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 const STORAGE_KEY = 'chosenLanguage';
 const TRANSLATIONS = { en, fr, es, de, nl };
@@ -25,7 +26,7 @@ const FRIENDLY = {
 };
 
 class TranslationsService {
-    constructor($localForage, $rootScope, $translate) {
+    constructor($localForage, $rootScope, $translate, $log) {
         this.chosen = $translate.use();
         this.translations = TRANSLATIONS;
         this.keys = LANGUAGE_IDS;
@@ -40,12 +41,14 @@ class TranslationsService {
 
                 $rootScope.$watch(() => this.chosen, () => {
                     $localForage.setItem(STORAGE_KEY, this.chosen);
+                    $log.info(`Language switching to ${this.chosen}`);
                     $translate.use(this.chosen);
+                    moment.locale(this.chosen);
                 });
             });
     }
 }
-TranslationsService.$inject = ['$localForage', '$rootScope', '$translate'];
+TranslationsService.$inject = ['$localForage', '$rootScope', '$translate', '$log'];
 
 class TranslationsProvider {
     constructor($translateProvider) {

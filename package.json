@@ -18,7 +18,7 @@
         "angular-ui-bootstrap": "0.14.x",
         "angular-ui-router": "0.2.x",
         "angularjs-slider": "2.1.x",
-        "angulartics": "0.20.x",
+        "angulartics": "1.0.x",
         "angulartics-google-analytics": "0.1.x",
         "bootstrap": ">=4.0.0-alpha.2 < 4.1",
         "clipboard": "1.5.x",

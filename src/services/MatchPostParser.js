@@ -164,7 +164,7 @@ class MatchPostParser {
         // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
         let post = {
             id: element.id,
-            title: element.title,
+            title: he.decode(element.title),
             selftext: he.decode(element.selftext),
             author: element.author,
             permalink: `https://reddit.com${element.permalink}`,
@@ -178,15 +178,12 @@ class MatchPostParser {
 
         // Grab all of the information from the title
         try {
-            let parsed = this._parseTitle(element.title);
+            let parsed = this._parseTitle(post.title);
 
             // Append the extras to the title
             if (parsed.extras.length > 0) {
                 parsed.title = parsed.title + ' ' + parsed.extras.join(' ');
             }
-
-            // Fix html encoded entities breaking in post titles
-            parsed.title = he.decode(parsed.title);
 
             delete parsed.extras;
             _.merge(post, parsed);

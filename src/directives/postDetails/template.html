@@ -35,7 +35,11 @@
     >
         <div class="col-lg-2 col-xs-12 text-xs-center text-lg-right" uib-tooltip="{{ 'post.tooltips.opens' | translate }}">
             <div class="abs-game-starts">
-                <b bo-text="details.openingTime()"></b>
+                <b
+                    local-time="details.post.opens"
+                    local-time-format="POST_HEADER"
+                    local-time-tick-refresh
+                ></b>
                 <i
                     class="fa fa-calendar show-pointer"
                     ng-click="details.toggleNotification($event)"
@@ -43,7 +47,10 @@
                 ></i>
             </div>
             <div class="game-opens visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-                <small bindonce="details.post" refresh-on="'clockTick'" bo-text="details.openingTimeRelative()"></small>
+                <small
+                    relative-time="details.post.opens"
+                    relative-time-tick-refresh
+                ></small>
                 <i class="fa fa-clock-o"></i>
             </div>
             <div class="divider hidden-lg-up"></div>
@@ -81,10 +88,16 @@
         </div>
         <div class="col-lg-2 text-lg-left text-xs-center col-xs-12">
             <div class="server-region" uib-tooltip="{{ 'post.tooltips.region' | translate }}">
-                <i class="fa fa-globe"></i> <small bo-text="details.post.region || 'Unknown'"></small>
+                <i class="fa fa-globe"></i>
+                <small bo-text="details.post.region || 'Unknown'"></small>
             </div>
             <div uib-tooltip="{{ 'post.tooltips.posted' | translate }}" class="time-posted visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
-                <i class="fa fa-reply fa-rotate-180"></i> <small bo-text="details.timePostedInAdvance()"></small>
+                <i class="fa fa-reply fa-rotate-180"></i>
+                <small
+                    relative-time="details.post.posted"
+                    relative-time-from="details.post.opens"
+                    relative-time-hide-suffix
+                ></small>
             </div>
         </div>
     </div>

@@ -6,13 +6,13 @@
             </a>
             <div class="clock-bar-time">
                 <strong
-                    ng-class="{unsynced: !clockbar.DateTime.synced}"
-                    bindonce
-                    bo-text="clockbar.DateTime.format('HEADER')"
+                    local-time
+                    local-time-tick-refresh
+                    local-time-format="HEADER"
                     uib-tooltip="{{ clockbar.timeTooltip() | translate:clockbar }}"
                     tooltip-append-to-body="true"
-                    refresh-on="'clockTick'">
-                </strong>
+                    ng-class="{unsynced: !clockbar.DateTime.synced}"
+                ></strong>
                 <span class="time-info-icons">
                     <i
                         class="fa fa-warning unsynced"

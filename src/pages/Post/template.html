@@ -9,8 +9,12 @@
                 </a>
             </h6>
             <div class="floating-label">
-                <div class="label label-success" bindonce refresh-on="'clockTick'" bo-class="post.relativeTimeClass()">
-                    <i class="fa fa-clock-o"></i> <span bo-text="post.openingTimeRelative()"></span>
+                <div
+                    class="label label-success"
+                    ng-class="post.relativeTimeClass()"
+                >
+                    <i class="fa fa-clock-o"></i>
+                    <span relative-time="::post.post.opens" relative-time-tick-refresh></span>
                 </div>
                 <div class="label" ng-bind="::post.post.region" bo-class="post.regionClass()"></div>
             </div>

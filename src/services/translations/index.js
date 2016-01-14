@@ -44,6 +44,7 @@ class TranslationsService {
                     $log.info(`Language switching to ${this.chosen}`);
                     $translate.use(this.chosen);
                     moment.locale(this.chosen);
+                    $rootScope.$broadcast('language');
                 });
             });
     }

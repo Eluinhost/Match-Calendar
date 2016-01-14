@@ -44,7 +44,7 @@ class PostNotifications {
                 $rootScope.$watch(() => this.playSounds, () => $localForage.setItem(SOUNDS_KEY, this.playSounds));
             });
 
-        $rootScope.$on('clockTick', () => this.recheckPosts());
+        $rootScope.$on('tick', () => this.recheckPosts());
     }
 
     recheckPosts() {

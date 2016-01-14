@@ -63,11 +63,13 @@ class DateTime {
                 $rootScope.$watch(() => this.timeFormat, () => {
                     $localForage.setItem(TIME_FORMAT_KEY, this.timeFormat);
                     this.refreshTimeFormats();
+                    this.$rootScope.$broadcast('timeFormat');
                     ga('set', 'dimension2', this.timeFormat);
                 });
                 $rootScope.$watch(() => this.timeZone, () => {
                     $localForage.setItem(TIME_ZONE_KEY, this.timeZone);
                     this.refreshTimeFormats();
+                    this.$rootScope.$broadcast('timeZone');
                     ga('set', 'dimension1', this.timeZone);
                 });
             });
@@ -89,7 +91,7 @@ class DateTime {
      * Sends out the clock tick event
      */
     tick() {
-        this.$rootScope.$broadcast('clockTick');
+        this.$rootScope.$broadcast('tick');
     }
 
     /**

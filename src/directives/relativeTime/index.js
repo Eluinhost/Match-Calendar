@@ -6,10 +6,10 @@ function localTime($rootScope, DateTime, Translations) {
         restrict: 'A',
         scope: {
             time: '=relativeTime',
-            from: '=?relativeTimeFrom',
+            from: '=?relativeTimeFrom'
         },
         link: function(scope, element, attr) {
-            var showSuffix = _.isUndefined(attr.relativeTimeHideSuffix);
+            let showSuffix = _.isUndefined(attr.relativeTimeHideSuffix);
 
             function rerender() {
                 element.text(

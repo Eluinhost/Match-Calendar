@@ -1,8 +1,7 @@
 import _ from 'lodash';
 
 class PostDetailsCtrl {
-    constructor($scope, DateTime, PostNotifications, Hosts, Subreddits, $timeout, $state) {
-        this.DateTime = DateTime;
+    constructor($scope, PostNotifications, Hosts, Subreddits, $timeout, $state) {
         this.PostNotifications = PostNotifications;
         this.Subreddits = Subreddits;
         this.Hosts = Hosts;
@@ -23,14 +22,6 @@ class PostDetailsCtrl {
 
     showSubreddit() {
         return this.Subreddits.subreddits.length > 1;
-    }
-
-    openingTime() {
-        return this.DateTime.format('POST_HEADER', this.post.opens);
-    }
-
-    openingTimeRelative() {
-        return this.post.opens.from(this.DateTime.getTime()) || 'Unknown';
     }
 
     toggleFavourite(event) {
@@ -74,7 +65,7 @@ class PostDetailsCtrl {
         this.$timeout(() => this.setAddressOverride(false), 2000);
     }
 }
-PostDetailsCtrl.$inject = ['$scope', 'DateTime', 'PostNotifications', 'Hosts', 'Subreddits', '$timeout', '$state'];
+PostDetailsCtrl.$inject = ['$scope', 'PostNotifications', 'Hosts', 'Subreddits', '$timeout', '$state'];
 
 function postDetails() {
     return {

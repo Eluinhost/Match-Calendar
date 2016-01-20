@@ -2,7 +2,7 @@
     <div class="card card-primary-outline card-inverse">
         <div class="post-header card-header card-primary">
             <h2 ng-bind="::post.post.title"></h2>
-            <h6 ng-bind="::post.openingTime()"></h6>
+            <h6 local-time="::post.post.opens"></h6>
             <h6>
                 <a ng-href="{{::'https://reddit.com/u/' + post.post.author}}" target="_blank">
                     <i class="fa fa-reddit-alien"></i> <span ng-bind="::post.post.author"></span>

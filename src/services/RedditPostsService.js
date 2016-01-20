@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const BASE_URL = 'https://www.reddit.com/r/';
+const BASE_URL = 'https://www.reddit.com/';
 const FLAIRS = 'q=flair:\'Upcoming Match\' OR flair:\'Community Game\'';
 
 class RedditPostsService {
@@ -13,7 +13,7 @@ class RedditPostsService {
     }
 
     _createURL(sub, limit, sort) {
-        return `${BASE_URL}${sub}/search.json?${FLAIRS}&restrict_sr=on&limit=${limit}&sort=${sort}`;
+        return `${BASE_URL}r/${sub}/search.json?${FLAIRS}&restrict_sr=on&limit=${limit}&sort=${sort}`;
     }
 
     _querySingle(subreddit, limit = 100, sort = 'new') {
@@ -22,6 +22,26 @@ class RedditPostsService {
             // Parse each element and filter out null posts
             .then(data => data.data.data.children.map(element => this.MatchPostParser.parse(element.data)))
             .catch(() => subreddit);
+    }
+
+    getSinglePost(id) {
+        return this.$http
+            .get(`${BASE_URL}/by_id/t3_${id}.json`)
+            .then(raw => {
+                let data = raw.data.data.children[0].data;
+
+                if (!data) {
+                    return this.$q.reject('Failed to get post information from API');
+                }
+
+                let post = this.MatchPostParser.parse(data);
+
+                if (!post) {
+                    return this.$q.reject('Failed to parse post from returned API data');
+                }
+
+                return post;
+            });
     }
 
     query(subreddits, limit = 100, sort = 'new') {

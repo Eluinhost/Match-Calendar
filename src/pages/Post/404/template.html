@@ -2,19 +2,12 @@
     <div class="card card-danger-outline card-inverse">
         <h4 class="card-header card-danger" translate="post404.title"></h4>
         <div class="card-block">
-            <p class="text-danger" translate="post404.header" translate-value-id="post.postId"></p>
-            <div class="text-xs-left">
-                <p class="text-muted" translate="post404.reasons.header"></p>
-                <ul class="text-muted">
-                    <li translate="post404.reasons.line1"></li>
-                    <li translate="post404.reasons.line2"></li>
-                    <li translate="post404.reasons.line3"></li>
-                </ul>
-            </div>
+            <p class="text-danger" translate="post404.header" translate-value-id="{{ post.postId }}"></p>
             <h5
                 translate="post404.reload"
                 translate-value-seconds='<strong>{{ post.seconds }}</strong>'
             ></h5>
+            <button class="btn btn-danger" ng-click="post.tryAgain()" translate="post404.tryAgain"></button>
         </div>
     </div>
 </div>

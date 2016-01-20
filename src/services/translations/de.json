@@ -139,12 +139,6 @@
     "post404": {
         "title": "404 - Nicht gefunden",
         "header": "Ein Reddit-Post mit der ID {{ id }} wurde nicht gefunden",
-        "reasons": {
-            "header": "Warum existiert dieser Post nicht?",
-            "line1": "Das Spiel hat vor über 30 Minuten gestartet",
-            "line2": "Der Kalendar hat dieses Spiel noch nicht geladen",
-            "line3": "Die gegebene URL ist nicht gültig"
-        },
         "reload": "Lade diesen Post in {{ seconds }} Sekunden automatisch neu"
     },
     "list": {

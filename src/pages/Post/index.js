@@ -1,24 +1,14 @@
 import _ from 'lodash';
 
 class PostCtrl {
-    constructor($stateParams, $state, Posts, DateTime, $timeout, $scope) {
+    constructor(Posts, DateTime, $timeout, $scope, post) {
         this.$scope = $scope;
         this.DateTime = DateTime;
         this.$timeout = $timeout;
         this.Posts = Posts;
         this.showCopyError = false;
         this.copyMessage = 'post.copy.initial';
-
-        if (_.isEmpty($stateParams.id)) {
-            this.goBackToList();
-            return;
-        }
-
-        this.post = _.find(Posts.posts, p => p.id === $stateParams.id);
-
-        if (_.isUndefined(this.post)) {
-            $state.go('app.post404', {id: $stateParams.id});
-        }
+        this.post = post;
     }
 
     regionClass() {
@@ -38,16 +28,8 @@ class PostCtrl {
         this.$timeout(() => this.copyMessage = 'post.copy.initial', 5000);
     }
 
-    openingTime() {
-        return this.DateTime.format('POST_HEADER', this.post.opens);
-    }
-
     teamStyle() {
         return this.post.teams + (this.post.teamSize ? ' To' + this.post.teamSize : '');
-    }
-
-    openingTimeRelative() {
-        return this.post.opens.from(this.DateTime.getTime());
     }
 
     relativeTimeClass() {
@@ -64,9 +46,38 @@ class PostCtrl {
         return 'label-success';
     }
 }
-PostCtrl.$inject = ['$stateParams', '$state', 'Posts', 'DateTime', '$timeout', '$scope'];
+PostCtrl.$inject = ['Posts', 'DateTime', '$timeout', '$scope', 'post'];
 
 let controllerName = 'PostCtrl';
+
+let resolvePost = function(Posts, RedditPostsService, $stateParams, $q, $state) {
+    // Redirect to listing if no id is provided
+    if (_.isEmpty($stateParams.id)) {
+        $state.go('app.list');
+        return $q.reject();
+    }
+
+    // Wait until initial query completes
+    return Posts.firstQuery
+        .then(() => {
+            // Check if we already know about the post
+            let post = _.find(Posts.posts, {id: $stateParams.id});
+
+            if (post) {
+                return post;
+            }
+
+            // Otherwise attempt to force load the post
+            return RedditPostsService
+                .getSinglePost($stateParams.id)
+                // Redirect to not found on failure
+                .catch(err => {
+                    $state.go('app.post404', {id: $stateParams.id});
+                    return $q.reject(err);
+                });
+        });
+};
+resolvePost.$inject = ['Posts', 'RedditPostsService', '$stateParams', '$q', '$state'];
 
 let state = {
     name: 'app.post',
@@ -74,10 +85,7 @@ let state = {
     template: require('./template.html'),
     controller: `${controllerName} as post`,
     resolve: {
-        savedData: ['Posts', function(Posts) {
-            // Only load once posts have loaded at least once
-            return Posts.firstQuery;
-        }]
+        post: resolvePost
     }
 };
 

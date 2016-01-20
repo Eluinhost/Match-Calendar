@@ -139,12 +139,7 @@
     "post404": {
         "title": "404 - Not Found",
         "header": "No post with the id {{ id }} was found",
-        "reasons": {
-            "header": "Reasons why this post might not exist:",
-            "line1": "The game started > 30 minutes ago",
-            "line2": "The calendar hasn't loaded this game yet",
-            "line3": "The link is invalid"
-        },
+        "tryAgain": "Try Again Now",
         "reload": "Will automatically attemtpt to load the post details again in {{ seconds }} seconds"
     },
     "list": {

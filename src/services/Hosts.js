@@ -58,7 +58,7 @@ class Hosts {
     }
 
     isFavouriteHost(name) {
-        return _.contains(this.favouriteHosts, name.toLowerCase());
+        return _.includes(this.favouriteHosts, name.toLowerCase());
     }
 
     addBlockedHost(name, checkExists = true) {
@@ -81,7 +81,7 @@ class Hosts {
     }
 
     isBlockedHost(name) {
-        return _.contains(this.blockedHosts, name.toLowerCase());
+        return _.includes(this.blockedHosts, name.toLowerCase());
     }
 }
 Hosts.$inject = ['$localForage', '$rootScope'];

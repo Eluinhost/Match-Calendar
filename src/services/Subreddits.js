@@ -32,7 +32,7 @@ class Subreddits {
     }
 
     hasSubreddit(name = '') {
-        return _.contains(this.subreddits, name.trim().toLowerCase());
+        return _.includes(this.subreddits, name.trim().toLowerCase());
     }
 
     deleteSubreddit(name = '') {

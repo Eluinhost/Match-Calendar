@@ -103,7 +103,7 @@ class GeneratorCtrl {
     }
 
     hasValidSubreddit() {
-        return _.contains(this.Subreddits.subreddits, this.subreddit);
+        return _.includes(this.Subreddits.subreddits, this.subreddit);
     }
 
     generateTitle() {

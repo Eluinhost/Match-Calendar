@@ -14,12 +14,12 @@ class PostListCtrl {
 
         this.filters = {
             search: '',
-            region: post => !_.contains(Posts.disabledRegions, post.region.toLowerCase()),
+            region: post => !_.includes(Posts.disabledRegions, post.region.toLowerCase()),
             // Check if all of its gamemodes are enabled or not
-            gamemode: post => !_.any(post.gamemodes, gamemode => {
-                return _.contains(Posts.disabledGamemodes, gamemode.toLowerCase());
+            gamemode: post => !_.some(post.gamemodes, gamemode => {
+                return _.includes(Posts.disabledGamemodes, gamemode.toLowerCase());
             }),
-            teamType: post => !_.contains(Posts.disabledTeamTypes, post.teams.toLowerCase()),
+            teamType: post => !_.includes(Posts.disabledTeamTypes, post.teams.toLowerCase()),
             favourited: post => Posts.showFavouritedHostsOnly ? Hosts.isFavouriteHost(post.author) : true,
             blocked: post => Posts.showBlockedHosts ? true : !Hosts.isBlockedHost(post.author)
         };

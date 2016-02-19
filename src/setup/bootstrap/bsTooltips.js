@@ -1,10 +1,10 @@
-function bsTooltips($tooltipProvider) {
-    $tooltipProvider.options({
+function bsTooltips($uibTooltipProvider) {
+    $uibTooltipProvider.options({
         animation: false,
         popupDelay: 400
     });
 }
 
-bsTooltips.$inject = ['$tooltipProvider'];
+bsTooltips.$inject = ['$uibTooltipProvider'];
 
 export default bsTooltips;

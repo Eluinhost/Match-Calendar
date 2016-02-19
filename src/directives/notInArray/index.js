@@ -10,11 +10,11 @@ function notInArray() {
         link: function(scope, elm, attrs, ctrl) {
             ctrl.$validators.notInArray = function(modelValue) {
                 if (scope.notInArrayCaseSensitive) {
-                    return !_.contains(scope.notInArray, modelValue);
+                    return !_.includes(scope.notInArray, modelValue);
                 }
 
                 let check = modelValue.toLowerCase();
-                return !_.any(scope.notInArray, item => item.toLowerCase() === check);
+                return !_.some(scope.notInArray, item => item.toLowerCase() === check);
             };
         }
     };

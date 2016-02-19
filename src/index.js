@@ -31,10 +31,10 @@ import animate   from 'angular-animate';
 import messages  from 'angular-messages';
 import {name as slider} from 'angularjs-slider';
 import gAnalytic from 'angulartics-google-analytics';
+import clipboard from 'ngclipboard';
 
 // 3rd party, don't expose names
 import 'angular-localforage'; const angularLocalForage = 'LocalForageModule';
-import 'ngclipboard';         const clipboard = 'ngclipboard';
 import 'angular-bindonce';    const bindonce = 'pasvaz.bindonce';
 import 'angular-truncate-2';  const truncate = 'truncate';
 import 'angulartics';         const angulartics = 'angulartics';

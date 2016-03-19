@@ -27,7 +27,7 @@ class GeneratorCtrl {
             AS: 'Asia',
             EU: 'Europe',
             NA: 'North America',
-            OC: 'Oceania',
+            AU: 'Oceania',
             SA: 'South America'
         };
 

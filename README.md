@@ -56,7 +56,7 @@ backend API (like `127.0.0.1:9001`).
 
 Here is a simple configuration file for nginx to work with this method:
 
-```
+```nginx
 server {
     listen        80;
     server_name   localhost; # your domain

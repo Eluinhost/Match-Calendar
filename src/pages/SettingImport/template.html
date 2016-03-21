@@ -1,0 +1,22 @@
+<div class="container text-xs-center settingimport-page">
+    <h3 class="text-muted">Paste saved settings into the box below and press import settings to import</h3>
+    <textarea
+        id="template-edit-box"
+        msd-elastic
+        class="generator-template form-control"
+        ng-model="settingimport.toImport"
+    ></textarea>
+    <button
+        class="btn btn-info btn-block btn-lg col-xs-12 col-md-6"
+        type="button"
+        ng-disabled="!settingimport.toImport"
+        ng-click="settingimport.import()"
+        translate="settings.importSettings"
+    ></button>
+    <button
+        class="btn btn-info btn-block btn-lg col-xs-12 col-md-6"
+        type="button"
+        ng-click="settingimport.export()"
+        translate="settings.exportSettings"
+    ></button>
+</div>

@@ -63,6 +63,7 @@ import RedditPostsService from 'app/services/RedditPostsService';
 import Subreddits         from 'app/services/Subreddits';
 import Templates          from 'app/services/Templates';
 import Translations       from 'app/services/translations';
+import SettingImportExport from 'app/services/SettingImportExport';
 
 // Directives
 import appCacheUpdater            from 'app/directives/appCacheUpdater';
@@ -92,8 +93,9 @@ import * as Post404        from 'app/pages/Post/404';
 import * as PostList       from 'app/pages/PostList';
 import * as Help           from 'app/pages/PostList/Help';
 import * as Settings       from 'app/pages/Settings';
+import * as SettingImport  from 'app/pages/SettingImport';
 
-let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post, Post404];
+let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post, Post404, SettingImport];
 
 function setupStates($stateProvider, $urlRouterProvider) {
     $stateProvider.state('app', {
@@ -162,7 +164,8 @@ let app = angular.module(
     .service('Posts', Posts)
     .service('RedditPostsService', RedditPostsService)
     .service('Subreddits', Subreddits)
-    .service('Templates', Templates);
+    .service('Templates', Templates)
+    .service('SettingImportExport', SettingImportExport);
 
 pages
     .filter(page => !_.isUndefined(page.controller) && !_.isUndefined(page.controllerName))

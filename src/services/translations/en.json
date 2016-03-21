@@ -204,7 +204,10 @@
             "required": "Please enter a host's username (without /u/)",
             "contained": "This username is already in your blocked list"
         },
-        "clearData": "Reset all settings/data"
+        "clearData": "Reset all settings/data",
+        "importexport": "Import/Export Settings",
+        "exportSettings": "Export Settings",
+        "importSettings": "Import Settings"
     },
     "templates": {
         "new": "New Template",

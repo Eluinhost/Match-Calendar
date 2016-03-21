@@ -73,6 +73,8 @@ server {
 }
 ```
 
+A more complete HTTPS nginx conf can be found [here](/nginx-current.md)
+
 Note that Apache/nginx require you to set the mime type of .appcache files to `text/cache-manifest`.
 
 For nginx this can be done in `mimes.types` by adding `text/cache-manifest appcache`,

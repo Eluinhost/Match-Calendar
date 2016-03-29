@@ -80,7 +80,6 @@
         "curly": false,
         "eqeqeq": true,
         "esversion": 6,
-        "esnext": true,
         "forin": true,
         "freeze": true,
         "funcscope": false,

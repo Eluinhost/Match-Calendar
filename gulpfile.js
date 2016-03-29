@@ -31,7 +31,7 @@ var momentjsLocales = fs
         return file.endsWith('.json');
     })
     .map(function(file) {
-        return file.slice(0, -5);
+        return file.slice(0, -5) + '\.js';
     })
     .join('|');
 

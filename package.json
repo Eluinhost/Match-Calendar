@@ -6,13 +6,13 @@
         "express": "4.13.x"
     },
     "devDependencies": {
-        "angular": ">=1.5.0-rc.0 < 1.6",
-        "angular-animate": ">=1.5.0-rc.0 < 1.6",
+        "angular": "1.5.x",
+        "angular-animate": "1.5.x",
         "angular-bindonce": "git://github.com/Pasvaz/bindonce.git#rebind-debug",
         "angular-elastic": "2.5.x",
         "angular-localforage": "1.2.x",
-        "angular-messages": ">=1.5.0-rc.0 < 1.6",
-        "angular-sanitize": ">=1.5.0-rc.0 < 1.6",
+        "angular-messages": "1.5.x",
+        "angular-sanitize": "1.5.x",
         "angular-translate": "2.8.x",
         "angular-truncate-2": "0.4.x",
         "angular-ui-bootstrap": "1.1.x",
@@ -64,7 +64,7 @@
         "jshint-loader": "0.8.x",
         "jscs-loader": "0.2.x",
         "jscs": "2.7.x",
-        "jshint": "2.9.1-rc1"
+        "jshint": "2.9.x"
     },
     "jscsConfig": {
         "preset": "node-style-guide",

@@ -16,7 +16,7 @@ function localTime($rootScope, DateTime, Translations) {
                     moment(scope.time)
                         .tz(DateTime.timeZone)
                         .locale(Translations.chosen)
-                        .from(moment(scope.from || moment()), !showSuffix)
+                        .from(moment(scope.from || DateTime.getTime()), !showSuffix)
                 );
             }
 

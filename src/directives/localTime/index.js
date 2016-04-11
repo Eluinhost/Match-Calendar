@@ -15,7 +15,7 @@ function localTime($rootScope, DateTime, Translations) {
 
             function time() {
                 if (!scope.time) {
-                    return moment();
+                    return DateTime.getTime();
                 }
 
                 if (scope.time instanceof moment) {

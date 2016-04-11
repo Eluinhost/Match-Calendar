@@ -80,7 +80,7 @@ import notInArray                 from 'app/directives/notInArray';
 import buttonRemovalList          from 'app/directives/buttonRemovalList';
 import uniqueItemsEditor          from 'app/directives/uniqueItemsEditor';
 import titleTime                  from 'app/directives/titleTime';
-import countryFlag                from 'app/directives/countryFlag';
+// Removed due to english only import countryFlag                from 'app/directives/countryFlag';
 import localTime                  from 'app/directives/localTime';
 import relativeTime               from 'app/directives/relativeTime';
 
@@ -139,7 +139,7 @@ let app = angular.module(
     .provider('Translations', Translations)
     .directive('localTime', localTime)
     .directive('relativeTime', relativeTime)
-    .directive('countryFlag', countryFlag)
+    // Removed due to english only - .directive('countryFlag', countryFlag)
     .directive('appCacheUpdater', appCacheUpdater)
     .directive('dateTimePicker', dateTimePicker)
     .directive('desktopNotificationEnabler', desktopNotificationEnabler)

@@ -95,7 +95,7 @@ class MatchPostParser {
         let type = parseGameType(style);
 
         return {
-            type: _.isUndefined(type) ? section : type.name,
+            type: _.isUndefined(type) ? style : type.name,
             size: size
         };
     }

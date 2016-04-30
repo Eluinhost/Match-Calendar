@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const BASE_URL = 'https://www.reddit.com/';
-const FLAIRS = 'q=flair:\'Upcoming Match\' OR flair:\'Community Game\'';
+const API_BASE_URL = '/api/v1/r/';
 
 class RedditPostsService {
     constructor($http, $q, $filter, MatchPostParser, DateTime) {
@@ -12,13 +12,9 @@ class RedditPostsService {
         this.DateTime = DateTime;
     }
 
-    _createURL(sub, limit, sort) {
-        return `${BASE_URL}r/${sub}/search.json?${FLAIRS}&restrict_sr=on&limit=${limit}&sort=${sort}`;
-    }
-
-    _querySingle(subreddit, limit = 100, sort = 'new') {
+    _querySingle(subreddit) {
         return this.$http
-            .get(this._createURL(subreddit, limit, sort))
+            .get(API_BASE_URL + subreddit)
             // Parse each element and filter out null posts
             .then(data => data.data.data.children.map(element => this.MatchPostParser.parse(element.data)))
             .catch(() => subreddit);

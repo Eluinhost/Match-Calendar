@@ -28,9 +28,13 @@ This will build the site into the `web` directory.
 
 ## Backend 
 
-The backend currently is only an API that returns the server time.
+The backend has the following routes:
 
-To run the backend you can run `node .`. 
+`/api/sync`/`/api/v1/sync` - used for syncing calendar time
+
+`/api/v1/r/:subreddit` - used for caching Reddit search requests
+
+To run the backend you can run `node .`
 
 You can also install [Forever](https://github.com/foreverjs/forever) and start
 the application by running `forever start .`

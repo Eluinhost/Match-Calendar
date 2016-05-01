@@ -2,15 +2,21 @@
 /*jshint esnext:false */
 /*jshint esversion:5 */
 
-var config = require('./config');
+var config = require('../config');
 
 var express = require('express');
 var app = express();
 
-app.get('/api/sync', function(req, res) {
-    res.json({ time: Date.now() });
-});
+var v1 = require('./v1');
 
+// Sync API
+app.get('/api/sync', v1.timeSync); // legacy
+app.get('/api/v1/sync', v1.timeSync);
+
+// Subreddit API
+app.get('/api/v1/r/:subreddit', v1.subreddits);
+
+// Serve files if required
 if (!config.server.apiOnly) {
     express.static.mime.define({'text/cache-manifest': ['appcache']});
 

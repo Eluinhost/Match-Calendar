@@ -47,11 +47,17 @@ server {
     gzip_comp_level 5;
     gzip_types application/x-javascript application/json text/css;
     
-    # disable all caching to leave it to appcache
-    expires            off;
-    add_header         Cache-Control "no-cache, no-store, must-revalidate";
-    sendfile           off;
-    if_modified_since  off;
+    location / {
+        # disable all caching to leave it to appcache
+        expires            off;
+        add_header         Cache-Control "no-cache, no-store, must-revalidate";
+        sendfile           off;
+        if_modified_since  off;
+    }
+    
+    location ~* .(map)$ {
+        # leaving empty, just so the above / doesn't cause zero caching
+    }       
         
     # setup SSL information
     ssl_certificate <PATH TO CERT>;

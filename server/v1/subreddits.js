@@ -1,90 +1,49 @@
 'use strict';
 
-var fetch = require('node-fetch');
-var moment = require('moment');
-var _ = require('lodash');
+const fetch = require('node-fetch');
+const PromiseCache = require('../PromiseCache');
+const Promise = require('bluebird');
 
-var BASE_URL = 'https://www.reddit.com/';
-var FLAIRS = 'q=flair:\'Upcoming Match\' OR flair:\'Community Game\'';
+const packageVersion = require('../../package.json').version;
 
-var packageVersion = require('../../package.json').version;
-
-var HEADERS = {
+const OPTIONS = {
     headers: {
-        'User-Agent': 'node:Match-Calendar:v' + packageVersion + ': (by /u/ghowden)'
-    }
+        'User-Agent': `node:Match-Calendar:v${packageVersion}: (by /u/ghowden)`
+    },
+    redirect: 'error'
 };
 
 function createURL(sub, limit, sort) {
-    return BASE_URL + 'r/' + sub + '/search.json?' + FLAIRS + '&restrict_sr=on&limit=' + limit + '&sort=' + sort;
+    return `https://www.reddit.com/r/${sub}/search.json?q=flair:\'Upcoming Match\' OR flair:\'Community Game\'&restrict_sr=on&limit=${limit}&sort=${sort}`;
 }
 
-class Cache {
-    constructor(builer, timeoutMillis) {
-        this.items = {};
-        this.timeoutMillis = timeoutMillis;
-        this.builder = builer;
+class InvalidResponseError extends Error {}
+
+const fetchForSubreddit = Promise.coroutine(function* fetchForSubreddit(name) {
+    let response;
+    console.info(`Loading data from /r/${name}`);
+    try {
+        response = yield fetch(createURL(name, 100, 'new'), OPTIONS);
+    } catch (error) {
+        throw new InvalidResponseError(error);
+    }
+    console.info(`Updated data from /r/${name}`);
+
+    if (!response.ok) {
+        throw new InvalidResponseError('Response was not OK');
     }
 
-    getItem(key) {
-        var now = moment();
+    return response.json();
+});
 
-        if (this.items.hasOwnProperty(key)) {
-            var existing = this.items[key];
+// Keep valid responses for 45 seconds and failures for 5
+const cache = new PromiseCache(fetchForSubreddit, 1000 * 45, 1000 * 5);
 
-            if (now.isBefore(existing.timeout)) {
-                return existing.promise;
-            }
-        }
-
-        var item = this.items[key] = {
-            promise: this.builder(key),
-            timeout: now.add(this.timeoutMillis, 'ms')
-        };
-
-        return item.promise
-            .catch(function (error) {
-                console.log(error);
-                return undefined;
-            })
+module.exports = function *() {
+    try {
+        this.body = yield cache.getItem(this.params.subreddit);
+    } catch (error) {
+        this.app.emit('error', error, this);
+        this.throw(502, 'Failed to fetch posts from Reddit');
     }
-}
-
-function subredditItemsBuiler(name) {
-    return fetch(createURL(name, 100, 'new'), HEADERS)
-        .then(function(response) {
-            if (!response.ok) {
-                throw new Error('Response was not OK');
-            }
-
-            return response.json();
-        });
-}
-
-const cache = new Cache(subredditItemsBuiler, 1000 * 45);
-
-module.exports = function subreddit(req, res, next) {
-    if (_.isUndefined(req.params) || _.isUndefined(req.params.subreddit) || _.isEmpty(req.params.subreddit)) {
-        res.status(400);
-        res.json({ error: 'Must provide a non-empty subreddit to return for' });
-        next();
-        return;
-    }
-
-    cache.getItem(req.params.subreddit)
-        .then(function (response) {
-            if (_.isUndefined(response)) {
-                res.status(400);
-                res.json({ error: 'Unable to fetch posts from Reddit, please try again later' });
-            } else {
-                res.json(response);
-            }
-
-            next();
-        })
-        .catch(function(error) {
-            console.error(error);
-            res.status(500);
-            res.json({ error: 'Internal server error' });
-        })
 };

@@ -11,7 +11,7 @@ class DateTime {
         this.$http = $http;
 
         // URL path for syncing time
-        this.resyncURL = 'api/sync';
+        this.resyncURL = 'api/v1/sync';
 
         // Preset values for chosing zone/format
         this.timeFormats = ['12h', '24h'];

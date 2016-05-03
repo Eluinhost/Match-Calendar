@@ -1,10 +1,10 @@
 'use strict';
 
 const fetch = require('node-fetch');
-const PromiseCache = require('../PromiseCache');
+const PromiseCache = require('../../PromiseCache');
 const Promise = require('bluebird');
 
-const packageVersion = require('../../package.json').version;
+const packageVersion = require('../../../package.json').version;
 
 const OPTIONS = {
     headers: {

@@ -3,6 +3,8 @@ const path = require('path');
 const Router = require('koa-router');
 const rewrite = require('koa-rewrite');
 const json = require('koa-json');
+const fs = require('fs');
+const { flatMap, forEach, filter, map } = require('lodash');
 const etag = require('koa-etag');
 const conditional = require('koa-conditional-get');
 
@@ -28,13 +30,40 @@ app.use(etag());
 app.use(json({ pretty: false, param: 'pretty' }));
 app.use(rewrite('/api/sync', '/api/v1/sync')); // Legacy, before vx syntax
 
-// Import and use each API version
-const apiRoutes = new Router({
+const apiFolder = path.join(__dirname, 'api');
+
+const apiRoutes = map(
+    filter(
+        fs.readdirSync(apiFolder),
+        name => fs.statSync(path.join(apiFolder, name)).isDirectory()
+    ),
+    name => {
+        const imported = require(`./api/${name}`);
+
+        return {
+            name,
+            setup: imported.setup,
+            rewrites: imported.rewrites || []
+        };
+    }
+);
+
+// Run rewrites before adding routes
+forEach(
+    flatMap(
+        apiRoutes,
+        it => it.rewrites
+    ),
+    it => app.use(rewrite(it.from, it.to))
+);
+
+// Base API route
+const apiRouter = new Router({
     prefix: '/api'
 });
 
 // Generic error catcher that renders as JSON
-apiRoutes.use(function * (next) {
+apiRouter.use(function * (next) {
     try {
         yield next;
     } catch (err) {
@@ -44,13 +73,17 @@ apiRoutes.use(function * (next) {
     }
 });
 
-['./v1']
-    .map(it => require(it))
-    .forEach(it => apiRoutes
-        .use(it.routes())
-        .use(it.allowedMethods())
-    );
+// Run the setup function for each version
+forEach(
+    apiRoutes,
+    ({name, setup}) => {
+        // Create route for /v1 e.t.c.
+        const router = new Router({ prefix: `/${name}` });
+        setup(router);
 
-app.use(apiRoutes.routes(), apiRoutes.allowedMethods());
+        // Attach to parent API route
+        apiRouter.use(router.routes()).use(router.allowedMethods());
+    }
+);
 
 app.listen(config.server.port, () => console.log(`Server running on port ${config.server.port}`));

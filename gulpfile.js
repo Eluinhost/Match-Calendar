@@ -1,31 +1,27 @@
-/*jshint varstmt:false */
-/*jshint esnext:false */
-/*jshint esversion:5 */
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const path = require('path');
+const del = require('del');
+const runSequence = require('run-sequence');
+const gitRev = require('git-rev-sync');
+const fs = require('fs');
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var path = require('path');
-var del = require('del');
-var runSequence = require('run-sequence');
-var gitRev = require('git-rev-sync');
-var fs = require('fs');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const AppCachePlugin = require('appcache-webpack-plugin');
+const WebpackDevServer = require('webpack-dev-server');
 
-var webpack = require('webpack');
-var autoprefixer = require('autoprefixer');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var AppCachePlugin = require('appcache-webpack-plugin');
-var WebpackDevServer = require('webpack-dev-server');
+const configFile = require('./config.js');
 
-var configFile = require('./config.js');
+// Default settings are for dev, run 'prod-build-config' to change for production
+const filename = '[name].[hash]';
+const APP_BASE = path.resolve(__dirname, 'src');
+const DIST_BASE = path.resolve(__dirname, 'web');
+const WEBPACK_ENTRY = 'webpack-dev-server/client?http://localhost:' + configFile.devServerPort;
 
-// default settings are for dev, run 'prod-build-config' to change for production
-var filename = '[name].[hash]';
-var APP_BASE = path.resolve(__dirname, 'src');
-var DIST_BASE = path.resolve(__dirname, 'web');
-var WEBPACK_ENTRY = 'webpack-dev-server/client?http://localhost:' + configFile.devServerPort;
-
-var momentjsLocales = fs
+const momentjsLocales = fs
     .readdirSync(path.resolve(APP_BASE, 'services/translations'))
     .filter(function(file) {
         return file.endsWith('.json');
@@ -35,7 +31,7 @@ var momentjsLocales = fs
     })
     .join('|');
 
-var config = {
+const config = {
     indexGlobalVars: {
         HASH: gitRev.long(),
         BRANCH: gitRev.branch(),
@@ -55,9 +51,13 @@ var config = {
     module: {
         loaders: [
             {
-                // our own JS files via babel
+                // Our own JS files via babel
                 test: /\.js$/,
-                loader: 'babel?presets[]=es2015,plugins[]=transform-es2015-modules-commonjs,plugins[]=transform-runtime,cacheDirectory!jshint!jscs',
+                loader: 'babel?' +
+                            'presets[]=es2015,' +
+                            'plugins[]=transform-es2015-modules-commonjs,' +
+                            'plugins[]=transform-runtime,' +
+                        'cacheDirectory!jshint!jscs',
                 include: APP_BASE
             },
             {
@@ -84,7 +84,7 @@ var config = {
                 test: /\.sass$/,
                 loader: ExtractTextPlugin.extract('style', 'css?sourceMap!sass?sourceMap,indentedSyntax=true')
             },
-            // libraries
+            // Libraries
             {
                 test: /ngclipboard.js$/,
                 loader: 'imports?Clipboard=clipboard'
@@ -102,7 +102,7 @@ var config = {
     resolve: {
         alias: {
             'ng-clip': 'ng-clip/src/ngClip',
-            'app': APP_BASE
+            app: APP_BASE
         }
     },
     plugins: [
@@ -113,7 +113,7 @@ var config = {
             inject: false,
             favicon: path.resolve(APP_BASE, 'images/favicon.png')
         }),
-        // only use english locale
+        // Only use english locale
         new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, new RegExp(momentjsLocales))
     ],
     node: {
@@ -133,29 +133,29 @@ var config = {
     jscs: require('./package.json').jscsConfig
 };
 
-var compiler;
+let compiler;
 
 gulp.task('clean', function() {
     return del([DIST_BASE]);
 });
 
 gulp.task('prod-build-config', function() {
-    // remove webpack entry
+    // Remove webpack entry
     config.entry.app.splice(0, 1);
 
-    // production flags
+    // Production flags
     config.bail = true;
     config.debug = false;
     config.output.pathinfo = false;
 
-    // full source map
+    // Full source map
     config.devtool = 'source-map';
 
-    // production plugins
+    // Production plugins
     config.plugins.push(
         new webpack.DefinePlugin({
-            "process.env": {
-                "NODE_ENV": JSON.stringify("production")
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
             }
         }),
         new webpack.NoErrorsPlugin(),
@@ -164,7 +164,7 @@ gulp.task('prod-build-config', function() {
         new webpack.optimize.OccurenceOrderPlugin(),
         new AppCachePlugin({
             network: ['*'],
-            // exclude manifest + map files + changelog md
+            // Exclude manifest + map files + changelog md
             exclude: [/\.appcache$/, /\.map$/, /\.md$/],
             output: 'manifest.appcache'
         })
@@ -182,8 +182,10 @@ gulp.task('webpack:init-prod', function(done) {
 });
 
 gulp.task('webpack:prod', ['webpack:init-prod'], function(done) {
-    compiler.run(function (err, stats) {
-        if (err) throw new gutil.PluginError('webpack:prod', err);
+    compiler.run(function(err, stats) {
+        if (err) {
+            throw new gutil.PluginError('webpack:prod', err);
+        }
 
         gutil.log('[webpack:prod]', stats.toString({
             colors: true
@@ -208,10 +210,16 @@ gulp.task('webpack:dev', ['webpack:init'], function(done) {
             }
         }
     }).listen(configFile.devServerPort, 'localhost', function(err) {
-        if(err) throw new gutil.PluginError('webpack-dev-server', err);
+        if (err) {
+            throw new gutil.PluginError('webpack-dev-server', err);
+        }
         done();
 
-        gutil.log('[webpack-dev-server]', 'http://localhost:' + configFile.devServerPort + '/webpack-dev-server/index.html', 'http://localhost:' + configFile.devServerPort + '/index.html');
+        gutil.log(
+            '[webpack-dev-server]',
+            `http://localhost:${configFile.devServerPort}/webpack-dev-server/index.html`,
+            `http://localhost:${configFile.devServerPort}/index.html`
+        );
     });
 });
 

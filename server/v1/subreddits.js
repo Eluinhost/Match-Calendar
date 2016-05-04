@@ -14,7 +14,8 @@ const OPTIONS = {
 };
 
 function createURL(sub, limit, sort) {
-    return `https://www.reddit.com/r/${sub}/search.json?q=flair:\'Upcoming Match\' OR flair:\'Community Game\'&restrict_sr=on&limit=${limit}&sort=${sort}`;
+    return `https://www.reddit.com/r/${sub}/search.json` +
+           `?q=flair:\'Upcoming Match\' OR flair:\'Community Game\'&restrict_sr=on&limit=${limit}&sort=${sort}`;
 }
 
 class InvalidResponseError extends Error {}

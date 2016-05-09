@@ -53,7 +53,7 @@ class TranslationsProvider {
 
         $translateProvider.useSanitizeValueStrategy('sanitize');
 
-        this.$get = function(...deps) {
+        this.$get = function (...deps) {
             return new TranslationsService(...deps);
         };
         this.$get.$inject = TranslationsService.$inject;

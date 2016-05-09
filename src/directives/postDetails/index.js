@@ -13,11 +13,17 @@ class PostDetailsCtrl {
     }
 
     timePostedInAdvance() {
-        return this.post.posted.from(this.post.opens, true) + ' in advance';
+        return `${this.post.posted.from(this.post.opens, true)} in advance`;
     }
 
     teamStyle() {
-        return this.post.teams + (this.post.teamSize ? ' To' + this.post.teamSize : '');
+        let style = this.post.teams;
+
+        if (this.post.teamSize) {
+            style += ` To${this.post.teamSize}`;
+        }
+
+        return style;
     }
 
     showSubreddit() {

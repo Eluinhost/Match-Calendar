@@ -8,9 +8,9 @@ let decorators = {
 };
 
 // Map templates to replacement directives
-decorators = _.mapValues(decorators, function(template) {
-    let decorator = function($delegate) {
-        let directive = $delegate[0];
+decorators = _.mapValues(decorators, template => {
+    const decorator = function ($delegate) {
+        const directive = $delegate[0];
 
         directive.templateUrl = undefined;
         directive.template = template;

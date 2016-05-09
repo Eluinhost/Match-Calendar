@@ -10,7 +10,7 @@ function watcherLog($rootScope, $log, $interval) {
     let lastCount = 0;
 
     function logWatchers() {
-        let watchers = $rootScope.$$watchersCount;
+        const watchers = $rootScope.$$watchersCount;
         let severity;
 
         if (watchers.length > 1600) {

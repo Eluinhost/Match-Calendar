@@ -6,7 +6,7 @@ function countryFlag() {
         scope: {
             countryCode: '='
         },
-        template: template
+        template
     };
 }
 countryFlag.$inject = [];

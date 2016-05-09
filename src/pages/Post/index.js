@@ -16,8 +16,12 @@ class PostCtrl {
     }
 
     showCopiedMessage() {
-        this.$scope.$apply(() => this.copyMessage = 'post.copy.copied');
-        this.$timeout(() => this.copyMessage = 'post.copy.initial', 3000);
+        this.$scope.$apply(() => {
+            this.copyMessage = 'post.copy.copied';
+        });
+        this.$timeout(() => {
+            this.copyMessage = 'post.copy.initial';
+        }, 3000);
     }
 
     showCtrlCMessage() {
@@ -25,15 +29,23 @@ class PostCtrl {
             this.copyMessage = 'post.copy.fallback';
             this.showCopyError = true;
         });
-        this.$timeout(() => this.copyMessage = 'post.copy.initial', 5000);
+        this.$timeout(() => {
+            this.copyMessage = 'post.copy.initial';
+        }, 5000);
     }
 
     teamStyle() {
-        return this.post.teams + (this.post.teamSize ? ' To' + this.post.teamSize : '');
+        let style = this.post.teams;
+
+        if (this.post.teamSize) {
+            style += ` ${this.post.teamSize}`;
+        }
+
+        return style;
     }
 
     relativeTimeClass() {
-        let time = this.post.opens.diff(this.DateTime.getTime());
+        const time = this.post.opens.diff(this.DateTime.getTime());
 
         if (time < 0) {
             return 'label-danger';
@@ -48,9 +60,9 @@ class PostCtrl {
 }
 PostCtrl.$inject = ['Posts', 'DateTime', '$timeout', '$scope', 'post'];
 
-let controllerName = 'PostCtrl';
+const controllerName = 'PostCtrl';
 
-let resolvePost = function(Posts, RedditPostsService, $stateParams, $q, $state) {
+const resolvePost = function (Posts, RedditPostsService, $stateParams, $q, $state) {
     // Redirect to listing if no id is provided
     if (_.isEmpty($stateParams.id)) {
         $state.go('app.list');
@@ -61,7 +73,7 @@ let resolvePost = function(Posts, RedditPostsService, $stateParams, $q, $state) 
     return Posts.firstQuery
         .then(() => {
             // Check if we already know about the post
-            let post = _.find(Posts.posts, {id: $stateParams.id});
+            const post = _.find(Posts.posts, { id: $stateParams.id });
 
             if (post) {
                 return post;
@@ -72,14 +84,14 @@ let resolvePost = function(Posts, RedditPostsService, $stateParams, $q, $state) 
                 .getSinglePost($stateParams.id)
                 // Redirect to not found on failure
                 .catch(err => {
-                    $state.go('app.post404', {id: $stateParams.id});
+                    $state.go('app.post404', { id: $stateParams.id });
                     return $q.reject(err);
                 });
         });
 };
 resolvePost.$inject = ['Posts', 'RedditPostsService', '$stateParams', '$q', '$state'];
 
-let state = {
+const state = {
     name: 'app.post',
     url: '/post/:id',
     template: require('./template.html'),

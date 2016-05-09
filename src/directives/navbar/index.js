@@ -4,7 +4,7 @@ function navbar() {
     return {
         restrict: 'E',
         scope: {},
-        template: template
+        template
     };
 }
 navbar.$inject = [];

@@ -6,8 +6,8 @@
  * Allows binding key codes to functions `keybind="expression()" key=13`
  */
 function keybind() {
-    return function(scope, element, attrs) {
-        element.bind('keydown keypress', function(event) {
+    return function (scope, element, attrs) {
+        element.bind('keydown keypress', event => {
             if (event.which === Number(attrs.key)) {
                 scope.$apply(() => scope.$eval(attrs.keybind));
                 event.preventDefault();

@@ -1,16 +1,3 @@
-function defaultFormatter(size) {
-    if (this.requiresTeamSizes) {
-        return this.shortCode + 'To' + size;
-    }
-
-    return this.name;
-}
-
-function defaultChecker(typeString) {
-    typeString = typeString.toLowerCase();
-    return typeString === this.shortCodeLower || typeString === this.nameLower;
-}
-
 /**
  * @ngdoc service
  * @name services:GameType
@@ -39,10 +26,22 @@ class GameType {
         this.description = options.description || 'No description set';
         this.requiresTeamSizes = options.requiresTeamSizes;
 
-        this.format = (options.format || defaultFormatter).bind(this);
-        this.isType = (options.isType || defaultChecker).bind(this);
+        this.format = (options.format || GameType.defaultFormatter).bind(this);
+        this.isType = (options.isType || GameType.defaultChecker).bind(this);
     }
 }
 
+GameType.defaultChecker = function (typeString) {
+    typeString = typeString.toLowerCase();
+    return typeString === this.shortCodeLower || typeString === this.nameLower;
+};
+
+GameType.defaultFormatter = function (size) {
+    if (this.requiresTeamSizes) {
+        return `${this.shortCode}To${size}`;
+    }
+
+    return this.name;
+};
+
 export default GameType;
-export {defaultChecker, defaultFormatter};

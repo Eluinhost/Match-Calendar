@@ -1,5 +1,4 @@
 import GameType from 'app/services/GameType';
-import {defaultChecker} from 'app/services/GameType';
 import _ from 'lodash';
 
 const types = {
@@ -13,9 +12,7 @@ const types = {
         shortCode: 'c',
         requiresTeamSizes: true,
         // Call default but also add the extra check if there is no type string to assume its a chosen teams
-        isType: function(typeString) {
-            return defaultChecker.call(this, typeString) || typeString === '';
-        }
+        isType: typeString => GameType.defaultChecker.call(types.CHOSEN, typeString) || typeString === ''
     }),
     RANDOM: new GameType({
         name: 'Random',

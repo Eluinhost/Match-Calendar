@@ -36,7 +36,7 @@ class Subreddits {
     }
 
     deleteSubreddit(name = '') {
-        let lowered = name.toLowerCase().trim();
+        const lowered = name.toLowerCase().trim();
 
         _.remove(this.subreddits, sub => sub === lowered);
     }

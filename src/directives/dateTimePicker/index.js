@@ -12,8 +12,8 @@ class DateTimePickerCtrl {
     }
 
     updatePickedDate() {
-        let pickedMoment = moment(this.internalJSDate);
-        let formattedMoment = pickedMoment.format('MMM DD HH:mm');
+        const pickedMoment = moment(this.internalJSDate);
+        const formattedMoment = pickedMoment.format('MMM DD HH:mm');
         this.pickedDate = moment.tz(formattedMoment, 'MMM DD HH:mm', this.timeZone);
     }
 
@@ -41,7 +41,7 @@ function dateTimePicker() {
             meridian: '=',
             timeZone: '='
         },
-        template: template,
+        template,
         controller: DateTimePickerCtrl,
         controllerAs: 'picker',
         bindToController: true

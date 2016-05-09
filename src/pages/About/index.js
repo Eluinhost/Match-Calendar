@@ -224,7 +224,7 @@ class AboutCtrl {
             }
         ], item => item.name.toLowerCase());
 
-        this.click = function(event, url) {
+        this.click = function (event, url) {
             if (url === '#') {
                 event.preventDefault();
             }
@@ -232,9 +232,9 @@ class AboutCtrl {
     }
 }
 
-let controllerName = 'AboutCtrl';
+const controllerName = 'AboutCtrl';
 
-let state = {
+const state = {
     name: 'app.about',
     url: '/about',
     template: require('./template.html'),

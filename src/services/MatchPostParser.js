@@ -1,10 +1,10 @@
-import {parseGameType} from 'app/services/GameTypes';
+import { parseGameType } from 'app/services/GameTypes';
 import moment from 'moment-timezone';
 import he from 'he';
 import _ from 'lodash';
 
 const IP_REGEX = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
-const DOMAIN_REGEX = /[^\w](IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi; // jscs:ignore maximumLineLength
+const DOMAIN_REGEX = /[^\w](IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi; // eslint-disable-line max-len
 const SIZE_REGEX = /To([\dX]+)/i;
 const EXTRAS_REGEX = /([\[\(].*?[\]\)])/g;
 
@@ -16,20 +16,20 @@ class MatchPostParser {
     }
 
     _parseTitle(title) {
-        let details = {
+        const details = {
             title,
             extras: []
         };
 
-        let pipeIndex = title.indexOf('|');
+        const pipeIndex = title.indexOf('|');
         details.isStartTime = pipeIndex !== -1;
 
         // Replace the | with a -
         if (details.isStartTime) {
-            title = title.substr(0, pipeIndex) + '-' + title.substr(pipeIndex + 1);
+            title = `${title.substr(0, pipeIndex)}-${title.substr(pipeIndex + 1)}`;
         }
 
-        let sections = title
+        const sections = title
             .split('-')
             .map(part => part.trim());
 
@@ -51,7 +51,7 @@ class MatchPostParser {
             details.gamemodes = ['Vanilla'];
 
             // Cut out the extras from team types
-            let extrasInfo = this._parseExtras(teamStyleSection);
+            const extrasInfo = this._parseExtras(teamStyleSection);
             details.extras = extrasInfo.extras;
             teamStyleSection = extrasInfo.section;
         } else {
@@ -61,15 +61,15 @@ class MatchPostParser {
             // Cut out the extras from the final scenario
 
             if (details.gamemodes.length > 0) {
-                let finalIndex = details.gamemodes.length - 1;
+                const finalIndex = details.gamemodes.length - 1;
 
-                let extrasInfo = this._parseExtras(details.gamemodes[finalIndex]);
+                const extrasInfo = this._parseExtras(details.gamemodes[finalIndex]);
                 details.extras = extrasInfo.extras;
                 details.gamemodes[finalIndex] = extrasInfo.section;
             }
         }
 
-        let teamInfo = this._parseTeamStyle(teamStyleSection);
+        const teamInfo = this._parseTeamStyle(teamStyleSection);
         details.teams = teamInfo.type;
         details.teamSize = teamInfo.size;
 
@@ -80,7 +80,7 @@ class MatchPostParser {
         section = section.trim();
 
         SIZE_REGEX.exec('');
-        let sizeCheck = SIZE_REGEX.exec(section);
+        const sizeCheck = SIZE_REGEX.exec(section);
 
         let size = 0;
         let style = section;
@@ -92,16 +92,16 @@ class MatchPostParser {
         }
 
         // Attempt to get the game type
-        let type = parseGameType(style);
+        const type = parseGameType(style);
 
         return {
             type: _.isUndefined(type) ? style : type.name,
-            size: size
+            size
         };
     }
 
     _parseExtras(section) {
-        let extras = [];
+        const extras = [];
         section = section
             .replace(EXTRAS_REGEX, part => {
                 extras.push(part);
@@ -119,10 +119,10 @@ class MatchPostParser {
         }
 
         // Parse the region as the last 2 characters
-        let region = section.slice(-2).toUpperCase();
+        const region = section.slice(-2).toUpperCase();
 
         // Attempt to parse the date from the remains
-        let opens = moment.utc(section.slice(0, -2), 'MMM DD HH:mm', 'en');
+        const opens = moment.utc(section.slice(0, -2), 'MMM DD HH:mm', 'en');
 
         return { region, opens };
     }
@@ -134,7 +134,7 @@ class MatchPostParser {
     _getAddress(content) {
         // Reset regex in case of exact copy of previous post
         IP_REGEX.exec('');
-        let ipcheck = IP_REGEX.exec(content);
+        const ipcheck = IP_REGEX.exec(content);
 
         // Check IP before falling back to domain
         if (!_.isNull(ipcheck)) {
@@ -149,7 +149,7 @@ class MatchPostParser {
         }
 
         DOMAIN_REGEX.exec('');
-        let domainCheck = DOMAIN_REGEX.exec(content);
+        const domainCheck = DOMAIN_REGEX.exec(content);
 
         if (!_.isNull(domainCheck)) {
             return domainCheck[2];
@@ -161,8 +161,7 @@ class MatchPostParser {
      */
     parse(element) {
         // Add basic stuff from the post itself
-        // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
-        let post = {
+        const post = {
             id: element.id,
             title: he.decode(element.title),
             selftext: he.decode(element.selftext),
@@ -174,15 +173,14 @@ class MatchPostParser {
             subreddit: element.subreddit,
             valid: false
         };
-        // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
         // Grab all of the information from the title
         try {
-            let parsed = this._parseTitle(post.title);
+            const parsed = this._parseTitle(post.title);
 
             // Append the extras to the title
             if (parsed.extras.length > 0) {
-                parsed.title = parsed.title + ' ' + parsed.extras.join(' ');
+                parsed.title += ` ${parsed.extras.join(' ')}`;
             }
 
             delete parsed.extras;
@@ -198,15 +196,14 @@ class MatchPostParser {
             return post;
         }
 
-        let current = this.DateTime.getTime();
-        let monthsAgo = post.opens.diff(current, 'months');
+        const current = this.DateTime.getTime();
+        const monthsAgo = post.opens.diff(current, 'months');
 
         // If it's more than 6 months old, assume it's in the next year
         if (monthsAgo < -6) {
             post.opens.add(1, 'years');
-        }
-        // If it's more than 6 months in the future assume it's in the last year
-        else if (monthsAgo > 6) {
+        } else if (monthsAgo > 6) {
+            // If it's more than 6 months in the future assume it's in the last year
             post.opens.subtract(1, 'years');
         }
 

@@ -4,11 +4,17 @@ class TitleTimeCtrl {
 
         this.loaded = false;
 
-        this.DateTime.initialised.then(() => this.loaded = true);
+        this.DateTime.initialised.then(() => {
+            this.loaded = true;
+        });
     }
 
     generate() {
-        return this.loaded ? this.DateTime.format('TITLE') + ' - Calendar' : 'Loading...';
+        if (!this.loaded) {
+            return 'Loading...';
+        }
+
+        return `${this.DateTime.format('TITLE')} - Calendar`;
     }
 }
 TitleTimeCtrl.$inject = ['DateTime'];

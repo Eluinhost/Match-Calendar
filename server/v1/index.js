@@ -3,7 +3,7 @@ const router = require('koa-router')({
     prefix: '/v1'
 });
 
-router.get('/sync', function *() {
+router.get('/sync', function * () {
     this.body = { time: Date.now() };
 });
 

@@ -33,15 +33,15 @@ class PostListCtrl {
 }
 PostListCtrl.$inject = ['Posts', 'PostNotifications', 'DateTime', 'Hosts', 'Changelog', 'Subreddits', 'Templates'];
 
-let controllerName = 'PostListCtrl';
+const controllerName = 'PostListCtrl';
 
-let state = {
+const state = {
     name: 'app.list',
     url: '/list',
     template: require('./template.html'),
     controller: `${controllerName} as postList`,
     resolve: {
-        savedData: ['$q', 'Hosts', 'Posts', 'Subreddits', 'PostNotifications', '$q', function($q, ...others) {
+        savedData: ['$q', 'Hosts', 'Posts', 'Subreddits', 'PostNotifications', '$q', function ($q, ...others) {
             return $q.all(others.map(o => o.initialised));
         }]
     }

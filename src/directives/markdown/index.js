@@ -9,10 +9,10 @@ function markdown($sanitize) {
         require: 'ngModel',
         scope: {},
         restrict: 'EA',
-        link: function(scope, element, attributes, ngModelCtrl) {
+        link: (scope, element, attributes, ngModelCtrl) => {
             element.addClass('md');
 
-            ngModelCtrl.$render = function() {
+            ngModelCtrl.$render = function () {
                 // Render the markdown to the DOM
                 element.html($sanitize(MarkdownParser.render(ngModelCtrl.$viewValue || '')));
                 // Replace all links to open in a new tab

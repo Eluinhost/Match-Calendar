@@ -6,7 +6,7 @@ class Post404Ctrl {
         this.recheckTime = 15;
         this.seconds = this.recheckTime;
 
-        let x = $interval(() => {
+        const x = $interval(() => {
             this.seconds--;
 
             if (this.seconds === 0) {
@@ -21,14 +21,14 @@ class Post404Ctrl {
 
     tryAgain() {
         this.seconds = this.recheckTime;
-        this.$state.go('app.post', {id: this.postId});
+        this.$state.go('app.post', { id: this.postId });
     }
 }
 Post404Ctrl.$inject = ['$stateParams', '$state', '$interval', '$scope'];
 
-let controllerName = 'Post404Ctrl';
+const controllerName = 'Post404Ctrl';
 
-let state = {
+const state = {
     name: 'app.post404',
     url: '/post/:id/404',
     template: require('./template.html'),

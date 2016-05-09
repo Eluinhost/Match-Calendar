@@ -8,7 +8,7 @@ function localTime($rootScope, DateTime, Translations) {
             time: '=?localTime',
             format: '@?localTimeFormat'
         },
-        link: function(scope, element, attr) {
+        link: (scope, element, attr) => {
             if (_.isUndefined(attr.localTimeFormat)) {
                 scope.format = 'POST_HEADER';
             }
@@ -34,7 +34,7 @@ function localTime($rootScope, DateTime, Translations) {
                 );
             }
 
-            let listeners = [
+            const listeners = [
                 $rootScope.$on('timeZone', rerender),
                 $rootScope.$on('timeFormat', rerender),
                 $rootScope.$on('language', rerender)

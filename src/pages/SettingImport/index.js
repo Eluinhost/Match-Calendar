@@ -19,7 +19,7 @@ class SettingImportCtrl {
     export() {
         return this.SettingImportExport.export()
             .then(data => {
-                const file = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data, null, '\t'));
+                const file = `text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data, null, '\t'))}`;
 
                 const link = document.createElement('a');
                 link.href = `data:${file}`;
@@ -34,16 +34,16 @@ class SettingImportCtrl {
 }
 SettingImportCtrl.$inject = ['SettingImportExport', '$window', '$uibModal'];
 
-let controllerName = 'SettingImportCtrl';
+const controllerName = 'SettingImportCtrl';
 
-let state = {
+const state = {
     name: 'app.settingimport',
     url: '/import',
     template: require('./template.html'),
     controller: `${controllerName} as settingimport`,
     resolve: {
         savedData: ['$q', 'Subreddits', 'PostNotifications', 'Hosts', 'Templates', 'HtmlNotifications',
-            function($q, ...others) {
+            function ($q, ...others) {
                 return $q.all(others.map(o => o.initialised));
             }
         ]

@@ -22,9 +22,9 @@ class HelpCtrl {
 }
 HelpCtrl.$inject = ['DateTime'];
 
-let controllerName = 'HelpCtrl';
+const controllerName = 'HelpCtrl';
 
-let state = {
+const state = {
     name: 'app.listhelp',
     url: '/list/help',
     template: require('./template.html'),

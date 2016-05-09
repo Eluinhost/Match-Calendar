@@ -7,13 +7,13 @@ function notInArray() {
             notInArray: '=',
             notInArrayCaseSensitive: '=?'
         },
-        link: function(scope, elm, attrs, ctrl) {
-            ctrl.$validators.notInArray = function(modelValue) {
+        link: (scope, elm, attrs, ctrl) => {
+            ctrl.$validators.notInArray = function (modelValue) {
                 if (scope.notInArrayCaseSensitive) {
                     return !_.includes(scope.notInArray, modelValue);
                 }
 
-                let check = modelValue.toLowerCase();
+                const check = modelValue.toLowerCase();
                 return !_.some(scope.notInArray, item => item.toLowerCase() === check);
             };
         }

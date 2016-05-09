@@ -76,7 +76,7 @@ class SettingsCtrl {
     }
 
     timeZoneGroup(zone) {
-        let index = zone.indexOf('/');
+        const index = zone.indexOf('/');
 
         if (index === -1) {
             return 'Other';
@@ -99,15 +99,15 @@ class SettingsCtrl {
 SettingsCtrl.$inject = ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'Hosts', 'DateTime',
     'PostNotifications', '$localForage', '$scope', 'Translations'];
 
-let controllerName = 'SettingsCtrl';
+const controllerName = 'SettingsCtrl';
 
-let state = {
+const state = {
     name: 'app.settings',
     url: '/settings',
     template: require('./template.html'),
     controller: `${controllerName} as settings`,
     resolve: {
-        savedData: ['$q', 'Subreddits', 'PostNotifications', 'Hosts', function($q, ...others) {
+        savedData: ['$q', 'Subreddits', 'PostNotifications', 'Hosts', function ($q, ...others) {
             return $q.all(others.map(o => o.initialised));
         }]
     }

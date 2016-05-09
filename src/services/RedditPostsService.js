@@ -24,13 +24,13 @@ class RedditPostsService {
         return this.$http
             .get(`${BASE_URL}/by_id/t3_${id}.json`)
             .then(raw => {
-                let data = raw.data.data.children[0].data;
+                const data = raw.data.data.children[0].data;
 
                 if (!data) {
                     return this.$q.reject('Failed to get post information from API');
                 }
 
-                let post = this.MatchPostParser.parse(data);
+                const post = this.MatchPostParser.parse(data);
 
                 if (!post) {
                     return this.$q.reject('Failed to parse post from returned API data');
@@ -46,26 +46,26 @@ class RedditPostsService {
             limit = 100;
         }
 
-        let subPromises = subreddits.map(sub => this._querySingle(sub, limit, sort));
+        const subPromises = subreddits.map(sub => this._querySingle(sub, limit, sort));
 
         // When all are completed
         return this.$q.all(subPromises)
             .then(data => {
                 // Split into separated arrays
-                let errorSubs = _.filter(data, _.isString);
+                const errorSubs = _.filter(data, _.isString);
 
-                let posts = _(data)
+                const posts = _(data)
                     .filter(_.isArray)
                     .flatten();
 
-                let halfHourAgo = this.DateTime.getTime().subtract(30, 'minutes');
-                let parsed = posts
+                const halfHourAgo = this.DateTime.getTime().subtract(30, 'minutes');
+                const parsed = posts
                     .filter(item => item.valid)
                     .filter(post => halfHourAgo.diff(post.opens) < 0)
                     .sortBy(item => item.opens.format('X'))
                     .value();
 
-                let unparsed = posts
+                const unparsed = posts
                     .filter(item => !item.valid)
                     .value();
 

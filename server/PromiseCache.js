@@ -20,13 +20,13 @@ module.exports = class PromiseCache {
 
     /**
      * Fetches an item for the given key
-     * @param key
+     * @param {Object} key identifier
      * @param {Function} [builder=this._builder] override the builder function used if no cached value found
      * @param {Number} [timeout=this._timeout] override the timeout on successful promises
      * @param {Number} [failTimeout=this._failTimeout] = override the timeout for failed promises
      * @returns {Promise} resolves to the cached value, can be a cached error
      */
-    getItem(key, {builder = this._builder, timeout = this._timeout, failTimeout = this._failTimeout} = {}) {
+    getItem(key, { builder = this._builder, timeout = this._timeout, failTimeout = this._failTimeout } = {}) {
         const now = moment();
         const existing = this._cache.get(key);
 

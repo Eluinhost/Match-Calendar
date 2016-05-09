@@ -1,0 +1,10 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "globals": {
+        "ga": true,
+        "APP_GLOBALS": true
+    }
+}

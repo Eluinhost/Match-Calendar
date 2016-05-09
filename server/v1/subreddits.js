@@ -14,13 +14,12 @@ const OPTIONS = {
 };
 
 function createURL(sub, limit, sort) {
-    return `https://www.reddit.com/r/${sub}/search.json` +
-           `?q=flair:\'Upcoming Match\' OR flair:\'Community Game\'&restrict_sr=on&limit=${limit}&sort=${sort}`;
+    return `https://www.reddit.com/r/${sub}/search.json?q=flair:\'Upcoming Match\' OR flair:\'Community Game\'&restrict_sr=on&limit=${limit}&sort=${sort}`;
 }
 
 class InvalidResponseError extends Error {}
 
-const fetchForSubreddit = Promise.coroutine(function* fetchForSubreddit(name) {
+const fetchForSubreddit = Promise.coroutine(function * fetchForSubreddit(name) {
     let response;
     console.info(`Loading data from /r/${name}`);
     try {
@@ -40,7 +39,7 @@ const fetchForSubreddit = Promise.coroutine(function* fetchForSubreddit(name) {
 // Keep valid responses for 45 seconds and failures for 5
 const cache = new PromiseCache(fetchForSubreddit, 1000 * 45, 1000 * 5);
 
-module.exports = function *() {
+module.exports = function * () {
     try {
         this.body = yield cache.getItem(this.params.subreddit);
     } catch (error) {

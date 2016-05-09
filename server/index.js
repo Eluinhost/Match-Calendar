@@ -29,7 +29,7 @@ const apiRoutes = new Router({
 });
 
 // Generic error catcher that renders as JSON
-apiRoutes.use(function *(next) {
+apiRoutes.use(function * (next) {
     try {
         yield next;
     } catch (err) {

@@ -27,7 +27,7 @@ class HtmlNotifications {
      * @returns {promise} resolves on granted, rejects on not
      */
     requestPermission() {
-        let def = this.$q.defer();
+        const def = this.$q.defer();
 
         if (this.$window.Notification.permission === 'granted') {
             def.resolve();
@@ -46,7 +46,7 @@ class HtmlNotifications {
             });
         }
 
-        def.promise.finally(function() {
+        def.promise.finally(function () {
             this.$rootScope.$broadcast('Notifications:PermissionsAsked');
         });
 

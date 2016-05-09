@@ -1,11 +1,11 @@
 function delegate($delegate) {
-    let original = $delegate.defer;
+    const original = $delegate.defer;
 
-    $delegate.defer = function() {
-        let prototype = original().promise.constructor.prototype;
+    $delegate.defer = function () {
+        const prototype = original().promise.constructor.prototype;
 
         Object.defineProperty(prototype, 'spread', {
-            value: function(resolve, reject) {
+            value: function (resolve, reject) { // eslint-disable-line babel/object-shorthand
                 function spread(data) {
                     return resolve.apply(undefined, data);
                 }

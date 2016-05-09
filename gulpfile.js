@@ -19,16 +19,12 @@ const configFile = require('./config.js');
 const filename = '[name].[hash]';
 const APP_BASE = path.resolve(__dirname, 'src');
 const DIST_BASE = path.resolve(__dirname, 'web');
-const WEBPACK_ENTRY = 'webpack-dev-server/client?http://localhost:' + configFile.devServerPort;
+const WEBPACK_ENTRY = `webpack-dev-server/client?http://localhost:${configFile.devServerPort}`;
 
 const momentjsLocales = fs
     .readdirSync(path.resolve(APP_BASE, 'services/translations'))
-    .filter(function(file) {
-        return file.endsWith('.json');
-    })
-    .map(function(file) {
-        return file.slice(0, -5) + '\.js';
-    })
+    .filter(file => file.endsWith('.json'))
+    .map(file => `${file.slice(0, -5)}.js`)
     .join('|');
 
 const config = {
@@ -43,8 +39,8 @@ const config = {
     output: {
         path: DIST_BASE,
         publicPath: '/',
-        filename: filename + '.js',
-        chunkFilename:  filename + '.js',
+        filename: `${filename}.js`,
+        chunkFilename: `${filename}.js`,
         pathinfo: true
     },
     devtool: 'eval',
@@ -57,7 +53,7 @@ const config = {
                             'presets[]=es2015,' +
                             'plugins[]=transform-es2015-modules-commonjs,' +
                             'plugins[]=transform-runtime,' +
-                        'cacheDirectory!jshint!jscs',
+                        'cacheDirectory!eslint',
                 include: APP_BASE
             },
             {
@@ -102,14 +98,14 @@ const config = {
     resolve: {
         alias: {
             'ng-clip': 'ng-clip/src/ngClip',
-            app: APP_BASE
+            'app': APP_BASE
         }
     },
     plugins: [
-        new ExtractTextPlugin(filename + '.css'),
+        new ExtractTextPlugin(`${filename}.css`),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: '!!ejs!' + path.resolve(APP_BASE, 'index_template.html'),
+            template: `!!ejs!${path.resolve(APP_BASE, 'index_template.html')}`,
             inject: false,
             favicon: path.resolve(APP_BASE, 'images/favicon.png')
         }),
@@ -135,11 +131,9 @@ const config = {
 
 let compiler;
 
-gulp.task('clean', function() {
-    return del([DIST_BASE]);
-});
+gulp.task('clean', () => del([DIST_BASE]));
 
-gulp.task('prod-build-config', function() {
+gulp.task('prod-build-config', () => {
     // Remove webpack entry
     config.entry.app.splice(0, 1);
 
@@ -172,17 +166,17 @@ gulp.task('prod-build-config', function() {
     gutil.log('Switched to production build configuration');
 });
 
-gulp.task('webpack:init', function() {
+gulp.task('webpack:init', () => {
     compiler = webpack(config);
     gutil.log('Created webpack compiler');
 });
 
-gulp.task('webpack:init-prod', function(done) {
+gulp.task('webpack:init-prod', done => {
     runSequence('prod-build-config', 'webpack:init', done);
 });
 
-gulp.task('webpack:prod', ['webpack:init-prod'], function(done) {
-    compiler.run(function(err, stats) {
+gulp.task('webpack:prod', ['webpack:init-prod'], done => {
+    compiler.run((err, stats) => {
         if (err) {
             throw new gutil.PluginError('webpack:prod', err);
         }
@@ -195,7 +189,7 @@ gulp.task('webpack:prod', ['webpack:init-prod'], function(done) {
     });
 });
 
-gulp.task('webpack:dev', ['webpack:init'], function(done) {
+gulp.task('webpack:dev', ['webpack:init'], done => {
     new WebpackDevServer(compiler, {
         publicPath: config.output.publicPath,
         stats: {
@@ -205,11 +199,11 @@ gulp.task('webpack:dev', ['webpack:init'], function(done) {
         port: configFile.devServerPort,
         proxy: {
             '/api/*': {
-                target: 'http://localhost:' + configFile.server.port + '/',
+                target: `http://localhost:${configFile.server.port}/`,
                 secure: false
             }
         }
-    }).listen(configFile.devServerPort, 'localhost', function(err) {
+    }).listen(configFile.devServerPort, 'localhost', err => {
         if (err) {
             throw new gutil.PluginError('webpack-dev-server', err);
         }
@@ -223,11 +217,11 @@ gulp.task('webpack:dev', ['webpack:init'], function(done) {
     });
 });
 
-gulp.task('backend', function() {
+gulp.task('backend', () => {
     require('./server');
 });
 
-gulp.task('build', function(done) {
+gulp.task('build', done => {
     runSequence('clean', 'webpack:prod', done);
 });
 

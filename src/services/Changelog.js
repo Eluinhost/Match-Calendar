@@ -1,9 +1,13 @@
-let modalController = function($scope, $http, Changelog) {
+const modalController = function ($scope, $http, Changelog) {
     $scope.markdown = 'Loading...';
 
     $http.get(Changelog.changelogURL)
-        .success(data => $scope.markdown = data)
-        .catch(() => $scope.markdown = 'Error loading changelog data');
+        .success(data => {
+            $scope.markdown = data;
+        })
+        .catch(() => {
+            $scope.markdown = 'Error loading changelog data';
+        });
 };
 modalController.$inject = ['$scope', '$http', 'Changelog'];
 

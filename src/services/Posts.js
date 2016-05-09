@@ -1,10 +1,10 @@
 import _ from 'lodash';
 
-let DISABLED_REGIONS_KEY = 'disabledRegions';
-let DISABLED_TEAM_TYPES_KEY = 'disabledTeamTypes';
-let DISABLED_GAMEMODES_KEY = 'disabledGamemodes';
-let FAVOURITES_ONLY_KEY = 'showFavouritedHostsOnly';
-let SHOW_BLOCKED_KEY = 'showBlockedHosts';
+const DISABLED_REGIONS_KEY = 'disabledRegions';
+const DISABLED_TEAM_TYPES_KEY = 'disabledTeamTypes';
+const DISABLED_GAMEMODES_KEY = 'disabledGamemodes';
+const FAVOURITES_ONLY_KEY = 'showFavouritedHostsOnly';
+const SHOW_BLOCKED_KEY = 'showBlockedHosts';
 
 class Posts {
     constructor($rootScope, $interval, Subreddits, DateTime, RedditPostsService, $localForage) {
@@ -98,7 +98,7 @@ class Posts {
     toggleGamemode(gamemode) {
         gamemode = gamemode.toLowerCase();
 
-        let index = this.disabledGamemodes.indexOf(gamemode);
+        const index = this.disabledGamemodes.indexOf(gamemode);
 
         if (index < 0) {
             this.disabledGamemodes.push(gamemode);
@@ -110,7 +110,7 @@ class Posts {
     toggleTeamType(type) {
         type = type.toLowerCase();
 
-        let index = this.disabledTeamTypes.indexOf(type);
+        const index = this.disabledTeamTypes.indexOf(type);
 
         if (index < 0) {
             this.disabledTeamTypes.push(type);
@@ -122,7 +122,7 @@ class Posts {
     toggleRegion(region) {
         region = region.toLowerCase();
 
-        let index = this.disabledRegions.indexOf(region);
+        const index = this.disabledRegions.indexOf(region);
 
         if (index < 0) {
             this.disabledRegions.push(region);
@@ -148,7 +148,9 @@ class Posts {
                 this.lastUpdated = this.DateTime.getTime().unix();
                 this.fireRefreshPostsEvent();
             })
-            .finally(() => this.updating = false);
+            .finally(() => {
+                this.updating = false;
+            });
     }
 
     updateRegions() {

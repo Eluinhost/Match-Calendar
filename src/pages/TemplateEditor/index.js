@@ -112,15 +112,15 @@ class TemplateEditorCtrl {
 }
 TemplateEditorCtrl.$inject = ['$interpolate', 'Templates', 'DateTime'];
 
-let controllerName = 'TemplateEditorCtrl';
+const controllerName = 'TemplateEditorCtrl';
 
-let state = {
+const state = {
     name: 'app.editor',
     url: '/editor',
     template: require('./template.html'),
     controller: `${controllerName} as editor`,
     resolve: {
-        savedData: ['Templates', function(Templates) {
+        savedData: ['Templates', function (Templates) {
             return Templates.initialised;
         }]
     }

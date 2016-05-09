@@ -8,8 +8,8 @@ function localTime($rootScope, DateTime, Translations) {
             time: '=relativeTime',
             from: '=?relativeTimeFrom'
         },
-        link: function(scope, element, attr) {
-            let showSuffix = _.isUndefined(attr.relativeTimeHideSuffix);
+        link: (scope, element, attr) => {
+            const showSuffix = _.isUndefined(attr.relativeTimeHideSuffix);
 
             function rerender() {
                 element.text(
@@ -20,7 +20,7 @@ function localTime($rootScope, DateTime, Translations) {
                 );
             }
 
-            let listeners = [
+            const listeners = [
                 $rootScope.$on('timeFormat', rerender),
                 $rootScope.$on('language', rerender)
             ];

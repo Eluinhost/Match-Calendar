@@ -4,7 +4,7 @@ function footerBar() {
     return {
         restrict: 'E',
         scope: {},
-        template: template
+        template
     };
 }
 footerBar.$inject = [];

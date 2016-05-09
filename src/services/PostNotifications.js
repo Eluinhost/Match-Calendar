@@ -62,7 +62,7 @@ class PostNotifications {
     }
 
     checkNotificationForPostId(postid) {
-        let post = _.find(this.Posts.posts, post => post.id === postid);
+        const post = _.find(this.Posts.posts, post => post.id === postid);
 
         // Post doesn't exist anymore
         if (_.isUndefined(post)) {
@@ -70,15 +70,15 @@ class PostNotifications {
             return;
         }
 
-        let currentTimeUnix = this.DateTime.getTime().unix();
+        const currentTimeUnix = this.DateTime.getTime().unix();
 
         this.notificationTimes.forEach(time => {
-            let unix = post.opens.unix();
-            let timeToNotify = unix - time;
+            const unix = post.opens.unix();
+            const timeToNotify = unix - time;
 
             // If it's passed the notify time and we havn't already done a notification later than this
             if (currentTimeUnix >= timeToNotify && this.notifyFor[postid].value < timeToNotify) {
-                let difference = unix - currentTimeUnix;
+                const difference = unix - currentTimeUnix;
 
                 this.$translate(
                     'notifications.notification',
@@ -124,7 +124,7 @@ class PostNotifications {
 
     addNotification(postid) {
         // Set the last notification time to 0 to say we havn't done any
-        this.notifyFor[postid] = {value: 0};
+        this.notifyFor[postid] = { value: 0 };
     }
 
     removeNotification(postid) {

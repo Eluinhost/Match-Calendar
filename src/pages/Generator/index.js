@@ -4,14 +4,14 @@ import GameTypes from 'app/services/GameTypes';
 const OLD_KEY = 'generator';
 const PREFIX = 'generator-';
 
-const TITLE_KEY     = PREFIX + 'postTitle';
-const REGION_KEY    = PREFIX + 'region';
-const TYPE_KEY      = PREFIX + 'gameType';
-const SIZE_KEY      = PREFIX + 'teamSize';
-const SCENARIOS_KEY = PREFIX + 'scenarios';
-const SUBREDDIT_KEY = PREFIX + 'subreddit';
-const EXTRAS_KEY    = PREFIX + 'extras';
-const TEMPLATE_KEY  = PREFIX + 'template';
+const TITLE_KEY = `${PREFIX}postTitle`;
+const REGION_KEY = `${PREFIX}region`;
+const TYPE_KEY = `${PREFIX}gameType`;
+const SIZE_KEY = `${PREFIX}teamSize`;
+const SCENARIOS_KEY = `${PREFIX}scenarios`;
+const SUBREDDIT_KEY = `${PREFIX}subreddit`;
+const EXTRAS_KEY = `${PREFIX}extras`;
+const TEMPLATE_KEY = `${PREFIX}template`;
 
 class GeneratorCtrl {
     constructor($window, DateTime, Templates, Subreddits, $localForage, $rootScope) {
@@ -59,11 +59,11 @@ class GeneratorCtrl {
 
                 // Setup watchers to save back
                 $rootScope.$watch(() => this.postTitle, () => $localForage.setItem(TITLE_KEY, this.postTitle));
-                $rootScope.$watch(() => this.region,    () => $localForage.setItem(REGION_KEY, this.region));
-                $rootScope.$watch(() => this.gameType,  () => $localForage.setItem(TYPE_KEY, this.gameType));
-                $rootScope.$watch(() => this.teamSize,  () => $localForage.setItem(SIZE_KEY, this.teamSize));
+                $rootScope.$watch(() => this.region, () => $localForage.setItem(REGION_KEY, this.region));
+                $rootScope.$watch(() => this.gameType, () => $localForage.setItem(TYPE_KEY, this.gameType));
+                $rootScope.$watch(() => this.teamSize, () => $localForage.setItem(SIZE_KEY, this.teamSize));
                 $rootScope.$watch(() => this.subreddit, () => $localForage.setItem(SUBREDDIT_KEY, this.subreddit));
-                $rootScope.$watch(() => this.template,  () => $localForage.setItem(TEMPLATE_KEY, this.template));
+                $rootScope.$watch(() => this.template, () => $localForage.setItem(TEMPLATE_KEY, this.template));
 
                 $rootScope.$watchCollection(
                     () => this.scenarios,
@@ -82,9 +82,7 @@ class GeneratorCtrl {
                     }
                 );
                 $rootScope.$watchCollection(() => this.extras, () => $localForage.setItem(EXTRAS_KEY, this.extras));
-
             });
-
 
         this.opens = DateTime.getTime();
         this.minTime = this.opens;
@@ -107,25 +105,16 @@ class GeneratorCtrl {
     }
 
     generateTitle() {
-        return this.DateTime.format('REDDIT_POST', this.opens.utc(), true) +
-        ' ' +
-        this.region +
-        ' - ' +
-        this.postTitle +
-        ' - ' +
-        GameTypes[this.gameType].format(this.teamSize) +
-        ' - ' +
-        this.scenarios.join(', ') +
-        ' ' +
-        this.extras.map(extra => '[' + extra + ']').join(' ').trim();
+        const time = this.DateTime.format('REDDIT_POST', this.opens.utc(), true);
+        const teams = GameTypes[this.gameType].format(this.teamSize);
+        const extras = this.extras.map(extra => `[${extra}]`).join(' ').trim();
+
+        return `${time} ${this.region} - ${this.postTitle} - ${teams} - ${this.scenarios.join(', ')} ${extras}`;
     }
-
-
-
 
     // Opens a new window to create a reddit post with the compiled template and info included
     sendToReddit() {
-        let context = {
+        const context = {
             opensUTC: this.DateTime.format('REDDIT_POST', this.opens, true),
             title: this.postTitle,
             region: this.region,
@@ -133,12 +122,11 @@ class GeneratorCtrl {
             scenarios: this.scenarios.join(', '),
             DateTime: this.DateTime
         };
-        let generated = this.Templates.compileTemplate(this.template, context);
+        const generated = this.Templates.compileTemplate(this.template, context);
 
-        let title = encodeURIComponent(this.generateTitle());
-        let contents = encodeURIComponent(
+        const title = encodeURIComponent(this.generateTitle());
+        const contents = encodeURIComponent(
 `${generated}
-
 
 *^created ^using ^the [^Match ^Calendar](${this.$window.location.protocol}//${this.$window.location.host})*`
         );
@@ -148,15 +136,15 @@ class GeneratorCtrl {
 }
 GeneratorCtrl.$inject = ['$window', 'DateTime', 'Templates', 'Subreddits', '$localForage', '$rootScope'];
 
-let controllerName = 'GeneratorCtrl';
+const controllerName = 'GeneratorCtrl';
 
-let state = {
+const state = {
     name: 'app.generate',
     url: '/generate',
     template: require('./template.html'),
     controller: `${controllerName} as generator`,
     resolve: {
-        savedData: ['$q', 'Templates', 'Subreddits', function($q, ...others) {
+        savedData: ['$q', 'Templates', 'Subreddits', function ($q, ...others) {
             return $q.all(others.map(o => o.initialised));
         }]
     }

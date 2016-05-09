@@ -4,7 +4,7 @@ import template from './defaultTemplate.md';
 const KEY = 'customTemplates';
 const DEFAULT_TEMPLATE = {
     name: 'default',
-    template: template
+    template
 };
 
 class Templates {
@@ -20,7 +20,7 @@ class Templates {
                     this.templates = value;
                 }
 
-                let def = _.find(this.templates, t => t.name === 'default');
+                const def = _.find(this.templates, t => t.name === 'default');
 
                 if (_.isUndefined(def)) {
                     // Add the default to the array if it isnt there
@@ -42,7 +42,7 @@ class Templates {
     }
 
     hasTemplate(name) {
-        return !!this.getTemplate(name);
+        return Boolean(this.getTemplate(name));
     }
 
     getTemplate(name) {
@@ -50,7 +50,7 @@ class Templates {
     }
 
     compileTemplate(name, context) {
-        let template = this.getTemplate(name);
+        const template = this.getTemplate(name);
 
         if (!template) {
             return '';

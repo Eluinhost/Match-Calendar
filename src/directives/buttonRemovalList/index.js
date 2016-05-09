@@ -10,7 +10,9 @@ class ButtonRemovalListCtrl {
     }
 
     init() {
-        this.ngModelCtrl.$render = () => this.items = this.ngModelCtrl.$viewValue;
+        this.ngModelCtrl.$render = () => {
+            this.items = this.ngModelCtrl.$viewValue;
+        };
     }
 }
 
@@ -25,7 +27,7 @@ function buttonRemovalList() {
             noItems: '?noItems'
         },
         template: require('./template.html'),
-        link: function(scope, elem, attr, ngModelCtrl) {
+        link: (scope, elem, attr, ngModelCtrl) => {
             scope.removal.ngModelCtrl = ngModelCtrl;
             scope.removal.init();
         },

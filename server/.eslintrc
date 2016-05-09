@@ -1,0 +1,10 @@
+{
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "rules": {
+        "require-yield": ["off"],
+        "no-console": ["warn"]
+    }
+}

@@ -98,7 +98,7 @@ class DateTime {
      * @returns {moment} current time with offset applied
      */
     getTime() {
-        let current = moment();
+        const current = moment();
         current.add(this.offset, 'ms');
         return current;
     }
@@ -124,13 +124,17 @@ class DateTime {
     resync() {
         this.syncing = true;
         return this.$http.get(this.resyncURL)
-            .then((data) => {
+            .then(data => {
                 this.synced = true;
                 this.offset = data.data.time - moment().valueOf();
                 ga('set', 'metric1', this.offset);
             })
-            .catch(() => this.synced = false)
-            .finally(() => this.syncing = false);
+            .catch(() => {
+                this.synced = false;
+            })
+            .finally(() => {
+                this.syncing = false;
+            });
     }
 
     /**

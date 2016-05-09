@@ -9,19 +9,29 @@ class AppCacheUpdaterCtrl {
         this.progress = 0;
 
         if (!_.isUndefined($window.applicationCache)) {
-            let cache = $window.applicationCache;
+            const cache = $window.applicationCache;
 
             // Show nothing for 'noupdate' (cache is fine) 'obsolete' (cache manifest gone) and 'cached' (initial cache)
-            cache.addEventListener('noupdate', () => this.status = 'idle');
-            cache.addEventListener('obsolete', () => this.status = 'idle');
-            cache.addEventListener('cached',   () => this.status = 'idle');
+            cache.addEventListener('noupdate', () => {
+                this.status = 'idle';
+            });
+            cache.addEventListener('obsolete', () => {
+                this.status = 'idle';
+            });
+            cache.addEventListener('cached', () => {
+                this.status = 'idle';
+            });
 
             // All other events set their own status
             ['checking', 'downloading', 'updateready', 'error', 'progress']
-                .forEach(event => cache.addEventListener(event, () => this.status = event));
+                .forEach(event => cache.addEventListener(event, () => {
+                    this.status = event;
+                }));
 
             // Listen to progress events to update the percentage
-            cache.addEventListener('progress', progress => this.progress = progress.loaded / progress.total * 100);
+            cache.addEventListener('progress', progress => {
+                this.progress = progress.loaded / progress.total * 100;
+            });
 
             // Recheck cache every hour
             $timeout(() => cache.update(), 1000 * 60 * 60);
@@ -41,14 +51,12 @@ AppCacheUpdaterCtrl.$inject = ['$window', '$timeout'];
 /**
  * @ngdoc directive
  * @name directive:appCacheUpdater
- * @description
- *
- * Keeps track of appcache status and show download progress + offers to restart
+ * @description Keeps track of appcache status and show download progress + offers to restart
  */
 function appCacheUpdater() {
     return {
         restrict: 'EA',
-        template: template,
+        template,
         scope: {},
         controller: AppCacheUpdaterCtrl,
         controllerAs: 'updater',

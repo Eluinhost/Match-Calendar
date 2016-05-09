@@ -5,8 +5,8 @@ function headerBar() {
     return {
         restrict: 'E',
         scope: {},
-        template: template,
-        link: function(scope) {
+        template,
+        link: scope => {
             scope.logoURL = logo;
         }
     };

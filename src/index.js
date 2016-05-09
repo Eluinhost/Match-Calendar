@@ -3,16 +3,16 @@ import _ from 'lodash';
 
 // Add mixin for lodash
 _.mixin({
-    mergeNotNull: function(object, ...sources) {
+    mergeNotNull: (object, ...sources) => {
         // Convert all nulls to undefined
-        let newSources = sources.map(source => _.mapValues(source, value => _.isNull(value) ? undefined : value));
+        const newSources = sources.map(source => _.mapValues(source, value => _.isNull(value) ? undefined : value));
         // Run a regular merge
         _.merge(object, ...newSources);
     }
 });
 
 // Registered as a global, capture export
-import outdatedBrowser  from 'imports?outdatedBrowser=>{}!exports?outdatedBrowser!outdated-browser';
+import outdatedBrowser from 'imports?outdatedBrowser=>{}!exports?outdatedBrowser!outdated-browser';
 
 outdatedBrowser({
     bgColor: '#f25648',
@@ -22,80 +22,85 @@ outdatedBrowser({
 });
 
 // 3rd party
-import angular   from 'angular';
+import angular from 'angular';
 import bootstrap from 'angular-ui-bootstrap';
-import elastic   from 'angular-elastic';
-import sanitize  from 'angular-sanitize';
-import router    from 'angular-ui-router';
-import animate   from 'angular-animate';
-import messages  from 'angular-messages';
-import {name as slider} from 'angularjs-slider';
+import elastic from 'angular-elastic';
+import sanitize from 'angular-sanitize';
+import router from 'angular-ui-router';
+import animate from 'angular-animate';
+import messages from 'angular-messages';
+import { name as slider } from 'angularjs-slider';
 import gAnalytic from 'angulartics-google-analytics';
 import clipboard from 'ngclipboard';
 
 // 3rd party, don't expose names
-import 'angular-localforage'; const angularLocalForage = 'LocalForageModule';
-import 'angular-bindonce';    const bindonce = 'pasvaz.bindonce';
-import 'angular-truncate-2';  const truncate = 'truncate';
-import 'angulartics';         const angulartics = 'angulartics';
-import 'angular-translate';   const translate = 'pascalprecht.translate';
+import 'angular-localforage';
+const angularLocalForage = 'LocalForageModule';
+import 'angular-bindonce';
+const bindonce = 'pasvaz.bindonce';
+import 'angular-truncate-2';
+const truncate = 'truncate';
+import 'angulartics';
+const angulartics = 'angulartics';
+import 'angular-translate';
+const translate = 'pascalprecht.translate';
 
 // Configs
-import q           from 'app/setup/q';
-import bsTooltips  from 'app/setup/bootstrap/bsTooltips';
+import q from 'app/setup/q';
+import bsTooltips from 'app/setup/bootstrap/bsTooltips';
 import bsTemplates from 'app/setup/bootstrap/bsTemplates';
 import localForage from 'app/setup/localForage';
-import debugInfo   from 'app/setup/debugInfo';
+import debugInfo from 'app/setup/debugInfo';
 
 // Runs
-import watcherLog  from 'app/setup/watcherLog';
+import watcherLog from 'app/setup/watcherLog';
 
 // Services
-import Changelog          from 'app/services/Changelog';
-import DateTime           from 'app/services/DateTime';
-import DurationFormatter  from 'app/services/DurationFormatter';
-import PostNotifications  from 'app/services/PostNotifications';
-import Hosts              from 'app/services/Hosts';
-import HtmlNotifications  from 'app/services/HtmlNotifications';
-import MatchPostParser    from 'app/services/MatchPostParser';
-import Posts              from 'app/services/Posts';
+import Changelog from 'app/services/Changelog';
+import DateTime from 'app/services/DateTime';
+import DurationFormatter from 'app/services/DurationFormatter';
+import PostNotifications from 'app/services/PostNotifications';
+import Hosts from 'app/services/Hosts';
+import HtmlNotifications from 'app/services/HtmlNotifications';
+import MatchPostParser from 'app/services/MatchPostParser';
+import Posts from 'app/services/Posts';
 import RedditPostsService from 'app/services/RedditPostsService';
-import Subreddits         from 'app/services/Subreddits';
-import Templates          from 'app/services/Templates';
-import Translations       from 'app/services/translations';
+import Subreddits from 'app/services/Subreddits';
+import Templates from 'app/services/Templates';
+import Translations from 'app/services/translations';
 import SettingImportExport from 'app/services/SettingImportExport';
 
 // Directives
-import appCacheUpdater            from 'app/directives/appCacheUpdater';
-import dateTimePicker             from 'app/directives/dateTimePicker';
+import appCacheUpdater from 'app/directives/appCacheUpdater';
+import dateTimePicker from 'app/directives/dateTimePicker';
 import desktopNotificationEnabler from 'app/directives/desktopNotificationEnabler';
-import markdown                   from 'app/directives/markdown';
-import keybind                    from 'app/directives/keybind';
-import postDetails                from 'app/directives/postDetails';
-import headerBar                  from 'app/directives/headerBar';
-import footerBar                  from 'app/directives/footerBar';
-import navbar                     from 'app/directives/navbar';
-import clockbar                   from 'app/directives/clockbar';
-import notInArray                 from 'app/directives/notInArray';
-import buttonRemovalList          from 'app/directives/buttonRemovalList';
-import uniqueItemsEditor          from 'app/directives/uniqueItemsEditor';
-import titleTime                  from 'app/directives/titleTime';
+import markdown from 'app/directives/markdown';
+import keybind from 'app/directives/keybind';
+import postDetails from 'app/directives/postDetails';
+import headerBar from 'app/directives/headerBar';
+import footerBar from 'app/directives/footerBar';
+import navbar from 'app/directives/navbar';
+import clockbar from 'app/directives/clockbar';
+import notInArray from 'app/directives/notInArray';
+import buttonRemovalList from 'app/directives/buttonRemovalList';
+import uniqueItemsEditor from 'app/directives/uniqueItemsEditor';
+import titleTime from 'app/directives/titleTime';
 // Removed due to english only import countryFlag                from 'app/directives/countryFlag';
-import localTime                  from 'app/directives/localTime';
-import relativeTime               from 'app/directives/relativeTime';
+import localTime from 'app/directives/localTime';
+import relativeTime from 'app/directives/relativeTime';
 
 // Pages/Controllers
-import * as About          from 'app/pages/About';
-import * as Generator      from 'app/pages/Generator';
+import * as About from 'app/pages/About';
+import * as Generator from 'app/pages/Generator';
 import * as TemplateEditor from 'app/pages/TemplateEditor';
-import * as Post           from 'app/pages/Post';
-import * as Post404        from 'app/pages/Post/404';
-import * as PostList       from 'app/pages/PostList';
-import * as Help           from 'app/pages/PostList/Help';
-import * as Settings       from 'app/pages/Settings';
-import * as SettingImport  from 'app/pages/SettingImport';
+import * as Post from 'app/pages/Post';
+import * as Post404 from 'app/pages/Post/404';
+import * as PostList from 'app/pages/PostList';
+import * as Help from 'app/pages/PostList/Help';
+import * as Settings from 'app/pages/Settings';
+import * as SettingImport from 'app/pages/SettingImport';
 
-let pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post, Post404, SettingImport];
+const pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post, Post404, SettingImport];
 
 function setupStates($stateProvider, $urlRouterProvider) {
     $stateProvider.state('app', {
@@ -104,7 +109,7 @@ function setupStates($stateProvider, $urlRouterProvider) {
         template: '<ui-view/>',
         resolve: {
             // All routes require DateTime to be loaded before continuing
-            savedData: ['DateTime', function(DateTime) {
+            savedData: ['DateTime', function (DateTime) {
                 return DateTime.initialised;
             }]
         }
@@ -124,7 +129,7 @@ function scrollToTop($rootScope, $window) {
 }
 scrollToTop.$inject = ['$rootScope', '$window'];
 
-let app = angular.module(
+const app = angular.module(
     'MatchCalendarApp',
     [angularLocalForage, elastic, sanitize, router, clipboard, animate, bindonce,
         bootstrap, truncate, slider, messages, angulartics, gAnalytic, translate]
@@ -174,19 +179,17 @@ pages
 _.forEach(bsTemplates, (decorator, name) => app.decorator(name, decorator));
 
 // Setup analytics snippet without initial pageview
-/* jscs:disable */
-/* jshint ignore:start */
 import DebugMode from 'app/services/DebugMode';
 
+/* eslint-disable */
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+/* eslint-enable */
 
 ga('create', 'UA-71696797-1', DebugMode ? 'none' : 'auto');
-ga('set', 'dimension3', !!window.applicationCache);
+ga('set', 'dimension3', Boolean(window.applicationCache));
 ga('set', 'dimension4', APP_GLOBALS.VERSION);
 ga('set', 'dimension5', APP_GLOBALS.HASH);
 ga('set', 'dimension6', APP_GLOBALS.BRANCH);
-/* jshint ignore:end */
-/* jscs:enable */

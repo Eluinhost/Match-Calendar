@@ -10,11 +10,20 @@ class RedditPostsService {
         this.$filter = $filter;
         this.MatchPostParser = MatchPostParser;
         this.DateTime = DateTime;
+
+        this.initData = APP_INITIAL_DATA.subreddits;
     }
 
     _querySingle(subreddit) {
-        return this.$http
-            .get(API_BASE_URL + subreddit)
+        let promise;
+        if (this.initData[subreddit]) {
+            promise = this.$q.resolve({ data: this.initData[subreddit] });
+            this.initData[subreddit] = undefined;
+        } else {
+            promise = this.$http.get(API_BASE_URL + subreddit);
+        }
+
+        return promise
             // Parse each element and filter out null posts
             .then(data => data.data.data.children.map(element => this.MatchPostParser.parse(element.data)))
             .catch(() => subreddit);

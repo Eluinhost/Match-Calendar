@@ -5,6 +5,7 @@
     },
     "globals": {
         "ga": true,
-        "APP_GLOBALS": true
+        "APP_GLOBALS": true,
+        "APP_INITIAL_DATA": true
     }
 }

@@ -47,3 +47,5 @@ module.exports = function * () {
         this.throw(502, 'Failed to fetch posts from Reddit');
     }
 };
+
+module.exports.cache = cache;

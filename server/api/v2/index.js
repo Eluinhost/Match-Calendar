@@ -1,7 +1,7 @@
 const subreddits = require('./subreddits');
 
-module.exports =  {
-    setup: function(router) {
+module.exports = {
+    setup: router => {
         router.get('/r/:subreddit', subreddits);
     },
     rewrites: [{

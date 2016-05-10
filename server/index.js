@@ -76,7 +76,7 @@ apiRouter.use(function * (next) {
 // Run the setup function for each version
 forEach(
     apiRoutes,
-    ({name, setup}) => {
+    ({ name, setup }) => {
         // Create route for /v1 e.t.c.
         const router = new Router({ prefix: `/${name}` });
         setup(router);

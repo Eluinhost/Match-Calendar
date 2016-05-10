@@ -1,3 +1,3 @@
-module.exports = function* subreddits() {
+module.exports = function * subreddits() {
     // TODO
 };

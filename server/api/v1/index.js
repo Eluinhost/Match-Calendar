@@ -1,6 +1,6 @@
 const subreddits = require('./subreddits');
 
-function* timeSync() {
+function * timeSync() {
     this.body = { time: Date.now() };
 }
 

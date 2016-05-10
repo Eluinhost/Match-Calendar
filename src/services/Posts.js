@@ -135,7 +135,7 @@ class Posts {
         this.updating = true;
 
         return this.RedditPostsService
-            .query(this.Subreddits.subreddits, 100)
+            .query(this.Subreddits.subreddits)
             .then(data => {
                 this.posts = data.posts;
                 this.unparsed = data.unparsed;

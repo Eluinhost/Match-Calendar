@@ -40,13 +40,8 @@ class RedditPostsService {
             });
     }
 
-    query(subreddits, limit = 100, sort = 'new') {
-        // Reddit max is 100 per query anyway
-        if (limit > 100) {
-            limit = 100;
-        }
-
-        const subPromises = subreddits.map(sub => this._querySingle(sub, limit, sort));
+    query(subreddits) {
+        const subPromises = subreddits.map(sub => this._querySingle(sub));
 
         // When all are completed
         return this.$q.all(subPromises)

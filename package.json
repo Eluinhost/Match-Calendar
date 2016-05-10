@@ -5,6 +5,8 @@
     "dependencies": {
         "bluebird": "3.3.x",
         "koa": "1.2.x",
+        "koa-conditional-get": "1.0.x",
+        "koa-etag": "2.1.x",
         "koa-json": "1.1.x",
         "koa-static-cache": "3.1.x",
         "koa-rewrite": "1.1.x",

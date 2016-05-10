@@ -3,6 +3,8 @@ const path = require('path');
 const Router = require('koa-router');
 const rewrite = require('koa-rewrite');
 const json = require('koa-json');
+const etag = require('koa-etag');
+const conditional = require('koa-conditional-get');
 
 const app = koa();
 const config = require('../config');
@@ -19,6 +21,9 @@ if (!config.server.apiOnly) {
         gzip: false
     }));
 }
+
+app.use(conditional());
+app.use(etag());
 
 app.use(json({ pretty: false, param: 'pretty' }));
 app.use(rewrite('/api/sync', '/api/v1/sync')); // Legacy, before vx syntax

@@ -120,7 +120,7 @@ function setupStates($stateProvider, $urlRouterProvider) {
         .map(page => page.state)
         .forEach(state => $stateProvider.state(state));
 
-    $urlRouterProvider.otherwise(PostList.state.url);
+    $urlRouterProvider.otherwise('/list');
 }
 setupStates.$inject = ['$stateProvider', '$urlRouterProvider'];
 

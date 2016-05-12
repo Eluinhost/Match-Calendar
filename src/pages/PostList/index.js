@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment-timezone';
 
 class PostListCtrl {
-    constructor(Posts, PostNotifications, DateTime, Hosts, Changelog) {
+    constructor(Posts, PostNotifications, DateTime, Hosts, Changelog, $stateParams) {
         this.Posts = Posts;
         this.DateTime = DateTime;
         this.PostNotifications = PostNotifications;
@@ -13,7 +13,7 @@ class PostListCtrl {
         this.showFilters = false;
 
         this.filters = {
-            search: '',
+            search: $stateParams.filter || '',
             region: post => !_.includes(Posts.disabledRegions, post.region.toLowerCase()),
             // Check if all of its gamemodes are enabled or not
             gamemode: post => !_.some(post.gamemodes, gamemode => {
@@ -31,13 +31,13 @@ class PostListCtrl {
         return enabled ? 'btn-success' : 'btn-danger';
     }
 }
-PostListCtrl.$inject = ['Posts', 'PostNotifications', 'DateTime', 'Hosts', 'Changelog', 'Subreddits', 'Templates'];
+PostListCtrl.$inject = ['Posts', 'PostNotifications', 'DateTime', 'Hosts', 'Changelog', '$stateParams'];
 
 const controllerName = 'PostListCtrl';
 
 const state = {
     name: 'app.list',
-    url: '/list',
+    url: '/list?filter',
     template: require('./template.html'),
     controller: `${controllerName} as postList`,
     resolve: {

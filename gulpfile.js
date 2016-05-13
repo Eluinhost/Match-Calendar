@@ -18,6 +18,7 @@ const configFile = require('./config.js');
 // Default settings are for dev, run 'prod-build-config' to change for production
 const filename = '[name].[hash]';
 const APP_BASE = path.resolve(__dirname, 'src');
+const SHARED_BASE = path.resolve(__dirname, 'shared');
 const DIST_BASE = path.resolve(__dirname, 'web');
 const WEBPACK_ENTRY = `webpack-dev-server/client?http://localhost:${configFile.devServerPort}`;
 
@@ -54,7 +55,7 @@ const config = {
                             'plugins[]=transform-es2015-modules-commonjs,' +
                             'plugins[]=transform-runtime,' +
                         'cacheDirectory!eslint',
-                include: APP_BASE
+                include: [APP_BASE, SHARED_BASE]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,

@@ -54,7 +54,10 @@ forEach(
         apiRoutes,
         it => it.rewrites
     ),
-    it => app.use(rewrite(it.from, it.to))
+    it => {
+        console.log(`Rewriting '${it.from}' to '${it.to}'`);
+        app.use(rewrite(it.from, it.to))
+    }
 );
 
 // Base API route
@@ -80,10 +83,16 @@ forEach(
         // Create route for /v1 e.t.c.
         const router = new Router({ prefix: `/${name}` });
         setup(router);
+        console.log(`Created API '${name}'`);
+        router.stack.forEach(it => {
+            console.log(`  ${it.methods.map(it => `[${it}]`)} - ${apiRouter.opts.prefix}${it.path}`);
+        });
 
         // Attach to parent API route
         apiRouter.use(router.routes()).use(router.allowedMethods());
     }
 );
+
+app.use(apiRouter.routes()).use(apiRouter.allowedMethods());
 
 app.listen(config.server.port, () => console.log(`Server running on port ${config.server.port}`));

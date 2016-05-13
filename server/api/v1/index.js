@@ -8,5 +8,5 @@ function * timeSync() {
 module.exports.setup = function setup(router) {
     router.get('/sync', timeSync);
     router.get('/r/:subreddit', subreddits);
-    router.get('/init', init);
+    router.get('/init.js', init);
 };

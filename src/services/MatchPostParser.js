@@ -1,4 +1,4 @@
-import { parseGameType } from 'app/services/GameTypes';
+import { parseFromString } from 'app/../shared/GameTypes';
 import moment from 'moment-timezone';
 import he from 'he';
 import _ from 'lodash';
@@ -92,7 +92,7 @@ class MatchPostParser {
         }
 
         // Attempt to get the game type
-        const type = parseGameType(style);
+        const type = parseFromString(style);
 
         return {
             type: _.isUndefined(type) ? style : type.name,

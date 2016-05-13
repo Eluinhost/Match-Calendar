@@ -1,5 +1,5 @@
-import GameType from 'app/services/GameType';
-import _ from 'lodash';
+const GameType = require('./GameType');
+const find = require('lodash/find');
 
 const types = {
     FFA: new GameType({
@@ -11,7 +11,7 @@ const types = {
         name: 'Chosen',
         shortCode: 'c',
         requiresTeamSizes: true,
-        // Call default but also add the extra check if there is no type string to assume its a chosen teams
+        // Call default but also add the extra check if there is no type string to assume its a chosen teams (fallback)
         isType: typeString => GameType.defaultChecker.call(types.CHOSEN, typeString) || typeString === ''
     }),
     RANDOM: new GameType({
@@ -45,14 +45,11 @@ const types = {
         requiresTeamSizes: 'CUSTOM',
         // Never use this type when parsing, it is for the generator only
         isType: () => false,
-        format: size => size
+        formatter: size => size
     })
 };
 
-function parseGameType(typeString) {
-    return _.find(types, value => value.isType(typeString));
-}
-
-export default types;
-
-export { types, parseGameType };
+module.exports = {
+    types,
+    parseFromString: typeString => find(types, value => value.isType(typeString))
+};

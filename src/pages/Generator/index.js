@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import GameTypes from 'app/services/GameTypes';
+import { types as GameTypes } from 'app/../shared/GameTypes';
 
 const OLD_KEY = 'generator';
 const PREFIX = 'generator-';

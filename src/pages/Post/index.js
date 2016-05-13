@@ -62,7 +62,7 @@ PostCtrl.$inject = ['Posts', 'DateTime', '$timeout', '$scope', 'post'];
 
 const controllerName = 'PostCtrl';
 
-const resolvePost = function (Posts, RedditPostsService, $stateParams, $q, $state) {
+const resolvePost = function (Posts, MatchFetcher, $stateParams, $q, $state) {
     // Redirect to listing if no id is provided
     if (_.isEmpty($stateParams.id)) {
         $state.go('app.list');
@@ -80,8 +80,8 @@ const resolvePost = function (Posts, RedditPostsService, $stateParams, $q, $stat
             }
 
             // Otherwise attempt to force load the post
-            return RedditPostsService
-                .getSinglePost($stateParams.id)
+            return MatchFetcher
+                .fetchById($stateParams.id) // TODO
                 // Redirect to not found on failure
                 .catch(err => {
                     $state.go('app.post404', { id: $stateParams.id });
@@ -89,7 +89,7 @@ const resolvePost = function (Posts, RedditPostsService, $stateParams, $q, $stat
                 });
         });
 };
-resolvePost.$inject = ['Posts', 'RedditPostsService', '$stateParams', '$q', '$state'];
+resolvePost.$inject = ['Posts', 'MatchFetcher', '$stateParams', '$q', '$state'];
 
 const state = {
     name: 'app.post',

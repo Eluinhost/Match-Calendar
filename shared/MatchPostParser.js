@@ -1,20 +1,14 @@
-import { parseFromString } from 'app/../shared/GameTypes';
-import moment from 'moment-timezone';
-import he from 'he';
-import _ from 'lodash';
+const { parseFromString } = require('./GameTypes');
+const moment = require('moment-timezone');
+const he = require('he');
+const _ = require('lodash');
 
 const IP_REGEX = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
 const DOMAIN_REGEX = /[^\w](IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi; // eslint-disable-line max-len
 const SIZE_REGEX = /To([\dX]+)/i;
 const EXTRAS_REGEX = /([\[\(].*?[\]\)])/g;
 
-class MatchPostParser {
-    constructor(DateTime, $location, $log) {
-        this.DateTime = DateTime;
-        this.$location = $location;
-        this.$log = $log;
-    }
-
+module.exports = class MatchPostParser {
     _parseTitle(title) {
         const details = {
             title,
@@ -167,9 +161,7 @@ class MatchPostParser {
             selftext: he.decode(element.selftext),
             author: element.author,
             permalink: `https://reddit.com${element.permalink}`,
-            posted: moment(element.created_utc, 'X'),
-            anchorlink: `#${this.$location.path()}?post=${element.id}`,
-            isCommunityGame: element.link_flair_text && element.link_flair_text === 'Community Game',
+            posted: element.created_utc,
             subreddit: element.subreddit,
             valid: false
         };
@@ -186,31 +178,29 @@ class MatchPostParser {
             delete parsed.extras;
             _.merge(post, parsed);
         } catch (err) {
-            this.$log.warn('Unable to parse post', element.title, post.permalink, err);
             return post;
         }
 
         post.address = this._getAddress(element.selftext);
 
-        if (_.isNull(post.opens) || !post.opens.isValid()) {
-            return post;
+        if (!_.isNull(post.opens) && post.opens.isValid()) {
+            // Modify it to the correct year
+            const monthsAgo = post.opens.diff(moment(), 'months');
+
+            // If it's more than 6 months old, assume it's in the next year
+            if (monthsAgo < -6) {
+                post.opens.add(1, 'years');
+            } else if (monthsAgo > 6) {
+                // If it's more than 6 months in the future assume it's in the last year
+                post.opens.subtract(1, 'years');
+            }
+
+            post.opens = parseInt(post.opens.format('X'), 10);
+            post.valid = true;
+        } else {
+            post.opens = null;
         }
 
-        const current = this.DateTime.getTime();
-        const monthsAgo = post.opens.diff(current, 'months');
-
-        // If it's more than 6 months old, assume it's in the next year
-        if (monthsAgo < -6) {
-            post.opens.add(1, 'years');
-        } else if (monthsAgo > 6) {
-            // If it's more than 6 months in the future assume it's in the last year
-            post.opens.subtract(1, 'years');
-        }
-
-        post.valid = true;
         return post;
     }
-}
-MatchPostParser.$inject = ['DateTime', '$location', '$log'];
-
-export default MatchPostParser;
+};

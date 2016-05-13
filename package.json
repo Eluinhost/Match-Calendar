@@ -4,6 +4,7 @@
     "main": "server/index.js",
     "dependencies": {
         "bluebird": "3.3.x",
+        "he": "1.0.x",
         "koa": "1.2.x",
         "koa-conditional-get": "1.0.x",
         "koa-etag": "2.1.x",
@@ -33,7 +34,6 @@
         "bootstrap": ">=4.0.0-alpha.2 < 4.1",
         "clipboard": "1.5.x",
         "font-awesome": "4.6.x",
-        "he": "1.0.x",
         "localforage": "1.4.x",
         "ngclipboard": "1.1.x",
         "outdated-browser": "git://github.com/burocratik/outdated-browser.git#1.1.2",

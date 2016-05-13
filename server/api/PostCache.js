@@ -1,10 +1,11 @@
 'use strict';
 
 const fetch = require('node-fetch');
-const PromiseCache = require('../PromiseCache');
 const Promise = require('bluebird');
 
+const PromiseCache = require('../PromiseCache');
 const packageVersion = require('../../package.json').version;
+const parser = new (require('../../shared/MatchPostParser'))();
 
 const OPTIONS = {
     headers: {
@@ -33,19 +34,15 @@ const fetchForSubreddit = Promise.coroutine(function * fetchForSubreddit(name) {
         throw new InvalidResponseError('Response was not OK');
     }
 
-    return response.json();
+    const raw = yield response.json();
+
+    return {
+        raw,
+        parsed: raw.data.children.map(it => parser.parse(it.data))
+    };
 });
 
 // Keep valid responses for 45 seconds and failures for 5
 const cache = new PromiseCache(fetchForSubreddit, 1000 * 45, 1000 * 5);
 
-module.exports = function * () {
-    try {
-        this.body = yield cache.getItem(this.params.subreddit);
-    } catch (error) {
-        this.app.emit('error', error, this);
-        this.throw(502, 'Failed to fetch posts from Reddit');
-    }
-};
-
-module.exports.cache = cache;
+module.exports = cache;

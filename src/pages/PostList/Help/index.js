@@ -11,7 +11,6 @@ class HelpCtrl {
             permalink: '#',
             posted: moment().subtract(2, 'hours'),
             opens: moment().add(2, 'hours'),
-            anchorlink: '#',
             address: '192.168.0.1',
             region: 'EU',
             teams: 'Chosen To4',

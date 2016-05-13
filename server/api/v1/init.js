@@ -1,5 +1,5 @@
 const isUndefined = require('lodash/isUndefined');
-const cache = require('./subreddits').cache;
+const cache = require('../PostCache');
 
 function renderSubreddits(subreddits) {
     return `APP_INITIAL_DATA=${JSON.stringify({ subreddits })};`;
@@ -13,7 +13,7 @@ let localCacheRendered = unknown;
 module.exports = function * initial() {
     let other;
     try {
-        other = yield cache.getItem('uhcmatches');
+        other = (yield cache.getItem('uhcmatches')).raw;
     } catch (error) {
         // don't do anything with the error,
         // if other has changed the render cache will change below (including undefined)

@@ -7,8 +7,8 @@ const FAVOURITES_ONLY_KEY = 'showFavouritedHostsOnly';
 const SHOW_BLOCKED_KEY = 'showBlockedHosts';
 
 class Posts {
-    constructor($rootScope, $interval, Subreddits, DateTime, RedditPostsService, $localForage) {
-        this.RedditPostsService = RedditPostsService;
+    constructor($rootScope, $interval, Subreddits, DateTime, MatchFetcher, $localForage) {
+        this.MatchFetcher = MatchFetcher;
         this.Subreddits = Subreddits;
         this.DateTime = DateTime;
         this.$rootScope = $rootScope;
@@ -134,12 +134,20 @@ class Posts {
     update() {
         this.updating = true;
 
-        return this.RedditPostsService
-            .query(this.Subreddits.subreddits)
-            .then(data => {
-                this.posts = data.posts;
-                this.unparsed = data.unparsed;
-                this.errorSubs = data.errors;
+        return this.MatchFetcher
+            .fetch(this.Subreddits.subreddits)
+            .then(({ parsed, unparsed, errors }) => {
+                const halfHourAgo = this.DateTime.getTime().subtract(30, 'minutes');
+
+                this.posts = _.sortBy( // Sort by unix opening times
+                    _.filter( // Filter out too old posts
+                        parsed,
+                        it => halfHourAgo.diff(it.opens) < 0
+                    ),
+                    it => it.opensUnix
+                );
+                this.unparsed = unparsed;
+                this.errorSubs = errors;
 
                 this.updateRegions();
                 this.updateGamemodes();
@@ -174,6 +182,6 @@ class Posts {
         this.$rootScope.$broadcast('postsUpdated', this.posts);
     }
 }
-Posts.$inject = ['$rootScope', '$interval', 'Subreddits', 'DateTime', 'RedditPostsService', '$localForage'];
+Posts.$inject = ['$rootScope', '$interval', 'Subreddits', 'DateTime', 'MatchFetcher', '$localForage'];
 
 export default Posts;

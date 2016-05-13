@@ -62,9 +62,8 @@ import DurationFormatter from 'app/services/DurationFormatter';
 import PostNotifications from 'app/services/PostNotifications';
 import Hosts from 'app/services/Hosts';
 import HtmlNotifications from 'app/services/HtmlNotifications';
-import MatchPostParser from 'app/services/MatchPostParser';
 import Posts from 'app/services/Posts';
-import RedditPostsService from 'app/services/RedditPostsService';
+import MatchFetcher from 'app/services/MatchFetcher';
 import Subreddits from 'app/services/Subreddits';
 import Templates from 'app/services/Templates';
 import Translations from 'app/services/translations';
@@ -165,9 +164,8 @@ const app = angular.module(
     .service('PostNotifications', PostNotifications)
     .service('Hosts', Hosts)
     .service('HtmlNotifications', HtmlNotifications)
-    .service('MatchPostParser', MatchPostParser)
     .service('Posts', Posts)
-    .service('RedditPostsService', RedditPostsService)
+    .service('MatchFetcher', MatchFetcher)
     .service('Subreddits', Subreddits)
     .service('Templates', Templates)
     .service('SettingImportExport', SettingImportExport);

@@ -1,3 +1,32 @@
+## Version 1.4.0
+
+- Added the ability to link directly to a fitler e.g. `/#/list?filter=[Cyburgh]`
+- Loads /r/uhcmatches data with the page to speed up first load for main use case
+- Make API calls use pre-parsed game data to reduce calculations on the client side and reduce bandwith (6-700kb -> 120kb)
+- Lots of other backend code tweaking/cleanup
+
+##  Version 1.3.0
+
+- Added endpoint for caching Reddit search responses to lower load on Reddit servers
+
+## Version 1.2.1
+
+- Fix time offset not showing in header or post relative times, times should be synced with UTC correctly now
+
+## Version 1.2
+
+- Added a 404 page for direct post links that don't exist
+- Now allows viewing of post that are > 30 minutes old and/or in a non 'subscribed' subreddit when using direct post links (/post/xxxxx)
+- Fixed using &, < e.t.c. in all sections of titles/content
+- Now allows the use of () instead of [] for 'extras' in a title
+- OC is now AU
+- Added settings import/export pages
+- Added a sound effect to go along with notifications that can be toggled in the settings
+- Added timezone 'autodetect' for first visit as well as a small warning when not using the detected one
+- Fixed some links that did not allow opening in new tab/copy link
+- Fixed 'unparsed' posts not opening in a new tab
+- Small CSS/JS updates/improvements
+
 ## Version 1.1
 
 - *General*

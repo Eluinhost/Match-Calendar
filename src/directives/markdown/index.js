@@ -16,7 +16,7 @@ function markdown($sanitize) {
                 // Render the markdown to the DOM
                 element.html($sanitize(MarkdownParser.render(ngModelCtrl.$viewValue || '')));
                 // Replace all links to open in a new tab
-                element.find('a').attr('target', '_blank');
+                element.find('a').attr('target', '_blank').attr('rel', 'noopener');
             };
         }
     };

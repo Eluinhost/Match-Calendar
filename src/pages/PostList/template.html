@@ -125,10 +125,10 @@
             ng-show="postList.showUnparsed"
         >
             <div>
-                <a target="_blank" ng-href="https://reddit.com/u/{{ ::post.author }}" ng-bind="post.author"></a>
+                <a target="_blank" rel="noopener" ng-href="https://reddit.com/u/{{ ::post.author }}" ng-bind="post.author"></a>
             </div>
             <div class="alert-link">
-                <a ng-href="{{ ::post.permalink }}" ng-bind="post.title"></a>
+                <a target="_blank" rel="noopener" ng-href="{{ ::post.permalink }}" ng-bind="post.title"></a>
             </div>
         </li>
     </ul>

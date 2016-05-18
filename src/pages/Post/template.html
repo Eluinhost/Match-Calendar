@@ -32,9 +32,8 @@
                 </div>
             </div>
             <div class="row m-t-1" ng-if="post.post.address">
-                <div class="input-group col-md-6 col-md-offset-3 col-xs-12">
-                    <span class="input-group-addon"><i class="fa fa-cubes"></i></span>
-                    <input type="text" class="form-control" id="game-address" readonly ng-model="post.post.address">
+                <div class="input-group col-lg-8 col-lg-offset-2 col-xs-12">
+                    <span class="form-control text-center" id="game-address" ng-bind="::post.post.address"></span>
                     <span class="input-group-btn">
                         <button
                             class="btn btn-primary-outline"

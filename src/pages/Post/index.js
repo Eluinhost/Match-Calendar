@@ -38,7 +38,7 @@ class PostCtrl {
         let style = this.post.teams;
 
         if (this.post.teamSize) {
-            style += ` ${this.post.teamSize}`;
+            style += ` To${this.post.teamSize}`;
         }
 
         return style;

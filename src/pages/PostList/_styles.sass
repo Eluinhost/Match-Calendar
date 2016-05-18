@@ -83,3 +83,23 @@
 .refresh-button
     margin-top: 10px
     margin-bottom: 10px
+
+.search-filter
+    .input-group-addon
+        border-right: 0
+        @extend .card-info-outline
+
+    input
+        @extend .card-info-outline
+        border-left: 0
+        background-color: white
+
+.search-filter-active
+    .input-group-addon
+        @extend .card-success-outline
+        border-width: 2px
+        color: $alert-danger-text
+
+    input
+        @extend .card-success-outline
+        border-width: 2px

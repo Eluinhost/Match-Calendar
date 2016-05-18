@@ -1,8 +1,8 @@
-import _ from 'lodash';
+import { includes, some, debounce } from 'lodash';
 import moment from 'moment-timezone';
 
 class PostListCtrl {
-    constructor(Posts, PostNotifications, DateTime, Hosts, Changelog, $stateParams) {
+    constructor(Posts, PostNotifications, DateTime, Hosts, Changelog, $stateParams, $state, $scope) {
         this.Posts = Posts;
         this.DateTime = DateTime;
         this.PostNotifications = PostNotifications;
@@ -14,15 +14,21 @@ class PostListCtrl {
 
         this.filters = {
             search: $stateParams.filter || '',
-            region: post => !_.includes(Posts.disabledRegions, post.region.toLowerCase()),
+            region: post => !includes(Posts.disabledRegions, post.region.toLowerCase()),
             // Check if all of its gamemodes are enabled or not
-            gamemode: post => !_.some(post.gamemodes, gamemode => {
-                return _.includes(Posts.disabledGamemodes, gamemode.toLowerCase());
+            gamemode: post => !some(post.gamemodes, gamemode => {
+                return includes(Posts.disabledGamemodes, gamemode.toLowerCase());
             }),
-            teamType: post => !_.includes(Posts.disabledTeamTypes, post.teams.toLowerCase()),
+            teamType: post => !includes(Posts.disabledTeamTypes, post.teams.toLowerCase()),
             favourited: post => Posts.showFavouritedHostsOnly ? Hosts.isFavouriteHost(post.author) : true,
             blocked: post => Posts.showBlockedHosts ? true : !Hosts.isBlockedHost(post.author)
         };
+
+        const debouncedUrlUpdated = debounce(newVal => {
+            $state.transitionTo('app.list', { filter: newVal }, { notify: false });
+        }, 300);
+
+        $scope.$watch(() => this.filters.search, debouncedUrlUpdated);
 
         this.filteredPosts = [];
     }
@@ -31,7 +37,8 @@ class PostListCtrl {
         return enabled ? 'btn-success' : 'btn-danger';
     }
 }
-PostListCtrl.$inject = ['Posts', 'PostNotifications', 'DateTime', 'Hosts', 'Changelog', '$stateParams'];
+PostListCtrl.$inject =
+    ['Posts', 'PostNotifications', 'DateTime', 'Hosts', 'Changelog', '$stateParams', '$state', '$scope'];
 
 const controllerName = 'PostListCtrl';
 

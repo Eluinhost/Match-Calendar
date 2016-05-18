@@ -3,11 +3,12 @@
         <div class="card-header post-list-filter">
             <div class="row">
                 <div class="col-lg-7 col-lg-offset-1 col-xs-12">
-                    <div class="input-group">
-                        <div class="input-group-addon card-info-outline"><i class="fa fa-search"></i></div>
+                    <div class="input-group search-filter" ng-class="{'search-filter-active': postList.filters.search}">
+                        <div class="input-group-addon" ng-hide="postList.filters.search"><i class="fa fa-search"></i></div>
+                        <div class="input-group-addon" ng-hide="!postList.filters.search" ng-click="postList.filters.search = ''"><i class="fa fa-trash"></i></div>
                         <input
                             ng-model="postList.filters.search"
-                            class="form-control card-info-outline"
+                            class="form-control"
                             type="search"
                             placeholder="{{ 'list.filters.searchPlaceholder' | translate }}"
                         />

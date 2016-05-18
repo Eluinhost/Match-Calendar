@@ -3,5 +3,5 @@ module.exports = {
         port: 9001,
         apiOnly: true
     },
-    devServerPort: 9000
+    devServerPort: 9002
 };

@@ -1,3 +1,12 @@
+## Version 1.4.1
+
+- Make URL reflect the current search filter state for easy copy/paste
+- Add colours to search filter for on/off states
+- Add button to clear search filter if it there is one
+- Fix 'To' being missing on post page
+- Fix opening unparsed post links not opening in a new tab
+- Fix server address being unreadable on smaller screens
+
 ## Version 1.4.0
 
 - Added the ability to link directly to a fitler e.g. `/#/list?filter=[Cyburgh]`

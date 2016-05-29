@@ -157,6 +157,12 @@
             "show": "Show unparsed posts",
             "hide": "Hide unparsed posts"
         },
+        "addSub": {
+            "header": "Adding subreddit '/r/{{ subreddit }}'",
+            "message": "Do you want to add the subreddit '/r/{{ subreddit }}' to your settings? You can remove it later by visiting the 'Settings' page",
+            "confirm": "Add",
+            "ignore": "Ignore"
+        },
         "failedSubs": "Failed to load matches from the chosen subreddit/s: {{ subs }}",
         "configure": "Configure",
         "refresh": "Refresh",

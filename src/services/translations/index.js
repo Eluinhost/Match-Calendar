@@ -15,7 +15,8 @@ const FRIENDLY = {
 
 class TranslationsService {
     constructor($localForage, $rootScope, $translate, $log) {
-        this.chosen = $translate.use();
+        this.chosen = 'en';
+
         this.translations = TRANSLATIONS;
         this.keys = LANGUAGE_IDS;
         this.friendly = FRIENDLY;

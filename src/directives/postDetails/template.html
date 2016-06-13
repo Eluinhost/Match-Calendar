@@ -23,6 +23,9 @@
         <div class="label label-danger text-xs-left" ng-if="details.isBlockedHost()">
             <i class="fa fa-minus-circle"></i>&nbsp;<span translate="post.blocked"></span>
         </div>
+        <div class="label label-danger text-xs-left" ng-if="details.post.overhost">
+            <i class="fa fa-warning"></i>&nbsp;<span translate="post.overhost"></span>
+        </div>
     </div>
     <div
         class="row text-xs-center card-block"

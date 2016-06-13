@@ -146,6 +146,23 @@ class Posts {
                     ),
                     ['opensUnix', 'postedUnix']
                 );
+
+                // Add 'overhost' flags
+                _.forEach(
+                    _.groupBy(this.posts, 'region'),
+                    regionPosts => {
+                        if (regionPosts.length < 2) {
+                            return;
+                        }
+
+                        for (let i = 1; i < regionPosts.length; i++) {
+                            if (regionPosts[i].opensUnix === regionPosts[i - 1].opensUnix) {
+                                regionPosts[i].overhost = true;
+                            }
+                        }
+                    }
+                );
+
                 this.unparsed = unparsed;
                 this.errorSubs = errors;
 

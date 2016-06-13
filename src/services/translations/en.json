@@ -54,6 +54,7 @@
         "startTime": "Start Time",
         "favourite": "Favourite",
         "blocked": "Blocked",
+        "overhost": "Potential Overhost",
         "tooltips": {
             "opens": "Time Match Opens",
             "startTime": "Time display is game start time, not whitelist off",

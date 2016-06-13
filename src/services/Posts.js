@@ -144,7 +144,7 @@ class Posts {
                         parsed,
                         it => halfHourAgo.diff(it.opens) < 0
                     ),
-                    it => it.opensUnix
+                    ['opensUnix', 'postedUnix']
                 );
                 this.unparsed = unparsed;
                 this.errorSubs = errors;

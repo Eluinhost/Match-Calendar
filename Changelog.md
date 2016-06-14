@@ -1,3 +1,10 @@
+## Version 1.4.2
+
+- Fixed rare issue causing times not to show
+- Added query paramter addsub for prompting for subreddit addition
+- Added 'potential overhost' tag
+- When 2 posts are for the same time the one posted first takes comes first in the list
+
 ## Version 1.4.1
 
 - Make URL reflect the current search filter state for easy copy/paste

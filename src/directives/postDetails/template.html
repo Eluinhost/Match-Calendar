@@ -56,6 +56,9 @@
             <div class="post-title">
                 <strong>
                     <a class="show-pointer" ui-sref="app.post({id: details.post.id})" bo-text="details.post.title | characters:100: false"></a>
+                    <a ng-href="{{::'https://redd.it/' + details.post.id}}" target="_blank">
+                        <i class="fa fa-external-link"></i>
+                    </a>
                 </strong>
                 <div>
                     <small>

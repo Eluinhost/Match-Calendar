@@ -81,8 +81,7 @@ const resolvePost = function (Posts, MatchFetcher, $stateParams, $q, $state) {
 
             // Otherwise attempt to force load the post
             return MatchFetcher
-                .fetchById($stateParams.id) // TODO
-                // Redirect to not found on failure
+                .fetchById($stateParams.id)
                 .catch(err => {
                     $state.go('app.post404', { id: $stateParams.id });
                     return $q.reject(err);

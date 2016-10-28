@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 class SettingsCtrl {
     constructor(DurationFormatter, $uibModal, $window, Subreddits, Hosts, DateTime,
                 PostNotifications, $localForage, $scope, Translations) {
@@ -21,58 +23,26 @@ class SettingsCtrl {
         this.tempFavouriteHost = '';
         this.tempBlockedHost = '';
 
-        $scope.$watch(() => this.tempSubreddit, () => {
-            if (!this.tempSubreddit) {
-                return;
-            }
+        const removePrefixedInput = (key, prefixes) => {
+            $scope.$watch(() => this[key], () => {
+                if (!this[key]) {
+                    return;
+                }
 
-            // Only cut beginning off if they typed past it
+                const item = this[key];
 
-            if (this.tempSubreddit.startsWith('/r/') && this.tempSubreddit.length > 3) {
-                this.tempSubreddit = this.tempSubreddit.slice(3);
-                return;
-            }
+                _(prefixes)
+                    .filter(p => item.length > p.length && item.startsWith(p))
+                    .take(1)
+                    .forEach(p => {
+                        this[key] = item.slice(p.length);
+                    });
+            });
+        };
 
-            if (this.tempSubreddit.startsWith('r/') && this.tempSubreddit.length > 2) {
-                this.tempSubreddit = this.tempSubreddit.slice(2);
-            }
-        });
-
-        $scope.$watch(() => this.tempFavouriteHost, () => {
-            if (!this.tempFavouriteHost) {
-                return;
-            }
-
-            // Only cut beginning off if they typed past it
-
-            if (this.tempFavouriteHost.startsWith('/u/') && this.tempFavouriteHost.length > 3) {
-                this.tempFavouriteHost = this.tempFavouriteHost.slice(3);
-                return;
-            }
-
-            if (this.tempFavouriteHost.startsWith('u/') && this.tempFavouriteHost.length > 2) {
-                this.tempFavouriteHost = this.tempFavouriteHost.slice(2);
-            }
-        });
-
-        // TODO replace these watchers with something generic
-
-        $scope.$watch(() => this.tempBlockedHost, () => {
-            if (!this.tempBlockedHost) {
-                return;
-            }
-
-            // Only cut beginning off if they typed past it
-
-            if (this.tempBlockedHost.startsWith('/u/') && this.tempBlockedHost.length > 3) {
-                this.tempBlockedHost = this.tempBlockedHost.slice(3);
-                return;
-            }
-
-            if (this.tempBlockedHost.startsWith('u/') && this.tempBlockedHost.length > 2) {
-                this.tempBlockedHost = this.tempBlockedHost.slice(2);
-            }
-        });
+        removePrefixedInput('tempSubreddit', ['/r/', 'r/']);
+        removePrefixedInput('tempFavouriteHost', ['/u/', 'u/']);
+        removePrefixedInput('tempBlockedHost', ['/u/', 'u/']);
     }
 
     timeZoneGroup(zone) {

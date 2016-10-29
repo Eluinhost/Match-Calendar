@@ -1,3 +1,10 @@
+## Version 1.4.3
+
+- Added a 'Short Notice' warning flag
+- Fixed layout of filter labels for certain screen sizes
+- Changed post page to use a reddit shortlink
+- Added a way to go directly to the reddit post from the listing
+
 ## Version 1.4.2
 
 - Fixed rare issue causing times not to show

@@ -1,8 +1,8 @@
 <div class="list-page">
-    <div class="card card-default search-panel card-info-outline">
+    <div class="card card-default search-panel card-outline-info">
         <div class="card-header post-list-filter">
             <div class="row">
-                <div class="col-lg-7 col-lg-offset-1 col-xs-12">
+                <div class="col-lg-7 offset-lg-1 col-xs-12">
                     <div class="input-group search-filter" ng-class="{'search-filter-active': postList.filters.search}">
                         <div class="input-group-addon" ng-hide="postList.filters.search"><i class="fa fa-search"></i></div>
                         <div class="input-group-addon" ng-hide="!postList.filters.search" ng-click="postList.filters.search = ''"><i class="fa fa-trash"></i></div>
@@ -117,7 +117,7 @@
     <ul class="list-group list-group-flush" ng-show="postList.Posts.unparsed.length">
         <li class="list-group-item-heading list-group-item list-group-item-warning" ng-click="postList.showUnparsed = !postList.showUnparsed">
             <span translate="{{ postList.showUnparsed ? 'list.unparsed.hide' : 'list.unparsed.show' }}"></span>
-            <span class="label label-danger" ng-bind="postList.Posts.unparsed.length"></span>
+            <span class="tag tag-danger" ng-bind="postList.Posts.unparsed.length"></span>
             <i class="fa" ng-class="{'fa-arrow-right': !postList.showUnparsed, 'fa-arrow-down': postList.showUnparsed}"></i>
         </li>
         <li

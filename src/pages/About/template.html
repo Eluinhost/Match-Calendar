@@ -19,7 +19,7 @@
 
     <div class="card-deck-wrapper">
         <div class="card-deck">
-            <div class="card card-inverse card-primary-outline" ng-repeat="author in about.authors">
+            <div class="card card-inverse card-outline-primary" ng-repeat="author in about.authors">
                 <h4 class="card-header card-primary">
                     <a
                         target="_blank"
@@ -35,7 +35,7 @@
 
     <h2 translate="about.libraries"></h2>
 
-    <div class="card card-primary-outline text-xs-left">
+    <div class="card card-outline-primary text-xs-left">
         <div class="card-block" ng-repeat="lib in ::about.libraries">
             <h4 class="card-title">
                 <a class="text-danger" ng-href="{{::lib.url}}" ng-bind="::lib.name" target="_blank"></a>

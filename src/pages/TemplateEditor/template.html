@@ -14,7 +14,7 @@
             ></li>
         </ul>
     </div>
-    <div class="row p-t-1" ng-show="editor.selected.name === 'default'">
+    <div class="row pt-1" ng-show="editor.selected.name === 'default'">
         <div class="col-xs-12">
             <h3>
                 <span translate="templates.noedit"></span>
@@ -24,9 +24,9 @@
     </div>
 </div>
 <div class="container-fluid">
-    <div ng-if="editor.tempCopy" class="row p-t-1">
+    <div ng-if="editor.tempCopy" class="row pt-1">
         <div class="card-group col-xs-12">
-            <div class="card card-primary-outline card-inverse">
+            <div class="card card-outline-primary card-inverse">
                 <h4 class="card-header card-primary" translate="templates.edit"></h4>
                 <div class="card-block">
                     <div ng-class="{'form-group has-feedback': true, 'has-error': !editor.isNameValid() }">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-primary-outline card-inverse">
+            <div class="card card-outline-primary card-inverse">
                 <h4 class="card-header card-primary" translate="templates.preview"></h4>
                 <div class="card-block">
                     <markdown class="md" ng-model="editor.generated"></markdown>
@@ -88,14 +88,14 @@
     </div>
 </div>
 <div class="container">
-    <div class="row p-t-1">
+    <div class="row pt-1">
         <div class="col-xs-12">
             <uib-accordion close-others="false">
                 <uib-accordion-group>
                     <uib-accordion-heading>
                         <span translate="templates.help.header"></span>
                     </uib-accordion-heading>
-                    <div class="text-xs-left p-t-1">
+                    <div class="text-xs-left pt-1">
                         <h3 translate="templates.help.available"></h3>
                         <div class="list-group">
                             <div class="list-group-item">
@@ -119,7 +119,7 @@
                                 <p class="list-group-item-text" translate="templates.help.scenarios"></p>
                             </div>
                         </div>
-                        <h3 class="p-t-1" translate="templates.help.howtouse"></h3>
+                        <h3 class="pt-1" translate="templates.help.howtouse"></h3>
                         <p translate="templates.help.surround"></p>
                         <code ng-non-bindable>**Match opens at** {{ opensUTC }}</code>
                         =>

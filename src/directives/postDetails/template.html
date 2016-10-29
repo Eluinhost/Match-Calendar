@@ -1,15 +1,15 @@
 <div
-    class="card match-post card-info-outline container-fluid"
+    class="card match-post card-outline-info container-fluid"
     bindonce="details.post"
     refresh-on="'postsUpdated'"
     ng-class="{'favourite-host': details.isFavouriteHost(), 'blocked-host': details.isBlockedHost()}"
 >
     <div class="match-post-labels">
-        <div class="label label-primary text-xs-left" bo-if="details.post.isCommunityGame">
+        <div class="tag tag-primary text-xs-left" bo-if="details.post.isCommunityGame">
             <i class="fa fa-users"></i>&nbsp;<span translate="post.communityGame"></span>
         </div>
         <div
-            class="label label-warning text-xs-left"
+            class="tag tag-warning text-xs-left"
             bo-if="details.post.isStartTime"
             uib-tooltip="{{ 'post.tooltips.startTime' | translate }}"
             tooltip-append-to-body="true"
@@ -17,13 +17,13 @@
         >
             <i class="fa fa-warning"></i>&nbsp;<span translate="post.startTime"></span>
         </div>
-        <div class="label label-success text-xs-left" ng-if="details.isFavouriteHost()">
+        <div class="tag tag-success text-xs-left" ng-if="details.isFavouriteHost()">
             <i class="fa fa-heart"></i>&nbsp;<span translate="post.favourite"></span>
         </div>
-        <div class="label label-danger text-xs-left" ng-if="details.isBlockedHost()">
+        <div class="tag tag-danger text-xs-left" ng-if="details.isBlockedHost()">
             <i class="fa fa-minus-circle"></i>&nbsp;<span translate="post.blocked"></span>
         </div>
-        <div class="label label-danger text-xs-left" ng-if="details.post.overhost">
+        <div class="tag tag-danger text-xs-left" ng-if="details.post.overhost">
             <i class="fa fa-warning"></i>&nbsp;<span translate="post.overhost"></span>
         </div>
     </div>

@@ -12,7 +12,7 @@ class PostCtrl {
     }
 
     regionClass() {
-        return this.Posts.isRegionDisabled(this.post.region) ? 'label-danger' : 'label-success';
+        return this.Posts.isRegionDisabled(this.post.region) ? 'tag-danger' : 'tag-success';
     }
 
     showCopiedMessage() {
@@ -48,14 +48,14 @@ class PostCtrl {
         const time = this.post.opens.diff(this.DateTime.getTime());
 
         if (time < 0) {
-            return 'label-danger';
+            return 'tag-danger';
         }
 
         if (time < 600000) {
-            return 'label-warning';
+            return 'tag-warning';
         }
 
-        return 'label-success';
+        return 'tag-success';
     }
 }
 PostCtrl.$inject = ['Posts', 'DateTime', '$timeout', '$scope', 'post'];

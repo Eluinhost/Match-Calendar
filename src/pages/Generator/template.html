@@ -5,7 +5,7 @@
             translate-value-rules="<a target='_blank' href='https://www.reddit.com/r/UHCHosts/wiki/guides/scheduling_matches'>here.</a>"
         ></span>
     </uib-alert>
-    <div class="card card-primary-outline card-inverse">
+    <div class="card card-outline-primary card-inverse">
         <h4 class="card-header card-primary" translate="generator.title.header"></h4>
         <div class="card-block">
             <input class="form-control" type="text" ng-model="generator.postTitle"/>
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="card-group">
-        <div class="card card-primary-outline card-inverse">
+        <div class="card card-outline-primary card-inverse">
             <h4 class="card-header card-primary">
                 <div translate="generator.opens.header"></div>
                 <div>
@@ -30,7 +30,7 @@
                 ></date-time-picker>
             </div>
         </div>
-        <div class="card card-primary-outline card-inverse">
+        <div class="card card-outline-primary card-inverse">
             <h4 class="card-header card-primary" translate="generator.region.header"></h4>
             <div class="card-block">
                 <select class="form-control" ng-model="generator.region" ng-options="o as k for (o,k) in generator.regions"></select>
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="card-group">
-        <div class="card card-primary-outline card-inverse">
+        <div class="card card-outline-primary card-inverse">
             <h4 class="card-header card-primary" translate="generator.scenarios.header"></h4>
             <div class="card-block">
                 <unique-items-editor
@@ -71,7 +71,7 @@
                 </unique-items-editor>
             </div>
         </div>
-        <div class="card card-primary-outline card-inverse">
+        <div class="card card-outline-primary card-inverse">
             <h4 class="card-header card-primary" translate="generator.extras.header"></h4>
             <div class="card-block">
                 <unique-items-editor
@@ -85,14 +85,14 @@
             </div>
         </div>
     </div>
-    <div class="card card-primary-outline card-inverse">
+    <div class="card card-outline-primary card-inverse">
         <h4 class="card-header card-primary" translate="generator.preview.header"></h4>
         <div class="card-block">
             <code ng-bind="generator.generateTitle()"></code>
         </div>
     </div>
     <div class="card-group">
-        <div class="card card-primary-outline card-inverse">
+        <div class="card card-outline-primary card-inverse">
             <h4 class="card-header card-primary" translate="generator.template.header"></h4>
             <div class="card-block form-group" ng-class="{'has-error': !generator.hasValidTemplate()}">
                 <select
@@ -106,7 +106,7 @@
                 </uib-alert>
             </div>
         </div>
-        <div class="card card-primary-outline card-inverse">
+        <div class="card card-outline-primary card-inverse">
             <h4 class="card-header card-primary" translate="generator.subreddit.header"></h4>
             <div class="card-block form-group" ng-class="{'has-error': !generator.hasValidSubreddit()}">
                 <select

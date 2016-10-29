@@ -1,5 +1,5 @@
-<div class="container p-t-1 post-page" bindonce="post" refresh-on="'postsUpdated'">
-    <div class="card card-primary-outline card-inverse">
+<div class="container pt-1 post-page" bindonce="post" refresh-on="'postsUpdated'">
+    <div class="card card-outline-primary card-inverse">
         <div class="post-header card-header card-primary">
             <h2 ng-bind="::post.post.title"></h2>
             <h6 local-time="::post.post.opens"></h6>
@@ -10,33 +10,33 @@
             </h6>
             <div class="floating-label">
                 <div
-                    class="label label-success"
+                    class="tag tag-success"
                     ng-class="post.relativeTimeClass()"
                 >
                     <i class="fa fa-clock-o"></i>
                     <span relative-time="::post.post.opens" relative-time-tick-refresh></span>
                 </div>
-                <div class="label" ng-bind="::post.post.region" bo-class="post.regionClass()"></div>
+                <div class="tag" ng-bind="::post.post.region" bo-class="post.regionClass()"></div>
             </div>
         </div>
         <div class="card-block post-page-content">
             <div class="floating-label gamemodes">
-                <div class="label label-primary">
+                <div class="tag tag-primary">
                     <i class="fa fa-cubes"></i>
                     <span ng-bind="::post.teamStyle()"></span>
                 </div>
                 <div
-                    class="label label-primary"
+                    class="tag tag-primary"
                     ng-repeat="gamemode in post.post.gamemodes track by $index"
                     ng-bind="gamemode">
                 </div>
             </div>
-            <div class="row m-t-1" ng-if="post.post.address">
-                <div class="input-group col-lg-8 col-lg-offset-2 col-xs-12">
+            <div class="row mt-1" ng-if="post.post.address">
+                <div class="input-group col-lg-8 offset-lg-2 col-xs-12">
                     <span class="form-control text-center" id="game-address" ng-bind="::post.post.address"></span>
                     <span class="input-group-btn">
                         <button
-                            class="btn btn-primary-outline"
+                            class="btn btn-outline-primary"
                             type="button"
                             ngclipboard
                             data-clipboard-target="#game-address"

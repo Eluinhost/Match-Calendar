@@ -163,6 +163,13 @@ class Posts {
                     }
                 );
 
+                // Add 'short notice' flags
+                _(this.posts)
+                    .filter(it => it.opens.diff(it.posted, 'minutes') < 30)
+                    .forEach(it => {
+                        it.shortNotice = true;
+                    });
+
                 this.unparsed = unparsed;
                 this.errorSubs = errors;
 

@@ -1,6 +1,6 @@
 {
     "name": "match-calendar",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "main": "server/index.js",
     "dependencies": {
         "bluebird": "3.3.x",

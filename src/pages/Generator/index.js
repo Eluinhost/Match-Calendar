@@ -14,7 +14,7 @@ const EXTRAS_KEY = `${PREFIX}extras`;
 const TEMPLATE_KEY = `${PREFIX}template`;
 
 class GeneratorCtrl {
-    constructor($window, DateTime, Templates, Subreddits, $localForage, $rootScope) {
+    constructor($window, DateTime, Templates, Subreddits, Posts, $localForage, $rootScope) {
         this.$window = $window;
         this.DateTime = DateTime;
         this.Templates = Templates;
@@ -93,6 +93,10 @@ class GeneratorCtrl {
         this.opens = initial;
         this.minTime = this.opens;
 
+        $rootScope.$watch(() => this.opens, _.debounce(() => {
+            this.overhost = _.some(Posts.posts, p => p.region === this.region && p.opens.isSame(this.opens, 'minutes'));
+        }, 150));
+
         // Temp variables to be used in adding new items to the arrays
         this.tempSubreddit = '';
         this.tempExtra = '';
@@ -140,7 +144,7 @@ class GeneratorCtrl {
         this.$window.open(`https://reddit.com/r/${this.subreddit}/submit?title=${title}&text=${contents}`, '_blank');
     }
 }
-GeneratorCtrl.$inject = ['$window', 'DateTime', 'Templates', 'Subreddits', '$localForage', '$rootScope'];
+GeneratorCtrl.$inject = ['$window', 'DateTime', 'Templates', 'Subreddits', 'Posts', '$localForage', '$rootScope'];
 
 const controllerName = 'GeneratorCtrl';
 
@@ -150,7 +154,7 @@ const state = {
     template: require('./template.html'),
     controller: `${controllerName} as generator`,
     resolve: {
-        savedData: ['$q', 'Templates', 'Subreddits', function ($q, ...others) {
+        savedData: ['$q', 'Templates', 'Subreddits', 'Posts', function ($q, ...others) {
             return $q.all(others.map(o => o.initialised));
         }]
     }

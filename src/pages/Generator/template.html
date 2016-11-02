@@ -29,6 +29,11 @@
                     meridian="generator.DateTime.timeFormat == '12h'"
                     minute-step="15"
                 ></date-time-picker>
+                <uib-alert type="danger" ng-if="generator.overhost">
+                    <span
+                        translate="generator.overhost"
+                    ></span>
+                </uib-alert>
             </div>
         </div>
         <div class="card card-outline-primary card-inverse">

@@ -137,7 +137,8 @@
             "header": "Selected Subreddit"
         },
         "templateEditor": "Template Editor",
-        "postToReddit": "Post to Reddit"
+        "postToReddit": "Post to Reddit",
+        "overhost": "Be careful! There is already a game at this time in the same region on your calendar"
     },
     "post404": {
         "title": "404 - Not Found",

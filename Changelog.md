@@ -1,7 +1,8 @@
-## Version 1.4.5
+## Version 1.4.6
 
 - Added warning to generator for potential overhosts
 - Tightened up restrictions for chooseable times in the generator (15 min intervals, at least 30 minutes in the future)
+- Fixed generator not saving settings
 
 ## Version 1.4.3
 

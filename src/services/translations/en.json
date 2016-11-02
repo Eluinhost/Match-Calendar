@@ -90,7 +90,7 @@
         "notice": "Make sure to read the submission rules for the subreddit you are posting to <b>BEFORE</b> using this tool. Rules for the main /r/uhcmatches subreddit can be found {{ rules }}",
         "title": {
             "header": "Title",
-            "info": "The title to show on the list"
+            "info": "The title to show on the list, do NOT include the time/scenarios e.t.c, that can be provided below"
         },
         "opens": {
             "header": "Opens",

@@ -93,9 +93,12 @@ class GeneratorCtrl {
         this.opens = initial;
         this.minTime = this.opens;
 
-        $rootScope.$watch(() => this.opens, _.debounce(() => {
-            this.overhost = _.some(Posts.posts, p => p.region === this.region && p.opens.isSame(this.opens, 'minutes'));
-        }, 150));
+        const checkOverhost = _.debounce(() => {
+            this.overhost = _.find(Posts.posts, p => p.region === this.region && p.opens.isSame(this.opens, 'minutes'));
+        }, 150);
+
+        $rootScope.$watch(() => this.opens, checkOverhost);
+        $rootScope.$watch(() => this.region, checkOverhost);
 
         // Temp variables to be used in adding new items to the arrays
         this.tempSubreddit = '';

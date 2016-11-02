@@ -30,9 +30,13 @@
                     minute-step="15"
                 ></date-time-picker>
                 <uib-alert type="danger" ng-if="generator.overhost">
-                    <span
-                        translate="generator.overhost"
-                    ></span>
+                    <div>
+                        <div translate="generator.overhost"></div>
+                        <a class="show-pointer" ui-sref="app.post({id: generator.overhost.id})" ng-bind="generator.overhost.title | characters:100: false"></a>
+                        <a ng-href="{{::'https://redd.it/' + generator.overhost.id}}" target="_blank">
+                            <i class="fa fa-external-link"></i>
+                        </a>
+                    </div>
                 </uib-alert>
             </div>
         </div>

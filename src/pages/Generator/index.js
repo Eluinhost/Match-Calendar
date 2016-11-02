@@ -48,7 +48,7 @@ class GeneratorCtrl {
             .spread((old, postTitle, region, gameType, teamSize, scenarios, subreddit, extras, template) => {
                 let toMerge = { postTitle, region, gameType, teamSize, scenarios, subreddit, extras, template };
 
-                if (!_.isUndefined(old)) {
+                if (!_.isNull(old)) {
                     // Copy over the old details and remove everything at the old key
                     toMerge = old;
                     $localForage.removeItem(OLD_KEY);

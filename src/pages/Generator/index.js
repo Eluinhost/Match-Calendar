@@ -84,7 +84,13 @@ class GeneratorCtrl {
                 $rootScope.$watchCollection(() => this.extras, () => $localForage.setItem(EXTRAS_KEY, this.extras));
             });
 
-        this.opens = DateTime.getTime();
+        const initial = DateTime.getTime().add(30, 'minutes');
+
+        initial.milliseconds(Math.ceil(initial.milliseconds() / 1000) * 1000);
+        initial.seconds(Math.ceil(initial.seconds() / 60) * 60);
+        initial.minutes(Math.ceil(initial.minutes() / 15) * 15); // Round to nearest 15 mins
+
+        this.opens = initial;
         this.minTime = this.opens;
 
         // Temp variables to be used in adding new items to the arrays

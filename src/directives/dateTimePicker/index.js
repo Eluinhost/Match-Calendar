@@ -7,7 +7,12 @@ class DateTimePickerCtrl {
         this.internalJSDate = this.pickedDate.toDate();
         this.internalMinDate = this.minDate.toDate();
 
-        $scope.$watch(() => this.internalJSDate, () => this.updatePickedDate());
+        $scope.$watch(() => this.internalJSDate, () => {
+            if (this.internalJSDate < this.internalMinDate) {
+                this.internalJSDate = this.internalMinDate;
+            }
+            this.updatePickedDate();
+        });
         $scope.$watch(() => this.timeZone, () => this.updatePickedDate());
     }
 
@@ -39,7 +44,8 @@ function dateTimePicker() {
             minDate: '=?',
             pickedDate: '=',
             meridian: '=',
-            timeZone: '='
+            timeZone: '=',
+            minuteStep: '='
         },
         template,
         controller: DateTimePickerCtrl,

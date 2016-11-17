@@ -170,13 +170,6 @@ class Posts {
                         it.shortNotice = true;
                     });
 
-                // Add extras to title
-                _(this.posts)
-                    .filter(it => it.extras.length > 0)
-                    .forEach(it => {
-                        it.title = `${it.title} ${it.extras.map(it => `[${it}]`).join('')}`;
-                    });
-
                 this.unparsed = unparsed;
                 this.errorSubs = errors;
 

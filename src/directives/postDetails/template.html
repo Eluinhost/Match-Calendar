@@ -58,7 +58,10 @@
         <div class="col-lg-8 text-lg-left text-xs-center col-xs-12">
             <div class="post-title">
                 <strong>
-                    <a class="show-pointer" ui-sref="app.post({id: details.post.id})" bo-text="details.post.title | characters:100: false"></a>
+                    <a class="show-pointer" ui-sref="app.post({id: details.post.id})">
+                        <span bo-text="details.post.title | characters:60: false"></span>
+                        <span ng-repeat="extra in ::details.post.extras" ng-bind="::'[' + extra + ']'"></span>
+                    </a>
                     <a ng-href="{{::'https://redd.it/' + details.post.id}}" target="_blank">
                         <i class="fa fa-external-link"></i>
                     </a>

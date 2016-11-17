@@ -1,7 +1,10 @@
 <div class="container pt-1 post-page" bindonce="post" refresh-on="'postsUpdated'">
     <div class="card card-outline-primary card-inverse">
         <div class="post-header card-header card-primary">
-            <h2 ng-bind="::post.post.title"></h2>
+            <h2>
+                <span ng-bind="::post.post.title"></span>
+                <span ng-repeat="extra in ::post.post.extras" ng-bind="::'[' + extra + ']'"></span>
+            </h2>
             <h6 local-time="::post.post.opens"></h6>
             <h6>
                 <a ng-href="{{::'https://reddit.com/u/' + post.post.author}}" target="_blank">

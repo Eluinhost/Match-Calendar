@@ -6,7 +6,7 @@ const _ = require('lodash');
 const IP_REGEX = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
 const DOMAIN_REGEX = /[^\w](IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi; // eslint-disable-line max-len
 const SIZE_REGEX = /To([\dX]+)/i;
-const EXTRAS_REGEX = /([\[\(].*?[\]\)])/g;
+const EXTRAS_REGEX = /[\[\(](.*?)[\]\)]/g;
 
 module.exports = class MatchPostParser {
     _parseTitle(title) {
@@ -97,8 +97,8 @@ module.exports = class MatchPostParser {
     _parseExtras(section) {
         const extras = [];
         section = section
-            .replace(EXTRAS_REGEX, part => {
-                extras.push(part);
+            .replace(EXTRAS_REGEX, (part, g1) => {
+                extras.push(g1);
                 return '';
             })
             .trim();
@@ -168,15 +168,7 @@ module.exports = class MatchPostParser {
 
         // Grab all of the information from the title
         try {
-            const parsed = this._parseTitle(post.title);
-
-            // Append the extras to the title
-            if (parsed.extras.length > 0) {
-                parsed.title += ` ${parsed.extras.join(' ')}`;
-            }
-
-            delete parsed.extras;
-            _.merge(post, parsed);
+            _.merge(post, this._parseTitle(post.title));
         } catch (err) {
             return post;
         }

@@ -2,25 +2,25 @@ import _ from 'lodash';
 
 const FAVOURITE_HOST_KEY = 'favoriteHosts';
 const BLOCKED_HOST_KEY = 'blockedHosts';
-const FAVOURITE_EXTRA_KEY = 'favouriteExtras';
-const BLOCKED_EXTRA_KEY = 'blockedExtras';
+const FAVOURITE_TAG_KEY = 'favouriteTags';
+const BLOCKED_TAG_KEY = 'blockedTags';
 
 class Hosts {
     constructor($localForage, $rootScope) {
         this.favouriteHosts = [];
         this.blockedHosts = [];
-        this.favouriteExtras = [];
-        this.blockedExtras = [];
+        this.favouriteTags = [];
+        this.blockedTags = [];
 
         // Set a promise to resolve on in routes
         this.initialised = $localForage
-            .getItem([FAVOURITE_HOST_KEY, BLOCKED_HOST_KEY, FAVOURITE_EXTRA_KEY, BLOCKED_EXTRA_KEY])
-            .spread((favouriteHosts, blockedHosts, favouriteExtras, blockedExtras) => {
+            .getItem([FAVOURITE_HOST_KEY, BLOCKED_HOST_KEY, FAVOURITE_TAG_KEY, BLOCKED_TAG_KEY])
+            .spread((favouriteHosts, blockedHosts, favouriteTags, blockedTags) => {
                 _.mergeNotNull(this, {
                     favouriteHosts,
                     blockedHosts,
-                    favouriteExtras,
-                    blockedExtras
+                    favouriteTags,
+                    blockedTags
                 });
 
                 $rootScope.$watchCollection(
@@ -44,20 +44,20 @@ class Hosts {
                 );
 
                 $rootScope.$watchCollection(
-                    () => this.favouriteExtras,
+                    () => this.favouriteTags,
                     () => {
                         // Always make sure to store as lowercase
-                        this.favouriteExtras = this.favouriteExtras.map(item => item.toLowerCase());
-                        $localForage.setItem(FAVOURITE_EXTRA_KEY, this.favouriteExtras);
+                        this.favouriteTags = this.favouriteTags.map(item => item.toLowerCase());
+                        $localForage.setItem(FAVOURITE_TAG_KEY, this.favouriteTags);
                     }
                 );
 
                 $rootScope.$watchCollection(
-                    () => this.blockedExtras,
+                    () => this.blockedTags,
                     () => {
                         // Always make sure to store as lowercase
-                        this.blockedExtras = this.blockedExtras.map(item => item.toLowerCase());
-                        $localForage.setItem(BLOCKED_EXTRA_KEY, this.blockedExtras);
+                        this.blockedTags = this.blockedTags.map(item => item.toLowerCase());
+                        $localForage.setItem(BLOCKED_TAG_KEY, this.blockedTags);
                     }
                 );
             });
@@ -107,6 +107,44 @@ class Hosts {
 
     isBlockedHost(name) {
         return _.includes(this.blockedHosts, name.toLowerCase());
+    }
+
+    isFavouriteTag(tag) {
+        return _.includes(this.favouriteTags, tag.toLowerCase());
+    }
+
+    anyFavouriteTag(tags) {
+        return _.some(tags, it => this.isFavouriteTag(it));
+    }
+
+    isBlockedTag(tag) {
+        return _.includes(this.blockedTags, tag.toLowerCase());
+    }
+
+    anyBlockedTag(tags) {
+        return _.some(tags, it => this.isBlockedTag(it));
+    }
+
+    addFavouriteTag(tag, checkExists = true) {
+        if (!checkExists || !this.isFavouriteTag(tag)) {
+            this.favouriteTags.push(tag.toLowerCase());
+        }
+    }
+
+    addBlockedTag(tag, checkExists = true) {
+        if (!checkExists || !this.isBlockedTag(tag)) {
+            this.blockedTags.push(tag.toLowerCase());
+        }
+    }
+
+    removeFavouriteTag(tag) {
+        tag = tag.toLowerCase();
+        _.remove(this.favouriteTags, it => it === tag);
+    }
+
+    removeBlockedTag(tag) {
+        tag = tag.toLowerCase();
+        _.remove(this.blockedTags, it => it === tag);
     }
 }
 Hosts.$inject = ['$localForage', '$rootScope'];

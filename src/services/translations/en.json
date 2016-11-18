@@ -120,11 +120,11 @@
             "contained": "This scenario is already in your list",
             "placeholder": "Scenario"
         },
-        "extras": {
-            "header": "Extras",
-            "none": "Please enter an extra (without brackets)",
-            "contained": "This extra is already in your list",
-            "placeholder": "Extra"
+        "tags": {
+            "header": "Tags",
+            "none": "Please enter an tag (without brackets)",
+            "contained": "This tag is already in your list",
+            "placeholder": "Tag"
         },
         "preview": {
             "header": "Post Title Preview"
@@ -150,7 +150,7 @@
         "filters": {
             "searchPlaceholder": "Search filter",
             "favourites": "Show favourited only:",
-            "blocked": "Show blocked hosts:",
+            "blocked": "Show blocked:",
             "region": "Regions:",
             "teams": "Team Types:",
             "gamemodes": "Gamemodes:",
@@ -202,17 +202,29 @@
                 "silent": "Do not play sounds"
             }
         },
-        "favourites": {
+        "favourites-author": {
             "header": "Favourite Hosts",
             "none": "No hosts are currently favourited",
             "required": "Please enter a host's username (without /u/)",
             "contained": "This username is already in your favourites"
         },
-        "blocked": {
+        "blocked-author": {
             "header": "Blocked Hosts",
             "none": "No hosts are currently blocked",
             "required": "Please enter a host's username (without /u/)",
             "contained": "This username is already in your blocked list"
+        },
+        "favourites-tag": {
+            "header": "Favourite Tags",
+            "none": "No tags are currently favourited",
+            "required": "Please enter a tag",
+            "contained": "This tag is already in your favourites"
+        },
+        "blocked-tag": {
+            "header": "Blocked Tags",
+            "none": "No tags are currently blocked",
+            "required": "Please enter a tag",
+            "contained": "This tag is already in your blocked list"
         },
         "clearData": "Reset all settings/data",
         "importexport": "Import/Export Settings",

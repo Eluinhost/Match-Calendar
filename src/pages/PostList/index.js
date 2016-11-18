@@ -50,8 +50,12 @@ class PostListCtrl {
                 return includes(Posts.disabledGamemodes, gamemode.toLowerCase());
             }),
             teamType: post => !includes(Posts.disabledTeamTypes, post.teams.toLowerCase()),
-            favourited: post => Posts.showFavouritedHostsOnly ? Hosts.isFavouriteHost(post.author) : true,
-            blocked: post => Posts.showBlockedHosts ? true : !Hosts.isBlockedHost(post.author)
+            favourited: post => Posts.showFavouritedHostsOnly ?
+                (Hosts.isFavouriteHost(post.author) || Hosts.anyFavouriteTag(post.tags)) :
+                true,
+            blocked: post => Posts.showBlockedHosts ?
+                true :
+                (!Hosts.isBlockedHost(post.author) && !Hosts.anyBlockedTag(post.tags))
         };
 
         const debouncedUrlUpdated = debounce(newVal => {

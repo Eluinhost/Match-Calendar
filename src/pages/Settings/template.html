@@ -117,7 +117,7 @@
     </div>
     <div class="card-group">
         <div class="card card-outline-success card-inverse">
-            <h4 class="card-header card-success" translate="settings.favourites.header"></h4>
+            <h4 class="card-header card-success" translate="settings.favourites-author.header"></h4>
             <div class="card-block">
                 <unique-items-editor
                     unique-items="settings.Hosts.favouriteHosts"
@@ -126,14 +126,32 @@
                     placeholder="dans1988"
                     temp-value="settings.tempFavouriteHost"
                 >
-                    <no-items><span translate="settings.favourites.none"></span></no-items>
-                    <required-error><span translate="settings.favourites.required"></span></required-error>
-                    <in-array-error><span translate="settings.favourites.contained"></span></in-array-error>
+                    <no-items><span translate="settings.favourites-author.none"></span></no-items>
+                    <required-error><span translate="settings.favourites-author.required"></span></required-error>
+                    <in-array-error><span translate="settings.favourites-author.contained"></span></in-array-error>
                 </unique-items-editor>
             </div>
         </div>
+        <div class="card card-outline-success card-inverse">
+            <h4 class="card-header card-success" translate="settings.favourites-tag.header"></h4>
+            <div class="card-block">
+                <unique-items-editor
+                    unique-items="settings.Hosts.favouriteTags"
+                    button-prefix=""
+                    button-icon="plus"
+                    placeholder="Artic"
+                    temp-value="settings.tempFavouriteTag"
+                >
+                    <no-items><span translate="settings.favourites-tag.none"></span></no-items>
+                    <required-error><span translate="settings.favourites-tag.required"></span></required-error>
+                    <in-array-error><span translate="settings.favourites-tag.contained"></span></in-array-error>
+                </unique-items-editor>
+            </div>
+        </div>
+    </div>
+    <div class="card-group">
         <div class="card card-outline-danger card-inverse">
-            <h4 class="card-header card-danger" translate="settings.blocked.header"></h4>
+            <h4 class="card-header card-danger" translate="settings.blocked-author.header"></h4>
             <div class="card-block">
                 <unique-items-editor
                     unique-items="settings.Hosts.blockedHosts"
@@ -142,9 +160,25 @@
                     placeholder="ghowden"
                     temp-value="settings.tempBlockedHost"
                 >
-                    <no-items><span translate="settings.blocked.none"></span></no-items>
-                    <required-error><span translate="settings.blocked.required"></span></required-error>
-                    <in-array-error><span translate="settings.blocked.contained"></span></in-array-error>
+                    <no-items><span translate="settings.blocked-author.none"></span></no-items>
+                    <required-error><span translate="settings.blocked-author.required"></span></required-error>
+                    <in-array-error><span translate="settings.blocked-author.contained"></span></in-array-error>
+                </unique-items-editor>
+            </div>
+        </div>
+        <div class="card card-outline-danger card-inverse">
+            <h4 class="card-header card-danger" translate="settings.blocked-tag.header"></h4>
+            <div class="card-block">
+                <unique-items-editor
+                    unique-items="settings.Hosts.blockedTags"
+                    button-prefix=""
+                    button-icon="minus"
+                    placeholder="Arctic"
+                    temp-value="settings.tempBlockedTag"
+                >
+                    <no-items><span translate="settings.blocked-tag.none"></span></no-items>
+                    <required-error><span translate="settings.blocked-tag.required"></span></required-error>
+                    <in-array-error><span translate="settings.blocked-tag.contained"></span></in-array-error>
                 </unique-items-editor>
             </div>
         </div>

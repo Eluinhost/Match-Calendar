@@ -60,7 +60,7 @@
                 <strong>
                     <a class="show-pointer" ui-sref="app.post({id: details.post.id})">
                         <span bo-text="details.post.title | characters:60: false"></span>
-                        <span ng-repeat="extra in ::details.post.extras" ng-bind="::'[' + extra + ']'"></span>
+                        <span ng-repeat="tag in ::details.post.tags" ng-bind="::'[' + tag + ']'"></span>
                     </a>
                     <a ng-href="{{::'https://redd.it/' + details.post.id}}" target="_blank">
                         <i class="fa fa-external-link"></i>

@@ -10,7 +10,7 @@ const TYPE_KEY = `${PREFIX}gameType`;
 const SIZE_KEY = `${PREFIX}teamSize`;
 const SCENARIOS_KEY = `${PREFIX}scenarios`;
 const SUBREDDIT_KEY = `${PREFIX}subreddit`;
-const EXTRAS_KEY = `${PREFIX}extras`;
+const TAGS_KEY = `${PREFIX}tags`;
 const TEMPLATE_KEY = `${PREFIX}template`;
 
 class GeneratorCtrl {
@@ -37,16 +37,16 @@ class GeneratorCtrl {
         this.teamSize = 4;
         this.scenarios = ['Vanilla'];
         this.subreddit = Subreddits.subreddits[0];
-        this.extras = [];
+        this.tags = [];
         this.template = Templates.getDefault().name;
 
         this.initialised = $localForage
             .getItem([
                 OLD_KEY, TITLE_KEY, REGION_KEY, TYPE_KEY, SIZE_KEY,
-                SCENARIOS_KEY, SUBREDDIT_KEY, EXTRAS_KEY, TEMPLATE_KEY
+                SCENARIOS_KEY, SUBREDDIT_KEY, TAGS_KEY, TEMPLATE_KEY
             ])
-            .spread((old, postTitle, region, gameType, teamSize, scenarios, subreddit, extras, template) => {
-                let toMerge = { postTitle, region, gameType, teamSize, scenarios, subreddit, extras, template };
+            .spread((old, postTitle, region, gameType, teamSize, scenarios, subreddit, tags, template) => {
+                let toMerge = { postTitle, region, gameType, teamSize, scenarios, subreddit, tags, template };
 
                 if (!_.isNull(old)) {
                     // Copy over the old details and remove everything at the old key
@@ -81,7 +81,7 @@ class GeneratorCtrl {
                         $localForage.setItem(SCENARIOS_KEY, this.scenarios);
                     }
                 );
-                $rootScope.$watchCollection(() => this.extras, () => $localForage.setItem(EXTRAS_KEY, this.extras));
+                $rootScope.$watchCollection(() => this.tags, () => $localForage.setItem(TAGS_KEY, this.tags));
             });
 
         const initial = DateTime.getTime().add(30, 'minutes');
@@ -102,7 +102,7 @@ class GeneratorCtrl {
 
         // Temp variables to be used in adding new items to the arrays
         this.tempSubreddit = '';
-        this.tempExtra = '';
+        this.tempTag = '';
     }
 
     requiresTeamSizes() {
@@ -120,9 +120,9 @@ class GeneratorCtrl {
     generateTitle() {
         const time = this.DateTime.format('REDDIT_POST', this.opens.utc(), true);
         const teams = GameTypes[this.gameType].format(this.teamSize);
-        const extras = this.extras.map(extra => `[${extra}]`).join(' ').trim();
+        const tags = this.tags.map(tag => `[${tag}]`).join(' ').trim();
 
-        return `${time} ${this.region} - ${this.postTitle} - ${teams} - ${this.scenarios.join(', ')} ${extras}`;
+        return `${time} ${this.region} - ${this.postTitle} - ${teams} - ${this.scenarios.join(', ')} ${tags}`;
     }
 
     // Opens a new window to create a reddit post with the compiled template and info included

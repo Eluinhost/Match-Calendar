@@ -6,13 +6,13 @@ const _ = require('lodash');
 const IP_REGEX = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d{1,5})?/g;
 const DOMAIN_REGEX = /[^\w](IP|Address).*?([a-z\d]([a-z\d\-]{0,61}[a-z\d])?(\.[a-z\d]([a-z\d\-]{0,61}[a-z\d])?)+(:\d{1,5})?)/gi; // eslint-disable-line max-len
 const SIZE_REGEX = /To([\dX]+)/i;
-const EXTRAS_REGEX = /[\[\(](.*?)[\]\)]/g;
+const TAGS_REGEX = /[\[\(](.*?)[\]\)]/g;
 
 module.exports = class MatchPostParser {
     _parseTitle(title) {
         const details = {
             title,
-            extras: []
+            tags: []
         };
 
         const pipeIndex = title.indexOf('|');
@@ -44,22 +44,22 @@ module.exports = class MatchPostParser {
         if (_.isUndefined(scenariosSection)) {
             details.gamemodes = ['Vanilla'];
 
-            // Cut out the extras from team types
-            const extrasInfo = this._parseExtras(teamStyleSection);
-            details.extras = extrasInfo.extras;
-            teamStyleSection = extrasInfo.section;
+            // Cut out the tags from team types
+            const tagsInfo = this._parseTags(teamStyleSection);
+            details.tags = tagsInfo.tags;
+            teamStyleSection = tagsInfo.section;
         } else {
             // Add gamemodes
             details.gamemodes = this._parseScenarios(scenariosSection);
 
-            // Cut out the extras from the final scenario
+            // Cut out the tags from the final scenario
 
             if (details.gamemodes.length > 0) {
                 const finalIndex = details.gamemodes.length - 1;
 
-                const extrasInfo = this._parseExtras(details.gamemodes[finalIndex]);
-                details.extras = extrasInfo.extras;
-                details.gamemodes[finalIndex] = extrasInfo.section;
+                const tagsInfo = this._parseTags(details.gamemodes[finalIndex]);
+                details.tags = tagsInfo.tags;
+                details.gamemodes[finalIndex] = tagsInfo.section;
             }
         }
 
@@ -94,16 +94,16 @@ module.exports = class MatchPostParser {
         };
     }
 
-    _parseExtras(section) {
-        const extras = [];
+    _parseTags(section) {
+        const tags = [];
         section = section
-            .replace(EXTRAS_REGEX, (part, g1) => {
-                extras.push(g1);
+            .replace(TAGS_REGEX, (part, g1) => {
+                tags.push(g1);
                 return '';
             })
             .trim();
 
-        return { section, extras };
+        return { section, tags };
     }
 
     _parseDateAndRegion(section) {

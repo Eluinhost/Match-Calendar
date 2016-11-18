@@ -3,7 +3,7 @@
         <div class="post-header card-header card-primary">
             <h2>
                 <span ng-bind="::post.post.title"></span>
-                <span ng-repeat="extra in ::post.post.extras" ng-bind="::'[' + extra + ']'"></span>
+                <span ng-repeat="tag in ::post.post.tags" ng-bind="::'[' + tag + ']'"></span>
             </h2>
             <h6 local-time="::post.post.opens"></h6>
             <h6>

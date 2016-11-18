@@ -52,11 +52,11 @@ class PostDetailsCtrl {
     }
 
     isFavouriteHost() {
-        return this.Hosts.isFavouriteHost(this.post.author);
+        return this.Hosts.isFavouriteHost(this.post.author) || this.Hosts.anyFavouriteTag(this.post.tags);
     }
 
     isBlockedHost() {
-        return this.Hosts.isBlockedHost(this.post.author);
+        return this.Hosts.isBlockedHost(this.post.author) || this.Hosts.anyBlockedTag(this.post.tags);
     }
 
     triggerCopiedMessage() {

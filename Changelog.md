@@ -1,3 +1,8 @@
+## Version 1.4.7
+
+- Added ability to favourite/block posts by 'tag'
+- Renamed 'extras' to tags in the entire app
+
 ## Version 1.4.6
 
 - Added warning to generator for potential overhosts

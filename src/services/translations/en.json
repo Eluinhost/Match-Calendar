@@ -27,7 +27,8 @@
         "timezoneTooltip": "Click to go to settings page to edit",
         "wrongTimezone": "You are not using the detected timezone '{{ guessedTimeZone }}' Click this icon to switch to it.",
         "unsynced": "Time has not been synced yet",
-        "unsyncedIconTooltip": "The time failed to sync with the server, time may be wrong"
+        "unsyncedIconTooltip": "The time failed to sync with the server, time may be wrong",
+        "nightmode": "Click this to toggle night mode"
     },
     "notifications": {
         "dismiss": "Dismiss",

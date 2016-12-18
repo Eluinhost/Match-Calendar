@@ -4,6 +4,7 @@ import _ from 'lodash';
 const TIME_FORMAT_KEY = 'timeFormat';
 const TIME_ZONE_KEY = 'timeZone';
 const FIRST_TIME_TIMEZONE_KEY = 'hasInitialTimezoneSet';
+const NIGHT_MODE = 'nightmode';
 
 class DateTime {
     constructor($rootScope, $interval, $http, $localForage, $timeout, $uibModal) {
@@ -34,15 +35,17 @@ class DateTime {
         this.timeFormat = '24h';
         this.guessedTimeZone = moment.tz.guess();
         this.timeZone = this.guessedTimeZone;
+        this.nightmode = false;
         this.refreshTimeFormats();
 
         // Set a promise to resolve on
         this.initialised = $localForage
-            .getItem([TIME_FORMAT_KEY, TIME_ZONE_KEY, FIRST_TIME_TIMEZONE_KEY])
-            .spread((format, zone, firstTime) => {
+            .getItem([TIME_FORMAT_KEY, TIME_ZONE_KEY, FIRST_TIME_TIMEZONE_KEY, NIGHT_MODE])
+            .spread((format, zone, firstTime, nightmode) => {
                 _.mergeNotNull(this, {
                     timeFormat: format,
-                    timeZone: zone
+                    timeZone: zone,
+                    nightmode
                 });
 
                 if (_.isNull(firstTime)) {
@@ -72,6 +75,7 @@ class DateTime {
                     this.$rootScope.$broadcast('timeZone');
                     ga('set', 'dimension1', this.timeZone);
                 });
+                $rootScope.$watch(() => this.nightmode, () => $localForage.setItem(NIGHT_MODE, this.nightmode));
             });
 
         // Start clock, no dirty check

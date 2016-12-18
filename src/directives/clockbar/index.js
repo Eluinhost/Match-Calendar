@@ -5,6 +5,14 @@ class ClockbarCtrl {
         this.Translations = Translations;
     }
 
+    toggleNightmode() {
+        this.DateTime.nightmode = !this.DateTime.nightmode;
+    }
+
+    isNightmode() {
+        return this.DateTime.nightmode;
+    }
+
     formattedOffset() {
         return this.DurationFormatter.format(this.DateTime.offset / 1000);
     }

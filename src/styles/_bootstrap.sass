@@ -20,3 +20,30 @@ $enable-flex: true
     src: url('~app/fonts/hammersmithone.ttf')
 
 $font-family-base: 'Hammersmith One', sans-serif
+
+.nightmode
+    background-color: #100c08
+    color: #e8eaea
+
+    .card.match-post, .nav-button, .clock-bar, .post-list-filter, .post-filters, .footer-ribbon, .list-group-item,
+        color: white
+        background: #1c1a1a none
+
+    .updater-bar
+        background: #e8eaea none
+
+    .nav-button.nav-active
+        background: #e8eaea
+        color: #100c08
+
+    .card.match-post.favourite-host
+        background: darken(#1b5e20, 6)
+
+    .card.match-post.blocked-host
+        background: darken(#B71C1C, 10)
+
+    a
+        color: #4FC3F7
+
+        &:hover
+            color: #B3E5FC

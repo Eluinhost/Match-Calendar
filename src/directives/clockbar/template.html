@@ -24,6 +24,12 @@
                         uib-tooltip="{{ 'clockbar.unsyncedIconTooltip' | translate }}"
                     ></i>
                     <i
+                        ng-class="clockbar.isNightmode() ? 'fa fa-moon-o' : 'fa fa-sun-o'"
+                        uib-tooltip="{{ 'clockbar.nightmode' | translate }}"
+                        tooltip-append-to-body="true"
+                        ng-click="clockbar.toggleNightmode()"
+                    ></i>
+                    <i
                         class="fa fa-refresh show-pointer"
                         ng-class="{'fa-spin': clockbar.DateTime.syncing}"
                         ng-click="clockbar.DateTime.resync()"

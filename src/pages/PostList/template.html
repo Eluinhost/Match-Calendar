@@ -18,14 +18,15 @@
                     <b class="refresh-icon show-pointer" ng-click="postList.Posts.update()">
                         <i class="fa fa-refresh" ng-class="{'fa-spin': postList.Posts.updating}"></i>
                         <span translate="list.refresh"></span>
-                        <small class="center-block">
-                            <span translate="list.updated"></span>
-                            <small
-                                class="last-updated"
-                                ng-bind="postList.DateTime.format('HEADER', postList.moment.unix(postList.Posts.lastUpdated))"
-                            ></small>
-                        </small>
                     </b>
+                    <br/>
+                    <small class="center-block">
+                        <span translate="list.updated"></span>
+                        <small
+                            class="last-updated"
+                            ng-bind="postList.DateTime.format('HEADER', postList.moment.unix(postList.Posts.lastUpdated))"
+                        ></small>
+                    </small>
                 </div>
                 <div class="col-lg-2 col-xs-12 text-xs-right">
                     <a ui-sref="app.listhelp">

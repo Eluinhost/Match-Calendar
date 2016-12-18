@@ -1,3 +1,7 @@
+## Version 1.4.8
+
+- Added night mode
+
 ## Version 1.4.7
 
 - Added ability to favourite/block posts by 'tag'

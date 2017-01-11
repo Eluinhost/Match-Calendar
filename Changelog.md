@@ -1,3 +1,7 @@
+## Version 1.4.9
+
+- Added tags for new verification system (verified/trial/advisor)
+
 ## Version 1.4.8
 
 - Added night mode

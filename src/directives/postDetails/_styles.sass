@@ -31,6 +31,31 @@
     left: 1em
     top: -.7em
 
+.match-post-verification
+    position: absolute
+    top: 0
+    right: 0
+    &.role-trial
+        opacity: .6
+
+    &.role-advisor
+        .match-post-verification-tag
+            border-color: transparent $brand-success transparent transparent
+
+.match-post-verification-tag
+    width: 0
+    height: 0
+    border-width: 0 40px 40px 0
+    border-color: transparent $brand-info transparent transparent
+    border-style: inset
+    -webkit-transform: rotate(360deg)
+
+.match-post-verification .fa
+    position: absolute
+    top: 4px
+    right: 5px
+    color: #ffd603
+
 .favourite-host.card
     +watercolour-green()
 

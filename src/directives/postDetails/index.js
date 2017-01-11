@@ -26,6 +26,18 @@ class PostDetailsCtrl {
         return style;
     }
 
+    getAuthorRoleIcon() {
+        switch (this.post.authorRole) {
+        case 'verified':
+        case 'advisor':
+            return 'shield';
+        case 'trial':
+            return 'bolt';
+        default:
+            return null;
+        }
+    }
+
     showSubreddit() {
         return this.Subreddits.subreddits.length > 1;
     }

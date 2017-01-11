@@ -64,7 +64,8 @@
             "teams": "Team Style",
             "gamemodes": "Gamemodes",
             "region": "Server Region",
-            "posted": "Time posted in advance of game opening"
+            "posted": "Time posted in advance of game opening",
+            "role": "{{ authorRole | capitalize }} Host"
         },
         "inAdvance": "in advance",
         "matchpost": "Match Post",

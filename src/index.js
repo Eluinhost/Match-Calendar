@@ -100,6 +100,9 @@ import * as Help from 'app/pages/PostList/Help';
 import * as Settings from 'app/pages/Settings';
 import * as SettingImport from 'app/pages/SettingImport';
 
+// Filtes
+import capitalize from 'app/filters/capitalize';
+
 const pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post, Post404, SettingImport];
 
 function setupStates($stateProvider, $urlRouterProvider) {
@@ -170,7 +173,8 @@ const app = angular.module(
     .service('MatchFetcher', MatchFetcher)
     .service('Subreddits', Subreddits)
     .service('Templates', Templates)
-    .service('SettingImportExport', SettingImportExport);
+    .service('SettingImportExport', SettingImportExport)
+    .filter('capitalize', capitalize);
 
 pages
     .filter(page => !_.isUndefined(page.controller) && !_.isUndefined(page.controllerName))

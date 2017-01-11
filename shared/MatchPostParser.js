@@ -161,6 +161,7 @@ module.exports = class MatchPostParser {
             selftext: he.decode(element.selftext),
             author: element.author,
             permalink: `https://reddit.com${element.permalink}`,
+            authorRole: element.author_flair_css_class && element.author_flair_css_class.toLowerCase(),
             posted: element.created_utc,
             subreddit: element.subreddit,
             valid: false

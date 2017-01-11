@@ -30,6 +30,16 @@
             <i class="fa fa-clock-o"></i> <span translate="post.shortNotice"></span>
         </div>
     </div>
+
+    <div
+        bo-if="details.getAuthorRoleIcon()"
+        class="match-post-verification" bo-class="'role-'+details.post.authorRole"
+        uib-tooltip="{{ 'post.tooltips.role' | translate:details.post }}"
+        tooltip-placement="left"
+    >
+        <div class="match-post-verification-tag"></div>
+        <i bo-class="'fa fa-' + details.getAuthorRoleIcon()"></i>
+    </div>
     <div
         class="row text-xs-center card-block"
         bo-attr

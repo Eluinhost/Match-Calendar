@@ -1,3 +1,8 @@
+## Version 1.4.10
+
+- Check Reddit for all match posts instead of just the 'newest' 100
+- Removed v1 API backend
+
 ## Version 1.4.9
 
 - Added tags for new verification system (verified/trial/advisor)

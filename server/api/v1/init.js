@@ -13,7 +13,7 @@ let localCacheRendered = unknown;
 module.exports = function * initial() {
     let other;
     try {
-        other = (yield cache.getItem('uhcmatches')).parsed;
+        other = (yield cache.getItem('uhcmatches')).raw;
     } catch (error) {
         // don't do anything with the error,
         // if other has changed the render cache will change below (including undefined)

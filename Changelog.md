@@ -1,3 +1,8 @@
+## Version 1.4.11
+
+- Fixed update check not running after the first hour open
+- Added a 'alert' system to show messages on the site without requiring an update
+
 ## Version 1.4.10
 
 - Check Reddit for all match posts instead of just the 'newest' 100

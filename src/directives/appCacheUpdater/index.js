@@ -2,7 +2,7 @@ import _ from 'lodash';
 import template from './template.html';
 
 class AppCacheUpdaterCtrl {
-    constructor($window, $timeout) {
+    constructor($window, $interval) {
         this.$window = $window;
 
         this.status = 'unsupported';
@@ -34,7 +34,7 @@ class AppCacheUpdaterCtrl {
             });
 
             // Recheck cache every hour
-            $timeout(() => cache.update(), 1000 * 60 * 60);
+            $interval(() => cache.update(), 1000 * 60 * 60);
         }
     }
 
@@ -46,7 +46,7 @@ class AppCacheUpdaterCtrl {
         this.$window.location.reload();
     }
 }
-AppCacheUpdaterCtrl.$inject = ['$window', '$timeout'];
+AppCacheUpdaterCtrl.$inject = ['$window', '$interval'];
 
 /**
  * @ngdoc directive

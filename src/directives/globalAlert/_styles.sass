@@ -1,0 +1,19 @@
+@import '../../styles/watercolour'
+@import '../../styles/crayon-border'
+
+.global-alert
+    position: fixed
+    bottom: 0
+    z-index: 1000000
+    width: 100%
+    padding: 3px
+    +watercolour-red
+    +crayon-border(1)
+    border-bottom-width: 0
+    border-left-width: 0
+    border-right-width: 0
+
+    .md
+        font-size: 110%
+        text-align: center
+

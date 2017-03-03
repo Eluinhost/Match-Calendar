@@ -85,6 +85,7 @@ import buttonRemovalList from 'app/directives/buttonRemovalList';
 import uniqueItemsEditor from 'app/directives/uniqueItemsEditor';
 import titleTime from 'app/directives/titleTime';
 import nightmode from 'app/directives/nightmode';
+import globalAlert from 'app/directives/globalAlert';
 // Removed due to english only import countryFlag                from 'app/directives/countryFlag';
 import localTime from 'app/directives/localTime';
 import relativeTime from 'app/directives/relativeTime';
@@ -163,6 +164,7 @@ const app = angular.module(
     .directive('uniqueItemsEditor', uniqueItemsEditor)
     .directive('titleTime', titleTime)
     .directive('nightmode', nightmode)
+    .directive('globalAlert', globalAlert)
     .service('Changelog', Changelog)
     .service('DateTime', DateTime)
     .service('DurationFormatter', DurationFormatter)

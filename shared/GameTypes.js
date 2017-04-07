@@ -39,6 +39,11 @@ const types = {
         shortCode: 'm',
         requiresTeamSizes: true
     }),
+    RED_VS_BLUE: new GameType({
+        name: 'Red vs Blue',
+        shortCode: 'RvB',
+        requiresTeamSizes: false
+    }),
     CUSTOM: new GameType({
         name: 'Custom',
         shortCode: 'Not required',

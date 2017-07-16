@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 const DISABLED_REGIONS_KEY = 'disabledRegions';
 const DISABLED_TEAM_TYPES_KEY = 'disabledTeamTypes';
@@ -7,14 +8,12 @@ const FAVOURITES_ONLY_KEY = 'showFavouritedHostsOnly';
 const SHOW_BLOCKED_KEY = 'showBlockedHosts';
 
 class Posts {
-    constructor($rootScope, $interval, DateTime, MatchFetcher, $localForage) {
-        this.MatchFetcher = MatchFetcher;
+    constructor($rootScope, $interval, DateTime, $localForage, $http) {
         this.DateTime = DateTime;
         this.$rootScope = $rootScope;
+        this.$http = $http;
 
         this.posts = [];
-        this.unparsed = [];
-
         this.lastUpdated = 0;
 
         this.disabledRegions = [];
@@ -63,8 +62,7 @@ class Posts {
         this.currentRegions = [];
         this.currentTeamTypes = [];
         this.currentGamemodes = [];
-
-        this.errorSubs = [];
+        this.error = false;
 
         this.updating = false;
 
@@ -124,17 +122,19 @@ class Posts {
     update() {
         this.updating = true;
 
-        return this.MatchFetcher
-            .fetch(['uhcmatches'])
-            .then(({ parsed, unparsed, errors }) => {
-                const halfHourAgo = this.DateTime.getTime().subtract(30, 'minutes');
+        return this.$http
+            .get('https://hosts.uhc.gg/api/matches')
+            .then(raw => {
+                if (raw.status >= 400) {
+                    throw new Error('Server returned invalid response');
+                }
 
-                this.posts = _.sortBy( // Sort by unix opening times
-                    _.filter( // Filter out too old posts
-                        parsed,
-                        it => halfHourAgo.diff(it.opens) < 0
-                    ),
-                    ['opensUnix', 'postedUnix']
+                this.posts = _.map(
+                    raw.data,
+                    post => Object.assign({}, post, {
+                        opens: moment(post.opens),
+                        created: moment(post.created)
+                    })
                 );
 
                 // Add 'overhost' flags
@@ -146,7 +146,7 @@ class Posts {
                         }
 
                         for (let i = 1; i < regionPosts.length; i++) {
-                            if (regionPosts[i].opensUnix === regionPosts[i - 1].opensUnix) {
+                            if (regionPosts[i].opens.isSame(regionPosts[i - 1].opens, 'minute')) {
                                 regionPosts[i].overhost = true;
                             }
                         }
@@ -155,25 +155,26 @@ class Posts {
 
                 // Add 'short notice' flags
                 _(this.posts)
-                    .filter(it => it.opens.diff(it.posted, 'minutes') < 30)
+                    .filter(it => it.opens.diff(it.created, 'minutes') < 30)
                     .forEach(it => {
                         it.shortNotice = true;
                     });
-
-                this.unparsed = unparsed;
-                this.errorSubs = errors;
 
                 this.updateRegions();
                 this.updateGamemodes();
                 this.updateTeamTypes();
 
                 this.lastUpdated = this.DateTime.getTime().unix();
+                this.error = false;
                 this.fireRefreshPostsEvent();
             })
             .finally(() => {
                 this.updating = false;
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err);
+                this.error = true;
+            });
     }
 
     updateRegions() {
@@ -186,9 +187,9 @@ class Posts {
 
     updateGamemodes() {
         this.currentGamemodes = _(this.posts)
-                .map(post => post.gamemodes)
+                .map(post => post.scenarios)
                 .flatten()
-                .map(gamemode => gamemode.toLowerCase())
+                .map(scenario => scenario.toLowerCase())
                 .uniq()
                 .value();
     }
@@ -197,6 +198,6 @@ class Posts {
         this.$rootScope.$broadcast('postsUpdated', this.posts);
     }
 }
-Posts.$inject = ['$rootScope', '$interval', 'DateTime', 'MatchFetcher', '$localForage'];
+Posts.$inject = ['$rootScope', '$interval', 'DateTime', '$localForage', '$http'];
 
 export default Posts;

@@ -111,29 +111,10 @@
         ></span>
     </button>
     <desktop-notification-enabler show-hide-button="true"></desktop-notification-enabler>
-    <uib-alert class="errored-subreddit" type="danger" bindonce bo-show="postList.Posts.errorSubs.length" refresh-on="'postsUpdated'">
-        <span translate="list.failedSubs" translate-value-subs="{{ postList.Posts.errorSubs.join(', ') }}"></span>
+    <uib-alert class="errored-subreddit" type="danger" bindonce bo-show="postList.Posts.error" refresh-on="'postsUpdated'">
+        <span translate="list.error"></span>
         <a ui-sref="app.settings" class="alert-link" translate="list.configure">Configure</a>
     </uib-alert>
-    <ul class="list-group list-group-flush" ng-show="postList.Posts.unparsed.length">
-        <li class="list-group-item-heading list-group-item list-group-item-warning" ng-click="postList.showUnparsed = !postList.showUnparsed">
-            <span translate="{{ postList.showUnparsed ? 'list.unparsed.hide' : 'list.unparsed.show' }}"></span>
-            <span class="tag tag-danger" ng-bind="postList.Posts.unparsed.length"></span>
-            <i class="fa" ng-class="{'fa-arrow-right': !postList.showUnparsed, 'fa-arrow-down': postList.showUnparsed}"></i>
-        </li>
-        <li
-            class="list-group-item-warning list-group-item"
-            ng-repeat="post in postList.Posts.unparsed | filter:postList.filters.favourited | filter:postList.filters.blocked | filter:postList.filters.search track by post.id"
-            ng-show="postList.showUnparsed"
-        >
-            <div>
-                <a target="_blank" rel="noopener" ng-href="https://reddit.com/u/{{ ::post.author }}" ng-bind="post.author"></a>
-            </div>
-            <div class="alert-link">
-                <a target="_blank" rel="noopener" ng-href="{{ ::post.permalink }}" ng-bind="post.title"></a>
-            </div>
-        </li>
-    </ul>
     <div class="post-item" ng-repeat="post in postList.filteredPosts=(postList.Posts.posts | filter:postList.filters.favourited | filter:postList.filters.blocked | filter:postList.filters.teamType | filter:postList.filters.gamemode | filter:postList.filters.region | filter:postList.filters.search) track by post.id">
         <post-details class="post-item" post="post" ></post-details>
     </div>

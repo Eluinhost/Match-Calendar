@@ -17,8 +17,8 @@ class PostListCtrl {
             search: $stateParams.filter || '',
             region: post => !includes(Posts.disabledRegions, post.region.toLowerCase()),
             // Check if all of its gamemodes are enabled or not
-            gamemode: post => !some(post.gamemodes, gamemode => {
-                return includes(Posts.disabledGamemodes, gamemode.toLowerCase());
+            gamemode: post => !some(post.scenarios, scenario => {
+                return includes(Posts.disabledGamemodes, scenario.toLowerCase());
             }),
             teamType: post => !includes(Posts.disabledTeamTypes, post.teams.toLowerCase()),
             favourited: post => Posts.showFavouritedHostsOnly ?

@@ -108,7 +108,7 @@
             "show": "Show unparsed posts",
             "hide": "Hide unparsed posts"
         },
-        "failedSubs": "Failed to load matches from the chosen subreddit/s: {{ subs }}",
+        "error": "Failed to load matches from the server",
         "configure": "Configure",
         "refresh": "Refresh",
         "updated": "Last Updated:",

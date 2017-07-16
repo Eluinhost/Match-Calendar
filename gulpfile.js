@@ -103,12 +103,6 @@ const config = {
         }
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('development')
-            },
-            __UHCGG_API_URL__: JSON.stringify(configFile.api.development)
-        }),
         new ExtractTextPlugin(`${filename}.css`),
         new HtmlWebpackPlugin({
             filename: 'index.html',
@@ -139,6 +133,17 @@ const config = {
 let compiler;
 
 gulp.task('clean', () => del([DIST_BASE]));
+
+gulp.task('dev-build-config', () => {
+    config.plugins.push(
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('development')
+            },
+            __UHCGG_API_URL__: JSON.stringify(configFile.api.development)
+        })
+    );
+});
 
 gulp.task('prod-build-config', () => {
     // Remove webpack entry
@@ -179,6 +184,10 @@ gulp.task('webpack:init', () => {
     gutil.log('Created webpack compiler');
 });
 
+gulp.task('webpack:init-dev', done => {
+    runSequence('dev-build-config', 'webpack:init', done);
+});
+
 gulp.task('webpack:init-prod', done => {
     runSequence('prod-build-config', 'webpack:init', done);
 });
@@ -197,7 +206,7 @@ gulp.task('webpack:prod', ['webpack:init-prod'], done => {
     });
 });
 
-gulp.task('webpack:dev', ['webpack:init'], done => {
+gulp.task('webpack:dev', ['webpack:init-dev'], done => {
     new WebpackDevServer(compiler, {
         publicPath: config.output.publicPath,
         stats: {

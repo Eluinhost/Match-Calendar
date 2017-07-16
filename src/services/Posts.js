@@ -68,7 +68,7 @@ class Posts {
 
         // Update every minute
         $interval(() => this.update(), 1000 * 60);
-        this.update();
+        this.firstQuery = this.update();
     }
 
     isGamemodeDisabled(gamemeode) {

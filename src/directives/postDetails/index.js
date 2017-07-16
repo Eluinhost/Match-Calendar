@@ -1,34 +1,48 @@
-import _ from 'lodash';
+import { intersection, map } from 'lodash';
 
 class PostDetailsCtrl {
-    constructor($scope, PostNotifications, Hosts, $timeout, $state) {
+    constructor(PostNotifications, Hosts, TeamStyles) {
         this.PostNotifications = PostNotifications;
         this.Hosts = Hosts;
-        this.$timeout = $timeout;
-        this.$scope = $scope;
-        this.$state = $state;
-
-        this.addressOverride = false;
-    }
-
-    timePostedInAdvance() {
-        return `${this.post.posted.from(this.post.opens, true)} in advance`;
+        this.TeamStyles = TeamStyles;
     }
 
     teamStyle() {
-        let style = this.post.teams;
-
-        if (this.post.teamSize) {
-            style += ` To${this.post.teamSize}`;
+        if (this.post.teams === 'custom') {
+            return this.post.customStyle;
         }
 
-        return style;
+        const style = this.TeamStyles[this.post.teams];
+
+        if (!style) {
+            return `Unknown team style: ${style}`;
+        }
+
+        if (style.requiresTeamSize) {
+            return `${style.display} To${this.post.size}`;
+        }
+
+        return style.display;
+    }
+
+    getTitle() {
+        return `${this.post.author} #${this.post.count}`;
+    }
+
+    getRoleClasses() {
+        return map(this.post.roles, role => `role-${role}`).join(' ');
     }
 
     getAuthorRoleIcon() {
-        switch (this.post.authorRole) {
-        case 'verified':
-        case 'advisor':
+        const matching = intersection(this.post.roles, ['trial', 'host', 'moderator']);
+
+        if (!matching.length) {
+            return null;
+        }
+
+        switch (matching[0]) {
+        case 'host':
+        case 'moderator':
             return 'shield';
         case 'trial':
             return 'bolt';
@@ -53,11 +67,6 @@ class PostDetailsCtrl {
         return this.PostNotifications.isNotifyingFor(this.post.id);
     }
 
-    setAddressOverride(override) {
-        this.addressOverride = override;
-        this.$scope.$broadcast('regionCopyChange');
-    }
-
     isFavouriteHost() {
         return this.Hosts.isFavouriteHost(this.post.author) || this.Hosts.anyFavouriteTag(this.post.tags);
     }
@@ -65,20 +74,8 @@ class PostDetailsCtrl {
     isBlockedHost() {
         return this.Hosts.isBlockedHost(this.post.author) || this.Hosts.anyBlockedTag(this.post.tags);
     }
-
-    triggerCopiedMessage() {
-        if (_.isEmpty(this.post.address)) {
-            return;
-        }
-
-        // Toggle copied message on
-        this.setAddressOverride('Copied!');
-
-        // Toggle back after 2 seconds
-        this.$timeout(() => this.setAddressOverride(false), 2000);
-    }
 }
-PostDetailsCtrl.$inject = ['$scope', 'PostNotifications', 'Hosts', '$timeout', '$state'];
+PostDetailsCtrl.$inject = ['PostNotifications', 'Hosts', 'TeamStyles'];
 
 function postDetails() {
     return {

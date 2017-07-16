@@ -66,6 +66,7 @@ import Posts from 'app/services/Posts';
 import MatchFetcher from 'app/services/MatchFetcher';
 import Translations from 'app/services/translations';
 import SettingImportExport from 'app/services/SettingImportExport';
+import TeamStyles from 'app/services/TeamStyles';
 
 // Directives
 import appCacheUpdater from 'app/directives/appCacheUpdater';
@@ -168,6 +169,7 @@ const app = angular.module(
     .service('Posts', Posts)
     .service('MatchFetcher', MatchFetcher)
     .service('SettingImportExport', SettingImportExport)
+    .constant('TeamStyles', TeamStyles)
     .filter('capitalize', capitalize);
 
 pages

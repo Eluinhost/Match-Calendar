@@ -5,9 +5,6 @@
     ng-class="{'favourite-host': details.isFavouriteHost(), 'blocked-host': details.isBlockedHost()}"
 >
     <div class="match-post-labels">
-        <div class="tag tag-primary text-xs-left" bo-if="details.post.isCommunityGame">
-            <i class="fa fa-users"></i>&nbsp;<span translate="post.communityGame"></span>
-        </div>
         <div class="tag tag-success text-xs-left" ng-if="details.isFavouriteHost()">
             <i class="fa fa-heart"></i>&nbsp;<span translate="post.favourite"></span>
         </div>
@@ -24,7 +21,7 @@
 
     <div
         bo-if="details.getAuthorRoleIcon()"
-        class="match-post-verification" bo-class="'role-'+details.post.authorRole"
+        class="match-post-verification" bo-class="details.getRoleClasses()"
         uib-tooltip="{{ 'post.tooltips.role' | translate:details.post }}"
         tooltip-placement="left"
     >
@@ -60,11 +57,8 @@
             <div class="post-title">
                 <strong>
                     <a class="show-pointer" ui-sref="app.post({id: details.post.id})">
-                        <span bo-text="details.post.title | characters:60: false"></span>
+                        <span bo-text="'#' + details.post.count"></span>
                         <span ng-repeat="tag in ::details.post.tags" ng-bind="::'[' + tag + ']'"></span>
-                    </a>
-                    <a ng-href="{{::'https://redd.it/' + details.post.id}}" target="_blank">
-                        <i class="fa fa-external-link"></i>
                     </a>
                 </strong>
                 <div>
@@ -88,7 +82,7 @@
                 <div class="post-teams" uib-tooltip="{{ 'post.tooltips.teams' | translate }}">
                     <strong bo-text="details.teamStyle()"></strong>
                 </div>
-                <div class="gamemodes" uib-tooltip="{{ 'post.tooltips.gamemodes' | translate }}" bo-text="details.post.gamemodes.join(' | ')"></div>
+                <div class="gamemodes" uib-tooltip="{{ 'post.tooltips.gamemodes' | translate }}" bo-text="details.post.scenarios.join(' | ')"></div>
             </div>
             <div class="divider hidden-lg-up"></div>
         </div>
@@ -98,7 +92,7 @@
             </div>
             <div uib-tooltip="{{ 'post.tooltips.posted' | translate }}" class="time-posted visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
                 <i class="fa fa-reply fa-rotate-180"></i>&nbsp;<small
-                    relative-time="details.post.posted"
+                    relative-time="details.post.created"
                     relative-time-from="details.post.opens"
                     relative-time-hide-suffix
                 ></small>&nbsp;<small translate="post.inAdvance"></small>

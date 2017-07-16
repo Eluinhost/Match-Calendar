@@ -6,7 +6,7 @@ A website for checking out upcoming UltraHardcore matches from Reddit.
 Requirements
 ------------
 
-- NodeJS 0.12+ and NPM 3+
+- NodeJS 0.12+
 - Apache/nginx (optional)
 
 Installation
@@ -16,13 +16,13 @@ Get the git respository: `git clone https://github.com/Eluinhost/Match-Calendar`
 
 Change into the directory: `cd Match-Calendar`
 
-Install/update dependencies: `npm update`
+Handle dependencies: `yarn install`
 
 ## Frontend
 
 To build the site run:
 
-`npm run build`
+`yarn build`
 
 This will build the site into the `web` directory.
 
@@ -98,18 +98,16 @@ Updating
 
 Run `git pull` to get the latest version.
 
-Run `npm update` to install the latest dependencies.
+Run `yarn install` to install the required dependencies.
 
-Run `npm prune` to cleanup dependencies.
-
-Update the changelog if wanted and do `npm run build` to rebuild the site.
+Update the changelog if wanted and do `yarn build` to rebuild the site.
 
 Development
 -----------
 
 A development server can be ran by running:
 
-`npm run dev`
+`yarn dev`
 
 This will start the backend server as well as serving the frontend code via port 9000.
 Any changes to the code/css in `/src` will automatically be compiled and the frontend

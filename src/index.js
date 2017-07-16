@@ -65,13 +65,11 @@ import HtmlNotifications from 'app/services/HtmlNotifications';
 import Posts from 'app/services/Posts';
 import MatchFetcher from 'app/services/MatchFetcher';
 import Subreddits from 'app/services/Subreddits';
-import Templates from 'app/services/Templates';
 import Translations from 'app/services/translations';
 import SettingImportExport from 'app/services/SettingImportExport';
 
 // Directives
 import appCacheUpdater from 'app/directives/appCacheUpdater';
-import dateTimePicker from 'app/directives/dateTimePicker';
 import desktopNotificationEnabler from 'app/directives/desktopNotificationEnabler';
 import markdown from 'app/directives/markdown';
 import keybind from 'app/directives/keybind';
@@ -92,8 +90,6 @@ import relativeTime from 'app/directives/relativeTime';
 
 // Pages/Controllers
 import * as About from 'app/pages/About';
-import * as Generator from 'app/pages/Generator';
-import * as TemplateEditor from 'app/pages/TemplateEditor';
 import * as Post from 'app/pages/Post';
 import * as Post404 from 'app/pages/Post/404';
 import * as PostList from 'app/pages/PostList';
@@ -104,7 +100,7 @@ import * as SettingImport from 'app/pages/SettingImport';
 // Filtes
 import capitalize from 'app/filters/capitalize';
 
-const pages = [About, Generator, TemplateEditor, PostList, Help, Settings, Post, Post404, SettingImport];
+const pages = [About, PostList, Help, Settings, Post, Post404, SettingImport];
 
 function setupStates($stateProvider, $urlRouterProvider) {
     $stateProvider.state('app', {
@@ -150,7 +146,6 @@ const app = angular.module(
     .directive('relativeTime', relativeTime)
     // Removed due to english only - .directive('countryFlag', countryFlag)
     .directive('appCacheUpdater', appCacheUpdater)
-    .directive('dateTimePicker', dateTimePicker)
     .directive('desktopNotificationEnabler', desktopNotificationEnabler)
     .directive('markdown', markdown)
     .directive('keybind', keybind)
@@ -174,7 +169,6 @@ const app = angular.module(
     .service('Posts', Posts)
     .service('MatchFetcher', MatchFetcher)
     .service('Subreddits', Subreddits)
-    .service('Templates', Templates)
     .service('SettingImportExport', SettingImportExport)
     .filter('capitalize', capitalize);
 

@@ -2,7 +2,7 @@
     <div class="card card-outline-primary card-inverse">
         <div class="post-header card-header card-primary">
             <h2>
-                <span ng-bind="::post.post.title"></span>
+                <span ng-bind="::'#' + post.post.count"></span>
                 <span ng-repeat="tag in ::post.post.tags" ng-bind="::'[' + tag + ']'"></span>
             </h2>
             <h6 local-time="::post.post.opens"></h6>
@@ -30,13 +30,13 @@
                 </div>
                 <div
                     class="tag tag-primary"
-                    ng-repeat="gamemode in post.post.gamemodes track by $index"
-                    ng-bind="gamemode">
+                    ng-repeat="scenario in post.post.scenarios track by $index"
+                    ng-bind="scenario">
                 </div>
             </div>
-            <div class="row mt-1" ng-if="post.post.address">
+            <div class="row mt-1">
                 <div class="input-group col-lg-8 offset-lg-2 col-xs-12">
-                    <span class="form-control text-center" id="game-address" ng-bind="::post.post.address"></span>
+                    <span class="form-control text-center" id="game-address" ng-bind="::post.post.address || post.post.ip"></span>
                     <span class="input-group-btn">
                         <button
                             class="btn btn-outline-primary"
@@ -54,15 +54,9 @@
                 <div ng-if="post.showCopyError" class="col-xs-12 text-danger" translate="post.copy.failed"></div>
             </div>
         </div>
-        <h5 class="card-header card-info">
-            <a ng-href="{{::'https://redd.it/' + post.post.id}}" target="_blank">
-                <span translate="post.matchpost"></span>
-                <i class="fa fa-external-link"></i>
-            </a>
-        </h5>
         <div class="card-block">
             <div class="container">
-                <markdown ng-model="post.post.selftext"></markdown>
+                <markdown ng-model="post.post.content"></markdown>
             </div>
         </div>
     </div>

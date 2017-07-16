@@ -103,6 +103,12 @@ const config = {
         }
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('development')
+            },
+            __UHCGG_API_URL__: JSON.stringify(configFile.api.development)
+        }),
         new ExtractTextPlugin(`${filename}.css`),
         new HtmlWebpackPlugin({
             filename: 'index.html',
@@ -151,7 +157,8 @@ gulp.task('prod-build-config', () => {
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
-            }
+            },
+            __UHCGG_API_URL__: JSON.stringify(configFile.api.production)
         }),
         new webpack.NoErrorsPlugin(),
         new webpack.optimize.DedupePlugin(),

@@ -130,7 +130,10 @@ class Posts {
                 }
 
                 this.posts = _.map(
-                    raw.data,
+                    _.filter(
+                        raw.data,
+                        it => !it.removed
+                    ),
                     post => Object.assign({}, post, {
                         opens: moment(post.opens),
                         created: moment(post.created)

@@ -52,14 +52,12 @@
     },
     "post": {
         "communityGame": "Community Game",
-        "startTime": "Start Time",
         "favourite": "Favourite",
         "blocked": "Blocked",
         "overhost": "Potential Overhost",
         "shortNotice": "Short Notice",
         "tooltips": {
             "opens": "Time Match Opens",
-            "startTime": "Time display is game start time, not whitelist off",
             "toggleFavourite": "Toggle Favorite",
             "teams": "Team Style",
             "gamemodes": "Gamemodes",
@@ -103,10 +101,6 @@
             "teams": "Team Types:",
             "gamemodes": "Gamemodes:",
             "tab": "Filter Posts - Showing <b>{{ showing }}</b> of <b>{{ all }}</b>"
-        },
-        "unparsed": {
-            "show": "Show unparsed posts",
-            "hide": "Hide unparsed posts"
         },
         "error": "Failed to load matches from the server",
         "configure": "Configure",

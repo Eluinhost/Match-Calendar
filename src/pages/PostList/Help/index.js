@@ -14,8 +14,7 @@ class HelpCtrl {
             address: '192.168.0.1',
             region: 'EU',
             teams: 'Chosen To4',
-            gamemodes: ['Vanilla+', 'Hardcore'],
-            isStartTime: true
+            gamemodes: ['Vanilla+', 'Hardcore']
         };
     }
 }

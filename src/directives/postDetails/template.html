@@ -8,15 +8,6 @@
         <div class="tag tag-primary text-xs-left" bo-if="details.post.isCommunityGame">
             <i class="fa fa-users"></i>&nbsp;<span translate="post.communityGame"></span>
         </div>
-        <div
-            class="tag tag-warning text-xs-left"
-            bo-if="details.post.isStartTime"
-            uib-tooltip="{{ 'post.tooltips.startTime' | translate }}"
-            tooltip-append-to-body="true"
-            tooltip-placement="right"
-        >
-            <i class="fa fa-warning"></i>&nbsp;<span translate="post.startTime"></span>
-        </div>
         <div class="tag tag-success text-xs-left" ng-if="details.isFavouriteHost()">
             <i class="fa fa-heart"></i>&nbsp;<span translate="post.favourite"></span>
         </div>

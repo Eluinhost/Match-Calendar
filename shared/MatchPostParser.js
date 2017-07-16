@@ -15,14 +15,6 @@ module.exports = class MatchPostParser {
             tags: []
         };
 
-        const pipeIndex = title.indexOf('|');
-        details.isStartTime = pipeIndex !== -1;
-
-        // Replace the | with a -
-        if (details.isStartTime) {
-            title = `${title.substr(0, pipeIndex)}-${title.substr(pipeIndex + 1)}`;
-        }
-
         const sections = title
             .split('-')
             .map(part => part.trim());

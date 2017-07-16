@@ -62,7 +62,7 @@ PostCtrl.$inject = ['Posts', 'DateTime', '$timeout', '$scope', 'post'];
 
 const controllerName = 'PostCtrl';
 
-const resolvePost = function (Posts, MatchFetcher, $stateParams, $q, $state) {
+const resolvePost = function (Posts, $stateParams, $q, $state) {
     // Redirect to listing if no id is provided
     if (_.isEmpty($stateParams.id)) {
         $state.go('app.list');
@@ -79,16 +79,11 @@ const resolvePost = function (Posts, MatchFetcher, $stateParams, $q, $state) {
                 return post;
             }
 
-            // Otherwise attempt to force load the post
-            return MatchFetcher
-                .fetchById($stateParams.id)
-                .catch(err => {
-                    $state.go('app.post404', { id: $stateParams.id });
-                    return $q.reject(err);
-                });
+            $state.go('app.post404', { id: $stateParams.id });
+            return $q.reject('not found');
         });
 };
-resolvePost.$inject = ['Posts', 'MatchFetcher', '$stateParams', '$q', '$state'];
+resolvePost.$inject = ['Posts', '$stateParams', '$q', '$state'];
 
 const state = {
     name: 'app.post',

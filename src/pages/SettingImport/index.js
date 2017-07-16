@@ -42,7 +42,7 @@ const state = {
     template: require('./template.html'),
     controller: `${controllerName} as settingimport`,
     resolve: {
-        savedData: ['$q', 'Subreddits', 'PostNotifications', 'Hosts', 'HtmlNotifications',
+        savedData: ['$q', 'PostNotifications', 'Hosts', 'HtmlNotifications',
             function ($q, ...others) {
                 return $q.all(others.map(o => o.initialised));
             }

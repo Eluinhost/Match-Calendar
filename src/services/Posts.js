@@ -7,9 +7,8 @@ const FAVOURITES_ONLY_KEY = 'showFavouritedHostsOnly';
 const SHOW_BLOCKED_KEY = 'showBlockedHosts';
 
 class Posts {
-    constructor($rootScope, $interval, Subreddits, DateTime, MatchFetcher, $localForage) {
+    constructor($rootScope, $interval, DateTime, MatchFetcher, $localForage) {
         this.MatchFetcher = MatchFetcher;
-        this.Subreddits = Subreddits;
         this.DateTime = DateTime;
         this.$rootScope = $rootScope;
 
@@ -69,18 +68,9 @@ class Posts {
 
         this.updating = false;
 
-        // Watch for subreddit changes
-        this.firstQuery = Subreddits.initialised.then(() => {
-            $rootScope.$watchCollection(() => Subreddits.subreddits, (oldSubs, newSubs) => {
-                if (oldSubs !== newSubs) {
-                    this.update();
-                }
-            });
-
-            // Update every minute
-            $interval(() => this.update(), 1000 * 60);
-            return this.update();
-        });
+        // Update every minute
+        $interval(() => this.update(), 1000 * 60);
+        this.update();
     }
 
     isGamemodeDisabled(gamemeode) {
@@ -135,7 +125,7 @@ class Posts {
         this.updating = true;
 
         return this.MatchFetcher
-            .fetch(this.Subreddits.subreddits)
+            .fetch(['uhcmatches'])
             .then(({ parsed, unparsed, errors }) => {
                 const halfHourAgo = this.DateTime.getTime().subtract(30, 'minutes');
 
@@ -182,7 +172,8 @@ class Posts {
             })
             .finally(() => {
                 this.updating = false;
-            });
+            })
+            .catch(err => console.error(err));
     }
 
     updateRegions() {
@@ -206,6 +197,6 @@ class Posts {
         this.$rootScope.$broadcast('postsUpdated', this.posts);
     }
 }
-Posts.$inject = ['$rootScope', '$interval', 'Subreddits', 'DateTime', 'MatchFetcher', '$localForage'];
+Posts.$inject = ['$rootScope', '$interval', 'DateTime', 'MatchFetcher', '$localForage'];
 
 export default Posts;

@@ -64,7 +64,6 @@ import Hosts from 'app/services/Hosts';
 import HtmlNotifications from 'app/services/HtmlNotifications';
 import Posts from 'app/services/Posts';
 import MatchFetcher from 'app/services/MatchFetcher';
-import Subreddits from 'app/services/Subreddits';
 import Translations from 'app/services/translations';
 import SettingImportExport from 'app/services/SettingImportExport';
 
@@ -168,7 +167,6 @@ const app = angular.module(
     .service('HtmlNotifications', HtmlNotifications)
     .service('Posts', Posts)
     .service('MatchFetcher', MatchFetcher)
-    .service('Subreddits', Subreddits)
     .service('SettingImportExport', SettingImportExport)
     .filter('capitalize', capitalize);
 

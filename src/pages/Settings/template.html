@@ -64,26 +64,6 @@
     -->
     <div class="card-group">
         <div class="card card-inverse card-outline-primary">
-            <h4 class="card-header card-primary" translate="settings.subreddits.header"></h4>
-            <div class="card-block">
-                <unique-items-editor
-                    unique-items="settings.Subreddits.subreddits"
-                    button-prefix="/r/"
-                    button-icon="reddit-alien"
-                    placeholder="uhcmatches"
-                    temp-value="settings.tempSubreddit"
-                >
-                    <no-items>
-                        <uib-alert type="danger">
-                            <span translate="settings.subreddits.none"></span>
-                        </uib-alert>
-                    </no-items>
-                    <required-error><span translate="settings.subreddits.required"></span></required-error>
-                    <in-array-error><span translate="settings.subreddits.contained"></span></in-array-error>
-                </unique-items-editor>
-            </div>
-        </div>
-        <div class="card card-inverse card-outline-primary">
             <h4 class="card-header card-primary" translate="settings.notifications.header"></h4>
             <div class="card-block">
                 <small class="text-muted" translate="settings.notifications.info"></small>

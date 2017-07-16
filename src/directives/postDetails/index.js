@@ -1,9 +1,8 @@
 import _ from 'lodash';
 
 class PostDetailsCtrl {
-    constructor($scope, PostNotifications, Hosts, Subreddits, $timeout, $state) {
+    constructor($scope, PostNotifications, Hosts, $timeout, $state) {
         this.PostNotifications = PostNotifications;
-        this.Subreddits = Subreddits;
         this.Hosts = Hosts;
         this.$timeout = $timeout;
         this.$scope = $scope;
@@ -36,10 +35,6 @@ class PostDetailsCtrl {
         default:
             return null;
         }
-    }
-
-    showSubreddit() {
-        return this.Subreddits.subreddits.length > 1;
     }
 
     toggleFavourite(event) {
@@ -83,7 +78,7 @@ class PostDetailsCtrl {
         this.$timeout(() => this.setAddressOverride(false), 2000);
     }
 }
-PostDetailsCtrl.$inject = ['$scope', 'PostNotifications', 'Hosts', 'Subreddits', '$timeout', '$state'];
+PostDetailsCtrl.$inject = ['$scope', 'PostNotifications', 'Hosts', '$timeout', '$state'];
 
 function postDetails() {
     return {

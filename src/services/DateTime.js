@@ -12,7 +12,7 @@ class DateTime {
         this.$http = $http;
 
         // URL path for syncing time
-        this.resyncURL = 'api/v1/sync';
+        this.resyncURL = `${__UHCGG_API_URL__}/sync`;
 
         // Preset values for chosing zone/format
         this.timeFormats = ['12h', '24h'];
@@ -130,7 +130,7 @@ class DateTime {
         return this.$http.get(this.resyncURL)
             .then(data => {
                 this.synced = true;
-                this.offset = data.data.time - moment().valueOf();
+                this.offset = moment(data.data).diff(moment());
                 ga('set', 'metric1', this.offset);
             })
             .catch(() => {

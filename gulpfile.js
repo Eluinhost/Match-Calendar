@@ -18,7 +18,6 @@ const configFile = require('./config.js');
 // Default settings are for dev, run 'prod-build-config' to change for production
 const filename = '[name].[hash]';
 const APP_BASE = path.resolve(__dirname, 'src');
-const SHARED_BASE = path.resolve(__dirname, 'shared');
 const DIST_BASE = path.resolve(__dirname, 'web');
 const WEBPACK_ENTRY = `webpack-dev-server/client?http://localhost:${configFile.devServerPort}`;
 
@@ -55,7 +54,7 @@ const config = {
                             'plugins[]=transform-es2015-modules-commonjs,' +
                             'plugins[]=transform-runtime,' +
                         'cacheDirectory!eslint',
-                include: [APP_BASE, SHARED_BASE]
+                include: [APP_BASE]
             },
             {
                 test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,
@@ -213,13 +212,7 @@ gulp.task('webpack:dev', ['webpack:init-dev'], done => {
             colors: true
         },
         contentBase: APP_BASE,
-        port: configFile.devServerPort,
-        proxy: {
-            '/api/*': {
-                target: `http://localhost:${configFile.server.port}/`,
-                secure: false
-            }
-        }
+        port: configFile.devServerPort
     }).listen(configFile.devServerPort, 'localhost', err => {
         if (err) {
             throw new gutil.PluginError('webpack-dev-server', err);
@@ -234,12 +227,8 @@ gulp.task('webpack:dev', ['webpack:init-dev'], done => {
     });
 });
 
-gulp.task('backend', () => {
-    require('./server');
-});
-
 gulp.task('build', done => {
     runSequence('clean', 'webpack:prod', done);
 });
 
-gulp.task('dev', ['webpack:dev', 'backend']);
+gulp.task('dev', ['webpack:dev']);

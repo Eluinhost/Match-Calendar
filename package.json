@@ -1,22 +1,11 @@
 {
     "name": "match-calendar",
     "version": "1.4.11",
-    "main": "server/index.js",
     "dependencies": {
         "bluebird": "3.3.x",
         "he": "1.0.x",
-        "koa": "1.2.x",
-        "koa-conditional-get": "1.0.x",
-        "koa-etag": "2.1.x",
-        "koa-json": "1.1.x",
-        "koa-static-cache": "3.1.x",
-        "koa-rewrite": "1.1.x",
-        "koa-router": "5.4.x",
-        "node-fetch": "1.5.x",
         "lodash": "4.11.x",
-        "moment-timezone": "0.5.x"
-    },
-    "devDependencies": {
+        "moment-timezone": "0.5.x",
         "angular": "1.5.x",
         "angular-animate": "1.5.x",
         "angular-bindonce": "git://github.com/Pasvaz/bindonce.git#rebind-debug",
@@ -78,7 +67,7 @@
     "scripts": {
         "build": "gulp build",
         "dev": "gulp dev",
-        "lint": "eslint src/ server/ gulpfile.js"
+        "lint": "eslint src/ gulpfile.js"
     },
     "license": "MIT",
     "engines": {

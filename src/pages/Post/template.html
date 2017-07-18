@@ -32,6 +32,9 @@
                 <div class="tag tag-primary">
                     <span ng-bind="::post.post.version"></span>
                 </div>
+                <div class="tag tag-primary">
+                    <span ng-bind="::post.post.slots"></span> Slots
+                </div>
                 <div
                     class="tag tag-primary"
                     ng-repeat="scenario in post.post.scenarios track by $index"

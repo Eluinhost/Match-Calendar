@@ -81,6 +81,9 @@
             </div>
         </div>
         <div class="card-block">
+            <h5>
+                Length: <span ng-bind="::post.post.length"></span>mins | PVP: <span ng-bind="::post.post.pvpEnabledAt"></span>mins
+            </h5>
             <div class="container">
                 <markdown ng-model="post.post.content"></markdown>
             </div>

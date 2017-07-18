@@ -29,6 +29,9 @@
                     <i class="fa fa-cubes"></i>
                     <span ng-bind="::post.teamStyle()"></span>
                 </div>
+                <div class="tag tag-primary">
+                    <span ng-bind="::post.post.version"></span>
+                </div>
                 <div
                     class="tag tag-primary"
                     ng-repeat="scenario in post.post.scenarios track by $index"

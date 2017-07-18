@@ -79,8 +79,14 @@
                 </div>
             </div>
             <div class="title-left">
-                <div class="post-teams" uib-tooltip="{{ 'post.tooltips.teams' | translate }}">
-                    <strong bo-text="details.teamStyle()"></strong>
+                <div>
+                    <span class="post-teams" uib-tooltip="{{ 'post.tooltips.teams' | translate }}">
+                        <strong bo-text="details.teamStyle()"></strong>
+                    </span>
+                    >
+                    <span class="version" uib-tooltip="{{ 'post.tooltips.version' | translate }}">
+                        <strong bo-text="details.post.version"></strong>
+                    </span>
                 </div>
                 <div class="gamemodes" uib-tooltip="{{ 'post.tooltips.gamemodes' | translate }}" bo-text="details.post.scenarios.join(' | ')"></div>
             </div>

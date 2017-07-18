@@ -53,7 +53,7 @@
             </div>
             <div class="divider hidden-lg-up"></div>
         </div>
-        <div class="col-lg-8 text-lg-left text-xs-center col-xs-12">
+        <div class="col-lg-7 text-lg-left text-xs-center col-xs-12">
             <div class="post-title">
                 <strong>
                     <a class="show-pointer" ui-sref="app.post({id: details.post.id})">
@@ -86,9 +86,9 @@
             </div>
             <div class="divider hidden-lg-up"></div>
         </div>
-        <div class="col-lg-2 text-lg-left text-xs-center col-xs-12">
+        <div class="col-lg-3 text-lg-left text-xs-center col-xs-12">
             <div class="server-region" uib-tooltip="{{ 'post.tooltips.region' | translate }}">
-                <i class="fa fa-globe"></i>&nbsp;<small bo-text="details.post.region || 'Unknown'"></small>
+                <i class="fa fa-globe"></i>&nbsp;<small bo-text="details.post.region || 'Unknown'"></small>&nbsp;-&nbsp;<small bo-text="details.post.location || 'Unknown'"></small>
             </div>
             <div uib-tooltip="{{ 'post.tooltips.posted' | translate }}" class="time-posted visible-lg-block visible-xs-inline visible-md-inline visible-sm-inline">
                 <i class="fa fa-reply fa-rotate-180"></i>&nbsp;<small

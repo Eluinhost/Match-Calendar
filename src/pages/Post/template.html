@@ -41,15 +41,34 @@
                     ng-bind="scenario">
                 </div>
             </div>
-            <div class="row mt-1">
+            <div class="row mt-1" ng-if="::post.post.address">
                 <div class="input-group col-lg-8 offset-lg-2 col-xs-12">
-                    <span class="form-control text-center" id="game-address" ng-bind="::post.post.address || post.post.ip"></span>
+                    <span class="form-control text-center" id="game-address" ng-bind="::post.post.address"></span>
                     <span class="input-group-btn">
                         <button
                             class="btn btn-outline-primary"
                             type="button"
                             ngclipboard
                             data-clipboard-target="#game-address"
+                            ngclipboard-success="post.showCopiedMessage()"
+                            ngclipboard-error="post.showCtrlCMessage()"
+                        >
+                            <i class="fa fa-clipboard"></i>
+                            <span translate="{{ post.copyMessage }}"></span>
+                        </button>
+                    </span>
+                </div>
+                <div ng-if="post.showCopyError" class="col-xs-12 text-danger" translate="post.copy.failed"></div>
+            </div>
+            <div class="row mt-1">
+                <div class="input-group col-lg-8 offset-lg-2 col-xs-12">
+                    <span class="form-control text-center" id="game-ip" ng-bind="::post.post.ip"></span>
+                    <span class="input-group-btn">
+                        <button
+                            class="btn btn-outline-primary"
+                            type="button"
+                            ngclipboard
+                            data-clipboard-target="#game-ip"
                             ngclipboard-success="post.showCopiedMessage()"
                             ngclipboard-error="post.showCtrlCMessage()"
                         >

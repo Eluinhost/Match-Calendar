@@ -57,7 +57,7 @@
             <div class="post-title">
                 <strong>
                     <a class="show-pointer" ui-sref="app.post({id: details.post.id})">
-                        <span bo-text="'#' + details.post.count"></span>
+                        <span bo-text="(details.post.hostingName || details.post.author) + '\'s #' + details.post.count"></span>
                         <span ng-repeat="tag in ::details.post.tags" ng-bind="::'[' + tag + ']'"></span>
                     </a>
                 </strong>

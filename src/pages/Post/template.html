@@ -2,7 +2,7 @@
     <div class="card card-outline-primary card-inverse">
         <div class="post-header card-header card-primary">
             <h2>
-                <span ng-bind="::'#' + post.post.count"></span>
+                <span ng-bind="::(post.post.hostingName || post.post.author) + '\'s #' + post.post.count"></span>
                 <span ng-repeat="tag in ::post.post.tags" ng-bind="::'[' + tag + ']'"></span>
             </h2>
             <h6 local-time="::post.post.opens"></h6>
@@ -84,7 +84,7 @@
             <h5>
                 Length: <span ng-bind="::post.post.length"></span>mins | PVP: <span ng-bind="::post.post.pvpEnabledAt"></span>mins
             </h5>
-            <h5>Map: <span ng-bind="::post.post.mapSizeX + ' x ' + post.post.mapSizeZ"></span></h5>
+            <h5>Map: <span ng-bind="::post.post.mapSize + ' x ' + post.post.mapSize"></span></h5>
             <div class="container">
                 <markdown ng-model="post.post.content"></markdown>
             </div>

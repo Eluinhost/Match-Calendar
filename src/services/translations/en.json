@@ -54,8 +54,6 @@
         "communityGame": "Community Game",
         "favourite": "Favourite",
         "blocked": "Blocked",
-        "overhost": "Potential Overhost",
-        "shortNotice": "Short Notice",
         "tooltips": {
             "opens": "Time Match Opens",
             "toggleFavourite": "Toggle Favorite",

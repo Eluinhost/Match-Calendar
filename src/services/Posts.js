@@ -140,29 +140,6 @@ class Posts {
                     })
                 );
 
-                // Add 'overhost' flags
-                _.forEach(
-                    _.groupBy(this.posts, 'region'),
-                    regionPosts => {
-                        if (regionPosts.length < 2) {
-                            return;
-                        }
-
-                        for (let i = 1; i < regionPosts.length; i++) {
-                            if (regionPosts[i].opens.isSame(regionPosts[i - 1].opens, 'minute')) {
-                                regionPosts[i].overhost = true;
-                            }
-                        }
-                    }
-                );
-
-                // Add 'short notice' flags
-                _(this.posts)
-                    .filter(it => it.opens.diff(it.created, 'minutes') < 30)
-                    .forEach(it => {
-                        it.shortNotice = true;
-                    });
-
                 this.updateRegions();
                 this.updateGamemodes();
                 this.updateTeamTypes();

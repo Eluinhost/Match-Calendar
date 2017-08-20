@@ -2,7 +2,7 @@
     <div class="card card-outline-primary card-inverse">
         <div class="post-header card-header card-primary">
             <h2>
-                <span ng-bind="::(post.post.hostingName || post.post.author) + '\'s #' + post.post.count"></span>
+                <span ng-bind="::post.getTitle()"></span>
                 <span ng-repeat="tag in ::post.post.tags" ng-bind="::'[' + tag + ']'"></span>
             </h2>
             <h6 local-time="::post.post.opens"></h6>

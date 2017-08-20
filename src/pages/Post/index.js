@@ -12,6 +12,11 @@ class PostCtrl {
         this.post = post;
     }
 
+    getTitle() {
+        const name = this.post.hostingName || this.post.author;
+        return `${name}'s ${this.post.tournament ? 'Tournament ' : ''}#${this.post.count}`;
+    }
+
     regionClass() {
         return this.Posts.isRegionDisabled(this.post.region) ? 'tag-danger' : 'tag-success';
     }

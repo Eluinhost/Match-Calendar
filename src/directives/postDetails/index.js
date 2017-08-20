@@ -26,7 +26,8 @@ class PostDetailsCtrl {
     }
 
     getTitle() {
-        return `${this.post.author} #${this.post.count}`;
+        const name = this.post.hostingName || this.post.author;
+        return `${name}'s ${this.post.tournament ? 'Tournament ' : ''}#${this.post.count}`;
     }
 
     getRoleClasses() {

@@ -1,4 +1,4 @@
-import { intersection, map, capitalize } from 'lodash';
+import { intersection, map, capitalize, includes } from 'lodash';
 
 class PostDetailsCtrl {
     constructor(PostNotifications, Hosts, TeamStyles) {
@@ -31,7 +31,7 @@ class PostDetailsCtrl {
     }
 
     getRoleClasses() {
-        return map(this.post.roles, role => `role-${role}`).join(' ');
+        return map(this.post.roles, role => `role-${role.replaceAll(' ', '-')}`).join(' ');
     }
 
     getRoleText() {
@@ -39,21 +39,11 @@ class PostDetailsCtrl {
     }
 
     getAuthorRoleIcon() {
-        const matching = intersection(this.post.roles, ['trial host', 'host', 'moderator']);
-
-        if (!matching.length) {
-            return null;
-        }
-
-        switch (matching[0]) {
-        case 'host':
-        case 'moderator':
-            return 'shield';
-        case 'trial host':
+        if (includes(this.post.roles, 'trial host')) {
             return 'bolt';
-        default:
-            return null;
         }
+
+        return 'shield';
     }
 
     toggleFavourite(event) {

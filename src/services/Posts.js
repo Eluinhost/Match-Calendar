@@ -123,7 +123,7 @@ class Posts {
         this.updating = true;
 
         return this.$http
-            .get(`${__UHCGG_API_URL__}/matches/current`)
+            .get(`${__UHCGG_API_URL__}/matches/upcoming`)
             .then(raw => {
                 if (raw.status >= 400) {
                     throw new Error('Server returned invalid response');

@@ -1,4 +1,4 @@
-import { intersection, map, capitalize, includes } from 'lodash';
+import { map, capitalize, includes } from 'lodash';
 
 class PostDetailsCtrl {
     constructor(PostNotifications, Hosts, TeamStyles) {

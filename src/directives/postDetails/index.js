@@ -31,7 +31,7 @@ class PostDetailsCtrl {
     }
 
     getRoleClasses() {
-        return map(this.post.roles, role => `role-${role.replaceAll(' ', '-')}`).join(' ');
+        return map(this.post.roles, role => `role-${role.replace(/ /g, '-')}`).join(' ');
     }
 
     getRoleText() {

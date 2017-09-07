@@ -119,6 +119,25 @@ class Posts {
         }
     }
 
+    fetchById(id) {
+        return this.$http
+            .get(`${__UHCGG_API_URL__}/matches/${id}`)
+            .then(raw => {
+                if (raw.status >= 400) {
+                    throw new Error('Server returned invalid response');
+                }
+
+                return Object.assign({}, raw.data, {
+                    opens: moment(raw.data.opens),
+                    created: moment(raw.data.created)
+                });
+            })
+           .catch(err => {
+               console.error(err);
+               throw err;
+           });
+    }
+
     update() {
         this.updating = true;
 

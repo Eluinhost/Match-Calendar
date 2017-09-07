@@ -1,5 +1,5 @@
 <div class="container pt-1 post-page" bindonce="post" refresh-on="'postsUpdated'">
-    <div class="card card-outline-primary card-inverse">
+    <div bo-class="post.cardClass()">
         <div class="post-header card-header card-primary">
             <h2>
                 <span ng-bind="::post.getTitle()"></span>
@@ -21,6 +21,10 @@
                 </div>
                 <div class="tag" ng-bind="::post.post.region" bo-class="post.regionClass()"></div>
                 <div class="tag tag-success" ng-bind="::post.post.location"  bo-class="post.regionClass()"></div>
+                <div ng-if="::post.post.removed" class="tag tag-danger" ng-attr-title="{{ post.post.removedReason }} - /u/{{ post.post.removedBy }}">
+                    <i class="fa fa-warning"></i>
+                    REMOVED
+                </div>
             </div>
         </div>
         <div class="card-block post-page-content">

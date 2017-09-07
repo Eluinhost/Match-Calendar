@@ -12,6 +12,10 @@ class PostCtrl {
         this.post = post;
     }
 
+    cardClass() {
+        return `card card-outline-${this.post.removed ? 'danger' : 'primary'} card-inverse`;
+    }
+
     getTitle() {
         const name = this.post.hostingName || this.post.author;
         return `${name}'s ${this.post.tournament ? 'Tournament ' : ''}#${this.post.count}`;
@@ -93,8 +97,15 @@ const resolvePost = function (Posts, $stateParams, $q, $state) {
                 return post;
             }
 
-            $state.go('app.post404', { id: $stateParams.id });
-            return $q.reject('not found');
+            return Posts.fetchById($stateParams.id);
+        })
+        .then(post => {
+            if (!post) {
+                $state.go('app.post404', { id: $stateParams.id });
+                return $q.reject('not found');
+            }
+
+            return post;
         });
 };
 resolvePost.$inject = ['Posts', '$stateParams', '$q', '$state'];

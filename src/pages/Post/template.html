@@ -64,7 +64,7 @@
                 </div>
                 <div ng-if="post.showCopyError" class="col-xs-12 text-danger" translate="post.copy.failed"></div>
             </div>
-            <div class="row mt-1">
+            <div class="row mt-1" ng-if="::post.post.ip">
                 <div class="input-group col-lg-8 offset-lg-2 col-xs-12">
                     <span class="form-control text-center" id="game-ip" ng-bind="::post.post.ip"></span>
                     <span class="input-group-btn">

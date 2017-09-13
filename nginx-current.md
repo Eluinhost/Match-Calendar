@@ -3,10 +3,7 @@
 server {
     listen 37.59.47.201;
     server_name c.uhc.gg;
-    
-    root <PROJECT PATH>/web;
-    index index.html;
-    
+       
     access_log /var/log/c.uhc.gg_access_log;
     error_log /var/log/c.uhc.gg_error_log;
     
@@ -33,7 +30,7 @@ server {
 }
 
 server {
-    listen 37.59.47.201:443 spdy ssl;
+    listen 37.59.47.201:443 http2 ssl;
     server_name c.uhc.gg;
     
     root <PROJECT PATH>/web;
@@ -70,12 +67,7 @@ server {
     add_header Strict-Transport-Security "max-age=15552000; includeSubdomains; preload";
     
     # other security headers
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-    
-    # proxy the API to the backend
-    location /api {
-        proxy_pass http://127.0.0.1:9001;
-    }	
+    more_set_headers X-Frame-Options DENY;
+    more_set_headers X-Content-Type-Options nosniff;
 }
 ```

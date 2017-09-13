@@ -6,6 +6,7 @@
     "globals": {
         "ga": true,
         "APP_GLOBALS": true,
-        "APP_INITIAL_DATA": true
+        "APP_INITIAL_DATA": true,
+        "__UHCGG_API_URL__": true
     }
 }

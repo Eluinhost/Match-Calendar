@@ -1,45 +1,49 @@
-import _ from 'lodash';
+import { map, capitalize, includes } from 'lodash';
 
 class PostDetailsCtrl {
-    constructor($scope, PostNotifications, Hosts, Subreddits, $timeout, $state) {
+    constructor(PostNotifications, Hosts, TeamStyles) {
         this.PostNotifications = PostNotifications;
-        this.Subreddits = Subreddits;
         this.Hosts = Hosts;
-        this.$timeout = $timeout;
-        this.$scope = $scope;
-        this.$state = $state;
-
-        this.addressOverride = false;
-    }
-
-    timePostedInAdvance() {
-        return `${this.post.posted.from(this.post.opens, true)} in advance`;
+        this.TeamStyles = TeamStyles;
     }
 
     teamStyle() {
-        let style = this.post.teams;
-
-        if (this.post.teamSize) {
-            style += ` To${this.post.teamSize}`;
+        if (this.post.teams === 'custom') {
+            return this.post.customStyle;
         }
 
-        return style;
+        const style = this.TeamStyles[this.post.teams];
+
+        if (!style) {
+            return `Unknown team style: ${style}`;
+        }
+
+        if (style.requiresTeamSize) {
+            return `${style.display} To${this.post.size}`;
+        }
+
+        return style.display;
+    }
+
+    getTitle() {
+        const name = this.post.hostingName || this.post.author;
+        return `${name}'s ${this.post.tournament ? 'Tournament ' : ''}#${this.post.count}`;
+    }
+
+    getRoleClasses() {
+        return map(this.post.roles, role => `role-${role.replace(/ /g, '-')}`).join(' ');
+    }
+
+    getRoleText() {
+        return this.post.roles.map(role => role.split(' ').map(capitalize).join(' ')).join(', ');
     }
 
     getAuthorRoleIcon() {
-        switch (this.post.authorRole) {
-        case 'verified':
-        case 'advisor':
-            return 'shield';
-        case 'trial':
+        if (includes(this.post.roles, 'trial host')) {
             return 'bolt';
-        default:
-            return null;
         }
-    }
 
-    showSubreddit() {
-        return this.Subreddits.subreddits.length > 1;
+        return 'shield';
     }
 
     toggleFavourite(event) {
@@ -58,11 +62,6 @@ class PostDetailsCtrl {
         return this.PostNotifications.isNotifyingFor(this.post.id);
     }
 
-    setAddressOverride(override) {
-        this.addressOverride = override;
-        this.$scope.$broadcast('regionCopyChange');
-    }
-
     isFavouriteHost() {
         return this.Hosts.isFavouriteHost(this.post.author) || this.Hosts.anyFavouriteTag(this.post.tags);
     }
@@ -70,20 +69,8 @@ class PostDetailsCtrl {
     isBlockedHost() {
         return this.Hosts.isBlockedHost(this.post.author) || this.Hosts.anyBlockedTag(this.post.tags);
     }
-
-    triggerCopiedMessage() {
-        if (_.isEmpty(this.post.address)) {
-            return;
-        }
-
-        // Toggle copied message on
-        this.setAddressOverride('Copied!');
-
-        // Toggle back after 2 seconds
-        this.$timeout(() => this.setAddressOverride(false), 2000);
-    }
 }
-PostDetailsCtrl.$inject = ['$scope', 'PostNotifications', 'Hosts', 'Subreddits', '$timeout', '$state'];
+PostDetailsCtrl.$inject = ['PostNotifications', 'Hosts', 'TeamStyles'];
 
 function postDetails() {
     return {

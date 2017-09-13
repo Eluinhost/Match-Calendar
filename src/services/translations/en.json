@@ -4,7 +4,7 @@
     },
     "navbar": {
         "matches": "Matches",
-        "generator": "Post Creator",
+        "generator": "Hosting",
         "settings": "Settings",
         "about": "About"
     },
@@ -52,20 +52,17 @@
     },
     "post": {
         "communityGame": "Community Game",
-        "startTime": "Start Time",
         "favourite": "Favourite",
         "blocked": "Blocked",
-        "overhost": "Potential Overhost",
-        "shortNotice": "Short Notice",
         "tooltips": {
             "opens": "Time Match Opens",
-            "startTime": "Time display is game start time, not whitelist off",
             "toggleFavourite": "Toggle Favorite",
             "teams": "Team Style",
             "gamemodes": "Gamemodes",
             "region": "Server Region",
             "posted": "Time posted in advance of game opening",
-            "role": "{{ authorRole | capitalize }} Host"
+            "role": "Roles: {{ getRoleText() }}",
+            "version": "Server version"
         },
         "inAdvance": "in advance",
         "matchpost": "Match Post",
@@ -88,60 +85,6 @@
         "contributors": "Contributors",
         "libraries": "Bundled Front-end Libraries"
     },
-    "generator": {
-        "notice": "Make sure to read the submission rules for the subreddit you are posting to <b>BEFORE</b> using this tool. Rules for the main /r/uhcmatches subreddit can be found {{ rules }}",
-        "title": {
-            "header": "Title",
-            "info": "The title to show on the list, do NOT include the time/scenarios e.t.c, that can be provided below"
-        },
-        "opens": {
-            "header": "Opens",
-            "info": "Time game will open (in your selected timezone)"
-        },
-        "region": {
-            "header": "Region"
-        },
-        "teams": {
-            "header": "Team Type",
-            "FFA": "Every man for himself.",
-            "CHOSEN": "Players form teams before the match",
-            "RANDOM": "Players are assigned random teammates",
-            "CAPTAINS": "Selected team leaders pick their teammates.",
-            "PICKED": "Players take turns joining a team.",
-            "AUCTION": "Selected team leaders buy their teammates.",
-            "MYSTERY": "Mystery teams.",
-            "CUSTOM": "Add a custom game style",
-            "input": {
-                "size": "Enter team size here:",
-                "custom": "Enter custom scenario title here:"
-            }
-        },
-        "scenarios": {
-            "header": "Scenarios",
-            "none": "Please enter a scenario name",
-            "contained": "This scenario is already in your list",
-            "placeholder": "Scenario"
-        },
-        "tags": {
-            "header": "Tags",
-            "none": "Please enter an tag (without brackets)",
-            "contained": "This tag is already in your list",
-            "placeholder": "Tag"
-        },
-        "preview": {
-            "header": "Post Title Preview"
-        },
-        "template": {
-            "header": "Selected Template",
-            "default": "You cannot use the default template to post to Reddit. Use the Template Editor below to create your own/copy the default and use that one instead."
-        },
-        "subreddit": {
-            "header": "Selected Subreddit"
-        },
-        "templateEditor": "Template Editor",
-        "postToReddit": "Post to Reddit",
-        "overhost": "Be careful! There is already a game at this time in the same region on your calendar"
-    },
     "post404": {
         "title": "404 - Not Found",
         "header": "No post with the id {{ id }} was found",
@@ -158,17 +101,7 @@
             "gamemodes": "Gamemodes:",
             "tab": "Filter Posts - Showing <b>{{ showing }}</b> of <b>{{ all }}</b>"
         },
-        "unparsed": {
-            "show": "Show unparsed posts",
-            "hide": "Hide unparsed posts"
-        },
-        "addSub": {
-            "header": "Adding subreddit '/r/{{ subreddit }}'",
-            "message": "Do you want to add the subreddit '/r/{{ subreddit }}' to your settings? You can remove it later by visiting the 'Settings' page",
-            "confirm": "Add",
-            "ignore": "Ignore"
-        },
-        "failedSubs": "Failed to load matches from the chosen subreddit/s: {{ subs }}",
+        "error": "Failed to load matches from the server",
         "configure": "Configure",
         "refresh": "Refresh",
         "updated": "Last Updated:",
@@ -188,12 +121,6 @@
         "language": {
             "header": "Language",
             "inUse": "Using language code:"
-        },
-        "subreddits": {
-            "header": "Subreddits",
-            "none": "You do not have any subreddits set up, you will not see any posts",
-            "required": "Please enter a subreddit name (without /r/)",
-            "contained": "This subreddit is already in your list"
         },
         "notifications": {
             "header": "Notifications",
@@ -232,28 +159,6 @@
         "importexport": "Import/Export Settings",
         "exportSettings": "Export Settings",
         "importSettings": "Import Settings"
-    },
-    "templates": {
-        "new": "New Template",
-        "noedit": "You cannot edit the default template.",
-        "copyText": "Click here to copy it",
-        "edit": "Edit Template",
-        "name": "Template Name",
-        "contents": "Template Contents",
-        "preview": "Preview",
-        "save": "Save Changes",
-        "delete": "Delete Template",
-        "help": {
-            "header": "Help - Available Template Variables",
-            "available": "Available Variables:",
-            "opensUTC": "When the match opens in the format MMM DD HH:mm Z",
-            "title": "The title of the post",
-            "region": "The short code of the region",
-            "teams": "The generated team type. e.g. Mystery To4",
-            "scenarios": "Comma separated list of scenarios",
-            "howtouse": "How to use:",
-            "surround": "Surround the variable with curly brackets"
-        }
     },
     "changelog": {
         "header": "Changelog"

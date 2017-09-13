@@ -1,14 +1,24 @@
 import _ from 'lodash';
 
 class PostCtrl {
-    constructor(Posts, DateTime, $timeout, $scope, post) {
+    constructor(Posts, DateTime, $timeout, $scope, TeamStyles, post) {
         this.$scope = $scope;
         this.DateTime = DateTime;
         this.$timeout = $timeout;
+        this.TeamStyles = TeamStyles;
         this.Posts = Posts;
         this.showCopyError = false;
         this.copyMessage = 'post.copy.initial';
         this.post = post;
+    }
+
+    cardClass() {
+        return `card card-outline-${this.post.removed ? 'danger' : 'primary'} card-inverse`;
+    }
+
+    getTitle() {
+        const name = this.post.hostingName || this.post.author;
+        return `${name}'s ${this.post.tournament ? 'Tournament ' : ''}#${this.post.count}`;
     }
 
     regionClass() {
@@ -35,13 +45,21 @@ class PostCtrl {
     }
 
     teamStyle() {
-        let style = this.post.teams;
-
-        if (this.post.teamSize) {
-            style += ` To${this.post.teamSize}`;
+        if (this.post.teams === 'custom') {
+            return this.post.customStyle;
         }
 
-        return style;
+        const style = this.TeamStyles[this.post.teams];
+
+        if (!style) {
+            return `Unknown team style: ${style}`;
+        }
+
+        if (style.requiresTeamSize) {
+            return `${style.display} To${this.post.size}`;
+        }
+
+        return style.display;
     }
 
     relativeTimeClass() {
@@ -58,11 +76,11 @@ class PostCtrl {
         return 'tag-success';
     }
 }
-PostCtrl.$inject = ['Posts', 'DateTime', '$timeout', '$scope', 'post'];
+PostCtrl.$inject = ['Posts', 'DateTime', '$timeout', '$scope', 'TeamStyles', 'post'];
 
 const controllerName = 'PostCtrl';
 
-const resolvePost = function (Posts, MatchFetcher, $stateParams, $q, $state) {
+const resolvePost = function (Posts, $stateParams, $q, $state) {
     // Redirect to listing if no id is provided
     if (_.isEmpty($stateParams.id)) {
         $state.go('app.list');
@@ -73,22 +91,24 @@ const resolvePost = function (Posts, MatchFetcher, $stateParams, $q, $state) {
     return Posts.firstQuery
         .then(() => {
             // Check if we already know about the post
-            const post = _.find(Posts.posts, { id: $stateParams.id });
+            const post = _.find(Posts.posts, { id: Number($stateParams.id) });
 
             if (post) {
                 return post;
             }
 
-            // Otherwise attempt to force load the post
-            return MatchFetcher
-                .fetchById($stateParams.id)
-                .catch(err => {
-                    $state.go('app.post404', { id: $stateParams.id });
-                    return $q.reject(err);
-                });
+            return Posts.fetchById($stateParams.id);
+        })
+        .then(post => {
+            if (!post) {
+                $state.go('app.post404', { id: $stateParams.id });
+                return $q.reject('not found');
+            }
+
+            return post;
         });
 };
-resolvePost.$inject = ['Posts', 'MatchFetcher', '$stateParams', '$q', '$state'];
+resolvePost.$inject = ['Posts', '$stateParams', '$q', '$state'];
 
 const state = {
     name: 'app.post',

@@ -6,7 +6,7 @@ A website for checking out upcoming UltraHardcore matches from Reddit.
 Requirements
 ------------
 
-- NodeJS 0.12+ and NPM 3+
+- NodeJS 0.12+
 - Apache/nginx (optional)
 
 Installation
@@ -16,49 +16,15 @@ Get the git respository: `git clone https://github.com/Eluinhost/Match-Calendar`
 
 Change into the directory: `cd Match-Calendar`
 
-Install/update dependencies: `npm update`
-
-## Frontend
+Handle dependencies: `yarn install`
 
 To build the site run:
 
-`npm run build`
+`yarn build`
 
 This will build the site into the `web` directory.
 
-## Backend 
-
-The backend has the following routes:
-
-`/api/sync`/`/api/v1/sync` - used for syncing calendar time
-
-`/api/v1/r/:subreddit` - used for caching Reddit search requests
-
-To run the backend you can run `node .`
-
-You can also install [Forever](https://github.com/foreverjs/forever) and start
-the application by running `forever start .`
-
-By editing the file `config.js` you can modify `server.port` to modify which port 
-the backend will listen on, default port 9001.
-
-## Serving files
-
-By default the backend does not serve the frontend to the web and only provides the
-API. You can modify the `config.js` file to change how it serves files.
-
-#### apiOnly = false
-
-In this mode the backend will also provide the regular assets, you can just access
-the website at `localhost:9001` (or whatever the configured port is) and use it as-is.
-
-#### apiOnly = true
-
-This is a mode for using Apache/nginx e.t.c. to serve the files to allow for load
-balancing of the backend e.t.c You will need to proxy the path `/api` to point at the
-backend API (like `127.0.0.1:9001`).
-
-Here is a simple configuration file for nginx to work with this method:
+Here is a simple configuration file for nginx:
 
 ```nginx
 server {
@@ -69,11 +35,6 @@ server {
     # disable all caching to leave it to appcache
     expires            off;
     add_header         Cache-Control "no-cache, no-store, must-revalidate";
-
-    # proxy the API to the backend
-    location /api {
-        proxy_pass http://127.0.0.1:9001;
-    }
 }
 ```
 
@@ -98,19 +59,17 @@ Updating
 
 Run `git pull` to get the latest version.
 
-Run `npm update` to install the latest dependencies.
+Run `yarn install` to install the required dependencies.
 
-Run `npm prune` to cleanup dependencies.
-
-Update the changelog if wanted and do `npm run build` to rebuild the site.
+Update the changelog if wanted and do `yarn build` to rebuild the site.
 
 Development
 -----------
 
 A development server can be ran by running:
 
-`npm run dev`
+`yarn dev`
 
-This will start the backend server as well as serving the frontend code via port 9000.
+This will start serving the frontend code via port 9002.
 Any changes to the code/css in `/src` will automatically be compiled and the frontend
 will reload.

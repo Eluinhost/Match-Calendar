@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 const DISABLED_REGIONS_KEY = 'disabledRegions';
 const DISABLED_TEAM_TYPES_KEY = 'disabledTeamTypes';
@@ -7,15 +8,12 @@ const FAVOURITES_ONLY_KEY = 'showFavouritedHostsOnly';
 const SHOW_BLOCKED_KEY = 'showBlockedHosts';
 
 class Posts {
-    constructor($rootScope, $interval, Subreddits, DateTime, MatchFetcher, $localForage) {
-        this.MatchFetcher = MatchFetcher;
-        this.Subreddits = Subreddits;
+    constructor($rootScope, $interval, DateTime, $localForage, $http) {
         this.DateTime = DateTime;
         this.$rootScope = $rootScope;
+        this.$http = $http;
 
         this.posts = [];
-        this.unparsed = [];
-
         this.lastUpdated = 0;
 
         this.disabledRegions = [];
@@ -64,23 +62,13 @@ class Posts {
         this.currentRegions = [];
         this.currentTeamTypes = [];
         this.currentGamemodes = [];
-
-        this.errorSubs = [];
+        this.error = false;
 
         this.updating = false;
 
-        // Watch for subreddit changes
-        this.firstQuery = Subreddits.initialised.then(() => {
-            $rootScope.$watchCollection(() => Subreddits.subreddits, (oldSubs, newSubs) => {
-                if (oldSubs !== newSubs) {
-                    this.update();
-                }
-            });
-
-            // Update every minute
-            $interval(() => this.update(), 1000 * 60);
-            return this.update();
-        });
+        // Update every minute
+        $interval(() => this.update(), 1000 * 60);
+        this.firstQuery = this.update();
     }
 
     isGamemodeDisabled(gamemeode) {
@@ -131,57 +119,60 @@ class Posts {
         }
     }
 
+    fetchById(id) {
+        return this.$http
+            .get(`${__UHCGG_API_URL__}/matches/${id}`)
+            .then(raw => {
+                if (raw.status >= 400) {
+                    throw new Error('Server returned invalid response');
+                }
+
+                return Object.assign({}, raw.data, {
+                    opens: moment(raw.data.opens),
+                    created: moment(raw.data.created)
+                });
+            })
+           .catch(err => {
+               console.error(err);
+               throw err;
+           });
+    }
+
     update() {
         this.updating = true;
 
-        return this.MatchFetcher
-            .fetch(this.Subreddits.subreddits)
-            .then(({ parsed, unparsed, errors }) => {
-                const halfHourAgo = this.DateTime.getTime().subtract(30, 'minutes');
+        return this.$http
+            .get(`${__UHCGG_API_URL__}/matches/upcoming`)
+            .then(raw => {
+                if (raw.status >= 400) {
+                    throw new Error('Server returned invalid response');
+                }
 
-                this.posts = _.sortBy( // Sort by unix opening times
-                    _.filter( // Filter out too old posts
-                        parsed,
-                        it => halfHourAgo.diff(it.opens) < 0
+                this.posts = _.map(
+                    _.filter(
+                        raw.data,
+                        it => !it.removed
                     ),
-                    ['opensUnix', 'postedUnix']
+                    post => Object.assign({}, post, {
+                        opens: moment(post.opens),
+                        created: moment(post.created)
+                    })
                 );
-
-                // Add 'overhost' flags
-                _.forEach(
-                    _.groupBy(this.posts, 'region'),
-                    regionPosts => {
-                        if (regionPosts.length < 2) {
-                            return;
-                        }
-
-                        for (let i = 1; i < regionPosts.length; i++) {
-                            if (regionPosts[i].opensUnix === regionPosts[i - 1].opensUnix) {
-                                regionPosts[i].overhost = true;
-                            }
-                        }
-                    }
-                );
-
-                // Add 'short notice' flags
-                _(this.posts)
-                    .filter(it => it.opens.diff(it.posted, 'minutes') < 30)
-                    .forEach(it => {
-                        it.shortNotice = true;
-                    });
-
-                this.unparsed = unparsed;
-                this.errorSubs = errors;
 
                 this.updateRegions();
                 this.updateGamemodes();
                 this.updateTeamTypes();
 
                 this.lastUpdated = this.DateTime.getTime().unix();
+                this.error = false;
                 this.fireRefreshPostsEvent();
             })
             .finally(() => {
                 this.updating = false;
+            })
+            .catch(err => {
+                console.error(err);
+                this.error = true;
             });
     }
 
@@ -195,9 +186,9 @@ class Posts {
 
     updateGamemodes() {
         this.currentGamemodes = _(this.posts)
-                .map(post => post.gamemodes)
+                .map(post => post.scenarios)
                 .flatten()
-                .map(gamemode => gamemode.toLowerCase())
+                .map(scenario => scenario.toLowerCase())
                 .uniq()
                 .value();
     }
@@ -206,6 +197,6 @@ class Posts {
         this.$rootScope.$broadcast('postsUpdated', this.posts);
     }
 }
-Posts.$inject = ['$rootScope', '$interval', 'Subreddits', 'DateTime', 'MatchFetcher', '$localForage'];
+Posts.$inject = ['$rootScope', '$interval', 'DateTime', '$localForage', '$http'];
 
 export default Posts;

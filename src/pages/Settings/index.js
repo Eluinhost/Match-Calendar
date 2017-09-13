@@ -1,9 +1,8 @@
 import _ from 'lodash';
 
 class SettingsCtrl {
-    constructor(DurationFormatter, $uibModal, $window, Subreddits, Hosts, DateTime,
+    constructor(DurationFormatter, $uibModal, $window, Hosts, DateTime,
                 PostNotifications, $localForage, $scope, Translations) {
-        this.Subreddits = Subreddits;
         this.DateTime = DateTime;
         this.PostNotifications = PostNotifications;
         this.$uibModal = $uibModal;
@@ -19,7 +18,6 @@ class SettingsCtrl {
             step: 60,
             translate: DurationFormatter.format
         };
-        this.tempSubreddit = '';
         this.tempFavouriteHost = '';
         this.tempBlockedHost = '';
 
@@ -40,7 +38,6 @@ class SettingsCtrl {
             });
         };
 
-        removePrefixedInput('tempSubreddit', ['/r/', 'r/']);
         removePrefixedInput('tempFavouriteHost', ['/u/', 'u/']);
         removePrefixedInput('tempBlockedHost', ['/u/', 'u/']);
     }
@@ -66,7 +63,7 @@ class SettingsCtrl {
             ));
     }
 }
-SettingsCtrl.$inject = ['DurationFormatter', '$uibModal', '$window', 'Subreddits', 'Hosts', 'DateTime',
+SettingsCtrl.$inject = ['DurationFormatter', '$uibModal', '$window', 'Hosts', 'DateTime',
     'PostNotifications', '$localForage', '$scope', 'Translations'];
 
 const controllerName = 'SettingsCtrl';
@@ -77,7 +74,7 @@ const state = {
     template: require('./template.html'),
     controller: `${controllerName} as settings`,
     resolve: {
-        savedData: ['$q', 'Subreddits', 'PostNotifications', 'Hosts', function ($q, ...others) {
+        savedData: ['$q', 'PostNotifications', 'Hosts', function ($q, ...others) {
             return $q.all(others.map(o => o.initialised));
         }]
     }

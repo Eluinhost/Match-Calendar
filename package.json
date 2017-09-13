@@ -1,6 +1,6 @@
 {
     "name": "match-calendar",
-    "version": "1.4.11",
+    "version": "2.0.0",
     "dependencies": {
         "bluebird": "3.3.x",
         "he": "1.0.x",

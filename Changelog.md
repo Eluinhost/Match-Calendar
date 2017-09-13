@@ -1,3 +1,11 @@
+## Version 2.0.0
+
+- Now pulls data from hosts.uhc.gg instead of Reddit
+- Removed post generator/templates
+- Removed subreddit selections
+- Removed 'start time', 'potential overhost' flags
+- Now shows some extra data for games from hosts.uhc.gg
+
 ## Version 1.4.11
 
 - Fixed update check not running after the first hour open

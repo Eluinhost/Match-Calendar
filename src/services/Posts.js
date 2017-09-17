@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import isUndefined from 'lodash/isUndefined';
 import moment from 'moment-timezone';
 
 const DISABLED_REGIONS_KEY = 'disabledRegions';
@@ -66,9 +67,61 @@ class Posts {
 
         this.updating = false;
 
-        // Update every minute
-        $interval(() => this.update(), 1000 * 60);
         this.firstQuery = this.update();
+
+        let isHidden = null;
+        let event = null;
+
+        if (!isUndefined(document.hidden)) {
+            isHidden = () => document.hidden;
+            event = 'visibilitychange';
+        } else if (!isUndefined(document.msHidden)) {
+            isHidden = () => document.msHidden;
+            event = 'msvisibilitychange';
+        } else if (!isUndefined(document.webkitHidden)) {
+            isHidden = () => document.webkitHidden;
+            event = 'webkitvisibilitychange';
+        }
+
+        let timer = null;
+
+        const intervalSeconds = 60;
+
+        const startInterval = () => {
+            timer = $interval(() => this.update(), intervalSeconds * 1000);
+
+            // trigger immediately if the last updated time exceed the reload timer
+            // don't update if lastUpdated = 0 to avoid double loads on first load
+            const secondsSinceUpdated = DateTime.getTime().unix() - this.lastUpdated;
+            if (this.lastUpdated !== 0 && secondsSinceUpdated > intervalSeconds) {
+                this.update();
+            }
+        };
+
+        const stopInterval = () => {
+            $interval.cancel(timer);
+        };
+
+        if (isUndefined(document.addEventListener) || isHidden === null) {
+            // doesn't fully support API required, just manually start the timer and leave it
+            startInterval();
+        } else {
+            // do things based on page visibility change
+            const handleOnVisibility = () => {
+                // always stop timers
+                stopInterval();
+
+                // if it is now showing start the timer again
+                if (!isHidden()) {
+                    startInterval();
+                }
+            };
+
+            document.addEventListener(event, handleOnVisibility, false);
+
+            // trigger event to start on load
+            handleOnVisibility();
+        }
     }
 
     isGamemodeDisabled(gamemeode) {

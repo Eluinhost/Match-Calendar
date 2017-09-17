@@ -1,3 +1,7 @@
+## Version 2.0.1
+
+- Stops refreshing match posts when tab is in the background (for supported browsers)
+
 ## Version 2.0.0
 
 - Now pulls data from hosts.uhc.gg instead of Reddit

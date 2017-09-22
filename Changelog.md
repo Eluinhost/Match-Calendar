@@ -1,3 +1,8 @@
+## Version 2.0.2
+
+- Add link through to hosts.uhc.gg on post details
+- Added support for ToX games
+
 ## Version 2.0.1
 
 - Stops refreshing match posts when tab is in the background (for supported browsers)

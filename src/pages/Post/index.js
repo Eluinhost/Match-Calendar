@@ -56,7 +56,7 @@ class PostCtrl {
         }
 
         if (style.requiresTeamSize) {
-            return `${style.display} To${this.post.size}`;
+            return `${style.display} To${this.post.size || 'X'}`;
         }
 
         return style.display;

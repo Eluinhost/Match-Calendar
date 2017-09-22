@@ -84,6 +84,12 @@
                 <div ng-if="post.showCopyError" class="col-xs-12 text-danger" translate="post.copy.failed"></div>
             </div>
         </div>
+        <h5 class="card-header card-info">
+            <a ng-href="{{::'https://hosts.uhc.gg/m/' + post.post.id}}" target="_blank">
+                <span translate="post.matchpost"></span>
+                <i class="fa fa-external-link"></i>
+            </a>
+        </h5>
         <div class="card-block">
             <h5>
                 Length: <span ng-bind="::post.post.length"></span>mins | PVP: <span ng-bind="::post.post.pvpEnabledAt"></span>mins

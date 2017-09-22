@@ -65,7 +65,7 @@
             "version": "Server version"
         },
         "inAdvance": "in advance",
-        "matchpost": "Match Post",
+        "matchpost": "Open on hosts.uhc.gg",
         "copy": {
             "initial": "Copy to clipboard",
             "copied": "Copied!",

@@ -16,7 +16,7 @@ export default {
         requiresTeamSize: true
     },
     market: {
-        display: 'SlaveMarket',
+        display: 'Auction',
         requiresTeamSize: false
     },
     mystery: {

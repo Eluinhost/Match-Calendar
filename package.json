@@ -30,7 +30,7 @@
 
         "gulp": "3.9.x",
         "gulp-util": "3.0.x",
-        "run-sequence": "1.1.x",
+        "run-sequence": "2.2.1",
         "del": "2.2.x",
         "git-rev-sync": "1.6.x",
 
@@ -45,7 +45,7 @@
         "extract-text-webpack-plugin": "1.0.x",
         "html-webpack-plugin": "2.16.x",
         "autoprefixer": "6.3.x",
-        "node-sass": "3.7.x",
+        "node-sass": "4.14.1",
         "json-loader": "0.5.x",
         "sass-loader": "3.2.x",
         "css-loader": "0.x.x",
@@ -63,6 +63,9 @@
         "eslint-config-xo": "0.14.x",
         "eslint-plugin-babel": "3.2.x",
         "babel-eslint": "6.0.x"
+    },
+    "resolutions": {
+        "graceful-fs": "^4.2.4"
     },
     "scripts": {
         "build": "gulp build",

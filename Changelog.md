@@ -1,3 +1,7 @@
+## Version 2.0.3
+
+- Changed team size 'SlaveMarket' to 'Auction'
+
 ## Version 2.0.2
 
 - Add link through to hosts.uhc.gg on post details

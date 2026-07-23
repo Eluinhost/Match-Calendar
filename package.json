@@ -8,7 +8,7 @@
         "moment-timezone": "0.5.x",
         "angular": "1.5.x",
         "angular-animate": "1.5.x",
-        "angular-bindonce": "git://github.com/Pasvaz/bindonce.git#rebind-debug",
+        "angular-bindonce": "Pasvaz/bindonce#rebind-debug",
         "angular-elastic": "2.5.x",
         "angular-localforage": "1.2.x",
         "angular-messages": "1.5.x",
@@ -25,7 +25,7 @@
         "font-awesome": "4.6.x",
         "localforage": "1.4.x",
         "ngclipboard": "1.1.x",
-        "outdated-browser": "git://github.com/burocratik/outdated-browser.git#1.1.2",
+        "outdated-browser": "burocratik/outdated-browser#1.1.2",
         "snuownd": "1.1.x",
 
         "gulp": "3.9.x",

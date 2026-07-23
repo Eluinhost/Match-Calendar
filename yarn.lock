@@ -94,9 +94,9 @@ angular-animate@1.5.x:
   resolved "https://registry.yarnpkg.com/angular-animate/-/angular-animate-1.5.11.tgz#1baa43c303d1b93c4e6aa89453b39114b7a1c669"
   integrity sha1-G6pDwwPRuTxOaqiUU7ORFLehxmk=
 
-"angular-bindonce@git://github.com/Pasvaz/bindonce.git#rebind-debug":
+angular-bindonce@Pasvaz/bindonce#rebind-debug:
   version "0.3.1"
-  resolved "git://github.com/Pasvaz/bindonce.git#31148e7874c44a9d293dabf2b114a98a797929e4"
+  resolved "https://codeload.github.com/Pasvaz/bindonce/tar.gz/31148e7874c44a9d293dabf2b114a98a797929e4"
 
 angular-elastic@2.5.x:
   version "2.5.1"
@@ -4679,9 +4679,9 @@ osenv@0:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
 
-"outdated-browser@git://github.com/burocratik/outdated-browser.git#1.1.2":
+outdated-browser@burocratik/outdated-browser#1.1.2:
   version "1.0.0"
-  resolved "git://github.com/burocratik/outdated-browser.git#deb030d07d09b9142d27af57531a7f28ea0a0ed3"
+  resolved "https://codeload.github.com/burocratik/outdated-browser/tar.gz/deb030d07d09b9142d27af57531a7f28ea0a0ed3"
 
 p-limit@^2.0.0:
   version "2.3.0"
